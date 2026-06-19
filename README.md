@@ -1,3 +1,32 @@
+# ROTAGAMES PROJECT
+RotaGames è una piattaforma e-commerce responsive dedicata alla vendita e catalogazione di videogiochi.
+
+## Membri del Gruppo ("Le 3 Rotelle")
+Pietro Senatore - Matricola 0512122495
+
+Giuseppe Sarlo - Matricola 0512122183
+
+Gabriele Karol Vicinanza - Matricola 0512122894
+
+## Tecnologie usate
+Elenca chiaramente le tecnologie utilizzate, evidenziando la conformità ai vincoli della checklist:
+
+Back-End: Java 11, Java Servlet, JSP
+
+Architettura: Pattern Model-View-Controller nativo
+
+Persistenza: MySQL (gestito tramite DataSource e Connection Pool su Apache Tomcat)
+
+Front-End: HTML5 semantico, CSS3, JavaScript
+
+Comunicazione Asincrona: AJAX tramite Fetch API e payload JSON
+
+Server: Apache Tomcat 9.0.x
+
+
+
+
+
 ## 📋 Checklist Completa del Progetto
 
 | Stato | Requisito | Priorità |
