@@ -1,5 +1,5 @@
 # ROTAGAMES PROJECT
-RotaGames è una piattaforma e-commerce responsive dedicata alla vendita e catalogazione di videogiochi.
+RotaGames è una piattaforma e-commerce responsive dedicata alla vendita e catalogazione di videogiochi!
 
 ## Membri del Gruppo ("Le 3 Rotelle")
 Pietro Senatore - Matricola 0512122495
@@ -24,7 +24,7 @@ Comunicazione Asincrona: AJAX tramite Fetch API e payload JSON
 Server: Apache Tomcat 9.0.x
 
 
-
+3
 
 
 ## 📋 Checklist Completa del Progetto
