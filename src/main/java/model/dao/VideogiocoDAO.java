@@ -23,7 +23,7 @@ public class VideogiocoDAO {
         ResultSet rs = null;
 
         // Selezioniamo solo i giochi approvati dall'admin per la vendita generale
-        String query = "SELECT * FROM Videogioco WHERE OR stato_approvazione = 'APPROVATO'";
+        String query = "SELECT * FROM Videogioco WHERE stato_approvazione = 'APPROVATO'";
 
         try {
             conn = DBConnection.getConnection();
