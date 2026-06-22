@@ -1,0 +1,316 @@
+/* =========================================
+   ROTAGAMES - FOGLIO DI STILE 
+   ========================================= */
+
+/* 	===========================
+	1. IMPOSTAZIONI BASE E BODY 
+	===========================	*/
+body {
+    background-color: #030D1A; /* Blu scurissimo, quasi nero */
+    color: #FFFFFF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*	=======================
+	2. HEADER E NAVIGAZIONE
+	=======================	*/
+header {
+    background-color: #09172E;
+    padding: 20px 40px;
+    border-bottom: 2px solid #00E5FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+header h1 { 
+    margin: 0; 
+    color: #00E5FF; 
+    font-size: 1.8em; 
+    text-transform: uppercase; 
+    font-weight: 900; 
+    letter-spacing: 1px;
+}
+
+.user-info { text-align: right; }
+
+
+/* Bottoni Guest */
+.btn-guest { 
+    background-color: transparent; 
+    color: #00E5FF; 
+    border: 1px solid #00E5FF; 
+    padding: 6px 15px; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    margin-left: 10px; 
+    transition: 0.3s; 
+    font-size: 0.9em;
+}
+.btn-guest:hover { background-color: #00E5FF; color: #030D1A; }
+.btn-guest.solid { background-color: #00E5FF; color: #030D1A; }
+.btn-guest.solid:hover { background-color: #0088CC; color: #fff; border-color: #0088CC;}
+
+/*	=======================================
+	3. VETRINA E GRIGLIA GIOCHI (index.jsp)
+	=======================================	*/
+.store-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.store-container h2 {
+    color: #00E5FF;
+    border-left: 6px solid #00E5FF;
+    padding-left: 15px;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-size: 2em;
+    margin-bottom: 40px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.game-card {
+    background: #09172E;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    border-radius: 4px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Triangolo decorativo dinamico */
+.game-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 50px 50px 0;
+    border-color: transparent rgba(0, 229, 255, 0.05) transparent transparent;
+    transition: border-color 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    border-color: #00E5FF;
+}
+
+.game-card:hover::after { border-color: transparent #00E5FF transparent transparent; }
+
+/* --- STILE DELLE COPERTINE --- */
+.game-cover {
+    width: 100%;
+    height: 220px; 
+    object-fit: cover; 
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Effetto zoom sull'immagine quando passiamo col mouse sulla card */
+.game-card:hover .game-cover {
+    transform: scale(1.05);
+}
+
+.game-info h3 {
+    color: #FFFFFF;
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+}
+
+.game-info p {
+    color: #A0B0C8;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.platform-tag {
+    color: #5C6F8E;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+/* --- CLASSI PER LA CARD CLICCABILE --- */
+.game-card-link {
+    text-decoration: none; 
+    color: inherit; 
+    display: block;
+}
+
+.cover-container {
+    overflow: hidden; 
+    border-radius: 4px; 
+    text-align: center;
+}
+
+.empty-cover {
+    background-color: #04142C; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #5C6F8E;
+}
+
+.game-title-box {
+    margin-bottom: 0;
+}
+
+.game-title-box h3 {
+    margin-bottom: 5px;
+}
+
+.game-desc-box {
+    margin-top: 5px;
+}
+
+.cart-form {
+    margin: 0;
+}
+
+/* --- Stili varie scritte --- */
+
+.header-logo-title { margin: 0; color: #fff; }
+
+.user-rotelline { color: #FFD700; font-weight: bold; }
+
+.admin-link { color: #00FF7F; text-decoration: none; margin-left: 15px; font-weight: bold; }
+
+.logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
+
+.visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
+
+.vetrina-title { 
+    color: #00E5FF; 
+    border-bottom: 2px solid #112A54; 
+    padding-bottom: 10px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+.empty-catalog-box { 
+    grid-column: 1 / -1; 
+    text-align: center; 
+    padding: 40px; 
+    background-color: #112A54; 
+    border-radius: 8px; 
+}
+
+.empty-catalog-title { color: #00E5FF; }
+
+.empty-catalog-desc { color: #A0B0C8; }
+
+/*	===================
+	4. PREZZI E SCONTI 
+	=================== */
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Prezzo di base (Bianco) */
+.price-tag {
+    font-weight: 800;
+    color: #FFFFFF;
+    font-size: 1.4em;
+}
+
+/* Prezzo scontato finale (Verde Acqua) */
+.price-tag.discounted-price {
+    color: #7FFFD4;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #5C6F8E;
+    font-size: 0.85em;
+    margin-bottom: -4px;
+}
+
+.discount-badge {
+    background-color: #FF4444; 
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 0.9em;
+    box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
+}
+
+/* 	=====================
+	5. BOTTONI PRINCIPALI
+	=====================	 */
+.btn-cart {
+    width: 100%;
+    background-color: transparent;
+    color: #00E5FF;
+    border: 2px solid #00E5FF;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-cart:hover {
+    background-color: #00E5FF;
+    color: #030D1A;
+}
+
+/* 	=================================
+	6. MODULI (Login / Registrazione)
+	================================= */
+.form-wrapper { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+.form-container { background-color: #09172E; padding: 40px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 320px; }
+.form-container h2 { color: #00E5FF; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
+.form-container input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #5C6F8E; border-radius: 4px; background-color: #030D1A; color: #FFFFFF; box-sizing: border-box; outline: none; transition: border-color 0.3s;}
+.form-container input:focus { border-color: #00E5FF; }
+.form-container input[type="submit"] { background-color: #00E5FF; color: #030D1A; border: none; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background-color 0.3s; text-transform: uppercase; }
+.form-container input[type="submit"]:hover { background-color: #7FFFD4; color: #030D1A; }
+.error { color: #FF4444; margin-bottom: 15px; font-size: 0.9em; font-weight: bold;}
+.link-text { color: #A0B0C8; font-size: 0.9em; margin-top: 20px; display: block; }
+.link-text a { color: #00E5FF; text-decoration: none; font-weight: bold; transition: color 0.3s;}
+.link-text a:hover { color: #7FFFD4; }
+

@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
             if ("AMMINISTRATORE".equals(utente.getRuolo())) {
                 response.sendRedirect("AdminDashboardServlet");
             } else {
-                response.sendRedirect("index.jsp"); 
+                response.sendRedirect("Home"); 
             }
         } else {
             // Se le credenziali sono errate, ricarica la pagina con un messaggio
