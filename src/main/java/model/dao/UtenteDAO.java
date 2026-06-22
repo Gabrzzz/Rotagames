@@ -160,4 +160,34 @@ public class UtenteDAO {
         }
         return rows > 0;
     }
+    
+    public boolean doUpdateRuota(int idUtente, int nuoveRotelline, java.util.Date dataOggi) {
+        //Query che somma direttamente il valore al saldo esistente
+        String query = "UPDATE utente SET saldo_rotelline = saldo_rotelline + ?, data_ultimo_giro_ruota = ? WHERE id_utente = ?";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, nuoveRotelline);
+            
+            // Conversione dalla data Java a data Sql
+            java.sql.Date sqlDate = new java.sql.Date(dataOggi.getTime());
+            ps.setDate(2, sqlDate); 
+            
+            ps.setInt(3, idUtente);
+
+         
+            int righeAggiornate = ps.executeUpdate();
+            
+            // Se ha aggiornato almeno una riga, l'operazione è andata a buon fine
+            return righeAggiornate > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+
+
+
