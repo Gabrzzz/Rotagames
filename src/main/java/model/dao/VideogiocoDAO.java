@@ -102,13 +102,14 @@ public class VideogiocoDAO {
         return gioco;
     }
     
-    // Salvataggio nuovo gioco nel database
+ // Salvataggio nuovo gioco nel database (BLOB incluso)
     public synchronized void doSave(Videogioco gioco) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Aggiunta la colonna copertina
+        String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione, copertina) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = DBConnection.getConnection();
@@ -121,6 +122,9 @@ public class VideogiocoDAO {
             ps.setString(5, gioco.getPiattaforma());
             ps.setString(6, gioco.getRequisitiSistema());
             ps.setString(7, gioco.getStatoApprovazione());
+            
+            // Salvataggio del BLOB
+            ps.setBytes(8, gioco.getCopertina());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -128,6 +132,53 @@ public class VideogiocoDAO {
         } finally {
             try {
                 if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Metodo per aggiornare un videogioco esistente (Gestisce se l'immagine cambia o no)
+    public synchronized void doUpdate(Videogioco gioco) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        // Query dinamica: se ha caricato un'immagine nuova, la aggiorniamo.
+        String query;
+        boolean aggiornaCopertina = (gioco.getCopertina() != null && gioco.getCopertina().length > 0);
+        
+        if (aggiornaCopertina) {
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, copertina=? WHERE id_videogioco=?";
+        } else {
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=? WHERE id_videogioco=?";
+        }
+
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, gioco.getTitolo());
+            ps.setString(2, gioco.getDescrizione());
+            ps.setDouble(3, gioco.getPrezzoBase());
+            ps.setInt(4, gioco.getScontoAttivo());
+            ps.setString(5, gioco.getPiattaforma());
+            ps.setString(6, gioco.getRequisitiSistema());
+
+            if (aggiornaCopertina) {
+                ps.setBytes(7, gioco.getCopertina());
+                ps.setInt(8, gioco.getIdVideogioco());
+            } else {
+                ps.setInt(7, gioco.getIdVideogioco());
+            }
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.doUpdate: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -253,5 +304,6 @@ public class VideogiocoDAO {
             e.printStackTrace();
         }
     }
-    
 }
+    
+

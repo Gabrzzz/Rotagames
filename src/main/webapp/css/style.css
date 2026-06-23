@@ -202,8 +202,6 @@ header h1 {
 
 /* --- Stili varie scritte --- */
 
-.header-logo-title { margin: 0; color: #fff; }
-
 .user-rotelline { color: #FFD700; font-weight: bold; }
 
 .admin-link { color: #00FF7F; text-decoration: none; margin-left: 15px; font-weight: bold; }
@@ -314,3 +312,184 @@ header h1 {
 .link-text a { color: #00E5FF; text-decoration: none; font-weight: bold; transition: color 0.3s;}
 .link-text a:hover { color: #7FFFD4; }
 
+/* --- Messaggi di Successo --- */
+.success-msg {
+    color: #00FF7F;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   7. PANNELLO AMMINISTRATORE (admin_dashboard.jsp)
+   ========================================= */
+
+/* --- Card e Griglia Dashboard --- */
+.admin-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 30px; 
+    margin-top: 30px; 
+}
+
+.admin-stat-card { 
+    background: #09172E; 
+    border: 1px solid rgba(0, 229, 255, 0.2); 
+    border-radius: 4px; 
+    padding: 30px; 
+    text-align: center; 
+    border-bottom: 4px solid #00E5FF; 
+    transition: transform 0.3s ease;
+}
+
+.admin-stat-card:hover { transform: translateY(-5px); }
+
+.admin-stat-card h3 { 
+    color: #A0B0C8; 
+    margin-top: 0; 
+    text-transform: uppercase; 
+    font-size: 1.1em; 
+}
+
+.admin-stat-card .num { 
+    font-size: 3em; 
+    color: #00E5FF; 
+    font-weight: 900; 
+    margin: 10px 0; 
+}
+
+.admin-actions { 
+    margin-top: 40px; 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+}
+
+.btn-admin { 
+    padding: 15px 30px; 
+    background-color: transparent; 
+    color: #00E5FF; 
+    border: 2px solid #00E5FF; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    transition: 0.3s; 
+    flex: 1;
+    text-align: center;
+}
+
+.btn-admin:hover { 
+    background-color: #00E5FF; 
+    color: #030D1A; 
+}
+
+/* --- Tabelle Admin e Bottoni Azione --- */
+.admin-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+    background-color: #112A54; 
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+.admin-table th { background-color: #00E5FF; color: #04142C; padding: 15px; text-align: left; }
+.admin-table td { padding: 15px; border-bottom: 1px solid #04142C; color: #fff; }
+.admin-table tr:hover { background-color: #09172E; }
+
+.btn-action { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 5px; }
+.btn-edit { background-color: #FFD700; color: #000; }
+.btn-delete { background-color: #FF4444; color: #fff; }
+.btn-add { background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+
+/* --- Form Admin: Dimensioni e Struttura --- */
+.admin-form-wrapper { min-height: auto; margin-top: 30px; }
+.admin-form-container { width: 600px; }
+
+.admin-form-section {
+    background-color: #030D1A; 
+    border: 1px solid #5C6F8E; 
+    border-radius: 4px; 
+    padding: 12px; 
+    margin: 10px 0; 
+    text-align: left;
+}
+
+.form-section-title {
+    color: #00E5FF; 
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+/* --- Form Admin: Textarea (Descrizione e Requisiti) --- */
+.form-container textarea {
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0; 
+    border: 1px solid #5C6F8E; 
+    border-radius: 4px; 
+    background-color: #030D1A; 
+    color: #FFFFFF; 
+    box-sizing: border-box; 
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-container textarea:focus { border-color: #00E5FF; }
+.textarea-sm { min-height: 80px; }
+.textarea-md { min-height: 100px; }
+
+/* --- Form Admin: Upload Immagini --- */
+.file-upload-label {
+    color: #00E5FF; 
+    display: block; 
+    margin-top: 15px; 
+    text-align: left; 
+    font-weight: bold;
+}
+
+.form-container input[type="file"] {
+    background-color: transparent; 
+    border: none; 
+    padding: 10px 0;
+}
+
+/* --- Messaggio Catalogo Vuoto --- */
+.empty-catalog-cell {
+    text-align: center; 
+    color: #A0B0C8;
+}
+
+/* --- Checkbox Piattaforme Admin --- */
+.checkbox-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #030D1A;
+    border: 1px solid #5C6F8E;
+    border-radius: 4px;
+}
+
+.checkbox-group label {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto !important;
+    margin: 0 8px 0 0 !important;
+}
+
+/* --- Stili aggiuntivi per Dashboard, Utenti e Ordini --- */
+.header-admin-text { color: #fff; }
+.admin-link-accent { color: #00E5FF; }
+.title-spaced { margin-top: 50px; }
+.text-unavailable { color: #5C6F8E; font-style: italic; }

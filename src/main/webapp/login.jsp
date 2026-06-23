@@ -14,7 +14,7 @@
         
         <%-- Stampa il messaggio di successo se arriva dalla registrazione --%>
 		<% if ("true".equals(request.getParameter("successo"))) { %>
-		    <div style="color: #00FF7F; font-weight: bold; margin-bottom: 15px;">
+			<div class="success-msg">
 		        Account creato con successo! Ora puoi accedere.
 		    </div>
 		<% } %>
