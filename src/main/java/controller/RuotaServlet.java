@@ -20,6 +20,7 @@ import java.util.List;
 
 @WebServlet("/GiraRuota")
 public class RuotaServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Impostiamo l'header per rispondere in JSON 
@@ -68,7 +69,7 @@ public class RuotaServlet extends HttpServlet {
         //Algoritmo di estrazione casuale pesata
         double pesoTotale = 0.0;
         for (ElementoRuota p : premi) {
-            pesoTotale += p.getProbabilita();
+            pesoTotale += p.getProb();
         }
 
         double valoreRandom = Math.random() * pesoTotale; // Genera un numero tra 0 e il peso totale
@@ -76,7 +77,7 @@ public class RuotaServlet extends HttpServlet {
         ElementoRuota premioVinto = null;
 
         for (ElementoRuota p : premi) {
-            sommaCorrente += p.getProbabilita();
+            sommaCorrente += p.getProb();
             if (valoreRandom <= sommaCorrente) {
                 premioVinto = p;
                 break;

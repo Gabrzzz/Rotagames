@@ -27,6 +27,10 @@
             <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
             <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
             
+            <button onclick="apriRuota()" class="btn-guest" style="background-color: #00E5FF; color: #04142C; cursor: pointer; border: none; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
+                🎁 Gira la Ruota
+            </button> |
+            
             <% if ("AMMINISTRATORE".equals(utenteLoggato.getRuolo())) { %>
                 <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
             <% } %>
@@ -115,6 +119,12 @@
         %>
     </div>
 </div>
+
+<% if (utenteLoggato != null) { %>
+    <jsp:include page="Ruota.jsp" />
+<% } %>
+
+
 
 </body>
 </html>
