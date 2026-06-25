@@ -10,6 +10,8 @@ public class Libreria implements Serializable {
     private String statoAvanzamento;
     private String productKeyPosseduta;
 
+    private Videogioco videogioco;
+    
     public Libreria() {
     }
 
@@ -44,5 +46,13 @@ public class Libreria implements Serializable {
 
     public void setProductKeyPosseduta(String productKeyPosseduta) {
         this.productKeyPosseduta = productKeyPosseduta;
+    }
+    
+    public Videogioco getVideogioco() {
+        return videogioco;
+    }
+
+    public void setVideogioco(Videogioco videogioco) {
+        this.videogioco = videogioco;
     }
 }
