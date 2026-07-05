@@ -14,7 +14,7 @@ body {
 }
 
 /*	=======================
-	2. HEADER E NAVIGAZIONE
+	2. HEADER, NAVIGAZIONE E FOOTER
 	=======================	*/
 header {
     background-color: #09172E;
@@ -83,6 +83,10 @@ header h1 {
     padding: 5px 10px;
     border-radius: 4px;
 }
+
+/* FOOTER */
+.footer{text-align: center; padding: 20px; background-color: #04142C; color: #ccc; margin-top: 40px; border-top: 1px solid #00E5FF;}
+.underfooter{font-size: 12px; margin-top: 5px;}
 
 /*	=======================================
 	3. VETRINA E GRIGLIA GIOCHI (index.jsp)

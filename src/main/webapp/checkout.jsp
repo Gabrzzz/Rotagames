@@ -31,13 +31,9 @@
 </head>
 <body>
 
-<header>
-    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
-    <div class="user-info">
-        <span>Acquisto sicuro per: <strong><%= utenteLoggato.getNickname() %></strong></span> |
-        <a href="carrello.jsp" class="admin-link user-rotelline">Torna al Carrello</a>
-    </div>
-</header>
+<jsp:include page="header.jsp">
+    <jsp:param name="tipo" value="checkout" />
+</jsp:include>
 
 <div class="store-container checkout-container">
     <h2 class="vetrina-title">Riepilogo Ordine</h2>
@@ -93,6 +89,8 @@
         </form>
     </div>
 </div>
+
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

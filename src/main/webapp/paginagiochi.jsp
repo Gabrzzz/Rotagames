@@ -13,17 +13,7 @@
 </head>
 <body>
 
-<header>
-    <h1 class="header-logo-title">RotaGames 🎮</h1>
-    <div class="user-info">
-        <% if (utenteLoggato != null) { %>
-            <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
-            ...
-        <% } else { %>
-            ...
-        <% } %>
-    </div>
-</header>
+<jsp:include page="header.jsp" />
 
 <div class="store-container">
     
@@ -46,6 +36,8 @@
     </form>
     
 </div>
+
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

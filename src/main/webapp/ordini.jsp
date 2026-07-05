@@ -20,16 +20,7 @@
 </head>
 <body>
 
-<header>
-    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
-    <div class="user-info">
-        <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
-        <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
-        <a href="LibreriaServlet" class="header-nav-link">📚 I Miei Giochi</a> |
-        <a href="index.jsp" class="btn-guest btn-outline">Torna allo Store</a> |
-        <a href="LogoutServlet" class="logout-link">Esci</a>
-    </div>
-</header>
+<jsp:include page="header.jsp" />
 
 <div class="store-container">
     <h2 class="vetrina-title">Storico Ordini</h2>
@@ -60,6 +51,8 @@
         </div>
     <% } %>
 </div>
+
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

@@ -161,6 +161,39 @@ public class UtenteDAO {
         return rows > 0;
     }
     
+    // Metodo per il controllo AJAX dell'email
+    public boolean checkEmailEsistente(String email) {
+        String query = "SELECT id_utente FROM utente WHERE email = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                // Se c'è almeno un risultato, l'email esiste già
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // In caso di errore o se non trova nulla, restituisce false
+    }
+    
+    // Metodo per il controllo AJAX del Nickname
+    public boolean checkNicknameEsistente(String nickname) {
+        String query = "SELECT id_utente FROM utente WHERE nickname = ?";
+        try (Connection con = util.DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, nickname);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Se trova una riga, il nickname è già preso
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public boolean doUpdateRuota(int idUtente, int nuoveRotelline, java.util.Date dataOggi) {
         //Query che somma direttamente il valore al saldo esistente
         String query = "UPDATE utente SET saldo_rotelline = saldo_rotelline + ?, data_ultimo_giro_ruota = ? WHERE id_utente = ?";

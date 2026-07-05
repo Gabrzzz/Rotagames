@@ -35,6 +35,21 @@ public class RegistrazioneServlet extends HttpServlet {
             request.getRequestDispatcher("registrazione.jsp").forward(request, response);
             return;
         }
+        
+        // Controllo se l'email esiste già
+        UtenteDAO dao = new UtenteDAO();
+        if (dao.checkEmailEsistente(email)) {
+            request.setAttribute("erroreReg", "Attenzione: Questa email è già associata a un account.");
+            request.getRequestDispatcher("registrazione.jsp").forward(request, response);
+            return;
+        }
+        
+        //Controllo se il Nickname esiste già
+        if (dao.checkNicknameEsistente(nickname)) {
+            request.setAttribute("erroreReg", "Attenzione: Questo Nickname è già in uso. Scegline un altro.");
+            request.getRequestDispatcher("registrazione.jsp").forward(request, response);
+            return;
+        }
 
         // Creazione dell'oggetto Utente con password cifrata 
         Utente nuovoUtente = new Utente();
@@ -46,11 +61,45 @@ public class RegistrazioneServlet extends HttpServlet {
         // Applichiamo la funzione di hash
         nuovoUtente.setPasswordHash(HashUtil.toHash(password)); 
         nuovoUtente.setRuolo("REGISTRATO"); 
-        
-        UtenteDAO dao = new UtenteDAO();
+
         dao.doSave(nuovoUtente);
         
         // Reindirizza alla pagina di login con flag di successo
         response.sendRedirect("login.jsp?successo=true");
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String azione = request.getParameter("azione");
+
+        // Blocco per verificare l'email
+        if ("verificaEmail".equals(azione)) {
+            String email = request.getParameter("email");
+            
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            if (email == null || email.trim().isEmpty()) {
+                response.getWriter().write("{\"esiste\": false}");
+                return;
+            }
+
+            // Richiamiamo il metodo per il check
+            UtenteDAO dao = new UtenteDAO();
+            boolean esiste = dao.checkEmailEsistente(email);
+
+            // Stampiamo la risposta JSON per JavaScript
+            response.getWriter().write("{\"esiste\": " + esiste + "}");
+        
+        //Blocco per verificare il Nickname
+        } else if ("verificaNickname".equals(azione)) { 
+            String nickname = request.getParameter("nickname");
+            if (nickname == null || nickname.trim().isEmpty()) {
+                response.getWriter().write("{\"esiste\": false}");
+                return;
+            }
+            UtenteDAO dao = new UtenteDAO();
+            boolean esiste = dao.checkNicknameEsistente(nickname);
+            response.getWriter().write("{\"esiste\": " + esiste + "}");
+        }
     }
 }

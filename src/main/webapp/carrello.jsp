@@ -24,19 +24,7 @@
 </head>
 <body>
 
-<header>
-    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
-    <div class="user-info">
-        <% if (utenteLoggato != null) { %>
-            <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
-            <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
-            <a href="LogoutServlet" class="logout-link">Esci</a>
-        <% } else { %>
-            <a href="login.jsp" class="btn-guest">Accedi</a>
-            <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
-        <% } %>
-    </div>
-</header>
+<jsp:include page="header.jsp" />
 
 <div class="cart-container">
     <h2 class="cart-header-title">Il tuo Carrello</h2>
@@ -103,6 +91,8 @@
         </div>
     <% } %>
 </div>
+
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

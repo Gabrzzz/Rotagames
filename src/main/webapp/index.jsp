@@ -20,30 +20,7 @@
 </head>
 <body>
 
-<header>
-    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
-    <div class="user-info">
-        <% if (utenteLoggato != null) { %>
-            <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
-            <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
-            
-            <a href="LibreriaServlet" class="header-nav-link">📚 I Miei Giochi</a> |
-            <a href="OrdiniServlet" class="header-nav-link">📦 I Miei Ordini</a> |
-            
-            <button onclick="apriRuota()" class="btn-wheel">🎁 Gira la Ruota</button> |
-            
-            <% if ("AMMINISTRATORE".equals(utenteLoggato.getRuolo())) { %>
-                <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
-            <% } %>
-            
-            <a href="LogoutServlet" class="logout-link">Esci</a>
-        <% } else { %>
-            <span class="visitor-msg">Esplora il catalogo come Visitatore</span>
-            <a href="login.jsp" class="btn-guest">Accedi</a>
-            <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
-        <% } %>
-    </div>
-</header>
+<jsp:include page="header.jsp" />
 
 <div class="store-container">
     <h2 class="vetrina-title">Vetrina Giochi in Evidenza</h2>
@@ -125,7 +102,7 @@
     <jsp:include page="Ruota.jsp" />
 <% } %>
 
-
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

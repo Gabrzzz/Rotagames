@@ -3,7 +3,7 @@
 <%
     Utente admin = (Utente) session.getAttribute("utenteLoggato");
 
-    // PROTEZIONE PAGINA: Se non sei loggato o non sei admin, fuori!
+    // PROTEZIONE PAGINA: Se non sei loggato o non sei admin, fuori.
     if (admin == null || !"AMMINISTRATORE".equals(admin.getRuolo())) {
         response.sendRedirect("login.jsp");
         return;
