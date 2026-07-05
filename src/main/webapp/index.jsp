@@ -56,7 +56,7 @@
             <div class="game-card">
             
                 <%-- INIZIO DEL LINK --%>
-                <a href="GameDetailServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
+                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
                     
                     <div class="cover-container">
                         <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
