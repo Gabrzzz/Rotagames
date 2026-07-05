@@ -21,15 +21,16 @@
 <body>
 
 <header>
-    <h1 class="header-logo-title">RotaGames 🎮</h1>
+    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
     <div class="user-info">
         <% if (utenteLoggato != null) { %>
             <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
             <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
             
-            <button onclick="apriRuota()" class="btn-guest" style="background-color: #00E5FF; color: #04142C; cursor: pointer; border: none; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
-                🎁 Gira la Ruota
-            </button> |
+            <a href="LibreriaServlet" class="header-nav-link">📚 I Miei Giochi</a> |
+            <a href="OrdiniServlet" class="header-nav-link">📦 I Miei Ordini</a> |
+            
+            <button onclick="apriRuota()" class="btn-wheel">🎁 Gira la Ruota</button> |
             
             <% if ("AMMINISTRATORE".equals(utenteLoggato.getRuolo())) { %>
                 <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |

@@ -14,7 +14,7 @@ import java.io.InputStream;
 public class VideogiocoDAO {
 
     
-     // Recupera tutti i videogiochi approvati dal catalogo.
+     // Recupera tutti i videogiochi approvati dal catalogo
      
     public synchronized List<Videogioco> doRetrieveAll() {
         List<Videogioco> lista = new ArrayList<>();
@@ -102,12 +102,11 @@ public class VideogiocoDAO {
         return gioco;
     }
     
- // Salvataggio nuovo gioco nel database (BLOB incluso)
+    // Salvataggio nuovo gioco nel database 
     public synchronized void doSave(Videogioco gioco) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        // Aggiunta la colonna copertina
         String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione, copertina) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -139,12 +138,12 @@ public class VideogiocoDAO {
         }
     }
 
-    // Metodo per aggiornare un videogioco esistente (Gestisce se l'immagine cambia o no)
+    // Metodo per aggiornare un videogioco esistente 
     public synchronized void doUpdate(Videogioco gioco) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        // Query dinamica: se ha caricato un'immagine nuova, la aggiorniamo.
+        // Query dinamica: se carichiamo una copertina nuova, la aggiorniamo.
         String query;
         boolean aggiornaCopertina = (gioco.getCopertina() != null && gioco.getCopertina().length > 0);
         
@@ -185,9 +184,8 @@ public class VideogiocoDAO {
         }
     }
     
-    /**
-     * Elimina un videogioco dal database.
-     */
+
+    //Elimina un videogioco dal database.
     public synchronized boolean doDelete(int idVideogioco) {
         java.sql.Connection conn = null;
         java.sql.PreparedStatement ps = null;
@@ -213,8 +211,8 @@ public class VideogiocoDAO {
     }
     
     /**
-     * Recupera TUTTI i videogiochi presenti nel database, senza filtri sullo stato.
-     * Funzionalità esclusiva per il pannello amministrativo.
+     	Recupera TUTTI i videogiochi presenti nel database, senza filtri sullo stato.
+      	Funzionalità esclusiva per il pannello amministrativo.
      */
     public synchronized List<Videogioco> doRetrieveAllForAdmin() {
         List<Videogioco> lista = new ArrayList<>();
@@ -261,9 +259,9 @@ public class VideogiocoDAO {
         return lista;
     }
     
-    /**
-     * Aggiorna lo stato di approvazione di un videogioco (es. da IN_ATTESA a APPROVATO).
-     */
+
+     //Aggiorna lo stato di approvazione di un videogioco (es. da IN_ATTESA a APPROVATO).
+
     public synchronized boolean doUpdateStatus(int idVideogioco, String nuovoStato) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -291,7 +289,6 @@ public class VideogiocoDAO {
     }
     
     public void aggiornaCopertina(int idVideogioco, InputStream fileStream) {
-        // Usiamo InputStream direttamente, è più pulito per JDBC
         String query = "UPDATE videogioco SET copertina = ? WHERE id_videogioco = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -303,6 +300,29 @@ public class VideogiocoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+
+    //Verifica se un utente possiede già un determinato videogioco nella sua libreria.
+
+    public boolean checkPossessoGioco(int idUtente, int idVideogioco) {
+        boolean posseduto = false;
+        String query = "SELECT 1 FROM libreria WHERE id_utente = ? AND id_videogioco = ?";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idVideogioco);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                posseduto = true; // Il gioco è stato trovato nella libreria dell'utente
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in checkPossessoGioco: " + e.getMessage());
+        }
+        return posseduto;
     }
 }
     

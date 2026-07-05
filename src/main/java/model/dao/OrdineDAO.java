@@ -13,7 +13,7 @@ import java.util.List;
 public class OrdineDAO {
 			
 	//Transazione di completamento acquisto
-    public void doSave(Ordine ordine, List<model.Videogioco> carrello) {
+    public boolean doSave(Ordine ordine, List<model.Videogioco> carrello, boolean richiediFattura) {
         Connection con = null;
         PreparedStatement psOrdine = null;
         PreparedStatement psComposizione = null;
@@ -66,8 +66,21 @@ public class OrdineDAO {
                 }
             }
 
+            //Gestione Fattura
+            if (richiediFattura && idOrdine != -1) {
+                // Impostiamo l'URL dinamico che richiama la FatturaServlet con l'ID dell'ordine
+                String urlFattura = "FatturaServlet?id=" + idOrdine;
+                String updateQuery = "UPDATE ordine SET url_fattura = ? WHERE id_ordine = ?";
+                
+                try (PreparedStatement psUpdate = con.prepareStatement(updateQuery)) {
+                    psUpdate.setString(1, urlFattura);
+                    psUpdate.setInt(2, idOrdine);
+                    psUpdate.executeUpdate();
+                }
+            }
            
             con.commit();
+            return true;
         } catch (SQLException e) {
             if (con != null) {
                 try {
@@ -77,6 +90,8 @@ public class OrdineDAO {
                 }
             }
             e.printStackTrace();
+            return false;
+            
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -94,7 +109,7 @@ public class OrdineDAO {
     public List<Ordine> doRetrieveAllForAdmin() {
         List<Ordine> ordini = new ArrayList<>();
         
-        // ordinare i  dati dal nickname del cliente
+        // ordinare i dati dal nickname del cliente
         String query = "SELECT o.id_ordine, o.totale_ordine, o.url_fattura, o.data_acquisto, o.id_utente, u.nickname " +
                        "FROM Ordine o " +
                        "JOIN Utente u ON o.id_utente = u.id_utente " +
@@ -124,6 +139,32 @@ public class OrdineDAO {
             }
         } catch (SQLException e) {
             System.err.println("Errore in doRetrieveAllForAdmin: " + e.getMessage());
+        }
+        return ordini;
+    }
+    
+ // Metodo per estrarre lo storico ordini di un singolo utente
+    public List<Ordine> doRetrieveByUtente(int idUtente) {
+        List<Ordine> ordini = new ArrayList<>();
+        String query = "SELECT id_ordine, totale_ordine, data_acquisto, url_fattura FROM ordine WHERE id_utente = ? ORDER BY data_acquisto DESC";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idUtente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ordine ordine = new Ordine();
+                    ordine.setIdOrdine(rs.getInt("id_ordine"));
+                    ordine.setTotaleOrdine(rs.getDouble("totale_ordine"));
+                    ordine.setDataOrdine(rs.getTimestamp("data_acquisto"));
+                    ordine.setUrlFattura(rs.getString("url_fattura"));
+                    
+                    ordini.add(ordine);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return ordini;
     }

@@ -55,6 +55,35 @@ header h1 {
 .btn-guest.solid { background-color: #00E5FF; color: #030D1A; }
 .btn-guest.solid:hover { background-color: #0088CC; color: #fff; border-color: #0088CC;}
 
+.logo-link {
+    text-decoration: none;
+}
+
+.header-nav-link {
+    color: #00E5FF;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-wheel {
+    background-color: #00E5FF;
+    color: #04142C;
+    cursor: pointer;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    background: none;
+    border: 1px solid #00E5FF;
+    color: #00E5FF;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
 /*	=======================================
 	3. VETRINA E GRIGLIA GIOCHI (index.jsp)
 	=======================================	*/
@@ -582,7 +611,7 @@ header h1 {
     margin: 0 auto 25px auto;
 }
 
-/* 6. L'elemento circolare della ruota (può essere un tag <canvas> o un <img> SVG/PNG) */
+/* 6. L'elemento circolare della ruota (puï¿½ essere un tag <canvas> o un <img> SVG/PNG) */
 .wheel-graphics {
     width: 100%;
     height: 100%;
@@ -636,11 +665,315 @@ header h1 {
     transform: scale(0.96);
 }
 
-/* Stato disabilitato per quando la ruota sta già girando o se l'utente ha già effettuato il giro giornaliero */
+/* Stato disabilitato per quando la ruota sta giï¿½ girando o se l'utente ha giï¿½ effettuato il giro giornaliero */
 .btn-spin:disabled {
     background-color: #112A54;
     color: #5C6F8E;
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+}
+
+/* =========================================
+   9. CARRELLO (carrello.jsp)
+   ========================================= */
+.cart-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #09172E;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.cart-header-title {
+    color: #00E5FF;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00E5FF;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart-item-info h3 { margin: 0 0 5px 0; color: #fff; }
+
+.cart-item-actions { display: flex; align-items: center; gap: 20px; }
+
+.cart-item-price { font-size: 1.2em; font-weight: bold; color: #fff; }
+
+.cart-form { margin: 0; }
+
+.btn-remove {
+    background-color: #FF4444;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-remove:hover { background-color: #CC0000; }
+
+.cart-total {
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 30px 0;
+    color: #fff;
+}
+
+.cart-total-amount { color: #00E5FF; }
+
+.btn-checkout {
+    display: block;
+    width: 100%;
+    background-color: #00E5FF;
+    color: #030D1A;
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.btn-checkout:hover { background-color: #7FFFD4; }
+
+.btn-checkout-inline {
+    width: auto;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.login-prompt {
+    text-align: center;
+    margin-top: 30px;
+    color: #FF4444;
+    font-weight: bold;
+    background: rgba(255, 68, 68, 0.1);
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #FF4444;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-cart h3 { color: #fff; font-size: 1.5em; margin-bottom: 10px; }
+
+.empty-cart p { color: #A0B0C8; margin-bottom: 25px; }
+
+.error-cart {background-color: rgba(255, 68, 68, 0.1); color: #FF4444; border: 1px solid #FF4444; padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 20px;}
+
+/* --- Copertine nel Carrello --- */
+.cart-item-details {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-cover {
+    width: 80px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.empty-cover-cart {
+    width: 80px;
+    height: 110px;
+    background-color: #04142C;
+    border-radius: 4px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5C6F8E;
+    font-size: 0.8em;
+    text-align: center;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* =========================================
+   9. CHECKOUT E PAGAMENTO (checkout.jsp)
+   ========================================= */
+.checkout-container {
+    max-width: 600px;
+}
+
+.checkout-section {
+    margin-bottom: 30px;
+}
+
+.checkout-list {
+    color: #fff;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.checkout-list-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #5C6F8E;
+    padding-bottom: 5px;
+}
+
+.checkout-item-price {
+    color: #00E5FF;
+}
+
+.checkout-total-box {
+    text-align: right;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.checkout-total-amount {
+    color: #00FF7F;
+}
+
+.payment-form-container {
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.payment-label {
+    color: #00E5FF;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.payment-flex-row {
+    display: flex;
+    gap: 15px;
+}
+
+.payment-flex-col {
+    flex: 1;
+}
+
+.btn-pay {
+    margin-top: 20px;
+}
+
+.invoice-request-box {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(0, 229, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid #00E5FF;
+}
+
+.invoice-request-label {
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.invoice-request-checkbox {
+    width: auto;
+    margin: 0;
+}
+
+.invoice-request-text {
+    font-weight: bold;
+}
+
+/* =========================================
+   10. LIBRERIA (libreria.jsp)
+   ========================================= */
+.game-info-centered {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.status-badge {
+    display: inline-block;
+    background-color: #ffaa00;
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-key-box {
+    background-color: #04142C;
+    border: 1px dashed #00E5FF;
+    color: #00E5FF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.key-label {
+    color: #ccc;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn-checkout-inline {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+/* =========================================
+   STORICO ORDINI (ordini.jsp)
+   ========================================= */
+.order-card {
+    background-color: #04142C;
+    border: 1px solid #00E5FF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-info {
+    color: #fff;
+}
+
+.order-info strong {
+    color: #00E5FF;
+}
+
+.no-invoice-text {
+    color: #888;
+    font-style: italic;
 }

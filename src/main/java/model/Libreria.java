@@ -2,9 +2,8 @@ package model;
 import java.io.Serializable;
 
 public class Libreria implements Serializable {
-    private static final long serialVersionUID = 1L; //Versione
+    private static final long serialVersionUID = 1L; 
 
-    //Variabili d'istanza corrispondenti agli attributi dell'ER
     private int idUtente;
     private int idVideogioco;
     private String statoAvanzamento;
@@ -15,7 +14,6 @@ public class Libreria implements Serializable {
     public Libreria() {
     }
 
-    //Getter e Setter per ogni attributo
     public int getIdUtente() {
         return idUtente;
     }
