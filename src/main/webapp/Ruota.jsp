@@ -13,20 +13,21 @@
             <div class="wheel-pointer"></div>
             
             <div id="ruota" class="wheel-graphics" style="background: conic-gradient(
-                #00E5FF 0deg 60deg,   
-                #0088CC 60deg 120deg, 
-                #04142C 120deg 180deg,
-                #00E5FF 180deg 240deg, 
-                #0088CC 240deg 300deg, 
-                #04142C 300deg 360deg
-            );"></div>
-        </div>
-
-        <button id="btn-gira" class="btn-spin">GIRA LA RUOTA!</button>
+                #00E5FF 0deg 60deg,   /* Spicchio 0: Niente */
+                #04142C 60deg 120deg, /* Spicchio 1: 5 Rotelline */
+                #0088CC 120deg 180deg,/* Spicchio 2: 10 Rotelline */
+                #04142C 180deg 240deg,/* Spicchio 3: 20 Rotelline */
+                #0088CC 240deg 300deg,/* Spicchio 4: 50 Rotelline */
+                #00E5FF 300deg 360deg /* Spicchio 5: Jackpot */
+            );">
+                <div class="spicchio" style="--i: 0;"><span>Niente</span></div>
+                <div class="spicchio" style="--i: 1;"><span>5</span></div>
+                <div class="spicchio" style="--i: 2;"><span>10</span></div>
+                <div class="spicchio" style="--i: 3;"><span>20</span></div>
+                <div class="spicchio" style="--i: 4;"><span>50</span></div>
+                <div class="spicchio" style="--i: 5;"><span>Jackpot</span></div>
+            </div> </div> <button id="btn-gira" class="btn-spin">GIRA LA RUOTA!</button>
         
         <p id="messaggio-errore" style="color: #E63946; display: none; margin-top: 15px; font-weight: bold;"></p>
-    </div>
-    
-</div>
-
-<script src="${pageContext.request.contextPath}/js/ruota.js"></script>
+        
+    </div> </div> <script src="${pageContext.request.contextPath}/js/ruota.js"></script>

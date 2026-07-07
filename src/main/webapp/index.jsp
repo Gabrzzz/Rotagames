@@ -16,7 +16,7 @@
 <head>
 <meta charset="UTF-8">
 <title>RotaGames - Il tuo negozio di videogiochi</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css?v=4">
 </head>
 <body>
 
