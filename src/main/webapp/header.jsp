@@ -7,6 +7,25 @@
 %>
 <header>
     <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
+    
+   	<!-- Ricerca Ajax -->
+<div class="search-container" id="searchContainer">
+        
+        <button class="search-toggle-btn" id="searchToggleBtn">
+            🔍
+        </button>
+
+        <div class="search-inner-wrapper" id="searchInner">
+            <input type="text" id="searchBar" placeholder="Cerca nel negozio..." autocomplete="off">
+            
+            <a href="ricerca.jsp" class="btn-adv-search">Ricerca Avanzata</a>
+            
+            <button class="search-close-btn" id="searchCloseBtn">✖</button>
+        </div>
+        
+        <div id="searchResults"></div>
+    </div>
+    
     <div class="user-info">
         <% if (utenteLoggatoHeader != null) { %>
             
@@ -20,7 +39,6 @@
                 <span>Bentornato, <strong><%= utenteLoggatoHeader.getNickname() %></strong></span> |
                 <span class="user-rotelline">🪙 <%= utenteLoggatoHeader.getSaldoRotelline() %> Rotelline</span> |
                 
-                <a href="index.jsp" class="header-nav-link">Store</a> |
                 <a href="LibreriaServlet" class="header-nav-link">📚 I Miei Giochi</a> |
                 <a href="OrdiniServlet" class="header-nav-link">📦 Ordini</a> |
                 
@@ -39,4 +57,85 @@
             <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
         <% } %>
     </div>
+    
+    <!-- Scripet per la Barra di RIcerca -->
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+	
+	// GESTIONE BARRA A SCOMPARSA
+    const searchContainer = document.getElementById("searchContainer");
+    const searchToggleBtn = document.getElementById("searchToggleBtn");
+    const searchCloseBtn = document.getElementById("searchCloseBtn");
+
+    // Apre la barra
+    searchToggleBtn.addEventListener("click", function(event) {
+        event.stopPropagation(); // Evita che il click chiuda subito la barra
+        searchContainer.classList.add("active");
+        setTimeout(() => searchBar.focus(), 300);
+    });
+
+    // Chiude la barra dalla X
+    searchCloseBtn.addEventListener("click", function(event) {
+        event.stopPropagation();
+        searchContainer.classList.remove("active");
+        searchBar.value = ""; // Svuota il testo
+        searchResults.style.display = "none"; // Nasconde i vecchi risultati
+    });
+    
+    const searchBar = document.getElementById("searchBar");
+    const searchResults = document.getElementById("searchResults");
+
+    searchBar.addEventListener("input", function() {
+        const q = searchBar.value.trim();
+        
+        // La ricerca parte non appena l'utente scrive almeno 2 lettere
+        if (q.length < 2) {
+            searchResults.style.display = "none";
+            return;
+        }
+
+        // Chiamata AJAX
+        fetch('RicercaAjaxServlet?q=' + encodeURIComponent(q))
+            .then(response => response.json())
+            .then(data => {
+                searchResults.innerHTML = ""; // Svuota i vecchi risultati
+                
+                if (data.length === 0) {
+                    searchResults.innerHTML = "<div style='padding: 10px; color: #ccc;'>Nessun gioco trovato</div>";
+                } else {
+                    // Crea un div per ogni gioco trovato nel database
+                    data.forEach(gioco => {
+                        const div = document.createElement("div");
+                        div.style.padding = "10px";
+                        div.style.borderBottom = "1px solid #113";
+                        div.style.cursor = "pointer";
+                        div.style.color = "#fff";
+                        div.innerHTML = "<strong>" + gioco.titolo + "</strong> <span style='color: #00E5FF; font-size: 12px;'>(" + gioco.piattaforma + ")</span>";
+                        
+                        // Effetto hover
+                        div.onmouseover = function() { this.style.backgroundColor = "#0a2a5c"; }
+                        div.onmouseout = function() { this.style.backgroundColor = "transparent"; }
+                        
+                        // Al click, porta l'utente alla pagina del dettaglio prodotto
+                        div.addEventListener("click", () => {
+                            window.location.href = "DettaglioGiocoServlet?id=" + gioco.id; 
+                        });
+                        
+                        searchResults.appendChild(div);
+                    });
+                }
+                searchResults.style.display = "block"; // Mostra la tendina
+            })
+            .catch(error => console.error('Errore ricerca AJAX:', error));
+    });
+
+ // Chiudi tutto se l'utente clicca da un'altra parte sullo schermo
+    document.addEventListener("click", function(event) {
+        if (!searchContainer.contains(event.target)) {
+            searchContainer.classList.remove("active");
+            searchResults.style.display = "none";
+        }
+    });
+});
+</script>
 </header>

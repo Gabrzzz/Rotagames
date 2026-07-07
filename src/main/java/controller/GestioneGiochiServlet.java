@@ -84,7 +84,10 @@ public class GestioneGiochiServlet extends HttpServlet {
                 nuovoGioco.setStatoApprovazione("APPROVATO"); // Default per l'admin
                 nuovoGioco.setRequisitiSistema(request.getParameter("requisitiSistema"));
                 
-                dao.doSave(nuovoGioco);
+                String[] generiSelezionati = request.getParameterValues("generi");
+                
+                dao.doSave(nuovoGioco, generiSelezionati);
+                
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return; // Per non fare il forward alla fine
                 
@@ -92,6 +95,11 @@ public class GestioneGiochiServlet extends HttpServlet {
                 // Mostra il form precompilato
                 int id = Integer.parseInt(request.getParameter("id"));
                 Videogioco gioco = dao.doRetrieveById(id);
+                
+               // Per recuperare la lista dei generi
+                List<String> generiGioco = dao.getGeneriByIdVideogioco(id);
+                request.setAttribute("generiGioco", generiGioco);
+                
                 request.setAttribute("giocoDaModificare", gioco);
                 request.setAttribute("vista", "formModifica");
                 
@@ -120,7 +128,10 @@ public class GestioneGiochiServlet extends HttpServlet {
                     giocoModificato.setCopertina(buffer.toByteArray()); 
                 }
                 giocoModificato.setRequisitiSistema(request.getParameter("requisitiSistema"));
-                dao.doUpdate(giocoModificato); 
+                
+                String[] generiSelezionati = request.getParameterValues("generi");
+                
+                dao.doUpdate(giocoModificato, generiSelezionati); 
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return;
                 

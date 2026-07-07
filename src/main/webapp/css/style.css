@@ -14,7 +14,7 @@ body {
 }
 
 /*	=======================
-	2. HEADER E NAVIGAZIONE
+	2. HEADER,NAVIGAZIONE e FOOTER
 	=======================	*/
 header {
     background-color: #09172E;
@@ -82,6 +82,156 @@ header h1 {
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 4px;
+}
+
+
+/* BARRA DI RICERCA A SCOMPARSA */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 30px; /* Distanza dal logo */
+    margin-right: auto; 
+    height: 45px; 
+}
+
+/* Bottone tondo con la lente */
+.search-toggle-btn {
+    background-color: #04142C;
+    color: #00E5FF;
+    border: 2px solid #00E5FF;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Lo teniamo bloccato a sinistra */
+    left: 0;
+    z-index: 2;
+}
+
+.search-toggle-btn:hover {
+    background-color: #00E5FF;
+    color: #04142C;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+    transform: scale(1.05);
+}
+
+/* La barra che si allarga */
+.search-inner-wrapper {
+    position: absolute;
+    left: 0; /* Si espande da sinistra verso destra */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    background-color: #04142C;
+    border: 1px solid #00E5FF;
+    border-radius: 25px; 
+    padding: 5px;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+    
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    z-index: 1;
+}
+
+/* CLASSE ATTIVA (Quando si clicca la lente) */
+.search-container.active .search-inner-wrapper {
+    width: 400px; 
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Nasconde il bottone tondo iniziale quando la barra è aperta */
+.search-container.active .search-toggle-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.5); 
+}
+
+/* Input testo */
+#searchBar {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px 15px 10px 20px;
+    font-size: 1rem;
+    outline: none;
+}
+
+#searchBar::placeholder {
+    color: #5C6F8E; 
+}
+
+/* Link Ricerca Avanzata */
+.btn-adv-search {
+    color: #00E5FF;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-left: 1px solid rgba(0, 229, 255, 0.3);
+    white-space: nowrap;
+    transition: color 0.2s;
+}
+
+.btn-adv-search:hover {
+    color: #FFFFFF;
+}
+
+/* La X per chiudere */
+.search-close-btn {
+    background: none;
+    border: none;
+    color: #A0B0C8;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 15px 0 5px;
+    transition: color 0.2s;
+}
+
+.search-close-btn:hover {
+    color: #FF4444; /* Diventa rosso al passaggio del mouse */
+}
+
+/* Risultati Ajax */
+#searchResults {
+    position: absolute; 
+    top: 60px; /* Sotto la barra */
+    left: 0; /* Allineato a sinistra con la barra */
+    width: 400px; 
+    background: #09172E;
+    border: 1px solid #00E5FF; 
+    border-radius: 8px;
+    display: none; 
+    z-index: 1000; 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+    overflow: hidden;
+}
+
+/* FOOTER */
+.footer{
+	text-align: center; 
+	padding: 20px; 
+	background-color: #04142C; 
+	color: #ccc; 
+	margin-top: 40px; 
+	border-top: 1px solid #00E5FF;
+}
+
+.underfooter{
+	font-size: 12px; 
+	margin-top: 5px;
 }
 
 /*	=======================================

@@ -97,6 +97,17 @@
 						    <label><input type="checkbox" name="piattaforma" value="Switch"> Switch</label>
 						</div>					
 					</div>
+					
+			        <div class="admin-form-section">
+			            <span class="form-section-title">Genere:</span>
+			            
+			            <div class="checkbox-group">
+			                <label><input type="checkbox" name="generi" value="JRPG"> JRPG</label>
+			                <label><input type="checkbox" name="generi" value="Metroidvania"> Metroidvania</label>
+			                <label><input type="checkbox" name="generi" value="Azione"> Azione</label>
+			                
+			                </div>
+			        </div>
 
 					<textarea name="requisitiSistema" class="textarea-sm" placeholder="Requisiti di Sistema (es. OS, CPU, RAM, GPU...)" required></textarea>
                     <input type="number" step="0.01" name="prezzoBase" placeholder="Prezzo Base (es. 59.99)" required>
@@ -140,6 +151,32 @@
 						    <label><input type="checkbox" name="piattaforma" value="Switch" <%= plat.contains("Switch") ? "checked" : "" %>> Switch</label>
 						</div>					
 					</div>
+					
+<% 
+            //Recuperiamo la lista originale
+            java.util.List<String> generiGioco = (java.util.List<String>) request.getAttribute("generiGioco");
+            
+            //Creiamo una lista "pulita" mettendo tutto in maiuscolo
+            java.util.List<String> cleanGeneri = new java.util.ArrayList<>();
+            if (generiGioco != null) {
+                for(String g : generiGioco) {
+                    if (g != null) {
+                        cleanGeneri.add(g.trim().toUpperCase());
+                    }
+                }
+            }
+        %>
+        
+        <div class="admin-form-section">
+            <span class="form-section-title">Genere:</span>
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="generi" value="JRPG" <%= cleanGeneri.contains("JRPG") ? "checked='checked'" : "" %>> JRPG</label>
+                <label><input type="checkbox" name="generi" value="Metroidvania" <%= cleanGeneri.contains("METROIDVANIA") ? "checked='checked'" : "" %>> Metroidvania</label>
+                <label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked='checked'" : "" %>> Azione</label>
+                
+                </div>
+        </div>
 					
 					<textarea name="requisitiSistema" class="textarea-sm" required><%= gioco.getRequisitiSistema() != null ? gioco.getRequisitiSistema() : "Requisiti non specificati." %></textarea>                    
 					<input type="number" step="0.01" name="prezzoBase" value="<%= gioco.getPrezzoBase() %>" required>
