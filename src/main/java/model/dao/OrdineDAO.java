@@ -110,7 +110,7 @@ public class OrdineDAO {
         List<Ordine> ordini = new ArrayList<>();
         
         // ordinare i dati dal nickname del cliente
-        String query = "SELECT o.id_ordine, o.totale_ordine, o.url_fattura, o.data_acquisto, o.id_utente, u.nickname " +
+        String query = "SELECT o.id_ordine, o.totale_ordine, o.url_fattura, o.data_acquisto, o.id_utente, u.nickname, u.email " +
                        "FROM Ordine o " +
                        "JOIN Utente u ON o.id_utente = u.id_utente " +
                        "ORDER BY o.id_ordine DESC";
@@ -128,6 +128,7 @@ public class OrdineDAO {
                 ordine.setUrlFattura(rs.getString("url_fattura"));
                 ordine.setIdUtente(rs.getInt("id_utente"));
                 ordine.setNicknameUtente(rs.getString("nickname"));
+                ordine.setEmailUtente(rs.getString("email"));
                 
                 try {
                     ordine.setDataOrdine(rs.getTimestamp("data_acquisto"));
@@ -166,6 +167,69 @@ public class OrdineDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return ordini;
+    }
+    
+    //Per filtrare gli ordini effettuati
+    public List<Ordine> getOrdiniFiltrati(String dataInizio, String dataFine, String ricercaCliente) {
+        List<Ordine> ordini = new ArrayList<>();
+        
+        StringBuilder sql = new StringBuilder("SELECT o.id_ordine, o.totale_ordine, o.url_fattura, o.data_acquisto, o.id_utente, u.nickname, u.email FROM ordine o JOIN utente u ON o.id_utente = u.id_utente WHERE 1=1 ");        
+        List<Object> parametri = new ArrayList<>();
+
+        // Filtro Data Inizio 
+        if (dataInizio != null && !dataInizio.trim().isEmpty()) {
+            sql.append("AND o.data_acquisto >= ? ");
+            parametri.add(dataInizio + " 00:00:00");
+        }
+        
+        // Filtro Data Fine
+        if (dataFine != null && !dataFine.trim().isEmpty()) {
+            sql.append("AND o.data_acquisto <= ? ");
+            parametri.add(dataFine + " 23:59:59");
+        }
+        
+        // Filtro Cliente (Cerca sia nell'Email che nel Nickname)
+        if (ricercaCliente != null && !ricercaCliente.trim().isEmpty()) {
+            sql.append("AND (u.email LIKE ? OR u.nickname LIKE ?) ");
+            String parametroRicerca = "%" + ricercaCliente.trim() + "%";
+            parametri.add(parametroRicerca); // Per la colonna email
+            parametri.add(parametroRicerca); // Per la colonna nickname
+        }
+        
+        sql.append("ORDER BY o.data_acquisto DESC");
+
+        try (Connection con = util.DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+             
+            for (int i = 0; i < parametri.size(); i++) {
+                ps.setString(i + 1, (String) parametri.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ordine ordine = new Ordine();
+                   
+                    ordine.setIdOrdine(rs.getInt("id_ordine"));
+                    ordine.setTotaleOrdine(rs.getDouble("totale_ordine"));
+                    ordine.setUrlFattura(rs.getString("url_fattura"));
+                    ordine.setIdUtente(rs.getInt("id_utente"));
+                    ordine.setNicknameUtente(rs.getString("nickname"));
+                    ordine.setEmailUtente(rs.getString("email"));
+                    
+                    try {
+                        ordine.setDataOrdine(rs.getTimestamp("data_acquisto"));
+                    } catch (SQLException e) {
+                        // se la colonna non esiste o è null, andiamo avanti
+                    }
+                    
+                    ordini.add(ordine);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
         return ordini;
     }
 }

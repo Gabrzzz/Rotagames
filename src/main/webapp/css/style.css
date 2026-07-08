@@ -602,6 +602,55 @@ header h1 {
     margin-top: 15px;
 }
 
+/* Stile Tabella Filtri (admin_ordini.jsp) */
+
+.admin-filter-section {
+    margin-bottom: 20px;
+}
+
+.admin-filter-form {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-label {
+    color: #ccc;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.filter-input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #5C6F8E;
+    background-color: #030D1A;
+    color: white;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.filter-input:focus {
+    border-color: #00E5FF;
+}
+
+.btn-filter {
+    padding: 8px 20px;
+    flex: 0;
+}
+
+.btn-reset {
+    padding: 8px 15px;
+    text-decoration: none;
+}
+
 /* --- Form Admin: Textarea (Descrizione e Requisiti) --- */
 .form-container textarea {
     width: 100%; 

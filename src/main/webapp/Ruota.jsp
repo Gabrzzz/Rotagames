@@ -16,9 +16,9 @@
                 #00E5FF 0deg 60deg,   /* Spicchio 0: Niente */
                 #04142C 60deg 120deg, /* Spicchio 1: 5 Rotelline */
                 #0088CC 120deg 180deg,/* Spicchio 2: 10 Rotelline */
-                #04142C 180deg 240deg,/* Spicchio 3: 20 Rotelline */
-                #0088CC 240deg 300deg,/* Spicchio 4: 50 Rotelline */
-                #00E5FF 300deg 360deg /* Spicchio 5: Jackpot */
+                #00E5FF 180deg 240deg,/* Spicchio 3: 20 Rotelline */
+                #04142C 240deg 300deg,/* Spicchio 4: 50 Rotelline */
+                #0088CC 300deg 360deg /* Spicchio 5: Jackpot */
             );">
                 <div class="spicchio" style="--i: 0;"><span>Niente</span></div>
                 <div class="spicchio" style="--i: 1;"><span>5</span></div>

@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<jsp:include page="header.jsp" />
+
 <div class="form-wrapper">
     <div class="form-container">
         <h2>Accesso RotaGames</h2>
