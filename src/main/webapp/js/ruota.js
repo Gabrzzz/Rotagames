@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Sostituiti i backtick con la concatenazione classica di stringhe
                     ruota.style.transform = "rotate(" + rotazioneAttuale + "deg)";
 
-                    // Aspetta 5.1 secondi (la durata esatta del tuo CSS transition) e mostra l'alert
+                    // Aspetta 5.1 secondi e mostra l'alert
                     setTimeout(function() {
                         // Sostituiti i backtick per risolvere "Unterminated template literal"
                         alert("Complimenti!\nLa ruota si è fermata su: " + data.premio + "\nHai vinto " + data.valore + " rotelline!");
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }, 5100);
 
                 } else {
-                    // Se la Servlet blocca (es. ha già giocato oggi)
+                    // Se la Servlet blocca
                     msgErrore.innerText = data.message;
                     msgErrore.style.display = "block";
                     btnGira.disabled = false;

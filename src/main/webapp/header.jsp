@@ -8,11 +8,7 @@
 <header>
     <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
     
-    <%-- Se la pagina richiede un header minimale, non mostriamo il resto --%>
-    <% if (!"minimal".equals(tipoHeader)) { %>
-    
-   	<!-- Ricerca Ajax -->
-	<div class="search-container" id="searchContainer">
+    <div class="search-container" id="searchContainer">
         
         <button class="search-toggle-btn" id="searchToggleBtn">
             🔍
@@ -42,33 +38,34 @@
                 <span>Bentornato, <strong><%= utenteLoggatoHeader.getNickname() %></strong></span> |
                 <span class="user-rotelline">🪙 <%= utenteLoggatoHeader.getSaldoRotelline() %> Rotelline</span> |
                 
-                <a href="LibreriaServlet" class="header-nav-link">📚 I Miei Giochi</a> |
-                <a href="OrdiniServlet" class="header-nav-link">📦 Ordini</a> |
-                
                 <button onclick="apriRuota()" class="btn-wheel">🎁 Gira la Ruota</button> |
-                
-                <a href="CartServlet" class="header-nav-link">🛒 Carrello</a> |
                 
                 <% if ("AMMINISTRATORE".equals(utenteLoggatoHeader.getRuolo())) { %>
                     <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
                 <% } %>
                 
-                <a href="LogoutServlet" class="logout-link">Esci</a>
-            <% } %>
+                <div class="user-dropdown">
+                    <button class="dropdown-toggle">Area Personale ▼</button>
+                    <div class="dropdown-menu">
+                        <a href="ProfiloServlet" class="dropdown-item">👤 Profilo</a>
+                        <a href="LibreriaServlet" class="dropdown-item">📚 I Miei Giochi</a>
+                        <a href="OrdiniServlet" class="dropdown-item">📦 Ordini</a>
+                        <a href="LogoutServlet" class="dropdown-item logout-text">Esci</a>
+                    </div>
+                </div>
+                <% } %>
             
         <% } else { %>
             <span class="visitor-msg">Esplora il catalogo come Visitatore</span>
             <a href="login.jsp" class="btn-guest">Accedi</a>
             <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
-            <a href="CartServlet" class="header-nav-link">🛒 Carrello</a> |
         <% } %>
     </div>
     
-    <!-- Scripet per la Barra di RIcerca -->
     <script>
 document.addEventListener("DOMContentLoaded", function() {
-	
-	// GESTIONE BARRA A SCOMPARSA
+    
+    // GESTIONE BARRA A SCOMPARSA
     const searchContainer = document.getElementById("searchContainer");
     const searchToggleBtn = document.getElementById("searchToggleBtn");
     const searchCloseBtn = document.getElementById("searchCloseBtn");
@@ -89,15 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     const searchBar = document.getElementById("searchBar");
- 
-    // Se l'utente preme "Invio" nella barra dell'header, lo manda alla ricerca avanzata
-    searchBar.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Evita che la pagina si ricarichi male
-            window.location.href = "ricerca.jsp?titolo=" + encodeURIComponent(searchBar.value);
-        }
-    });
-    
     const searchResults = document.getElementById("searchResults");
 
     searchBar.addEventListener("input", function() {
@@ -153,6 +141,4 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
-
-	<% } /* fine dell' if per l'header minimale */ %>
 </header>

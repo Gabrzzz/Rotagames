@@ -962,7 +962,10 @@ header h1 {
 
 .cart-total-amount { color: #00E5FF; }
 
-.btn-checkout {
+.btn-
+
+
+bout {
     display: block;
     width: 100%;
     background-color: #00E5FF;
@@ -1553,4 +1556,116 @@ header h1 {
 
 .btn-error-home {
     padding: 12px 30px;
+}
+
+/* =========================================
+   MENU A TENDINA (DROPDOWN) - HEADER
+   ========================================= */
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Bottone principale del menù */
+.dropdown-toggle {
+    background-color: transparent;
+    color: #00E5FF;
+    border: 1px solid rgba(0, 229, 255, 0.5);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+    background-color: rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+/* Contenitore della lista (nascosto di default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%; 
+    background-color: #09172E;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 5px;
+    margin-top: 10px; 
+    overflow: hidden;
+}
+
+/* Singolo link nella tendina */
+.dropdown-item {
+    color: #ffffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.2s;
+    font-size: 0.95em;
+}
+
+.dropdown-item:hover {
+    background-color: #04142C;
+    color: #00E5FF;
+}
+
+/* Stile speciale per il tasto Esci */
+.logout-text {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ff4c4c; /*Rosso*/
+}
+
+.logout-text:hover {
+    background-color: rgba(255, 76, 76, 0.1);
+    color: #ff4c4c;
+}
+
+/* Effetto di apertura: quando si passa il mouse sul contenitore, mostra il sottomenù */
+.user-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.user-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px; 
+    background-color: transparent; 
+}
+
+/* COOKIE "RICORDAMI" LOGIN*/
+
+.remember-me-container {
+    text-align: left;
+    margin-bottom: 20px;
+    padding-left: 2px; 
+}
+
+.remember-me-label {
+    cursor: pointer;
+    color: #cccccc;
+    font-size: 0.9em;
+    display: flex;       
+    align-items: center; 
+    gap: 8px;           
+}
+
+/* Blocchiamo le regole globali degli input che rovinano la checkbox */
+input.remember-checkbox {
+    width: auto ;      
+    height: auto ;     
+    margin: 0 ;        
+    cursor: pointer;
 }
