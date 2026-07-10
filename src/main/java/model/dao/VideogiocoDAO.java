@@ -490,8 +490,6 @@ public class VideogiocoDAO {
             query += " ORDER BY v.id_videogioco DESC";
         }
 
-        System.out.println("Query eseguita: " + query);
-
         try (java.sql.Connection con = util.DBConnection.getConnection();
              java.sql.PreparedStatement ps = con.prepareStatement(query)) {
 

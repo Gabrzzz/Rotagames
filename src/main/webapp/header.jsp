@@ -8,6 +8,9 @@
 <header>
     <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
     
+    <%-- Se la pagina richiede un header minimale, non mostriamo il resto --%>
+    <% if (!"minimal".equals(tipoHeader)) { %>
+    
    	<!-- Ricerca Ajax -->
 	<div class="search-container" id="searchContainer">
         
@@ -86,6 +89,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     const searchBar = document.getElementById("searchBar");
+ 
+    // Se l'utente preme "Invio" nella barra dell'header, lo manda alla ricerca avanzata
+    searchBar.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Evita che la pagina si ricarichi male
+            window.location.href = "ricerca.jsp?titolo=" + encodeURIComponent(searchBar.value);
+        }
+    });
+    
     const searchResults = document.getElementById("searchResults");
 
     searchBar.addEventListener("input", function() {
@@ -141,4 +153,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+	<% } /* fine dell' if per l'header minimale */ %>
 </header>

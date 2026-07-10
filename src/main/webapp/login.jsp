@@ -8,7 +8,9 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
+<jsp:include page="header.jsp">
+    <jsp:param name="tipo" value="minimal" />
+</jsp:include>
 
 <div class="form-wrapper">
     <div class="form-container">
