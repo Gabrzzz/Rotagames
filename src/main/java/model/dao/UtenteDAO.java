@@ -46,6 +46,7 @@ public class UtenteDAO {
                 utente.setDataUltimoGiroRuota(rs.getDate("data_ultimo_giro_ruota"));
                 utente.setGenerePreferito(rs.getString("genere_preferito"));
                 utente.setNomeStudioSviluppo(rs.getString("nome_studio_sviluppo"));
+                utente.setBadgePersonalita(rs.getString("badge_personalita"));
             }
 
         } catch (SQLException e) {
@@ -192,6 +193,20 @@ public class UtenteDAO {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    // Metodo per salvare il badge utente Questionario
+    public boolean doSaveBadge(int idUtente, String badge) {
+        String query = "UPDATE utente SET badge_personalita = ? WHERE id_utente = ? "; //AND badge_personalita IS NULL
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, badge);
+            ps.setInt(2, idUtente);
+            return ps.executeUpdate() > 0; // Restituisce true se ha aggiornato con successo
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public boolean doUpdateRuota(int idUtente, int nuoveRotelline, java.util.Date dataOggi) {

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 /* =========================================
    ROTAGAMES - FOGLIO DI STILE 
    ========================================= */
@@ -1668,4 +1669,84 @@ input.remember-checkbox {
     height: auto ;     
     margin: 0 ;        
     cursor: pointer;
+}
+
+/* =========================================
+   SFONDO ANIMATO TUNNEL GENERATIVO
+   ========================================= */
+.tunnel-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2; /* Dietro al velo nero */
+}
+
+.tunnel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(3, 13, 26, 0.3); /* Sfumatura scura a tema RotaGames */
+    z-index: -1; /* Sopra al canvas, ma sotto alle scritte */
+}
+
+/* =========================================
+   QUIZ STILE EVERHOOD & LAYOUT ORIZZONTALE
+   ========================================= */
+
+/* Contenitore invisibile centrato in mezzo allo schermo */
+.quiz-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centratura assoluta perfetta */
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 10; /* Sempre sopra il tunnel */
+}
+
+/* Domanda: Font stile Everhood grande, bianco con bordo nero netto */
+.quiz-question-text {
+    font-family: 'VT323', monospace; 
+    font-size: 3.5rem; 
+    color: #ffffff;
+    margin-bottom: 60px;
+    line-height: 1.2;
+    /* Ombra spessa multipla per creare il contorno nero in stile videogioco 8-bit */
+    text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+
+/* Contenitore per le risposte */
+.quiz-options-horizontal {
+    display: flex;
+    justify-content: center;
+    gap: 80px; /* Molto spazio tra le risposte, come in foto */
+    flex-wrap: wrap;
+}
+
+/* Risposte: Nessun bottone, solo testo in ombra che aspetta di essere cliccato */
+.quiz-option-btn {
+    background-color: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4); /* Testo semi-trasparente/scuro di default */
+    font-family: 'VT323', monospace;
+    font-size: 2.8rem;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+    text-shadow: 2px 2px 0 #000;
+}
+
+/* Effetto Hover (quando ci passi sopra col mouse): si illumina! */
+.quiz-option-btn:hover, .quiz-option-btn:focus {
+    outline: none;
+    color: #ffffff; /* Diventa bianco acceso */
+    transform: scale(1.15); /* Si ingrandisce leggermente */
+    text-shadow: 3px 3px 0 #000, 0 0 20px rgba(255, 255, 255, 0.8); /* Effetto "Glow" */
 }

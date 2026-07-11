@@ -23,6 +23,9 @@ public class Utente {
     private String generePreferito;
     private String nomeStudioSviluppo; // Attributo specifico per gli sviluppatori
     
+    // Dati per il questionario
+    private String badgePersonalita;
+    
     // Costruttore vuoto
     public Utente() {
     }
@@ -163,4 +166,7 @@ public class Utente {
     public String toString() {
         return "Utente [idUtente=" + idUtente + ", email=" + email + ", nickname=" + nickname + ", ruolo=" + ruolo + "]";
     }
+    
+    public String getBadgePersonalita() { return badgePersonalita; }
+    public void setBadgePersonalita(String badgePersonalita) { this.badgePersonalita = badgePersonalita; }
 }
