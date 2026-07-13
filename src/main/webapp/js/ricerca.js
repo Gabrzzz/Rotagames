@@ -50,11 +50,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			// cambia l'URL visibile senza ricaricare la pagina
 			window.history.replaceState({}, '', urlCorrente);
 										                                
-        let urlAjax = 'RicercaAvanzataAjaxServlet?prezzo=' + maxPrezzo + 
-                      '&ordinamento=' + ordinamento + 
-                      '&piattaforme=' + encodeURIComponent(piattaformeSelezionate) +
-                      '&generi=' + encodeURIComponent(generiSelezionati) +
-                      '&titolo=' + encodeURIComponent(titoloCercato);
+		let urlAjax = 'RicercaAvanzataAjaxServlet?maxPrezzo=' + maxPrezzo + 
+			          '&ordinamento=' + ordinamento + 
+			          '&piattaforme=' + encodeURIComponent(piattaformeSelezionate) +
+			          '&generi=' + encodeURIComponent(generiSelezionati) +
+			          '&titolo=' + encodeURIComponent(titoloCercato);
 
         fetch(urlAjax)
             .then(response => response.json())

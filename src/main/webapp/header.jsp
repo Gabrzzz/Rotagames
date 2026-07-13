@@ -8,6 +8,11 @@
 <header>
     <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
     
+    <%-- Se la pagina richiede un header minimale, non mostriamo il resto --%>
+    <% if (!"minimal".equals(tipoHeader)) { %>
+    
+   	<!-- Ricerca Ajax -->
+    
     <div class="search-container" id="searchContainer">
         
         <button class="search-toggle-btn" id="searchToggleBtn">
@@ -39,6 +44,7 @@
                 <span class="user-rotelline">🪙 <%= utenteLoggatoHeader.getSaldoRotelline() %> Rotelline</span> |
                 
                 <button onclick="apriRuota()" class="btn-wheel">🎁 Gira la Ruota</button> |
+                <a href="CartServlet" class="header-nav-link">🛒 Carrello</a> |
                 
                 <% if ("AMMINISTRATORE".equals(utenteLoggatoHeader.getRuolo())) { %>
                     <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
@@ -87,6 +93,14 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const searchBar = document.getElementById("searchBar");
     const searchResults = document.getElementById("searchResults");
+    
+    // Se l'utente preme "Invio" nella barra dell'header, lo manda alla ricerca avanzata
+    searchBar.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Evita che la pagina si ricarichi male
+            window.location.href = "ricerca.jsp?titolo=" + encodeURIComponent(searchBar.value);
+        }
+    });
 
     searchBar.addEventListener("input", function() {
         const q = searchBar.value.trim();
@@ -141,4 +155,5 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+<% } /* fine dell' if per l'header minimale */ %>
 </header>

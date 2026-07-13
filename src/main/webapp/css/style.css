@@ -963,10 +963,7 @@ header h1 {
 
 .cart-total-amount { color: #00E5FF; }
 
-.btn-
-
-
-bout {
+.btn-checkout {
     display: block;
     width: 100%;
     background-color: #00E5FF;
@@ -1570,7 +1567,7 @@ bout {
     vertical-align: middle;
 }
 
-/* Bottone principale del menù */
+/* Bottone principale del menï¿½ */
 .dropdown-toggle {
     background-color: transparent;
     color: #00E5FF;
@@ -1631,7 +1628,7 @@ bout {
     color: #ff4c4c;
 }
 
-/* Effetto di apertura: quando si passa il mouse sul contenitore, mostra il sottomenù */
+/* Effetto di apertura: quando si passa il mouse sul contenitore, mostra il sottomenï¿½ */
 .user-dropdown:hover .dropdown-menu {
     display: block;
 }
