@@ -1,24 +1,71 @@
 document.addEventListener("DOMContentLoaded", function() {
     const questions = [
+        
         {
-            question: "Cosa preferisci fare appena entri in un gioco Open-World?",
+            question: "Quale di questi elementi cerchi di più in un gioco?",
             options: [
-                { text: "Scalare", value: "Esploratore" },
-                { text: "Collezionare", value: "Collezionista" },
-                { text: "Allearti", value: "Socializzatore" },
-                { text: "Combattere", value: "Competitivo" }
+                { text: "Segreti", value: "Esploratore" },
+                { text: "Trofei", value: "Collezionista" },
+                { text: "Eventi di gruppo", value: "Socializzatore" },
+                { text: "Classifiche", value: "Competitivo" }
             ]
         },
         {
-            question: "Qual è la tua più grande soddisfazione in un videogioco?",
+            question: "Cosa fai se sei bloccato in un livello difficile?",
             options: [
-                { text: "Scoprire", value: "Esploratore" },
-                { text: "Completare", value: "Collezionista" },
-                { text: "Aiutare", value: "Socializzatore" },
-                { text: "Vincere", value: "Competitivo" }
+                { text: "Cerco percorsi alternativi", value: "Esploratore" },
+                { text: "Farmo risorse", value: "Collezionista" },
+                { text: "Chiedo aiuto", value: "Socializzatore" },
+                { text: "Ritento all'infinito", value: "Competitivo" }
             ]
         },
-        // Aggiungi qui altre domande...
+        {
+            question: "Quale parola descrive meglio il tuo stile?",
+            options: [
+                { text: "Creativo", value: "Esploratore" },
+                { text: "Metodico", value: "Collezionista" },
+                { text: "Collaborativo", value: "Socializzatore" },
+                { text: "Aggressivo", value: "Competitivo" }
+            ]
+        },
+        {
+            question: "Qual è il tuo obiettivo finale in una partita?",
+            options: [
+                { text: "Conoscenza", value: "Esploratore" },
+                { text: "Ricchezza", value: "Collezionista" },
+                { text: "Compagnia", value: "Socializzatore" },
+                { text: "Primato", value: "Competitivo" }
+            ]
+        },
+        {
+            question: "Cosa guardi più volentieri su YouTube o Twitch?",
+            options: [
+                { text: "Video sulla lore", value: "Esploratore" },
+                { text: "Guide al 100%", value: "Collezionista" },
+                { text: "Gameplay divertenti", value: "Socializzatore" },
+                { text: "Tornei eSports", value: "Competitivo" }
+            ]
+        },
+        {
+            question: "Qual è la causa principale che ti fa abbandonare un gioco?",
+            options: [
+                { text: "Mappe lineari", value: "Esploratore" },
+                { text: "Niente da sbloccare", value: "Collezionista" },
+                { text: "Server vuoti", value: "Socializzatore" },
+                { text: "Troppo facile", value: "Competitivo" }
+            ]
+        },
+        {
+            question: "Giochi a Fortnite?",
+            options: [
+                { text: "No", value: "Esploratore" },
+                { text: "Si", value: "Collezionista" },
+                { text: "Qualche volta", value: "Socializzatore" },
+                { text: "Preferisco fare analisi 1 da capo", value: "Competitivo" }
+            ]
+        }
+
+        
     ];
 
     let currentQuestionIndex = 0;
@@ -64,14 +111,26 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function calculateResult() {
-        let profiloDominante = "Esploratore"; 
         let maxPunti = -1;
+        let profiliVincenti = [];
+
+        //Troviamo qual è il punteggio matematico più alto raggiunto
         for (let profilo in conteggio) {
             if (conteggio[profilo] > maxPunti) {
                 maxPunti = conteggio[profilo];
-                profiloDominante = profilo;
             }
         }
+
+        //Raccogliamo in un array tutti i profili che hanno raggiunto quel punteggio massimo
+        for (let profilo in conteggio) {
+            if (conteggio[profilo] === maxPunti) {
+                profiliVincenti.push(profilo);
+            }
+        }
+
+        //SPAREGGIO CASUALE: Scegliamo a sorte uno dei profili vincitori
+        const indiceCasuale = Math.floor(Math.random() * profiliVincenti.length);
+        const profiloDominante = profiliVincenti[indiceCasuale];
 
         // Invio AJAX del risultato alla Servlet
         fetch("QuestionarioServlet", {
@@ -82,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Analisi Completata!\nIl tuo profilo dominante è: " + data.badge + ".\nIl relativo Badge Onorifico è stato aggiunto al tuo profilo!");
+                alert("L'Oracolo ha parlato...\nIl tuo profilo dominante è: " + data.badge + ".\nIl relativo Badge è stato inciso sul tuo profilo!");
                 window.location.href = "ProfiloServlet"; 
             } else {
                 alert("⚠️ " + data.message);
