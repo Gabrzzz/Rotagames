@@ -26,11 +26,11 @@ public class QuestionarioServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        /*
-        if (utente.getBadgePersonalita() != null) {			//TESTING
-            response.sendRedirect("ProfiloServlet");		//RIATTIVA 
+        
+        if (utente.getBadgePersonalita() != null) {			
+            response.sendRedirect("ProfiloServlet");		
             return;
-        } */
+        } 
 
         request.getRequestDispatcher("/questionario.jsp").forward(request, response);
     }

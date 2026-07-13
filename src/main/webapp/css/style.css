@@ -737,6 +737,35 @@ header h1 {
 .title-spaced { margin-top: 50px; }
 .text-unavailable { color: #5C6F8E; font-style: italic; }
 
+/* Riga della tabella per i giochi ritirati */
+.row-ritirato {
+    opacity: 0.5;
+    background-color: #121f3d;
+}
+
+/* Pulsante Ripristina (Verde neon) */
+.btn-restore {
+    background-color: #00FF80;
+    color: #030D1A;
+}
+
+.btn-restore:hover {
+    background-color: #00cc66; 
+    box-shadow: 0 0 8px rgba(0, 255, 128, 0.6);
+}
+
+/* Pulsante Approva (Giallo/Oro) */
+.btn-approve {
+    background-color: #FFCC00; 
+    color: #030D1A; 
+    font-weight: bold;
+}
+
+.btn-approve:hover {
+    background-color: #e6b800;
+    box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+}
+
 /* =======================================================
    8. RUOTA DELLA FORTUNA (OVERLAY MODAL E ANIMAZIONE)
    ======================================================= */

@@ -197,7 +197,7 @@ public class UtenteDAO {
     
     // Metodo per salvare il badge utente Questionario
     public boolean doSaveBadge(int idUtente, String badge) {
-        String query = "UPDATE utente SET badge_personalita = ? WHERE id_utente = ? "; //AND badge_personalita IS NULL
+        String query = "UPDATE utente SET badge_personalita = ? WHERE id_utente = ? AND badge_personalita IS NULL"; 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, badge);

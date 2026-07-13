@@ -4,7 +4,7 @@
 <%
     // Protezione di sicurezza: accessibile solo se loggato
     Utente utente = (Utente) session.getAttribute("utenteLoggato");
-    if (utente == null ) { // || utente.getBadgePersonalita() != null
+    if (utente == null || utente.getBadgePersonalita() != null ) { 
         response.sendRedirect("login.jsp");
         return;
     }

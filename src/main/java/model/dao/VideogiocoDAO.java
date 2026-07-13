@@ -264,14 +264,13 @@ public class VideogiocoDAO {
         }
     }
     
-
-    //Elimina un videogioco dal database
+    //Ritiriamo un gioco dal mercato
     public synchronized boolean doDelete(int idVideogioco) {
         java.sql.Connection conn = null;
         java.sql.PreparedStatement ps = null;
         int rows = 0;
 
-        String query = "DELETE FROM Videogioco WHERE id_videogioco = ?";
+        String query = "UPDATE Videogioco SET stato_approvazione = 'ELIMINATO' WHERE id_videogioco = ?";
 
         try {
             conn = util.DBConnection.getConnection();
@@ -339,6 +338,30 @@ public class VideogiocoDAO {
         return lista;
     }
     
+    //Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
+    public synchronized boolean doRestore(int idVideogioco) {
+        java.sql.Connection conn = null;
+        java.sql.PreparedStatement ps = null;
+        int rows = 0;
+
+        String query = "UPDATE Videogioco SET stato_approvazione = 'APPROVATO' WHERE id_videogioco = ?";
+
+        try {
+            conn = util.DBConnection.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idVideogioco);
+            rows = ps.executeUpdate();
+        } catch (java.sql.SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.doRestore: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rows > 0;
+    }
 
     //Aggiorna lo stato di approvazione di un videogioco (es. da IN_ATTESA a APPROVATO).
     public synchronized boolean doUpdateStatus(int idVideogioco, String nuovoStato) {

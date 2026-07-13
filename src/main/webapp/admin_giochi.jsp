@@ -53,18 +53,45 @@
                     <th>Azioni</th>
                 </tr>
             </thead>
-            <tbody>
+           <tbody>
                 <% if (catalogo != null && !catalogo.isEmpty()) { 
                     for (Videogioco gioco : catalogo) { %>
-                    <tr>
+                    
+                    <%-- Aggiungiamo la classe CSS condizionale alla riga --%>
+                    <tr class="<%= "ELIMINATO".equals(gioco.getStatoApprovazione()) ? "row-ritirato" : "" %>">
+                        
                         <td><%= gioco.getIdVideogioco() %></td>
                         <td><strong><%= gioco.getTitolo() %></strong></td>
                         <td><%= gioco.getPiattaforma() %></td>
                         <td>€<%= String.format("%.2f", gioco.getPrezzoBase()) %></td>
                         <td><%= gioco.getScontoAttivo() %>%</td>
+                        
                         <td>
+                            <%-- Tasto Modifica (sempre visibile) --%>
                             <a href="GestioneGiochiServlet?azione=mostraFormModifica&id=<%= gioco.getIdVideogioco() %>" class="btn-action btn-edit">Modifica</a>
-                            <a href="GestioneGiochiServlet?azione=elimina&id=<%= gioco.getIdVideogioco() %>" class="btn-action btn-delete" onclick="return confirm('Sei sicuro di voler eliminare questo gioco?');">Elimina</a>
+                            
+                            <%-- Logica condizionale per i pulsanti di stato (senza inline style) --%>
+                            <% if ("APPROVATO".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=elimina&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-delete" 
+                                   onclick="return confirm('Sicuro di voler ritirare questo gioco dal negozio?\n\nIl gioco non sarà più acquistabile dai nuovi clienti, ma gli utenti che lo possiedono già lo manterranno.');">
+                                   Ritira dal Negozio
+                                </a>
+                            
+                            <% } else if ("ELIMINATO".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=ripristina&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-restore" 
+                                   onclick="return confirm('Vuoi ripristinare questo gioco nel negozio?\n\nTornerà ad essere acquistabile da tutti gli utenti.');">
+                                   Ripristina nel Negozio
+                                </a>
+                            
+                            <% } else if ("IN_ATTESA".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=approva&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-approve" 
+                                   onclick="return confirm('Vuoi approvare questo videogioco?\n\nIl gioco verrà pubblicato istantaneamente sul catalogo e sarà acquistabile.');">
+                                   Approva Gioco
+                                </a>
+                            <% } %>
                         </td>
                     </tr>
                 <%  }
