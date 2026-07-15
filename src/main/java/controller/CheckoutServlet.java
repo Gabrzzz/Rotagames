@@ -32,18 +32,43 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-        // 2. Calcolo del totale lato server
-        double totale = 0.0;
+        // ===================================================================
+        // MODIFICA: CALCOLO DEL TOTALE CON REGOLA "COUPON NON CUMULABILE"
+        // ===================================================================
+        // Recuperiamo lo sconto del coupon memorizzato in sessione (se presente)
+        Integer sconto = (Integer) session.getAttribute("couponScontoPercentuale");
+        if (sconto == null) {
+            sconto = 0; // Se non c'è, lo sconto è dello 0%
+        }
+
+        double totaleScontato = 0.0;
+
         for (ElementoCarrello item : carrello) {
             Videogioco v = item.getVideogioco();
-            double prezzoSc = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
-            totale += (prezzoSc * item.getQuantita());
+            
+            // Prezzo calcolato con l'eventuale sconto già attivo sul catalogo (es. Persona 3)
+            double prezzoCatalogoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+
+            if (v.getScontoAttivo() > 0 || sconto == 0) {
+                // Se il gioco è GIÀ in saldo nel catalogo, il coupon NON si applica.
+                // Oppure se lo sconto del coupon è 0, prendiamo semplicemente il prezzo standard di catalogo.
+                totaleScontato += (prezzoCatalogoScontato * item.getQuantita());
+            } else {
+                // Se il gioco è a prezzo pieno (scontoAttivo == 0) e abbiamo un coupon attivo,
+                // applichiamo la percentuale del coupon sul prezzo base.
+                double prezzoConCoupon = v.getPrezzoBase() - (v.getPrezzoBase() * sconto / 100.0);
+                totaleScontato += (prezzoConCoupon * item.getQuantita());
+            }
         }
+        // ===================================================================
 
         // 3. Creazione dell'oggetto Ordine
         Ordine nuovoOrdine = new Ordine();
         nuovoOrdine.setIdUtente(utente.getIdUtente());
-        nuovoOrdine.setTotaleOrdine(totale);
+        
+        // Passiamo il totale scontato (calcolato secondo la nuova regola)
+        nuovoOrdine.setTotaleOrdine(totaleScontato); 
+        
         nuovoOrdine.setDataOrdine(new java.sql.Timestamp(System.currentTimeMillis())); // Imposta la data e ora attuale
 
         // 4. Salvataggio nel Database
@@ -59,6 +84,9 @@ public class CheckoutServlet extends HttpServlet {
         if (successo) {
             // Svuotiamo il carrello dalla sessione
             session.removeAttribute("carrello");
+            
+            // Rimuoviamo il coupon consumato dalla sessione così non rimane attivo sul prossimo acquisto
+            session.removeAttribute("couponScontoPercentuale");
             
             // Messaggio di successo e reindirizzamento alla libreria
             request.setAttribute("messaggioSuccesso", "Pagamento completato! I giochi sono stati aggiunti al tuo ordine con le relative Product Key.");

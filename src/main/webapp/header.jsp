@@ -57,6 +57,9 @@
                         <a href="LibreriaServlet" class="dropdown-item">📚 I Miei Giochi</a>
                         <a href="OrdiniServlet" class="dropdown-item">📦 Ordini</a>
                         <a href="WishlistServlet" class="dropdown-item">❤️ Wishlist</a>
+                        
+                        <a href="ShopServlet" class="dropdown-item">🎡 Negozio Premi</a>
+                        
                         <a href="LogoutServlet" class="dropdown-item logout-text">Esci</a>
                     </div>
                 </div>
@@ -158,3 +161,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <% } /* fine dell' if per l'header minimale */ %>
 </header>
+
+<% if (utenteLoggatoHeader != null && !"minimal".equals(tipoHeader)) { %>
+    <jsp:include page="Ruota.jsp" />
+    <script src="${pageContext.request.contextPath}/js/ruota.js"></script>
+<% } %>

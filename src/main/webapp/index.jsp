@@ -128,9 +128,6 @@
     </div>
 </div>
 
-<% if (utenteLoggato != null) { %>
-    <jsp:include page="Ruota.jsp" />
-<% } %>
 
 <div id="toastWishlist" class="toast-message"></div>
 <jsp:include page="footer.jsp" />

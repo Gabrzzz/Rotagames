@@ -47,6 +47,8 @@ public class UtenteDAO {
                 utente.setGenerePreferito(rs.getString("genere_preferito"));
                 utente.setNomeStudioSviluppo(rs.getString("nome_studio_sviluppo"));
                 utente.setBadgePersonalita(rs.getString("badge_personalita"));
+                utente.setTitoloAttivo(rs.getString("titolo_attivo"));
+                utente.setAvatarAttivo(rs.getString("avatar_attivo"));
             }
 
         } catch (SQLException e) {
@@ -120,6 +122,8 @@ public class UtenteDAO {
                 u.setRuolo(rs.getString("ruolo"));
                 u.setNickname(rs.getString("nickname"));
                 u.setSaldoRotelline(rs.getInt("saldo_rotelline"));
+                u.setTitoloAttivo(rs.getString("titolo_attivo"));
+                u.setAvatarAttivo(rs.getString("avatar_attivo"));
                 
                 listaUtenti.add(u);
             }
