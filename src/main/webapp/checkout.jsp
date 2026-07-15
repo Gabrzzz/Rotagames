@@ -1,11 +1,12 @@
 <%@ page import="model.Utente" %>
 <%@ page import="model.Videogioco" %>
+<%@ page import="model.ElementoCarrello" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
     @SuppressWarnings("unchecked")
-    List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello");
+    List<ElementoCarrello> carrello = (List<ElementoCarrello>) session.getAttribute("carrello");
 
     // Controlli di sicurezza
     if (utenteLoggato == null) {
@@ -18,8 +19,14 @@
     }
 
     double totale = 0.0;
-    for (Videogioco v : carrello) {
-        totale += v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+    if (carrello != null) {
+        for (ElementoCarrello item : carrello) {
+            // Estraiamo il videogioco dal contenitore
+            Videogioco v = item.getVideogioco();
+            double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+            
+            totale += (prezzoScontato * item.getQuantita());
+        }
     }
 %>
 <!DOCTYPE html>
@@ -41,12 +48,14 @@
     <div class="admin-form-section checkout-section">
         <span class="form-section-title">Giochi in acquisto:</span>
         <ul class="checkout-list">
-            <% for (Videogioco v : carrello) { 
+			<% for (ElementoCarrello item : carrello) { 
+                Videogioco v = item.getVideogioco();
+                String piattaformaScelta = item.getPiattaformaSelezionata();
                 double prezzoSc = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
             %>
-                <li class="checkout-list-item">
-                    <span><%= v.getTitolo() %></span>
-                    <span class="checkout-item-price"><%= String.format("%.2f", prezzoSc) %>€</span>
+				<li class="checkout-list-item">
+                    <span><%= item.getQuantita() %>x <%= v.getTitolo() %> <span class="checkout-item-platform">(<%= piattaformaScelta %>)</span></span>
+                    <span class="checkout-item-price"><%= String.format("%.2f", prezzoSc * item.getQuantita()) %>€</span>
                 </li>
             <% } %>
         </ul>

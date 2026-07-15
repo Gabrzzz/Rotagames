@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Ordine;
 import model.Utente;
+import model.ElementoCarrello;
 import model.Videogioco;
 import model.dao.OrdineDAO;
 
@@ -23,7 +24,7 @@ public class CheckoutServlet extends HttpServlet {
         Utente utente = (Utente) session.getAttribute("utenteLoggato");
         
         @SuppressWarnings("unchecked")
-        List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello");
+        List<ElementoCarrello> carrello = (List<ElementoCarrello>) session.getAttribute("carrello");
 
         // 1. Controlli di sicurezza
         if (utente == null || carrello == null || carrello.isEmpty()) {
@@ -33,8 +34,10 @@ public class CheckoutServlet extends HttpServlet {
 
         // 2. Calcolo del totale lato server
         double totale = 0.0;
-        for (Videogioco v : carrello) {
-            totale += v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+        for (ElementoCarrello item : carrello) {
+            Videogioco v = item.getVideogioco();
+            double prezzoSc = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+            totale += (prezzoSc * item.getQuantita());
         }
 
         // 3. Creazione dell'oggetto Ordine
@@ -58,7 +61,7 @@ public class CheckoutServlet extends HttpServlet {
             session.removeAttribute("carrello");
             
             // Messaggio di successo e reindirizzamento alla libreria
-            request.setAttribute("messaggioSuccesso", "Pagamento completato! I giochi sono stati aggiunti alla tua Libreria con le relative Product Key.");
+            request.setAttribute("messaggioSuccesso", "Pagamento completato! I giochi sono stati aggiunti al tuo ordine con le relative Product Key.");
             request.getRequestDispatcher("libreria.jsp").forward(request, response);
         } else {
             // Errore nel DB

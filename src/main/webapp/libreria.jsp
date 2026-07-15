@@ -48,13 +48,6 @@
                 
                 <div class="game-info game-info-centered">
                     <span class="status-badge"><%= item.getStatoAvanzamento().replace("_", " ") %></span>
-                    <br>
-                    <span class="platform-tag"><%= g.getPiattaforma() %></span>
-                    
-                    <div class="product-key-box">
-                        <small class="key-label">Codice Attivazione:</small>
-                        <strong><%= item.getProductKeyPosseduta() %></strong>
-                    </div>
                 </div>
             </div> 
         <% 

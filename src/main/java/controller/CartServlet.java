@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Utente;
 import model.Videogioco;
+import model.ElementoCarrello;
 import model.dao.VideogiocoDAO;
 
 @WebServlet("/CartServlet")
@@ -26,64 +27,77 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
+        // Il carrello è una lista di ElementoCarrello
         @SuppressWarnings("unchecked")
-        List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello");
+        List<ElementoCarrello> carrello = (List<ElementoCarrello>) session.getAttribute("carrello");
         if (carrello == null) {
             carrello = new ArrayList<>();
             session.setAttribute("carrello", carrello);
         }
-
+        
         String azione = request.getParameter("azione");
-
+        
         if ("aggiungi".equals(azione)) {
             String idStr = request.getParameter("idVideogioco");
-            if (idStr != null) {
+            String piattaformaScelta = request.getParameter("piattaforma"); 
+            
+            if (idStr != null && piattaformaScelta != null) {
                 try {
                     int id = Integer.parseInt(idStr);
-                    // 1. Controllo se è già nel carrello (Evita doppioni in sessione)
-                    boolean found = false;
-                    for (Videogioco v : carrello) {
-                        if (v.getIdVideogioco() == id) {
-                            found = true;
-                            session.setAttribute("erroreCarrello", "Hai già inserito questo gioco nel carrello.");
-                            break;
-                        }
-                    }
+                    VideogiocoDAO dao = new VideogiocoDAO();
+                    Videogioco gioco = dao.doRetrieveById(id);
                     
-                    if (!found) {
-                        VideogiocoDAO dao = new VideogiocoDAO();
-                        boolean giaPosseduto = false;
+                    if (gioco != null) {
+                        String[] arrayPiattaforme = piattaformaScelta.split(",");
                         
-                        // 2. Controllo se l'utente possiede gia il gioco
-                        Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
-                        if (utenteLoggato != null) {
-                            giaPosseduto = dao.checkPossessoGioco(utenteLoggato.getIdUtente(), id);
-                        }
-                        
-                        if (giaPosseduto) {
-                            session.setAttribute("erroreCarrello", "Possiedi già questo titolo nella tua libreria!");
-                        } else {
-                            // 3. Se non lo possiede lo aggiungiamo al carrello
-                            Videogioco gioco = dao.doRetrieveById(id);
-                            if (gioco != null) {
-                                carrello.add(gioco);
-                                session.removeAttribute("erroreCarrello"); // Pulizia di eventuali vecchi errori
+                        for (String p : arrayPiattaforme) {
+                            String plat = p.trim();
+                            boolean found = false;
+                            
+                            // Se c'è già, aumentiamo la quantità di +1
+                            for (ElementoCarrello item : carrello) {
+                                if (item.getVideogioco().getIdVideogioco() == id && item.getPiattaformaSelezionata().equalsIgnoreCase(plat)) {
+                                    item.setQuantita(item.getQuantita() + 1);
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            
+                            // Se non c'è, lo aggiungiamo con quantità 1
+                            if (!found) {
+                                carrello.add(new ElementoCarrello(gioco, plat, 1));
                             }
                         }
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
         } else if ("rimuovi".equals(azione)) {
             String idStr = request.getParameter("idVideogioco");
-            if (idStr != null) {
+            String plat = request.getParameter("piattaforma"); 
+            if (idStr != null && plat != null) {
                 try {
                     int id = Integer.parseInt(idStr);
-                    carrello.removeIf(v -> v.getIdVideogioco() == id);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                    carrello.removeIf(item -> item.getVideogioco().getIdVideogioco() == id && item.getPiattaformaSelezionata().equalsIgnoreCase(plat));
+                } catch (NumberFormatException e) { e.printStackTrace(); }
+            }
+        } else if ("aggiorna".equals(azione)) {
+            // Nuova azione per il selettore numerico del carrello
+            String idStr = request.getParameter("idVideogioco");
+            String plat = request.getParameter("piattaforma");
+            String qtaStr = request.getParameter("quantita");
+            if (idStr != null && plat != null && qtaStr != null) {
+                try {
+                    int id = Integer.parseInt(idStr);
+                    int qta = Integer.parseInt(qtaStr);
+                    if (qta > 0) {
+                        for (ElementoCarrello item : carrello) {
+                            if (item.getVideogioco().getIdVideogioco() == id && item.getPiattaformaSelezionata().equalsIgnoreCase(plat)) {
+                                item.setQuantita(qta);
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception e) { e.printStackTrace(); }
             }
         }
 

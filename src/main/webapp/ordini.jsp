@@ -33,13 +33,17 @@
                     <p>Data: <%= o.getDataOrdine() %></p>
                     <p>Totale: <strong><%= String.format("%.2f", o.getTotaleOrdine()) %>€</strong></p>
                 </div>
-                <div>
+                <div class="order-actions">
+                    <button onclick="apriDettaglioOrdine(<%= o.getIdOrdine() %>)" class="btn-order-action">
+                        🔍 Riepilogo
+                    </button>
+                    
                     <% if (o.getUrlFattura() != null && !o.getUrlFattura().isEmpty()) { %>
-                        <a href="<%= o.getUrlFattura() %>" target="_blank" class="btn-checkout">
-                            📄 Scarica Fattura
+                        <a href="<%= o.getUrlFattura() %>" target="_blank" class="btn-order-action solid">
+                            📄 Fattura
                         </a>
                     <% } else { %>
-                        <span class="no-invoice-text">Nessuna fattura richiesta</span>
+                        <span class="no-invoice-text">Nessuna fattura</span>
                     <% } %>
                 </div>
             </div>
@@ -52,7 +56,21 @@
     <% } %>
 </div>
 
+<div id="modalDettaglio" class="platform-overlay">
+    <div class="platform-modal modal-wide">
+        <button class="platform-close-btn" onclick="chiudiDettaglioOrdine()">✖</button>
+        <h2>Dettagli Ordine #<span id="modalOrderId"></span></h2>
+        
+        <div id="dettagliContainer" class="scrollable-container order-detail-container">
+            <p class="loading-text">Caricamento chiavi di attivazione in corso...</p>
+        </div>
+    </div>
+</div>
+
+<script src="${pageContext.request.contextPath}/js/ordini.js"></script>
+
 <jsp:include page="footer.jsp" />
+
 
 </body>
 </html>

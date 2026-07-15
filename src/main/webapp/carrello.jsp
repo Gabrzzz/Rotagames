@@ -1,17 +1,21 @@
 <%@ page import="model.Utente" %>
 <%@ page import="model.Videogioco" %>
+<%@ page import="model.ElementoCarrello" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
     @SuppressWarnings("unchecked")
-    List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello");
+    List<ElementoCarrello> carrello = (List<ElementoCarrello>) session.getAttribute("carrello");
 
     double totale = 0.0;
     if (carrello != null) {
-        for (Videogioco v : carrello) {
+        for (ElementoCarrello item : carrello) {
+            // Estraiamo il videogioco dal contenitore
+            Videogioco v = item.getVideogioco();
             double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
-            totale += prezzoScontato;
+            
+            totale += (prezzoScontato * item.getQuantita());
         }
     }
 %>
@@ -31,7 +35,7 @@
     
     <%-- Stampa eventuali errori di inserimento --%>
     <% String erroreCarrello = (String) session.getAttribute("erroreCarrello");
-       if (erroreCarrello != null) { %>
+    if (erroreCarrello != null) { %>
         <div class="error-cart">
             ⚠️ <%= erroreCarrello %>
         </div>
@@ -39,7 +43,10 @@
     <% } %>
 
     <% if (carrello != null && !carrello.isEmpty()) { %>
-        <% for (Videogioco v : carrello) {
+        <% for (ElementoCarrello item : carrello) {
+            // Estraiamo i dati dall'ElementoCarrello per questa riga
+            Videogioco v = item.getVideogioco();
+            String piattaformaScelta = item.getPiattaformaSelezionata();
             double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
         %>
 			<div class="cart-item">
@@ -52,20 +59,37 @@
                     
                     <div class="cart-item-info">
                         <h3><%= v.getTitolo() %></h3>
-                        <span class="platform-tag"><%= v.getPiattaforma() %></span>
+                        <span class="platform-tag"><%= piattaformaScelta %></span>
                     </div>
                 </div>
                 
-                <div class="cart-item-actions">
-                    <span class="cart-item-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
+				<div class="cart-item-actions">
+                    <form action="CartServlet" method="post" class="cart-form cart-item-form-update">
+                        <input type="hidden" name="azione" value="aggiorna">
+                        <input type="hidden" name="idVideogioco" value="<%= v.getIdVideogioco() %>">
+                        <input type="hidden" name="piattaforma" value="<%= piattaformaScelta %>">
+                        
+                        <select name="quantita" class="cart-qty-select" onchange="this.form.submit()">
+                            <% for(int i = 1; i <= 10; i++) { %>
+                                <option value="<%= i %>" <%= (item.getQuantita() == i) ? "selected" : "" %>>
+                                    <%= i %>
+                                </option>
+                            <% } %>
+                        </select>
+                    </form>
+
+                    <span class="cart-item-price"><%= String.format("%.2f", prezzoScontato * item.getQuantita()) %>€</span>
+                    
                     <form action="CartServlet" method="post" class="cart-form">
                         <input type="hidden" name="azione" value="rimuovi">
                         <input type="hidden" name="idVideogioco" value="<%= v.getIdVideogioco() %>">
+                        <input type="hidden" name="piattaforma" value="<%= piattaformaScelta %>">
                         <button type="submit" class="btn-remove">Rimuovi</button>
                     </form>
                 </div>
             </div>
-        <% } %>
+        <% } 
+        %>
 
         <div class="cart-total">
             Totale: <span class="cart-total-amount"><%= String.format("%.2f", totale) %>€</span>

@@ -556,6 +556,82 @@ public class VideogiocoDAO {
         }
         return list;
     }
+    
+    // GESTIONE WISHLIST
+    
+    // Controlla se il gioco è già nella wishlist dell'utente
+    public boolean checkWishlist(int idUtente, int idVideogioco) {
+        String query = "SELECT 1 FROM wishlist WHERE id_utente = ? AND id_videogioco = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idVideogioco);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Aggiunge o rimuove il gioco (Toggle)
+    public boolean toggleWishlist(int idUtente, int idVideogioco) {
+        boolean isAlreadyIn = checkWishlist(idUtente, idVideogioco);
+        String query;
+        
+        if (isAlreadyIn) {
+            // Se c'è già, lo rimuove
+            query = "DELETE FROM wishlist WHERE id_utente = ? AND id_videogioco = ?";
+        } else {
+            // Se non c'è, lo aggiunge con la data di oggi
+            query = "INSERT INTO wishlist (id_utente, id_videogioco, data_aggiunta) VALUES (?, ?, NOW())";
+        }
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idVideogioco);
+            ps.executeUpdate();
+            return !isAlreadyIn; // Ritorna true se lo ha aggiunto, false se lo ha rimosso
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    // Recupera tutti i giochi presenti nella wishlist di un utente
+    public List<Videogioco> getWishlistUtente(int idUtente) {
+        List<Videogioco> lista = new ArrayList<>();
+        // Uniamo la tabella Videogioco con la tabella Wishlist per recuperare i dettagli dei giochi
+        String query = "SELECT v.* FROM Videogioco v JOIN wishlist w ON v.id_videogioco = w.id_videogioco WHERE w.id_utente = ? ORDER BY w.data_aggiunta DESC";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setInt(1, idUtente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Videogioco v = new Videogioco();
+                    v.setIdVideogioco(rs.getInt("id_videogioco"));
+                    v.setTitolo(rs.getString("titolo"));
+                    v.setPrezzoBase(rs.getDouble("prezzo_base"));
+                    v.setScontoAttivo(rs.getInt("sconto_attivo"));
+                    v.setPiattaforma(rs.getString("piattaforma"));
+                    
+                    java.sql.Blob blob = rs.getBlob("copertina");
+                    if (blob != null) {
+                        byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+                        v.setBase64Copertina(java.util.Base64.getEncoder().encodeToString(imageBytes));
+                    }
+                    lista.add(v);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
 }
     
 

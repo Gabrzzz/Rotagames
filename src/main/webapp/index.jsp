@@ -74,13 +74,24 @@
                         <span class="platform-tag"><%= g.getPiattaforma() %></span>
                     </div>
                     
-                    <form action="CartServlet" method="post" class="cart-form">
-                        <input type="hidden" name="azione" value="aggiungi">
-                        <input type="hidden" name="idVideogioco" value="<%= g.getIdVideogioco() %>">
-                        <button type="submit" class="btn-cart">
-                            Aggiungi al Carrello 🛒
-                        </button>
-                    </form>
+					<div class="action-buttons-index">
+					    
+					    <button type="button" class="btn-cart btn-cart-index" 
+					            onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+					        AL CARRELLO 🛒
+					    </button>
+					
+					    <% if (utenteLoggato != null) { 
+					        boolean inWishlist = new model.dao.VideogiocoDAO().checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+					    %>
+					        <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
+					                onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
+					            <%= inWishlist ? "❤️" : "🤍" %>
+					        </button>
+					    <% } %>
+					    
+					</div>
+					
                 </div>
                 
             </div> 
@@ -98,11 +109,35 @@
     </div>
 </div>
 
+<div id="modalPiattaforma" class="platform-overlay">
+    <div class="platform-modal">
+        <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
+        <h2>Scegli le Piattaforme</h2>
+        <p>Spunta le versioni che desideri aggiungere al carrello:</p>
+        
+        <div id="platformButtonsContainer" class="platform-checkbox-container">
+        </div>
+
+        <button type="button" class="btn-checkout" onclick="inviaPiattaformeMultiple()">Aggiungi Selezionate 🛒</button>
+
+        <form id="formAggiungiCarrello" action="CartServlet" method="post" class="hidden-form">
+            <input type="hidden" name="azione" value="aggiungi">
+            <input type="hidden" name="idVideogioco" id="modalIdVideogioco" value="">
+            <input type="hidden" name="piattaforma" id="modalPiattaformaScelta" value="">
+        </form>
+    </div>
+</div>
+
 <% if (utenteLoggato != null) { %>
     <jsp:include page="Ruota.jsp" />
 <% } %>
 
+<div id="toastWishlist" class="toast-message"></div>
 <jsp:include page="footer.jsp" />
+
+
+<script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
+<script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 
 </body>
 </html>

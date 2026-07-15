@@ -81,32 +81,32 @@ public class FatturaServlet extends HttpServlet {
             double totaleLordoComplessivo = 0;
 
             // 3. Estrazione dei giochi acquistati
-            String queryGiochi = "SELECT v.id_videogioco, v.titolo, c.prezzo_acquisto FROM composizione c " +
-                                 "JOIN videogioco v ON c.id_videogioco = v.id_videogioco WHERE c.id_ordine = ?";
-            PreparedStatement psGiochi = con.prepareStatement(queryGiochi);
-            psGiochi.setInt(1, idOrdine);
-            ResultSet rs = psGiochi.executeQuery();
-
-            while (rs.next()) {
-                int idProdotto = rs.getInt("id_videogioco");
-                String nome = rs.getString("titolo");
-                
-                //Calcolo iva
-                double prezzoLordo = rs.getDouble("prezzo_acquisto"); // Quello pagato dall'utente
-                double prezzoNetto = prezzoLordo / 1.22;              // Togliamo il 22%
-                double iva = prezzoLordo - prezzoNetto;               // La differenza è l'IVA
-                
-                totaleLordoComplessivo += prezzoLordo;
-                totaleNettoComplessivo += prezzoNetto;
-                totaleIvaComplessiva += iva;
-
-                // Riempimento celle
-                productTable.addCell(new Cell().add(new Paragraph(String.valueOf(idProdotto))).setTextAlignment(TextAlignment.CENTER));
-                productTable.addCell(new Cell().add(new Paragraph(nome)).setTextAlignment(TextAlignment.LEFT));
-                productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", prezzoNetto))).setTextAlignment(TextAlignment.RIGHT));
-                productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", iva))).setTextAlignment(TextAlignment.RIGHT));
-                productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", prezzoLordo))).setTextAlignment(TextAlignment.RIGHT));
-            }
+            String queryGiochi = "SELECT v.id_videogioco, v.titolo, c.prezzo_acquisto, c.piattaforma_scelta FROM composizione c " +
+                    "JOIN videogioco v ON c.id_videogioco = v.id_videogioco WHERE c.id_ordine = ?";
+			PreparedStatement psGiochi = con.prepareStatement(queryGiochi);
+			psGiochi.setInt(1, idOrdine);
+			ResultSet rs = psGiochi.executeQuery();
+			
+			while (rs.next()) {
+			   int idProdotto = rs.getInt("id_videogioco");
+			   // Uniamo il titolo alla piattaforma
+			   String nome = rs.getString("titolo") + " (" + rs.getString("piattaforma_scelta") + ")";
+			   
+			   double prezzoLordo = rs.getDouble("prezzo_acquisto"); 
+			   double prezzoNetto = prezzoLordo / 1.22;              
+			   double iva = prezzoLordo - prezzoNetto;               
+			   
+			   totaleLordoComplessivo += prezzoLordo;
+			   totaleNettoComplessivo += prezzoNetto;
+			   totaleIvaComplessiva += iva;
+			
+			   // Riempimento celle
+			   productTable.addCell(new Cell().add(new Paragraph(String.valueOf(idProdotto))).setTextAlignment(TextAlignment.CENTER));
+			   productTable.addCell(new Cell().add(new Paragraph(nome)).setTextAlignment(TextAlignment.LEFT));
+			   productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", prezzoNetto))).setTextAlignment(TextAlignment.RIGHT));
+			   productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", iva))).setTextAlignment(TextAlignment.RIGHT));
+			   productTable.addCell(new Cell().add(new Paragraph(String.format("€ %.2f", prezzoLordo))).setTextAlignment(TextAlignment.RIGHT));
+			}
             
             document.add(productTable);
             

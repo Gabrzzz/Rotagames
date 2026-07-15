@@ -13,7 +13,7 @@ import java.util.List;
 public class OrdineDAO {
 			
 	//Transazione di completamento acquisto
-    public boolean doSave(Ordine ordine, List<model.Videogioco> carrello, boolean richiediFattura) {
+    public boolean doSave(Ordine ordine, List<model.ElementoCarrello> carrello, boolean richiediFattura) {
         Connection con = null;
         PreparedStatement psOrdine = null;
         PreparedStatement psComposizione = null;
@@ -21,9 +21,8 @@ public class OrdineDAO {
         ResultSet rs = null;
         try {
             con = DBConnection.getConnection();
-            con.setAutoCommit(false); 			//Per garantire la consistenza dei dati
+            con.setAutoCommit(false);
 
-            
             String insertOrdine = "INSERT INTO ordine (id_utente, totale_ordine, data_acquisto) VALUES (?, ?, ?)";
             psOrdine = con.prepareStatement(insertOrdine, java.sql.Statement.RETURN_GENERATED_KEYS);
             psOrdine.setInt(1, ordine.getIdUtente());
@@ -37,41 +36,47 @@ public class OrdineDAO {
                 idOrdine = rs.getInt(1);
             }
 
-            //Se l'ordine è stato salvato con successo
-            if (idOrdine != -1) {
-                String insertComposizione = "INSERT INTO composizione (id_ordine, id_videogioco, prezzo_acquisto, product_key) VALUES (?, ?, ?, ?)";
+            if (idOrdine != -1) {  
+                String insertComposizione = "INSERT INTO composizione (id_ordine, id_videogioco, prezzo_acquisto, product_key, piattaforma_scelta) VALUES (?, ?, ?, ?, ?)";
                 psComposizione = con.prepareStatement(insertComposizione);
-
-                String insertLibreria = "INSERT INTO libreria (id_utente, id_videogioco, stato_avanzamento, product_key_posseduta) VALUES (?, ?, ?, ?)";
+                
+                String insertLibreria = "INSERT INTO libreria (id_utente, id_videogioco, stato_avanzamento, product_key_posseduta, piattaforma_scelta) VALUES (?, ?, ?, ?, ?)";
                 psLibreria = con.prepareStatement(insertLibreria);
 
-                //Per ogni gioco nel carrello
-                for (model.Videogioco v : carrello) {
-                    String productKey = java.util.UUID.randomUUID().toString();
 
-                    //inserimento gioco Storico ordine
-                    psComposizione.setInt(1, idOrdine);
-                    psComposizione.setInt(2, v.getIdVideogioco());
+                // Cicliamo sugli oggetti nel carrello
+                for (model.ElementoCarrello item : carrello) {
+                    model.Videogioco v = item.getVideogioco();
+                    String plat = item.getPiattaformaSelezionata();
+                    int qta = item.getQuantita();
                     double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
-                    psComposizione.setDouble(3, prezzoScontato);
-                    psComposizione.setString(4, productKey);
-                    psComposizione.executeUpdate();
 
-                    //Inserimento gioco nella Libreria dell'utente
-                    psLibreria.setInt(1, ordine.getIdUtente());
-                    psLibreria.setInt(2, v.getIdVideogioco());
-                    psLibreria.setString(3, "DA_GIOCARE");
-                    psLibreria.setString(4, productKey);
-                    psLibreria.executeUpdate();
+                    // Generiamo N chiavi in base alla quantità scelta
+                    for (int i = 0; i < qta; i++) {
+                        String productKey = java.util.UUID.randomUUID().toString();
+
+                        psComposizione.setInt(1, idOrdine);
+                        psComposizione.setInt(2, v.getIdVideogioco());
+                        psComposizione.setDouble(3, prezzoScontato);
+                        psComposizione.setString(4, productKey);
+                        psComposizione.setString(5, plat);
+                        psComposizione.executeUpdate();
+
+                        psLibreria.setInt(1, ordine.getIdUtente());
+                        psLibreria.setInt(2, v.getIdVideogioco());
+                        psLibreria.setString(3, "DA_GIOCARE");
+                        psLibreria.setString(4, productKey);
+                        psLibreria.setString(5, plat);
+                        psLibreria.executeUpdate();
+                    }
                 }
             }
-
+            
             //Gestione Fattura
             if (richiediFattura && idOrdine != -1) {
-                // Impostiamo l'URL dinamico che richiama la FatturaServlet con l'ID dell'ordine
+            	// Impostiamo l'URL dinamico che richiama la FatturaServlet con l'ID dell'ordine
                 String urlFattura = "FatturaServlet?id=" + idOrdine;
                 String updateQuery = "UPDATE ordine SET url_fattura = ? WHERE id_ordine = ?";
-                
                 try (PreparedStatement psUpdate = con.prepareStatement(updateQuery)) {
                     psUpdate.setString(1, urlFattura);
                     psUpdate.setInt(2, idOrdine);
@@ -91,17 +96,14 @@ public class OrdineDAO {
             }
             e.printStackTrace();
             return false;
-            
         } finally {
             try {
                 if (rs != null) rs.close();
-                if (psLibreria != null) psLibreria.close();				//Chiudiamo i vari
-                if (psComposizione != null) psComposizione.close();		//canali di comunicazione
-                if (psOrdine != null) psOrdine.close();					//delle query
-                if (con != null) { con.setAutoCommit(true); con.close(); } // Reimpostiamo autocommit a true prima di chiudere per il Connection Pool di Tomcat
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+                if (psLibreria != null) psLibreria.close();
+                if (psComposizione != null) psComposizione.close();
+                if (psOrdine != null) psOrdine.close();
+                if (con != null) { con.setAutoCommit(true); con.close(); }
+            } catch (SQLException e) { e.printStackTrace(); }
         }
     }
 

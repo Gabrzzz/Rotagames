@@ -56,6 +56,7 @@
                         <a href="ProfiloServlet" class="dropdown-item">👤 Profilo</a>
                         <a href="LibreriaServlet" class="dropdown-item">📚 I Miei Giochi</a>
                         <a href="OrdiniServlet" class="dropdown-item">📦 Ordini</a>
+                        <a href="WishlistServlet" class="dropdown-item">❤️ Wishlist</a>
                         <a href="LogoutServlet" class="dropdown-item logout-text">Esci</a>
                     </div>
                 </div>
