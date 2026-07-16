@@ -1,0 +1,1070 @@
+/* =========================================
+   ROTAGAMES - FOGLIO DI STILE 
+   ========================================= */
+
+/* 	===========================
+	1. IMPOSTAZIONI BASE E BODY 
+	===========================	*/
+body {
+    background-color: #030D1A; /* Blu scurissimo, quasi nero */
+    color: #FFFFFF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*	=======================
+	2. HEADER E NAVIGAZIONE
+	=======================	*/
+header {
+    background-color: #09172E;
+    padding: 20px 40px;
+    border-bottom: 2px solid #00E5FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+header h1 { 
+    margin: 0; 
+    color: #00E5FF; 
+    font-size: 1.8em; 
+    text-transform: uppercase; 
+    font-weight: 900; 
+    letter-spacing: 1px;
+}
+
+.user-info { text-align: right; }
+
+
+/* Bottoni Guest */
+.btn-guest { 
+    background-color: transparent; 
+    color: #00E5FF; 
+    border: 1px solid #00E5FF; 
+    padding: 6px 15px; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    margin-left: 10px; 
+    transition: 0.3s; 
+    font-size: 0.9em;
+}
+.btn-guest:hover { background-color: #00E5FF; color: #030D1A; }
+.btn-guest.solid { background-color: #00E5FF; color: #030D1A; }
+.btn-guest.solid:hover { background-color: #0088CC; color: #fff; border-color: #0088CC;}
+
+.logo-link {
+    text-decoration: none;
+}
+
+.header-nav-link {
+    color: #00E5FF;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-wheel {
+    background-color: #00E5FF;
+    color: #04142C;
+    cursor: pointer;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    background: none;
+    border: 1px solid #00E5FF;
+    color: #00E5FF;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/*	=======================================
+	3. VETRINA E GRIGLIA GIOCHI (index.jsp)
+	=======================================	*/
+.store-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.store-container h2 {
+    color: #00E5FF;
+    border-left: 6px solid #00E5FF;
+    padding-left: 15px;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-size: 2em;
+    margin-bottom: 40px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.game-card {
+    background: #09172E;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    border-radius: 4px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Triangolo decorativo dinamico */
+.game-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 50px 50px 0;
+    border-color: transparent rgba(0, 229, 255, 0.05) transparent transparent;
+    transition: border-color 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    border-color: #00E5FF;
+}
+
+.game-card:hover::after { border-color: transparent #00E5FF transparent transparent; }
+
+/* --- STILE DELLE COPERTINE --- */
+.game-cover {
+    width: 100%;
+    height: 220px; 
+    object-fit: cover; 
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Effetto zoom sull'immagine quando passiamo col mouse sulla card */
+.game-card:hover .game-cover {
+    transform: scale(1.05);
+}
+
+.game-info h3 {
+    color: #FFFFFF;
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+}
+
+.game-info p {
+    color: #A0B0C8;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.platform-tag {
+    color: #5C6F8E;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+/* --- CLASSI PER LA CARD CLICCABILE --- */
+.game-card-link {
+    text-decoration: none; 
+    color: inherit; 
+    display: block;
+}
+
+.cover-container {
+    overflow: hidden; 
+    border-radius: 4px; 
+    text-align: center;
+}
+
+.empty-cover {
+    background-color: #04142C; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #5C6F8E;
+}
+
+.game-title-box {
+    margin-bottom: 0;
+}
+
+.game-title-box h3 {
+    margin-bottom: 5px;
+}
+
+.game-desc-box {
+    margin-top: 5px;
+}
+
+.cart-form {
+    margin: 0;
+}
+
+/* --- Stili varie scritte --- */
+
+.user-rotelline { color: #FFD700; font-weight: bold; }
+
+.admin-link { color: #00FF7F; text-decoration: none; margin-left: 15px; font-weight: bold; }
+
+.logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
+
+.visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
+
+.vetrina-title { 
+    color: #00E5FF; 
+    border-bottom: 2px solid #112A54; 
+    padding-bottom: 10px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+.empty-catalog-box { 
+    grid-column: 1 / -1; 
+    text-align: center; 
+    padding: 40px; 
+    background-color: #112A54; 
+    border-radius: 8px; 
+}
+
+.empty-catalog-title { color: #00E5FF; }
+
+.empty-catalog-desc { color: #A0B0C8; }
+
+/*	===================
+	4. PREZZI E SCONTI 
+	=================== */
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Prezzo di base (Bianco) */
+.price-tag {
+    font-weight: 800;
+    color: #FFFFFF;
+    font-size: 1.4em;
+}
+
+/* Prezzo scontato finale (Verde Acqua) */
+.price-tag.discounted-price {
+    color: #7FFFD4;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #5C6F8E;
+    font-size: 0.85em;
+    margin-bottom: -4px;
+}
+
+.discount-badge {
+    background-color: #FF4444; 
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 0.9em;
+    box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
+}
+
+/* 	=====================
+	5. BOTTONI PRINCIPALI
+	=====================	 */
+.btn-cart {
+    width: 100%;
+    background-color: transparent;
+    color: #00E5FF;
+    border: 2px solid #00E5FF;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-cart:hover {
+    background-color: #00E5FF;
+    color: #030D1A;
+}
+
+/* 	=================================
+	6. MODULI (Login / Registrazione)
+	================================= */
+.form-wrapper { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+.form-container { background-color: #09172E; padding: 40px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 320px; }
+.form-container h2 { color: #00E5FF; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
+.form-container input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #5C6F8E; border-radius: 4px; background-color: #030D1A; color: #FFFFFF; box-sizing: border-box; outline: none; transition: border-color 0.3s;}
+.form-container input:focus { border-color: #00E5FF; }
+.form-container input[type="submit"] { background-color: #00E5FF; color: #030D1A; border: none; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background-color 0.3s; text-transform: uppercase; }
+.form-container input[type="submit"]:hover { background-color: #7FFFD4; color: #030D1A; }
+.error { color: #FF4444; margin-bottom: 15px; font-size: 0.9em; font-weight: bold;}
+.link-text { color: #A0B0C8; font-size: 0.9em; margin-top: 20px; display: block; }
+.link-text a { color: #00E5FF; text-decoration: none; font-weight: bold; transition: color 0.3s;}
+.link-text a:hover { color: #7FFFD4; }
+
+/* --- Messaggi di Successo --- */
+.success-msg {
+    color: #00FF7F;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   7. PANNELLO AMMINISTRATORE (admin_dashboard.jsp)
+   ========================================= */
+
+/* --- Card e Griglia Dashboard --- */
+.admin-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 30px; 
+    margin-top: 30px; 
+}
+
+.admin-stat-card { 
+    background: #09172E; 
+    border: 1px solid rgba(0, 229, 255, 0.2); 
+    border-radius: 4px; 
+    padding: 30px; 
+    text-align: center; 
+    border-bottom: 4px solid #00E5FF; 
+    transition: transform 0.3s ease;
+}
+
+.admin-stat-card:hover { transform: translateY(-5px); }
+
+.admin-stat-card h3 { 
+    color: #A0B0C8; 
+    margin-top: 0; 
+    text-transform: uppercase; 
+    font-size: 1.1em; 
+}
+
+.admin-stat-card .num { 
+    font-size: 3em; 
+    color: #00E5FF; 
+    font-weight: 900; 
+    margin: 10px 0; 
+}
+
+.admin-actions { 
+    margin-top: 40px; 
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+}
+
+.btn-admin { 
+    padding: 15px 30px; 
+    background-color: transparent; 
+    color: #00E5FF; 
+    border: 2px solid #00E5FF; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    transition: 0.3s; 
+    flex: 1;
+    text-align: center;
+}
+
+.btn-admin:hover { 
+    background-color: #00E5FF; 
+    color: #030D1A; 
+}
+
+/* --- Tabelle Admin e Bottoni Azione --- */
+.admin-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+    background-color: #112A54; 
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+.admin-table th { background-color: #00E5FF; color: #04142C; padding: 15px; text-align: left; }
+.admin-table td { padding: 15px; border-bottom: 1px solid #04142C; color: #fff; }
+.admin-table tr:hover { background-color: #09172E; }
+
+.btn-action { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 5px; }
+.btn-edit { background-color: #FFD700; color: #000; }
+.btn-delete { background-color: #FF4444; color: #fff; }
+.btn-add { background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+
+/* --- Form Admin: Dimensioni e Struttura --- */
+.admin-form-wrapper { min-height: auto; margin-top: 30px; }
+.admin-form-container { width: 600px; }
+
+.admin-form-section {
+    background-color: #030D1A; 
+    border: 1px solid #5C6F8E; 
+    border-radius: 4px; 
+    padding: 12px; 
+    margin: 10px 0; 
+    text-align: left;
+}
+
+.form-section-title {
+    color: #00E5FF; 
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+/* --- Form Admin: Textarea (Descrizione e Requisiti) --- */
+.form-container textarea {
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0; 
+    border: 1px solid #5C6F8E; 
+    border-radius: 4px; 
+    background-color: #030D1A; 
+    color: #FFFFFF; 
+    box-sizing: border-box; 
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-container textarea:focus { border-color: #00E5FF; }
+.textarea-sm { min-height: 80px; }
+.textarea-md { min-height: 100px; }
+
+/* --- Form Admin: Upload Immagini --- */
+.file-upload-label {
+    color: #00E5FF; 
+    display: block; 
+    margin-top: 15px; 
+    text-align: left; 
+    font-weight: bold;
+}
+
+.form-container input[type="file"] {
+    background-color: transparent; 
+    border: none; 
+    padding: 10px 0;
+}
+
+/* --- Messaggio Catalogo Vuoto --- */
+.empty-catalog-cell {
+    text-align: center; 
+    color: #A0B0C8;
+}
+
+/* --- Checkbox Piattaforme Admin --- */
+.checkbox-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #030D1A;
+    border: 1px solid #5C6F8E;
+    border-radius: 4px;
+}
+
+.checkbox-group label {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto !important;
+    margin: 0 8px 0 0 !important;
+}
+
+/* --- Stili aggiuntivi per Dashboard, Utenti e Ordini --- */
+.header-admin-text { color: #fff; }
+.admin-link-accent { color: #00E5FF; }
+.title-spaced { margin-top: 50px; }
+.text-unavailable { color: #5C6F8E; font-style: italic; }
+
+/* =======================================================
+   8. RUOTA DELLA FORTUNA (OVERLAY MODAL E ANIMAZIONE)
+   ======================================================= */
+
+/*Sfondo oscurato*/
+#modalRuota.wheel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(3, 13, 26, 0.85);
+    z-index: 99999;
+    display: none; 
+    justify-content: center;
+    align-items: center;
+}
+
+/* Attivazione tramite JavaScript */
+#modalRuota.wheel-overlay.active {
+    display: flex;
+}
+
+/*Il box/pannello centrale*/
+.wheel-modal {
+    background-color: #09172E; 
+    padding: 40px 35px;
+    border-radius: 6px;
+    border: 2px solid #00E5FF; 
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.35); 
+    text-align: center;
+    position: relative;
+    max-width: 450px;
+    width: 90%;
+    display: block; 
+}
+
+/* Pulsante di chiusura */
+.wheel-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #A0B0C8; 
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.wheel-close-btn:hover {
+    color: #00E5FF; 
+}
+
+/* MARGINI PRECISI PER DISTANZIARE GLI ELEMENTI */
+.wheel-modal h2 {
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.wheel-modal p {
+    color: #A0B0C8;
+    font-size: 0.95em;
+    margin-top: 0;
+    margin-bottom: 35px; 
+}
+
+/*  Il contenitore della ruota */
+.wheel-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto 35px auto;
+}
+
+/*  L'elemento circolare della ruota */
+.wheel-graphics {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 6px solid #0088CC; 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    background-color: #04142C;
+    transition: transform 5s cubic-bezier(0.25, 0.1, 0.1, 1); 
+}
+
+/*L'indicatore/Freccia */
+.wheel-pointer {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 26px solid #00E5FF; 
+    z-index: 10;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Pulsante di attivazione (GIRA!) */
+.btn-spin {
+	margin-top: 20px;
+    display: inline-block;
+    background-color: #00E5FF;
+    color: #030D1A;
+    border: none;
+    padding: 14px 40px;
+    font-size: 1.15em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.btn-spin:hover {
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.5);
+}
+
+.btn-spin:active {
+    transform: scale(0.96);
+}
+
+.btn-spin:disabled {
+    background-color: #112A54;
+    color: #5C6F8E;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Stile per gli spicchi di testo */
+.spicchio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%; 
+    height: 40px;
+    margin-top: -20px; 
+    transform-origin: 0% 50%; 
+    transform: rotate(calc(60deg * var(--i) - 90deg + 30deg)); 
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    padding-right: 20px; 
+    box-sizing: border-box;
+}
+
+.spicchio span {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+}
+
+/* =========================================
+   9. CARRELLO (carrello.jsp)
+   ========================================= */
+.cart-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #09172E;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.cart-header-title {
+    color: #00E5FF;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00E5FF;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart-item-info h3 { margin: 0 0 5px 0; color: #fff; }
+
+.cart-item-actions { display: flex; align-items: center; gap: 20px; }
+
+.cart-item-price { font-size: 1.2em; font-weight: bold; color: #fff; }
+
+.cart-form { margin: 0; }
+
+.btn-remove {
+    background-color: #FF4444;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-remove:hover { background-color: #CC0000; }
+
+.cart-total {
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 30px 0;
+    color: #fff;
+}
+
+.cart-total-amount { color: #00E5FF; }
+
+.btn-checkout {
+    display: block;
+    width: 100%;
+    background-color: #00E5FF;
+    color: #030D1A;
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.btn-checkout:hover { background-color: #7FFFD4; }
+
+.btn-checkout-inline {
+    width: auto;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.login-prompt {
+    text-align: center;
+    margin-top: 30px;
+    color: #FF4444;
+    font-weight: bold;
+    background: rgba(255, 68, 68, 0.1);
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #FF4444;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-cart h3 { color: #fff; font-size: 1.5em; margin-bottom: 10px; }
+
+.empty-cart p { color: #A0B0C8; margin-bottom: 25px; }
+
+.error-cart {background-color: rgba(255, 68, 68, 0.1); color: #FF4444; border: 1px solid #FF4444; padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 20px;}
+
+/* --- Copertine nel Carrello --- */
+.cart-item-details {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-cover {
+    width: 80px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.empty-cover-cart {
+    width: 80px;
+    height: 110px;
+    background-color: #04142C;
+    border-radius: 4px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5C6F8E;
+    font-size: 0.8em;
+    text-align: center;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* =========================================
+   9. CHECKOUT E PAGAMENTO (checkout.jsp)
+   ========================================= */
+.checkout-container {
+    max-width: 600px;
+}
+
+.checkout-section {
+    margin-bottom: 30px;
+}
+
+.checkout-list {
+    color: #fff;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.checkout-list-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #5C6F8E;
+    padding-bottom: 5px;
+}
+
+.checkout-item-price {
+    color: #00E5FF;
+}
+
+.checkout-total-box {
+    text-align: right;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.checkout-total-amount {
+    color: #00FF7F;
+}
+
+.payment-form-container {
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.payment-label {
+    color: #00E5FF;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.payment-flex-row {
+    display: flex;
+    gap: 15px;
+}
+
+.payment-flex-col {
+    flex: 1;
+}
+
+.btn-pay {
+    margin-top: 20px;
+}
+
+.invoice-request-box {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(0, 229, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid #00E5FF;
+}
+
+.invoice-request-label {
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.invoice-request-checkbox {
+    width: auto;
+    margin: 0;
+}
+
+.invoice-request-text {
+    font-weight: bold;
+}
+
+/* =========================================
+   10. LIBRERIA (libreria.jsp)
+   ========================================= */
+.game-info-centered {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.status-badge {
+    display: inline-block;
+    background-color: #ffaa00;
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-key-box {
+    background-color: #04142C;
+    border: 1px dashed #00E5FF;
+    color: #00E5FF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.key-label {
+    color: #ccc;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn-checkout-inline {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+}
+
+/* =========================================
+   STORICO ORDINI (ordini.jsp)
+   ========================================= */
+.order-card {
+    background-color: #04142C;
+    border: 1px solid #00E5FF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-info {
+    color: #fff;
+}
+
+.order-info strong {
+    color: #00E5FF;
+}
+
+.no-invoice-text {
+    color: #888;
+    font-style: italic;
+}
+
+/* ==========================================
+   COPERTINE GIOCHI NELLA PAGINA D'ACQUISTO 
+   ========================================== */
+.dettaglio-gioco-copertina {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 2px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Dettaglio gioco: copertina + galleria affiancate */
+.dettaglio-immagini-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.dettaglio-copertina-box {
+    flex-shrink: 0;
+    width: 280px;
+}
+
+.dettaglio-copertina-box .game-cover {
+    width: 100% !important;
+    height: 220px !important;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dettaglio-galleria-box {
+    flex: 1;
+    overflow: hidden;
+}
+
+.dettaglio-galleria-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.dettaglio-galleria-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.dettaglio-galleria-scroll::-webkit-scrollbar-track {
+    background: #04142C;
+    border-radius: 4px;
+}
+
+.dettaglio-galleria-scroll::-webkit-scrollbar-thumb {
+    background: #00E5FF;
+    border-radius: 4px;
+}
+
+.dettaglio-copertina-img {
+    width: 280px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0;
+}
+
+.dettaglio-galleria-img:hover {
+    transform: scale(1.03);
+    border-color: #00E5FF;
+}

@@ -26,6 +26,10 @@ public class Utente {
     // Dati per il questionario
     private String badgePersonalita;
     
+    // Dati per il negozio
+    private String avatarAttivo;
+    private String titoloAttivo;
+    
     // Costruttore vuoto
     public Utente() {
     }
@@ -169,4 +173,11 @@ public class Utente {
     
     public String getBadgePersonalita() { return badgePersonalita; }
     public void setBadgePersonalita(String badgePersonalita) { this.badgePersonalita = badgePersonalita; }
+    
+    //getter e setter negozio
+    public String getAvatarAttivo() { return avatarAttivo; }
+    public void setAvatarAttivo(String avatarAttivo) { this.avatarAttivo = avatarAttivo; }
+
+    public String getTitoloAttivo() { return titoloAttivo; }
+    public void setTitoloAttivo(String titoloAttivo) { this.titoloAttivo = titoloAttivo; }
 }
