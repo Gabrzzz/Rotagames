@@ -46,6 +46,9 @@ public class UtenteDAO {
                 utente.setDataUltimoGiroRuota(rs.getDate("data_ultimo_giro_ruota"));
                 utente.setGenerePreferito(rs.getString("genere_preferito"));
                 utente.setNomeStudioSviluppo(rs.getString("nome_studio_sviluppo"));
+                utente.setBadgePersonalita(rs.getString("badge_personalita"));
+                utente.setTitoloAttivo(rs.getString("titolo_attivo"));
+                utente.setAvatarAttivo(rs.getString("avatar_attivo"));
             }
 
         } catch (SQLException e) {
@@ -119,6 +122,8 @@ public class UtenteDAO {
                 u.setRuolo(rs.getString("ruolo"));
                 u.setNickname(rs.getString("nickname"));
                 u.setSaldoRotelline(rs.getInt("saldo_rotelline"));
+                u.setTitoloAttivo(rs.getString("titolo_attivo"));
+                u.setAvatarAttivo(rs.getString("avatar_attivo"));
                 
                 listaUtenti.add(u);
             }
@@ -159,6 +164,53 @@ public class UtenteDAO {
             }
         }
         return rows > 0;
+    }
+    
+    // Metodo per il controllo AJAX dell'email
+    public boolean checkEmailEsistente(String email) {
+        String query = "SELECT id_utente FROM utente WHERE email = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                // Se c'è almeno un risultato, l'email esiste già
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // In caso di errore o se non trova nulla, restituisce false
+    }
+    
+    // Metodo per il controllo AJAX del Nickname
+    public boolean checkNicknameEsistente(String nickname) {
+        String query = "SELECT id_utente FROM utente WHERE nickname = ?";
+        try (Connection con = util.DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, nickname);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Se trova una riga, il nickname è già preso
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    // Metodo per salvare il badge utente Questionario
+    public boolean doSaveBadge(int idUtente, String badge) {
+        String query = "UPDATE utente SET badge_personalita = ? WHERE id_utente = ? AND badge_personalita IS NULL"; 
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, badge);
+            ps.setInt(2, idUtente);
+            return ps.executeUpdate() > 0; // Restituisce true se ha aggiornato con successo
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public boolean doUpdateRuota(int idUtente, int nuoveRotelline, java.util.Date dataOggi) {

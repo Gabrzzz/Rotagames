@@ -12,7 +12,6 @@
     
     @SuppressWarnings("unchecked")
     List<Ordine> ordini = (List<Ordine>) request.getAttribute("listaOrdini");
-    
     // Formattatore per data 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 %>
@@ -37,12 +36,39 @@
 <div class="store-container">
     <h2 class="vetrina-title">Storico Ordini Globali</h2>
 
+    <div class="admin-form-section admin-filter-section">
+        <span class="form-section-title">Filtra Ordini</span>
+        
+        <form action="GestioneOrdiniServlet" method="get" class="admin-filter-form">
+            <input type="hidden" name="azione" value="filtra">
+            
+            <div class="filter-group">
+                <label class="filter-label">Da Data:</label>
+                <input type="date" name="dataInizio" class="filter-input">
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">A Data:</label>
+                <input type="date" name="dataFine" class="filter-input">
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Email o Nickname Cliente:</label>
+                <input type="text" name="emailCliente" placeholder="Es. utente@email.it" class="filter-input">
+            </div>
+            
+            <button type="submit" class="btn-admin btn-filter">Filtra</button>
+            <a href="GestioneOrdiniServlet" class="btn-outline btn-reset">Resetta</a>
+        </form>
+    </div>
+
     <table class="admin-table">
         <thead>
             <tr>
                 <th>ID Ordine</th>
                 <th>Data Acquisto</th>
                 <th>Cliente (Nickname)</th>
+                <th>Email Cliente</th>
                 <th>Totale</th>
                 <th>Fattura</th>
             </tr>
@@ -54,6 +80,7 @@
                     <td>#<%= o.getIdOrdine() %></td>
                     <td><%= o.getDataOrdine() != null ? sdf.format(o.getDataOrdine()) : "N/D" %></td>
                     <td><strong><%= o.getNicknameUtente() %></strong></td>
+                    <td><%= o.getEmailUtente() != null ? o.getEmailUtente() : "N/D" %></td>
                     <td>€<%= String.format("%.2f", o.getTotaleOrdine()) %></td>
                     <td>
                         <% if (o.getUrlFattura() != null && !o.getUrlFattura().isEmpty()) { %>
@@ -66,7 +93,7 @@
             <%  }
                } else { %>
                 <tr>
-                    <td colspan="5" class="empty-catalog-cell">Nessun ordine presente nel sistema.</td>
+                    <td colspan="6" class="empty-catalog-cell">Nessun ordine presente nel sistema.</td>
                 </tr>
             <% } %>
         </tbody>

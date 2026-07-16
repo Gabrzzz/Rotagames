@@ -53,18 +53,45 @@
                     <th>Azioni</th>
                 </tr>
             </thead>
-            <tbody>
+           <tbody>
                 <% if (catalogo != null && !catalogo.isEmpty()) { 
                     for (Videogioco gioco : catalogo) { %>
-                    <tr>
+                    
+                    <%-- Aggiungiamo la classe CSS condizionale alla riga --%>
+                    <tr class="<%= "ELIMINATO".equals(gioco.getStatoApprovazione()) ? "row-ritirato" : "" %>">
+                        
                         <td><%= gioco.getIdVideogioco() %></td>
                         <td><strong><%= gioco.getTitolo() %></strong></td>
                         <td><%= gioco.getPiattaforma() %></td>
                         <td>€<%= String.format("%.2f", gioco.getPrezzoBase()) %></td>
                         <td><%= gioco.getScontoAttivo() %>%</td>
+                        
                         <td>
+                            <%-- Tasto Modifica (sempre visibile) --%>
                             <a href="GestioneGiochiServlet?azione=mostraFormModifica&id=<%= gioco.getIdVideogioco() %>" class="btn-action btn-edit">Modifica</a>
-                            <a href="GestioneGiochiServlet?azione=elimina&id=<%= gioco.getIdVideogioco() %>" class="btn-action btn-delete" onclick="return confirm('Sei sicuro di voler eliminare questo gioco?');">Elimina</a>
+                            
+                            <%-- Logica condizionale per i pulsanti di stato (senza inline style) --%>
+                            <% if ("APPROVATO".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=elimina&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-delete" 
+                                   onclick="return confirm('Sicuro di voler ritirare questo gioco dal negozio?\n\nIl gioco non sarà più acquistabile dai nuovi clienti, ma gli utenti che lo possiedono già lo manterranno.');">
+                                   Ritira dal Negozio
+                                </a>
+                            
+                            <% } else if ("ELIMINATO".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=ripristina&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-restore" 
+                                   onclick="return confirm('Vuoi ripristinare questo gioco nel negozio?\n\nTornerà ad essere acquistabile da tutti gli utenti.');">
+                                   Ripristina nel Negozio
+                                </a>
+                            
+                            <% } else if ("IN_ATTESA".equals(gioco.getStatoApprovazione())) { %>
+                                <a href="GestioneGiochiServlet?azione=approva&id=<%= gioco.getIdVideogioco() %>" 
+                                   class="btn-action btn-approve" 
+                                   onclick="return confirm('Vuoi approvare questo videogioco?\n\nIl gioco verrà pubblicato istantaneamente sul catalogo e sarà acquistabile.');">
+                                   Approva Gioco
+                                </a>
+                            <% } %>
                         </td>
                     </tr>
                 <%  }
@@ -97,6 +124,17 @@
 						    <label><input type="checkbox" name="piattaforma" value="Switch"> Switch</label>
 						</div>					
 					</div>
+					
+			        <div class="admin-form-section">
+			            <span class="form-section-title">Genere:</span>
+			            
+			            <div class="checkbox-group">
+			                <label><input type="checkbox" name="generi" value="JRPG"> JRPG</label>
+			                <label><input type="checkbox" name="generi" value="Metroidvania"> Metroidvania</label>
+			                <label><input type="checkbox" name="generi" value="Azione"> Azione</label>
+			                
+			                </div>
+			        </div>
 
 					<textarea name="requisitiSistema" class="textarea-sm" placeholder="Requisiti di Sistema (es. OS, CPU, RAM, GPU...)" required></textarea>
                     <input type="number" step="0.01" name="prezzoBase" placeholder="Prezzo Base (es. 59.99)" required>
@@ -140,6 +178,32 @@
 						    <label><input type="checkbox" name="piattaforma" value="Switch" <%= plat.contains("Switch") ? "checked" : "" %>> Switch</label>
 						</div>					
 					</div>
+					
+<% 
+            //Recuperiamo la lista originale
+            java.util.List<String> generiGioco = (java.util.List<String>) request.getAttribute("generiGioco");
+            
+            //Creiamo una lista "pulita" mettendo tutto in maiuscolo
+            java.util.List<String> cleanGeneri = new java.util.ArrayList<>();
+            if (generiGioco != null) {
+                for(String g : generiGioco) {
+                    if (g != null) {
+                        cleanGeneri.add(g.trim().toUpperCase());
+                    }
+                }
+            }
+        %>
+        
+        <div class="admin-form-section">
+            <span class="form-section-title">Genere:</span>
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="generi" value="JRPG" <%= cleanGeneri.contains("JRPG") ? "checked='checked'" : "" %>> JRPG</label>
+                <label><input type="checkbox" name="generi" value="Metroidvania" <%= cleanGeneri.contains("METROIDVANIA") ? "checked='checked'" : "" %>> Metroidvania</label>
+                <label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked='checked'" : "" %>> Azione</label>
+                
+                </div>
+        </div>
 					
 					<textarea name="requisitiSistema" class="textarea-sm" required><%= gioco.getRequisitiSistema() != null ? gioco.getRequisitiSistema() : "Requisiti non specificati." %></textarea>                    
 					<input type="number" step="0.01" name="prezzoBase" value="<%= gioco.getPrezzoBase() %>" required>

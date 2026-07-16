@@ -29,16 +29,31 @@ public class GestioneOrdiniServlet extends HttpServlet {
             return;
         }
 
-        // Recupero la lista degli ordini tramite il DAO
+        String azione = request.getParameter("azione");
+        OrdineDAO dao = new OrdineDAO();
+
         try {
-            OrdineDAO ordineDAO = new OrdineDAO();
-            List<Ordine> listaOrdini = ordineDAO.doRetrieveAllForAdmin();
-            request.setAttribute("listaOrdini", listaOrdini);
+            if ("filtra".equals(azione)) {
+                // Se si preme su "Filtra"
+                String dataInizio = request.getParameter("dataInizio");
+                String dataFine = request.getParameter("dataFine");
+                String emailCliente = request.getParameter("emailCliente");
+                
+                List<Ordine> ordiniFiltrati = dao.getOrdiniFiltrati(dataInizio, dataFine, emailCliente);
+                request.setAttribute("listaOrdini", ordiniFiltrati);
+                
+            } else {
+                // In caso mostra tutti gli ordini
+                List<Ordine> tuttiOrdini = dao.doRetrieveAllForAdmin();
+                request.setAttribute("listaOrdini", tuttiOrdini);
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
+            request.setAttribute("errore", "Si è verificato un errore durante il recupero degli ordini.");
         }
 
-        // Inoltro alla pagina JSP
+        // Inoltra alla pagina JSP
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_ordini.jsp");
         dispatcher.forward(request, response);
     }

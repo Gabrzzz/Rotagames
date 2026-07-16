@@ -8,7 +8,7 @@ public class Ordine {
     private String urlFattura;
     private Timestamp dataOrdine;
     private int idUtente;
-    
+    private String emailUtente;
     private String nicknameUtente;
     
     public Ordine() {}
@@ -30,4 +30,7 @@ public class Ordine {
     
     public String getNicknameUtente() { return nicknameUtente; }
     public void setNicknameUtente(String nicknameUtente) { this.nicknameUtente = nicknameUtente; }
+    
+    public String getEmailUtente() { return emailUtente; }
+    public void setEmailUtente(String emailUtente) { this.emailUtente = emailUtente; }
 }

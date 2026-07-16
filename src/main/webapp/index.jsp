@@ -16,33 +16,11 @@
 <head>
 <meta charset="UTF-8">
 <title>RotaGames - Il tuo negozio di videogiochi</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css?v=4">
 </head>
 <body>
 
-<header>
-    <h1 class="header-logo-title">RotaGames 🎮</h1>
-    <div class="user-info">
-        <% if (utenteLoggato != null) { %>
-            <span>Bentornato, <strong><%= utenteLoggato.getNickname() %></strong></span> |
-            <span class="user-rotelline">🪙 <%= utenteLoggato.getSaldoRotelline() %> Rotelline</span> |
-            
-            <button onclick="apriRuota()" class="btn-guest" style="background-color: #00E5FF; color: #04142C; cursor: pointer; border: none; padding: 5px 10px; border-radius: 5px; font-weight: bold;">
-                🎁 Gira la Ruota
-            </button> |
-            
-            <% if ("AMMINISTRATORE".equals(utenteLoggato.getRuolo())) { %>
-                <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
-            <% } %>
-            
-            <a href="LogoutServlet" class="logout-link">Esci</a>
-        <% } else { %>
-            <span class="visitor-msg">Esplora il catalogo come Visitatore</span>
-            <a href="login.jsp" class="btn-guest">Accedi</a>
-            <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
-        <% } %>
-    </div>
-</header>
+<jsp:include page="header.jsp" />
 
 <div class="store-container">
     <h2 class="vetrina-title">Vetrina Giochi in Evidenza</h2>
@@ -55,7 +33,7 @@
             <div class="game-card">
             
                 <%-- INIZIO DEL LINK --%>
-                <a href="GameDetailServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
+                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
                     
                     <div class="cover-container">
                         <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
@@ -96,13 +74,24 @@
                         <span class="platform-tag"><%= g.getPiattaforma() %></span>
                     </div>
                     
-                    <form action="CartServlet" method="post" class="cart-form">
-                        <input type="hidden" name="azione" value="aggiungi">
-                        <input type="hidden" name="idVideogioco" value="<%= g.getIdVideogioco() %>">
-                        <button type="submit" class="btn-cart">
-                            Aggiungi al Carrello 🛒
-                        </button>
-                    </form>
+					<div class="action-buttons-index">
+					    
+					    <button type="button" class="btn-cart btn-cart-index" 
+					            onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+					        AL CARRELLO 🛒
+					    </button>
+					
+					    <% if (utenteLoggato != null) { 
+					        boolean inWishlist = new model.dao.VideogiocoDAO().checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+					    %>
+					        <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
+					                onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
+					            <%= inWishlist ? "❤️" : "🤍" %>
+					        </button>
+					    <% } %>
+					    
+					</div>
+					
                 </div>
                 
             </div> 
@@ -120,11 +109,32 @@
     </div>
 </div>
 
-<% if (utenteLoggato != null) { %>
-    <jsp:include page="Ruota.jsp" />
-<% } %>
+<div id="modalPiattaforma" class="platform-overlay">
+    <div class="platform-modal">
+        <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
+        <h2>Scegli le Piattaforme</h2>
+        <p>Spunta le versioni che desideri aggiungere al carrello:</p>
+        
+        <div id="platformButtonsContainer" class="platform-checkbox-container">
+        </div>
+
+        <button type="button" class="btn-checkout" onclick="inviaPiattaformeMultiple()">Aggiungi Selezionate 🛒</button>
+
+        <form id="formAggiungiCarrello" action="CartServlet" method="post" class="hidden-form">
+            <input type="hidden" name="azione" value="aggiungi">
+            <input type="hidden" name="idVideogioco" id="modalIdVideogioco" value="">
+            <input type="hidden" name="piattaforma" id="modalPiattaformaScelta" value="">
+        </form>
+    </div>
+</div>
 
 
+<div id="toastWishlist" class="toast-message"></div>
+<jsp:include page="footer.jsp" />
+
+
+<script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
+<script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 
 </body>
 </html>
