@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +32,9 @@ public class GestioneGiochiServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Fondamentale se si incollano testi copiati dal web con accenti o simboli!
+        request.setCharacterEncoding("UTF-8"); 
+        
         HttpSession session = request.getSession();
         Utente admin = (Utente) session.getAttribute("utenteLoggato");
         
@@ -46,30 +48,49 @@ public class GestioneGiochiServlet extends HttpServlet {
 
         try {
             if (azione == null || azione.equals("lista")) {
-                
-            	// Mostra la tabella del catalogo
-                List<Videogioco> catalogo = dao.doRetrieveAllForAdmin();
-                request.setAttribute("listaGiochi", catalogo);
+                request.setAttribute("listaGiochi", dao.doRetrieveAllForAdmin());
                 request.setAttribute("vista", "tabella"); 
                 
             } else if (azione.equals("mostraFormAggiungi")) {
-                // Mostra il form vuoto
                 request.setAttribute("vista", "formAggiungi");
                 
-            } else if (azione.equals("aggiungi")) {
+            } else if (azione.equals("aggiungi") || azione.equals("modifica")) {
                 
-            	// Logica di salvataggio nuovo gioco
-                Videogioco nuovoGioco = new Videogioco();
+                // HO UNITO LE DUE LOGICHE: Fanno esattamente la stessa cosa!
+                Videogioco gioco = new Videogioco();
                 
-                nuovoGioco.setTitolo(request.getParameter("titolo"));
-                String[] piattaformeSelezionate = request.getParameterValues("piattaforma");
-                String piattaformeUnite = (piattaformeSelezionate != null) ? String.join(", ", piattaformeSelezionate) : "Non specificata";
-                nuovoGioco.setPiattaforma(piattaformeUnite);                
-                nuovoGioco.setDescrizione(request.getParameter("descrizione"));
-                nuovoGioco.setPrezzoBase(Double.parseDouble(request.getParameter("prezzoBase")));
-                nuovoGioco.setScontoAttivo(Integer.parseInt(request.getParameter("scontoAttivo")));
-                Part filePart = request.getPart("copertinaFile");
+                if (azione.equals("modifica")) {
+                    gioco.setIdVideogioco(Integer.parseInt(request.getParameter("idVideogioco")));
+                }
 
+                // 1. Acquisizione stringhe
+                String titolo = request.getParameter("titolo");
+                String descrizione = request.getParameter("descrizione");
+                String requisiti = request.getParameter("requisitiSistema");
+
+                // TAGLIO SICURO PER DATABASE: Limita a 250 caratteri (standard VARCHAR)
+                if (titolo != null && titolo.length() > 100) titolo = titolo.substring(0, 100);
+                if (descrizione != null && descrizione.length() > 250) descrizione = descrizione.substring(0, 250);
+                if (requisiti != null && requisiti.length() > 250) requisiti = requisiti.substring(0, 250);
+
+                gioco.setTitolo(titolo);
+                gioco.setDescrizione(descrizione);
+                gioco.setRequisitiSistema(requisiti);
+
+                // 2. Acquisizione array (Piattaforme)
+                String[] piattaformeSelezionate = request.getParameterValues("piattaforma");
+                gioco.setPiattaforma((piattaformeSelezionate != null) ? String.join(", ", piattaformeSelezionate) : "Non specificata");                
+                
+                // 3. Acquisizione Numeri (Con fix per chi scrive il prezzo con la virgola)
+                String prezzoStr = request.getParameter("prezzoBase");
+                if (prezzoStr != null) prezzoStr = prezzoStr.replace(",", "."); // Fix virgola
+                gioco.setPrezzoBase(Double.parseDouble(prezzoStr));
+                
+                String scontoStr = request.getParameter("scontoAttivo");
+                gioco.setScontoAttivo((scontoStr != null && !scontoStr.isEmpty()) ? Integer.parseInt(scontoStr) : 0);
+
+                // 4. Copertina
+                Part filePart = request.getPart("copertinaFile");
                 if (filePart != null && filePart.getSize() > 0) {
                     InputStream is = filePart.getInputStream();
                     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -78,86 +99,64 @@ public class GestioneGiochiServlet extends HttpServlet {
                     while ((nRead = is.read(data, 0, data.length)) != -1) {
                         buffer.write(data, 0, nRead);
                     }
-                    // Salviamo i byte fisici nell'oggetto Videogioco
-                    nuovoGioco.setCopertina(buffer.toByteArray()); 
-                }                
-                nuovoGioco.setStatoApprovazione("APPROVATO"); // Default per l'admin
-                nuovoGioco.setRequisitiSistema(request.getParameter("requisitiSistema"));
+                    gioco.setCopertina(buffer.toByteArray()); 
+                }
                 
+                gioco.setStatoApprovazione("APPROVATO");
+                
+                // 5. Salvataggio su Database
                 String[] generiSelezionati = request.getParameterValues("generi");
                 
-                dao.doSave(nuovoGioco, generiSelezionati);
+                if (azione.equals("aggiungi")) {
+                    dao.doSave(gioco, generiSelezionati);
+                } else {
+                    dao.doUpdate(gioco, generiSelezionati); 
+                }
                 
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
-                return; // Per non fare il forward alla fine
+                return; 
                 
             } else if (azione.equals("mostraFormModifica")) {
-                // Mostra il form precompilato
                 int id = Integer.parseInt(request.getParameter("id"));
-                Videogioco gioco = dao.doRetrieveById(id);
-                
-               // Per recuperare la lista dei generi
-                List<String> generiGioco = dao.getGeneriByIdVideogioco(id);
-                request.setAttribute("generiGioco", generiGioco);
-                
-                request.setAttribute("giocoDaModificare", gioco);
+                request.setAttribute("giocoDaModificare", dao.doRetrieveById(id));
+                request.setAttribute("generiGioco", dao.getGeneriByIdVideogioco(id));
                 request.setAttribute("vista", "formModifica");
                 
-            } else if (azione.equals("modifica")) {
-                // Logica di aggiornamento gioco esistente
-                Videogioco giocoModificato = new Videogioco();
-                giocoModificato.setIdVideogioco(Integer.parseInt(request.getParameter("idVideogioco")));
-                giocoModificato.setTitolo(request.getParameter("titolo"));
-                String[] piattaformeSelezionate = request.getParameterValues("piattaforma");
-                String piattaformeUnite = (piattaformeSelezionate != null) ? String.join(", ", piattaformeSelezionate) : "Non specificata";
-                giocoModificato.setPiattaforma(piattaformeUnite);                
-                giocoModificato.setDescrizione(request.getParameter("descrizione"));
-                giocoModificato.setPrezzoBase(Double.parseDouble(request.getParameter("prezzoBase")));
-                giocoModificato.setScontoAttivo(Integer.parseInt(request.getParameter("scontoAttivo")));
-                Part filePart = request.getPart("copertinaFile");
-
-                if (filePart != null && filePart.getSize() > 0) {
-                    InputStream is = filePart.getInputStream();
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                    int nRead;
-                    byte[] data = new byte[1024];
-                    while ((nRead = is.read(data, 0, data.length)) != -1) {
-                        buffer.write(data, 0, nRead);
-                    }
-                    // Salviamo i byte fisici nell'oggetto Videogioco
-                    giocoModificato.setCopertina(buffer.toByteArray()); 
-                }
-                giocoModificato.setRequisitiSistema(request.getParameter("requisitiSistema"));
-                
-                String[] generiSelezionati = request.getParameterValues("generi");
-                
-                dao.doUpdate(giocoModificato, generiSelezionati); 
-                response.sendRedirect("GestioneGiochiServlet?azione=lista");
-                return;
-                
             } else if (azione.equals("elimina")) {
-                // Logica di eliminazione 
                 int id = Integer.parseInt(request.getParameter("id"));
                 dao.doDelete(id);
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return;
-            }  else if (azione.equals("ripristina")) {
+            } else if (azione.equals("ripristina")) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                dao.doRestore(id); // Esegue l'UPDATE cioè SET stato_approvazione = 'APPROVATO'
+                dao.doRestore(id);
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return;
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errore", "Si è verificato un errore durante l'operazione.");
-            request.setAttribute("vista", "tabella");
-            try {
-                request.setAttribute("listaGiochi", dao.doRetrieveAllForAdmin());
-            } catch(Exception ex) {}
+            // Prepariamo l'errore ESATTO da far leggere a schermo per farti capire cosa si è rotto
+            request.setAttribute("erroreForm", "ERRORE SALVATAGGIO: Controlla che il testo non sia troppo lungo per il tuo database o che i numeri siano corretti! Dettaglio: " + e.getMessage());
+            
+            // Rimettiamo l'utente sul form che stava compilando, per non fargli perdere i dati
+            if ("aggiungi".equals(azione)) {
+                request.setAttribute("vista", "formAggiungi");
+            } else if ("modifica".equals(azione)) {
+                request.setAttribute("vista", "formModifica");
+                try {
+                    int id = Integer.parseInt(request.getParameter("idVideogioco"));
+                    request.setAttribute("giocoDaModificare", dao.doRetrieveById(id));
+                    request.setAttribute("generiGioco", dao.getGeneriByIdVideogioco(id));
+                } catch(Exception ex) {}
+            } else {
+                request.setAttribute("vista", "tabella");
+                try {
+                    request.setAttribute("listaGiochi", dao.doRetrieveAllForAdmin());
+                } catch(Exception ex) {}
+            }
         }
 
-        // Inoltriamo alla JSP condivisa
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_giochi.jsp");
         dispatcher.forward(request, response);
     }

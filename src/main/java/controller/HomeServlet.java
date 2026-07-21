@@ -11,21 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 import model.Videogioco;
 import model.dao.VideogiocoDAO;
 
-// Questa servlet scatta quando l'utente va sulla pagina principale del sito o su "/Home"
 @WebServlet(urlPatterns = {"", "/Home"}) 
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        // Chiamiamo il database tramite il DAO per avere tutti i giochi
         VideogiocoDAO dao = new VideogiocoDAO();
-        List<Videogioco> giochi = dao.doRetrieveAll();
         
-        // Mettiamo la lista dei giochi in "listaGiochiHome"
-        request.setAttribute("listaGiochiHome", giochi);
+        // 1. Giochi di Tendenza (per la rotella 3D)
+        List<Videogioco> giochiTendenza = dao.doRetrieveTendenza();
         
-        // Li mandiamo all'indexx
+        // 2. Giochi Scontati (Slider orizzontale)
+        List<Videogioco> giochiScontati = dao.doRetrieveInSconto();
+        
+        // 3. Giochi a meno di 10 euro (Slider orizzontale)
+        List<Videogioco> giochiMeno10 = dao.filtraCatalogo(null, null, "10", "prezzo_asc");
+        
+        // Impostiamo gli attributi per la JSP
+        request.setAttribute("giochiTendenza", giochiTendenza);
+        request.setAttribute("giochiScontati", giochiScontati);
+        request.setAttribute("giochiMeno10", giochiMeno10);
+        
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

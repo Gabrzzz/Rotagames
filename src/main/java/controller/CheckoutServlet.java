@@ -32,9 +32,6 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-        // ===================================================================
-        // MODIFICA: CALCOLO DEL TOTALE CON REGOLA "COUPON NON CUMULABILE"
-        // ===================================================================
         // Recuperiamo lo sconto del coupon memorizzato in sessione (se presente)
         Integer sconto = (Integer) session.getAttribute("couponScontoPercentuale");
         if (sconto == null) {
@@ -46,7 +43,7 @@ public class CheckoutServlet extends HttpServlet {
         for (ElementoCarrello item : carrello) {
             Videogioco v = item.getVideogioco();
             
-            // Prezzo calcolato con l'eventuale sconto già attivo sul catalogo (es. Persona 3)
+            // Prezzo calcolato con l'eventuale sconto già attivo sul catalogo 
             double prezzoCatalogoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
 
             if (v.getScontoAttivo() > 0 || sconto == 0) {
@@ -60,18 +57,18 @@ public class CheckoutServlet extends HttpServlet {
                 totaleScontato += (prezzoConCoupon * item.getQuantita());
             }
         }
-        // ===================================================================
+        
 
-        // 3. Creazione dell'oggetto Ordine
+
         Ordine nuovoOrdine = new Ordine();
         nuovoOrdine.setIdUtente(utente.getIdUtente());
         
-        // Passiamo il totale scontato (calcolato secondo la nuova regola)
+        // Passiamo il totale scontato
         nuovoOrdine.setTotaleOrdine(totaleScontato); 
         
         nuovoOrdine.setDataOrdine(new java.sql.Timestamp(System.currentTimeMillis())); // Imposta la data e ora attuale
 
-        // 4. Salvataggio nel Database
+        //Salvataggio nel Database
         OrdineDAO dao = new OrdineDAO();
         
         // Leggiamo se l'utente ha spuntato la casella della fattura
@@ -80,9 +77,9 @@ public class CheckoutServlet extends HttpServlet {
         // Passiamo il nuovo flag booleano al DAO
         boolean successo = dao.doSave(nuovoOrdine, carrello, richiediFattura);
 
-        // 5. Gestione del risultato
+        
         if (successo) {
-            // Svuotiamo il carrello dalla sessione
+            
             session.removeAttribute("carrello");
             
             // Rimuoviamo il coupon consumato dalla sessione così non rimane attivo sul prossimo acquisto

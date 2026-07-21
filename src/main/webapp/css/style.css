@@ -2116,4 +2116,140 @@ input.remember-checkbox {
     opacity: 1;
     bottom: 50px; 
 }
+/* =========================================
+   STILI SLIDER ORIZZONTALI (Scontati, Meno 10€)
+   ========================================= */
+.horizontal-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; 
+    gap: 20px;
+    padding: 20px 5px; 
+    margin-bottom: 40px;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #222;
+}
 
+.horizontal-slider::-webkit-scrollbar {
+    height: 10px;
+}
+.horizontal-slider::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 5px;
+}
+.horizontal-slider::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+.horizontal-slider::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.horizontal-slider .game-card {
+    flex: 0 0 280px; 
+    scroll-snap-align: start; 
+}
+/* =========================================
+   NUOVO STILE ROTELLA DIMEZZATA (Tendenze)
+   ========================================= */
+.tendenza-section {
+    position: relative;
+    width: 100%;
+    margin-bottom: 40px;
+    overflow: hidden; /* Taglia tutto ciò che esce dalla sezione */
+}
+
+.rotella-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Box del singolo gioco sospeso sopra l'ingranaggio */
+.gioco-attivo-container {
+    position: relative;
+    width: 200px;  /* Proporzioni ottimali per 1 sola copertina */
+    height: 280px;
+    margin-bottom: -60px; /* Spinge la card leggermente "dentro" il raggio dell'ingranaggio */
+    z-index: 5; /* Forza il gioco a stare davanti all'ingranaggio */
+}
+
+/* Stile base nascosto per tutte le copertine */
+.rotella-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9) translateY(15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    overflow: hidden;
+    border: 2px solid #00E5FF; /* Dettaglio neon azzurro coordinato */
+}
+
+/* Stile per la card attiva (l'unica visibile) */
+.rotella-card.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+
+.rotella-card img {
+    width: 100%;
+    height: 82%;
+    object-fit: cover;
+}
+
+.gioco-titolo-tendenza {
+    height: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0 5px;
+}
+
+.gioco-titolo-tendenza h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Contenitore dell'ingranaggio: alto la metà del diametro dell'ingranaggio */
+.rotella-container {
+    position: relative;
+    width: 460px;
+    height: 230px; 
+    overflow: hidden; 
+}
+
+/* L'ingranaggio centrato che sbuca dal fondo del box */
+.ingranaggio {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 460px;
+    height: 460px;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.ingranaggio img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

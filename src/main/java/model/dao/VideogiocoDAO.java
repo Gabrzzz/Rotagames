@@ -70,6 +70,74 @@ public class VideogiocoDAO {
         return lista;
     }
     
+ // =================================================================
+    // METODI PER LE CATEGORIE DELLA HOMEPAGE
+    // =================================================================
+
+    // 1. Recupera i giochi in sconto (Max 10 per lo slider)
+    public synchronized List<Videogioco> doRetrieveInSconto() {
+        List<Videogioco> lista = new ArrayList<>();
+        // Prende i giochi approvati, con sconto > 0, dal più scontato al meno, massimo 10
+        String query = "SELECT * FROM Videogioco WHERE stato_approvazione = 'APPROVATO' AND sconto_attivo > 0 ORDER BY sconto_attivo DESC LIMIT 10";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                lista.add(estraiVideogiocoDaResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.doRetrieveInSconto: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    // 2. Recupera i giochi in Tendenza (Carosello - 5 giochi)
+    public synchronized List<Videogioco> doRetrieveTendenza() {
+        List<Videogioco> lista = new ArrayList<>();
+        // In mancanza di statistiche di vendita reali, peschiamo 5 giochi casuali approvati per creare dinamismo
+        String query = "SELECT * FROM Videogioco WHERE stato_approvazione = 'APPROVATO' ORDER BY RAND() LIMIT 5";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+             
+            while (rs.next()) {
+                lista.add(estraiVideogiocoDaResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.doRetrieveTendenza: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    // 3. METODO DI SUPPORTO: Evita di duplicare il codice di estrazione in ogni metodo
+    private Videogioco estraiVideogiocoDaResultSet(ResultSet rs) throws SQLException {
+        Videogioco gioco = new Videogioco();
+        gioco.setIdVideogioco(rs.getInt("id_videogioco"));
+        gioco.setTitolo(rs.getString("titolo"));
+        gioco.setDescrizione(rs.getString("descrizione"));
+        gioco.setPrezzoBase(rs.getDouble("prezzo_base"));
+        gioco.setScontoAttivo(rs.getInt("sconto_attivo"));
+        gioco.setPiattaforma(rs.getString("piattaforma"));
+        gioco.setRequisitiSistema(rs.getString("requisiti_sistema"));
+        gioco.setStatoApprovazione(rs.getString("stato_approvazione"));
+        
+        int idSvil = rs.getInt("id_sviluppatore");
+        if (!rs.wasNull()) {
+            gioco.setIdSviluppatore(idSvil);
+        }
+        
+        java.sql.Blob blob = rs.getBlob("copertina");
+        if (blob != null && blob.length() > 0) {
+            byte[] imageBytes = blob.getBytes(1, (int) blob.length());
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            gioco.setBase64Copertina(base64Image);
+        }
+        return gioco;
+    }
+    
     public Videogioco doRetrieveById(int id) {
         Videogioco gioco = null;
         String query = "SELECT * FROM videogioco WHERE id_videogioco = ?";
@@ -337,6 +405,8 @@ public class VideogiocoDAO {
         }
         return lista;
     }
+    
+ 
     
     //Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
     public synchronized boolean doRestore(int idVideogioco) {

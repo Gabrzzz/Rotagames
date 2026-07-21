@@ -26,8 +26,14 @@
                 <div class="spicchio" style="--i: 3;"><span>20</span></div>
                 <div class="spicchio" style="--i: 4;"><span>50</span></div>
                 <div class="spicchio" style="--i: 5;"><span>Jackpot</span></div>
-            </div> </div> <button id="btn-gira" class="btn-spin">GIRA LA RUOTA!</button>
+            </div>
+        </div> 
+        
+        <button id="btn-gira" class="btn-spin">GIRA LA RUOTA!</button>
         
         <p id="messaggio-errore" style="color: #E63946; display: none; margin-top: 15px; font-weight: bold;"></p>
         
-    </div> </div> <script src="${pageContext.request.contextPath}/js/ruota.js"></script>
+    </div> 
+</div> 
+
+<script src="${pageContext.request.contextPath}/js/ruota.js"></script>
