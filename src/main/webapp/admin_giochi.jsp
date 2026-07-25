@@ -119,7 +119,7 @@
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Titolo del Gioco:</span>
-                        <input type="text" name="titolo" placeholder="Titolone" maxlenght="64" required>
+                        <input type="text" name="titolo" placeholder="Titolone" maxlength="64" required>
                     </div>
                     
                     <div class="admin-form-section">
@@ -144,22 +144,22 @@
 
                     <div class="admin-form-section">
                         <span class="form-section-title">Requisiti di Sistema:</span>
-                        <textarea name="requisitiSistema" class="textarea-sm" placeholder="Requisiti di Sistema (es. OS, CPU, RAM, GPU...)" maxlenght="800" required></textarea>
+                        <textarea name="requisitiSistema" class="textarea-sm" placeholder="Requisiti di Sistema (es. OS, CPU, RAM, GPU...)" maxlength="800" required></textarea>
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Prezzo Base (€):</span>
-                        <input type="number" step="0.01" name="prezzoBase" placeholder="Es. 59.99" maxlenght="4" required>
+                        <input type="number" step="0.01" name="prezzoBase" placeholder="Es. 59.99" min="0" max="9999" required>
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Sconto Attivo (%):</span>
-                        <input type="number" name="scontoAttivo" placeholder="Es. 0 o 20" maxlenght="3" value="0" required>
+                        <input type="number" name="scontoAttivo" placeholder="Es. 0 o 20" min="0" max="100" value="0" required>
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Descrizione del Gioco:</span>
-                        <textarea name="descrizione" class="textarea-md" placeholder="Es. In una landa desolata " maxlenght="350" required></textarea>
+                        <textarea name="descrizione" class="textarea-md" placeholder="Es. In una landa desolata " maxlength="350" required></textarea>
                     </div>
                     
                     <div class="admin-form-section">
@@ -189,7 +189,7 @@
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Titolo del Gioco:</span>
-                        <input type="text" name="titolo" value="<%= gioco.getTitolo() %>" maxlenght="64"required>
+                        <input type="text" name="titolo" value="<%= gioco.getTitolo() %>" maxlength="64" required>
                     </div>
                     
                     <div class="admin-form-section">
@@ -229,22 +229,22 @@
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Requisiti di Sistema:</span>
-                        <textarea name="requisitiSistema" class="textarea-sm" maxlenght="800" required><%= gioco.getRequisitiSistema() != null ? gioco.getRequisitiSistema() : "Requisiti non specificati." %></textarea>                    
+                        <textarea name="requisitiSistema" class="textarea-sm" maxlength="800" required><%= gioco.getRequisitiSistema() != null ? gioco.getRequisitiSistema() : "Requisiti non specificati." %></textarea>                    
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Prezzo Base (€):</span>
-                        <input type="number" step="0.01" name="prezzoBase" value="<%= gioco.getPrezzoBase() %>" maxlenght="4" required>
+                        <input type="number" step="0.01" name="prezzoBase" value="<%= gioco.getPrezzoBase() %>" min="0" max="9999" required>
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Sconto Attivo (%):</span>
-                        <input type="number" name="scontoAttivo" value="<%= gioco.getScontoAttivo() %>" maxlenght="3"required>
+                        <input type="number" name="scontoAttivo" value="<%= gioco.getScontoAttivo() %>" min="0" max="100" required>
                     </div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Descrizione del Gioco:</span>
-                        <textarea name="descrizione" class="textarea-md" maxlenght="350" required><%= gioco.getDescrizione() %></textarea>
+                        <textarea name="descrizione" class="textarea-md" maxlength="350" required><%= gioco.getDescrizione() %></textarea>
                     </div>
                     
                     <div class="admin-form-section">

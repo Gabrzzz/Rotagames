@@ -70,6 +70,12 @@ header h1 {
     text-decoration: none;
 }
 
+.header-logo-letter {
+    height: 1.1em;           /* Altezza proporzionata a una lettera maiuscola */
+    vertical-align: -8%;    /* Abbassa leggermente l'immagine per allinearla alla linea di base del testo */
+    margin-right: -16px;       /* Lascia un micro-spazio tra la rotella e la lettera 'o' */
+}
+
 .btn-wheel {
     background-color: #00E5FF;
     color: #04142C;

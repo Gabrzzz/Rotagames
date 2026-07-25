@@ -6,7 +6,11 @@
     String tipoHeader = request.getParameter("tipo");
 %>
 <header>
-    <a href="index.jsp" class="logo-link"><h1 class="header-logo-title">RotaGames 🎮</h1></a>
+    <a href="index.jsp" class="logo-link">
+    <h1 class="header-logo-title">
+         <img src="${pageContext.request.contextPath}/images/RotaLogo.png" alt="Logo RotaGames" class="header-logo-letter">otaGames
+    </h1>
+</a>
     
     <%-- Se la pagina richiede un header minimale, non mostriamo il resto --%>
     <% if (!"minimal".equals(tipoHeader)) { %>
