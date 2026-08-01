@@ -5,10 +5,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Recensione" %>
 <%
-    Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); //acquisisce l'utente che visualizza il gioco
-    Videogioco gioco = (Videogioco) request.getAttribute("gioco"); //acquisisce il gioco
-    List<ImmagineGioco> immagini = (List<ImmagineGioco>) request.getAttribute("immagini"); //acquisisce le immagini aggiuntive del gioco
-    List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni"); //acquisisce le recensioni del gioco
+    Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
+    Videogioco gioco = (Videogioco) request.getAttribute("gioco");
+    List<ImmagineGioco> immagini = (List<ImmagineGioco>) request.getAttribute("immagini");
+    List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni");
     boolean giocoPosseduto = false;
     if (utenteLoggato != null) {
         model.dao.VideogiocoDAO vdao = new model.dao.VideogiocoDAO();

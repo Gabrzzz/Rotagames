@@ -51,25 +51,26 @@ public class RecensioneDAO {
         }
         return lista;
     }
-}
 
-/* ============================================
-   Metodo che salva le recensioni nel database
-   ============================================ */
-public void doSave(Recensione recensione, int idUtente) {
-    String query = "INSERT INTO recensione (id_videogioco, id_utente, voto, testo, data_creazione) " +
-                   "VALUES (?, ?, ?, ?, NOW())";
+    /* ============================================
+       Metodo che salva le recensioni nel database
+       ============================================ */
+    public void doSave(Recensione recensione, int idUtente) {
+        String query = "INSERT INTO recensione (id_videogioco, id_utente, voto, testo, data_creazione) " +
+                       "VALUES (?, ?, ?, ?, NOW())";
 
-    try (Connection con = DBConnection.getConnection();
-         PreparedStatement ps = con.prepareStatement(query)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
 
-        ps.setInt(1, recensione.getIdVideogioco());
-        ps.setInt(2, idUtente);
-        ps.setInt(3, recensione.getVoto());
-        ps.setString(4, recensione.getTesto());
-        ps.executeUpdate();
+            ps.setInt(1, recensione.getIdVideogioco());
+            ps.setInt(2, idUtente);
+            ps.setInt(3, recensione.getVoto());
+            ps.setString(4, recensione.getTesto());
+            ps.executeUpdate();
 
-    } catch (SQLException e) {
-        System.err.println("Errore in RecensioneDAO.doSave: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Errore in RecensioneDAO.doSave: " + e.getMessage());
+        }
     }
-}
+
+} // fine classe RecensioneDAO

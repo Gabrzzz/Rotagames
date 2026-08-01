@@ -13,6 +13,8 @@ import model.Videogioco;
 import model.dao.VideogiocoDAO;
 import model.Recensione;
 import model.dao.RecensioneDAO;
+import model.ImmagineGioco;
+import model.dao.ImmagineGiocoDAO;
 
 @WebServlet("/DettaglioGiocoServlet")
 public class DettaglioGiocoServlet extends HttpServlet {
@@ -22,10 +24,11 @@ public class DettaglioGiocoServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String id = request.getParameter("id");
+        int idGioco = Integer.parseInt(id);
         
         //viene recuperato il gioco
         VideogiocoDAO dao = new VideogiocoDAO();
-        Videogioco gioco = dao.doRetrieveById(Integer.parseInt(id));
+        Videogioco gioco = dao.doRetrieveById(idGioco);
         
         //vengono recuperate le immagini aggiuntive
         ImmagineGiocoDAO immagineDao = new ImmagineGiocoDAO();
@@ -34,8 +37,11 @@ public class DettaglioGiocoServlet extends HttpServlet {
         //vengono recuperate le recensioni
         RecensioneDAO recensioneDao = new RecensioneDAO();
         List<Recensione> recensioni = recensioneDao.doRetrieveByVideogioco(idGioco);
+        System.out.println("DEBUG recensioni trovate: " + recensioni.size()); // riga di debug temporanea
         
         request.setAttribute("gioco", gioco);
+        request.setAttribute("immagini", immagini);
+        request.setAttribute("recensioni", recensioni); //passaggio di gioco, immagini e recensioni alla JSP
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("/paginagiochi.jsp");
         dispatcher.forward(request, response);
