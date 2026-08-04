@@ -25,7 +25,7 @@ public class DettaglioGiocoServlet extends HttpServlet {
         
         String id = request.getParameter("id");
         int idGioco = Integer.parseInt(id);
-        
+      
         //viene recuperato il gioco
         VideogiocoDAO dao = new VideogiocoDAO();
         Videogioco gioco = dao.doRetrieveById(idGioco);

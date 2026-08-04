@@ -8,32 +8,40 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.ImmagineGioco;
+
 import model.Videogioco;
-import model.dao.ImmagineGiocoDAO;
 import model.dao.VideogiocoDAO;
+import model.Recensione;
+import model.dao.RecensioneDAO;
+import model.ImmagineGioco;
+import model.dao.ImmagineGiocoDAO;
 
 @WebServlet("/DettaglioGiocoServlet")
 public class DettaglioGiocoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-
+        
         String id = request.getParameter("id");
         int idGioco = Integer.parseInt(id);
-
-        //seleziona il videogioco
+        
+        //viene recuperato il gioco
         VideogiocoDAO dao = new VideogiocoDAO();
         Videogioco gioco = dao.doRetrieveById(idGioco);
-
-        //seleziona le immagini collegate al videogioco
+        
+        //vengono recuperate le immagini aggiuntive
         ImmagineGiocoDAO immagineDao = new ImmagineGiocoDAO();
         List<ImmagineGioco> immagini = immagineDao.doRetrieveByGioco(idGioco);
 
+        //vengono recuperate le recensioni
+        RecensioneDAO recensioneDao = new RecensioneDAO();
+        List<Recensione> recensioni = recensioneDao.doRetrieveByVideogioco(idGioco);
+        
         request.setAttribute("gioco", gioco);
         request.setAttribute("immagini", immagini);
-
+        request.setAttribute("recensioni", recensioni);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/paginagiochi.jsp");
         dispatcher.forward(request, response);
     }
