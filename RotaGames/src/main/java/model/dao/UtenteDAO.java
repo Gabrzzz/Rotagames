@@ -187,6 +187,57 @@ public class UtenteDAO {
             return false;
         }
     }
+    
+    /* ------------------------------------------------------
+       Recupera un utente dal database tramite ID 
+       ----------------------------------------------------- */
+    
+    public synchronized Utente doRetrieveById(int idUtente) {
+        Utente utente = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM Utente WHERE id_utente = ?";
+
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idUtente);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                utente = new Utente();
+                utente.setIdUtente(rs.getInt("id_utente"));
+                utente.setEmail(rs.getString("email"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setVia(rs.getString("via"));
+                utente.setCap(rs.getString("cap"));
+                utente.setCitta(rs.getString("citta"));
+                utente.setRuolo(rs.getString("ruolo"));
+                utente.setNickname(rs.getString("nickname"));
+                utente.setPasswordHash(rs.getString("password_hash"));
+                utente.setSaldoRotelline(rs.getInt("saldo_rotelline"));
+                utente.setDataUltimoGiroRuota(rs.getDate("data_ultimo_giro_ruota"));
+                utente.setGenerePreferito(rs.getString("genere_preferito"));
+                utente.setNomeStudioSviluppo(rs.getString("nome_studio_sviluppo"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Errore in doRetrieveById: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return utente;
+    }
 }
 
 

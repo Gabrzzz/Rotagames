@@ -9,25 +9,29 @@ public class Utente {
     private String nome;
     private String cognome;
     
-    // Indirizzo di fatturazione
+    //indirizzo di fatturazione
     private String via;
     private String cap;
     private String citta;
     
-    // Dati di accesso e profilo
-    private String ruolo; // sviluppatore, admin oppure utente
+    //dati di accesso e profilo
+    private String ruolo; //sviluppatore, admin oppure utente
     private String nickname;
     private String passwordHash;
     private int saldoRotelline;
     private Date dataUltimoGiroRuota;
     private String generePreferito;
-    private String nomeStudioSviluppo; // Attributo specifico per gli sviluppatori
+    private String nomeStudioSviluppo; //solo per gli sviluppatori
+
+    //campi opzionali per la personalizzazione del profilo
+    private String avatarAttivo;
+    private String titoloAttivo;
+    private String badgePersonalita;
     
-    // Costruttore vuoto
+    //costruttore vuoto e completo
     public Utente() {
     }
 
-    // Costruttore completo
     public Utente(int idUtente, String email, String nome, String cognome, String via, String cap,
             String citta, String ruolo, String nickname, String passwordHash, int saldoRotelline,
             Date dataUltimoGiroRuota, String generePreferito, String nomeStudioSviluppo) {
@@ -157,6 +161,30 @@ public class Utente {
 
     public void setNomeStudioSviluppo(String nomeStudioSviluppo) {
         this.nomeStudioSviluppo = nomeStudioSviluppo;
+    }
+
+    public String getAvatarAttivo() {
+        return avatarAttivo;
+    }
+
+    public void setAvatarAttivo(String avatarAttivo) {
+        this.avatarAttivo = avatarAttivo;
+    }
+
+    public String getTitoloAttivo() {
+        return titoloAttivo;
+    }
+
+    public void setTitoloAttivo(String titoloAttivo) {
+        this.titoloAttivo = titoloAttivo;
+    }
+
+    public String getBadgePersonalita() {
+        return badgePersonalita;
+    }
+
+    public void setBadgePersonalita(String badgePersonalita) {
+        this.badgePersonalita = badgePersonalita;
     }
 
     @Override

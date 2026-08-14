@@ -72,5 +72,47 @@ public class RecensioneDAO {
             System.err.println("Errore in RecensioneDAO.doSave: " + e.getMessage());
         }
     }
+    
+    /* ======================================================
+       Recupera le recensioni scritte da uno specifico utente
+       ====================================================== */
+   
+    public List<Recensione> doRetrieveByUtente(int idUtente) {
+        List<Recensione> lista = new ArrayList<>();
+        
+        String query = "SELECT r.id_recensione, r.id_videogioco, r.testo, r.voto, r.data_creazione, v.titolo " +
+                       "FROM recensione r " +
+                       "JOIN videogioco v ON r.id_videogioco = v.id_videogioco " +
+                       "WHERE r.id_utente = ? " +
+                       "ORDER BY r.id_recensione DESC";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Recensione r = new Recensione();
+                r.setIdRecensione(rs.getInt("id_recensione"));
+                r.setIdVideogioco(rs.getInt("id_videogioco"));
+                r.setNicknameUtente(rs.getString("titolo")); // Usato per mostrare il titolo del gioco nella JSP profilo
+                r.setVoto(rs.getInt("voto"));
+                r.setTesto(rs.getString("testo"));
+                
+                java.sql.Timestamp dataPubb = rs.getTimestamp("data_creazione");
+                if (dataPubb != null) {
+                    r.setDataCreazione(dataPubb);
+                } else {
+                    r.setDataCreazione(new java.sql.Timestamp(System.currentTimeMillis()));
+                }
+                
+                lista.add(r);
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in RecensioneDAO.doRetrieveByUtente: " + e.getMessage());
+        }
+        return lista;
+    }
 
-} // fine classe RecensioneDAO
+}

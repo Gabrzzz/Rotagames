@@ -239,6 +239,42 @@ public class UtenteDAO {
             return false;
         }
     }
+ 
+    /*--------------------------------------------------
+      recupera un utente dal database tramite il suo ID
+     --------------------------------------------------*/
+    public Utente doRetrieveById(int idUtente) {
+        Utente utente = null;
+        String query = "SELECT * FROM Utente WHERE id_utente = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                utente = new Utente();
+                utente.setIdUtente(rs.getInt("id_utente"));
+                utente.setEmail(rs.getString("email"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setVia(rs.getString("via"));
+                utente.setCap(rs.getString("cap"));
+                utente.setCitta(rs.getString("citta"));
+                utente.setRuolo(rs.getString("ruolo"));
+                utente.setNickname(rs.getString("nickname"));
+                utente.setSaldoRotelline(rs.getInt("saldo_rotelline"));
+                utente.setGenerePreferito(rs.getString("genere_preferito"));
+                utente.setBadgePersonalita(rs.getString("badge_personalita"));
+                utente.setTitoloAttivo(rs.getString("titolo_attivo"));
+                utente.setAvatarAttivo(rs.getString("avatar_attivo"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in UtenteDAO.doRetrieveById: " + e.getMessage());
+        }
+        return utente;
+    }
 }
 
 
