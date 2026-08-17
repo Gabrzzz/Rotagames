@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="model.Utente, model.Libreria, model.Ordine, model.Recensione, model.Videogioco, java.util.List" %>
+<%@ page import="model.Utente, model.Libreria, model.Recensione, model.Videogioco, java.util.List" %> <%-- rimosso import model.Ordine, non più necessario --%>
 <%
     Utente utenteProfilo = (Utente) request.getAttribute("utenteProfilo");
     List<Libreria> giochiPosseduti = (List<Libreria>) request.getAttribute("giochiPosseduti");
-    List<Ordine> ordiniUtente = (List<Ordine>) request.getAttribute("ordiniUtente");
     List<Recensione> recensioniUtente = (List<Recensione>) request.getAttribute("recensioniUtente");
     List<Videogioco> wishlistUtente = (List<Videogioco>) request.getAttribute("wishlistUtente");
     Boolean isProprietarioObj = (Boolean) request.getAttribute("isProprietario");
@@ -266,22 +265,6 @@
                 <p class="profilo-vuoto">La tua wishlist è vuota.</p>
             <% } %>
         </div>
-
-        <%-- Ordini --%>
-        <% if (isProprietario) { %>
-        <div class="profilo-sezione">
-            <h2>I TUOI ORDINI (<%= ordiniUtente != null ? ordiniUtente.size() : 0 %>)</h2>
-            <% if (ordiniUtente != null && !ordiniUtente.isEmpty()) { %>
-                <% for (Ordine ord : ordiniUtente) { %>
-                    <div class="ordine-item">
-                        <p>Ordine #<%= ord.getIdOrdine() %> - Data: <%= ord.getDataOrdine() %></p>
-                    </div>
-                <% } %>
-            <% } else { %>
-                <p>Nessun ordine effettuato.</p>
-            <% } %>
-        </div>
-        <% } %>
 
     </div>
 
