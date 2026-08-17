@@ -1,21 +1,21 @@
 package model.dao;
-import model.Videogioco;
 
+import model.Videogioco;
+import util.DBConnection;
+
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-import util.DBConnection;
 import java.util.Base64;
-import java.io.InputStream;
+import java.util.List;
 
 public class VideogiocoDAO {
 
-    
-     // Recupera tutti i videogiochi approvati dal catalogo
-     
+    // Recupera tutti i videogiochi approvati dal catalogo
     public synchronized List<Videogioco> doRetrieveAll() {
         List<Videogioco> lista = new ArrayList<>();
         Connection conn = null;
@@ -70,7 +70,7 @@ public class VideogiocoDAO {
         return lista;
     }
     
- // =================================================================
+    // =================================================================
     // METODI PER LE CATEGORIE DELLA HOMEPAGE
     // =================================================================
 
@@ -160,7 +160,7 @@ public class VideogiocoDAO {
                 java.sql.Blob blob = rs.getBlob("copertina");
                 if (blob != null && blob.length() > 0) {
                     byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                    String base64Image = java.util.Base64.getEncoder().encodeToString(imageBytes);
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
                     gioco.setBase64Copertina(base64Image);
                 }
             }
@@ -170,12 +170,12 @@ public class VideogiocoDAO {
         return gioco;
     }
     
- // Recupera la lista dei generi associati a un singolo videogioco
+    // Recupera la lista dei generi associati a un singolo videogioco
     public List<String> getGeneriByIdVideogioco(int idVideogioco) {
         List<String> generi = new ArrayList<>();
         String query = "SELECT nome_genere FROM videogioco_genere WHERE id_videogioco = ?";
         
-        try (Connection con = util.DBConnection.getConnection();
+        try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setInt(1, idVideogioco);
@@ -206,7 +206,7 @@ public class VideogiocoDAO {
             // blocchiamo il salvataggio automatico
             conn.setAutoCommit(false); 
 
-            ps = conn.prepareStatement(query, java.sql.Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, gioco.getTitolo());
             ps.setString(2, gioco.getDescrizione());
@@ -257,7 +257,7 @@ public class VideogiocoDAO {
         }
     }
 
- // Metodo per aggiornare un videogioco esistente e i suoi generi
+    // Metodo per aggiornare un videogioco esistente e i suoi generi
     public synchronized void doUpdate(Videogioco gioco, String[] generi) {
         Connection conn = null;
         PreparedStatement psUpdateGioco = null;
@@ -332,25 +332,25 @@ public class VideogiocoDAO {
         }
     }
     
-    //Ritiriamo un gioco dal mercato
+    // Ritiriamo un gioco dal mercato
     public synchronized boolean doDelete(int idVideogioco) {
-        java.sql.Connection conn = null;
-        java.sql.PreparedStatement ps = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
         int rows = 0;
 
         String query = "UPDATE Videogioco SET stato_approvazione = 'ELIMINATO' WHERE id_videogioco = ?";
 
         try {
-            conn = util.DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, idVideogioco);
             rows = ps.executeUpdate();
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Errore in VideogiocoDAO.doDelete: " + e.getMessage());
         } finally {
             try {
                 if (ps != null) ps.close();
-            } catch (java.sql.SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -358,8 +358,8 @@ public class VideogiocoDAO {
     }
     
     /**
-     	Recupera tutti i videogiochi presenti nel database, senza filtri sullo stato
-      	Funzionalità esclusiva per il pannello amministrativo.
+     * Recupera tutti i videogiochi presenti nel database, senza filtri sullo stato
+     * Funzionalità esclusiva per il pannello amministrativo.
      */
     public synchronized List<Videogioco> doRetrieveAllForAdmin() {
         List<Videogioco> lista = new ArrayList<>();
@@ -371,7 +371,7 @@ public class VideogiocoDAO {
         String query = "SELECT * FROM Videogioco ORDER BY id_videogioco DESC";
 
         try {
-            conn = util.DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
 
@@ -405,35 +405,33 @@ public class VideogiocoDAO {
         }
         return lista;
     }
-    
- 
-    
-    //Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
+
+    // Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
     public synchronized boolean doRestore(int idVideogioco) {
-        java.sql.Connection conn = null;
-        java.sql.PreparedStatement ps = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
         int rows = 0;
 
         String query = "UPDATE Videogioco SET stato_approvazione = 'APPROVATO' WHERE id_videogioco = ?";
 
         try {
-            conn = util.DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, idVideogioco);
             rows = ps.executeUpdate();
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Errore in VideogiocoDAO.doRestore: " + e.getMessage());
         } finally {
             try {
                 if (ps != null) ps.close();
-            } catch (java.sql.SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return rows > 0;
     }
 
-    //Aggiorna lo stato di approvazione di un videogioco (es. da IN_ATTESA a APPROVATO).
+    // Aggiorna lo stato di approvazione di un videogioco (es. da IN_ATTESA a APPROVATO).
     public synchronized boolean doUpdateStatus(int idVideogioco, String nuovoStato) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -442,7 +440,7 @@ public class VideogiocoDAO {
         String query = "UPDATE Videogioco SET stato_approvazione = ? WHERE id_videogioco = ?";
 
         try {
-            conn = util.DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, nuovoStato);
             ps.setInt(2, idVideogioco);
@@ -473,9 +471,8 @@ public class VideogiocoDAO {
             e.printStackTrace();
         }
     }
-    
 
-    //Verifica se un utente possiede già un determinato videogioco nella sua libreria
+    // Verifica se un utente possiede già un determinato videogioco nella sua libreria
     public boolean checkPossessoGioco(int idUtente, int idVideogioco) {
         boolean posseduto = false;
         String query = "SELECT 1 FROM libreria WHERE id_utente = ? AND id_videogioco = ?";
@@ -496,13 +493,12 @@ public class VideogiocoDAO {
         return posseduto;
     }
     
-    
- // Metodo per la ricerca AJAX
+    // Metodo per la ricerca AJAX
     public List<Videogioco> cercaPerTitoloAjax(String queryTesto) {
         List<Videogioco> risultati = new ArrayList<>();
-        String query = "SELECT id_videogioco, titolo, piattaforma FROM videogioco WHERE titolo LIKE ? LIMIT 5"; //LIMIT 5 lo usiamo per far uscire solo i primi 5 risultati
+        String query = "SELECT id_videogioco, titolo, piattaforma FROM videogioco WHERE titolo LIKE ? LIMIT 5";
         
-        try (Connection con = util.DBConnection.getConnection();
+        try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setString(1, "%" + queryTesto + "%");
@@ -522,8 +518,8 @@ public class VideogiocoDAO {
         return risultati;
     }
     
-    public java.util.List<Videogioco> filtraCatalogo(String piattaformeStr, String generiStr, String maxPrezzo, String ordinamento) {
-        java.util.List<Videogioco> list = new java.util.ArrayList<>();
+    public List<Videogioco> filtraCatalogo(String piattaformeStr, String generiStr, String maxPrezzo, String ordinamento) {
+        List<Videogioco> list = new ArrayList<>();
         
         // Usiamo DISTINCT per non avere cloni e "v" come alias per videogioco
         String query = "SELECT DISTINCT v.* FROM videogioco v "; 
@@ -559,7 +555,7 @@ public class VideogiocoDAO {
 
         // Filtro Generi
         if (hasGeneri) {
-        	arrayGeneri = generiStr.split(",");
+            arrayGeneri = generiStr.split(",");
             for (int i = 0; i < arrayGeneri.length; i++) {
                 query += " AND EXISTS (SELECT 1 FROM videogioco_genere vg WHERE vg.id_videogioco = v.id_videogioco AND vg.nome_genere = ?) ";
             }
@@ -583,8 +579,8 @@ public class VideogiocoDAO {
             query += " ORDER BY v.id_videogioco DESC";
         }
 
-        try (java.sql.Connection con = util.DBConnection.getConnection();
-             java.sql.PreparedStatement ps = con.prepareStatement(query)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
 
             int paramIndex = 1; // Contatore per i punti interrogativi
             
@@ -603,7 +599,7 @@ public class VideogiocoDAO {
                 }
             }
 
-            try (java.sql.ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Videogioco v = new Videogioco();
                     v.setIdVideogioco(rs.getInt("id_videogioco")); 
@@ -615,13 +611,13 @@ public class VideogiocoDAO {
                     java.sql.Blob blob = rs.getBlob("copertina");
                     if (blob != null) {
                         byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                        v.setBase64Copertina(java.util.Base64.getEncoder().encodeToString(imageBytes));
+                        v.setBase64Copertina(Base64.getEncoder().encodeToString(imageBytes));
                     }
                     
                     list.add(v);
                 }
             }
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Errore SQL nella ricerca avanzata: " + e.getMessage());
         }
         return list;
@@ -685,6 +681,7 @@ public class VideogiocoDAO {
                     Videogioco v = new Videogioco();
                     v.setIdVideogioco(rs.getInt("id_videogioco"));
                     v.setTitolo(rs.getString("titolo"));
+                    v.setDescrizione(rs.getString("descrizione"));
                     v.setPrezzoBase(rs.getDouble("prezzo_base"));
                     v.setScontoAttivo(rs.getInt("sconto_attivo"));
                     v.setPiattaforma(rs.getString("piattaforma"));
@@ -692,7 +689,7 @@ public class VideogiocoDAO {
                     java.sql.Blob blob = rs.getBlob("copertina");
                     if (blob != null) {
                         byte[] imageBytes = blob.getBytes(1, (int) blob.length());
-                        v.setBase64Copertina(java.util.Base64.getEncoder().encodeToString(imageBytes));
+                        v.setBase64Copertina(Base64.getEncoder().encodeToString(imageBytes));
                     }
                     lista.add(v);
                 }
@@ -702,6 +699,9 @@ public class VideogiocoDAO {
         }
         return lista;
     }
-}
-    
 
+    // Alias per retrocompatibilità e chiamate dai Servlet
+    public List<Videogioco> getWishlistByUtente(int idUtente) {
+        return getWishlistUtente(idUtente);
+    }
+}

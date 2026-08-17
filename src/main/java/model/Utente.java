@@ -22,6 +22,7 @@ public class Utente {
     private Date dataUltimoGiroRuota;
     private String generePreferito;
     private String nomeStudioSviluppo; // Attributo specifico per gli sviluppatori
+    private String bio;
     
     // Dati per il questionario
     private String badgePersonalita;
@@ -52,6 +53,17 @@ public class Utente {
         this.dataUltimoGiroRuota = dataUltimoGiroRuota;
         this.generePreferito = generePreferito;
         this.nomeStudioSviluppo = nomeStudioSviluppo;
+    }
+
+    public Utente(int idUtente, String email, String nome, String cognome, String via, String cap,
+            String citta, String ruolo, String nickname, String passwordHash, int saldoRotelline,
+            Date dataUltimoGiroRuota, String generePreferito, String nomeStudioSviluppo, String bio,
+            String badgePersonalita, String avatarAttivo, String titoloAttivo) {
+        this(idUtente, email, nome, cognome, via, cap, citta, ruolo, nickname, passwordHash, saldoRotelline, dataUltimoGiroRuota, generePreferito, nomeStudioSviluppo);
+        this.bio = bio;
+        this.badgePersonalita = badgePersonalita;
+        this.avatarAttivo = avatarAttivo;
+        this.titoloAttivo = titoloAttivo;
     }
 
     public int getIdUtente() {
@@ -166,18 +178,41 @@ public class Utente {
         this.nomeStudioSviluppo = nomeStudioSviluppo;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBadgePersonalita() {
+        return badgePersonalita;
+    }
+
+    public void setBadgePersonalita(String badgePersonalita) {
+        this.badgePersonalita = badgePersonalita;
+    }
+
+    //getter e setter negozio
+    public String getAvatarAttivo() {
+        return avatarAttivo;
+    }
+
+    public void setAvatarAttivo(String avatarAttivo) {
+        this.avatarAttivo = avatarAttivo;
+    }
+
+    public String getTitoloAttivo() {
+        return titoloAttivo;
+    }
+
+    public void setTitoloAttivo(String titoloAttivo) {
+        this.titoloAttivo = titoloAttivo;
+    }
+
     @Override
     public String toString() {
         return "Utente [idUtente=" + idUtente + ", email=" + email + ", nickname=" + nickname + ", ruolo=" + ruolo + "]";
     }
-    
-    public String getBadgePersonalita() { return badgePersonalita; }
-    public void setBadgePersonalita(String badgePersonalita) { this.badgePersonalita = badgePersonalita; }
-    
-    //getter e setter negozio
-    public String getAvatarAttivo() { return avatarAttivo; }
-    public void setAvatarAttivo(String avatarAttivo) { this.avatarAttivo = avatarAttivo; }
-
-    public String getTitoloAttivo() { return titoloAttivo; }
-    public void setTitoloAttivo(String titoloAttivo) { this.titoloAttivo = titoloAttivo; }
 }

@@ -6,6 +6,8 @@ public class Libreria implements Serializable {
 
     private int idUtente;
     private int idVideogioco;
+    private int idGioco;
+    private String titoloGioco;
     private String statoAvanzamento;
     private String productKeyPosseduta;
 
@@ -52,5 +54,13 @@ public class Libreria implements Serializable {
 
     public void setVideogioco(Videogioco videogioco) {
         this.videogioco = videogioco;
+    }
+    
+    public int getIdGioco() {
+        return idGioco;
+    }
+    
+    public String getTitoloGioco() {
+        return titoloGioco;
     }
 }

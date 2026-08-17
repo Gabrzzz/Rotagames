@@ -49,6 +49,7 @@ public class UtenteDAO {
                 utente.setBadgePersonalita(rs.getString("badge_personalita"));
                 utente.setTitoloAttivo(rs.getString("titolo_attivo"));
                 utente.setAvatarAttivo(rs.getString("avatar_attivo"));
+                utente.setBio(rs.getString("bio"));
             }
 
         } catch (SQLException e) {
@@ -186,7 +187,7 @@ public class UtenteDAO {
     // Metodo per il controllo AJAX del Nickname
     public boolean checkNicknameEsistente(String nickname) {
         String query = "SELECT id_utente FROM utente WHERE nickname = ?";
-        try (Connection con = util.DBConnection.getConnection();
+        try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
             
             ps.setString(1, nickname);
@@ -269,13 +270,78 @@ public class UtenteDAO {
                 utente.setBadgePersonalita(rs.getString("badge_personalita"));
                 utente.setTitoloAttivo(rs.getString("titolo_attivo"));
                 utente.setAvatarAttivo(rs.getString("avatar_attivo"));
+                utente.setBio(rs.getString("bio"));
             }
         } catch (SQLException e) {
             System.err.println("Errore in UtenteDAO.doRetrieveById: " + e.getMessage());
         }
         return utente;
     }
+
+    // Metodo per aggiornare l'avatar attivo dell'utente
+    public boolean doUpdateAvatar(int idUtente, String avatar) {
+        String query = "UPDATE Utente SET avatar_attivo = ? WHERE id_utente = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, avatar);
+            ps.setInt(2, idUtente);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Errore in UtenteDAO.doUpdateAvatar: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //metodo per aggiornare la bio dell'utente
+    public boolean doUpdateBio(int idUtente, String bio) {
+        String query = "UPDATE Utente SET bio = ? WHERE id_utente = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, bio);
+            ps.setInt(2, idUtente);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Errore in UtenteDAO.doUpdateBio: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean doUpdateNickname(int idUtente, String nuovoNickname) {
+        boolean esito = false;
+        String query = "UPDATE Utente SET nickname = ? WHERE id_utente = ?";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, nuovoNickname);
+            ps.setInt(2, idUtente);
+            
+            esito = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return esito;
+    }
+
+    public boolean doUpdateTitoloAttivo(int idUtente, String nuovoTitolo) {
+        boolean esito = false;
+        String query = "UPDATE Utente SET titolo_attivo = ? WHERE id_utente = ?";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setString(1, nuovoTitolo);
+            ps.setInt(2, idUtente);
+            
+            esito = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return esito;
+    }
+    
 }
-
-
-
