@@ -32,7 +32,7 @@ public class GestioneGiochiServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Fondamentale se si incollano testi copiati dal web con accenti o simboli!
+        
         request.setCharacterEncoding("UTF-8"); 
         
         HttpSession session = request.getSession();
@@ -56,7 +56,6 @@ public class GestioneGiochiServlet extends HttpServlet {
                 
             } else if (azione.equals("aggiungi") || azione.equals("modifica")) {
                 
-                // HO UNITO LE DUE LOGICHE: Fanno esattamente la stessa cosa!
                 Videogioco gioco = new Videogioco();
                 
                 if (azione.equals("modifica")) {
@@ -68,7 +67,7 @@ public class GestioneGiochiServlet extends HttpServlet {
                 String descrizione = request.getParameter("descrizione");
                 String requisiti = request.getParameter("requisitiSistema");
 
-                // TAGLIO SICURO PER DATABASE: Limita a 250 caratteri (standard VARCHAR)
+                // TAGLIO SICURO PER DATABASE: Limita a 250 caratteri 
                 if (titolo != null && titolo.length() > 100) titolo = titolo.substring(0, 100);
                 if (descrizione != null && descrizione.length() > 250) descrizione = descrizione.substring(0, 250);
                 if (requisiti != null && requisiti.length() > 250) requisiti = requisiti.substring(0, 250);
@@ -81,9 +80,9 @@ public class GestioneGiochiServlet extends HttpServlet {
                 String[] piattaformeSelezionate = request.getParameterValues("piattaforma");
                 gioco.setPiattaforma((piattaformeSelezionate != null) ? String.join(", ", piattaformeSelezionate) : "Non specificata");                
                 
-                // 3. Acquisizione Numeri (Con fix per chi scrive il prezzo con la virgola)
+                // 3. Acquisizione Numeri 
                 String prezzoStr = request.getParameter("prezzoBase");
-                if (prezzoStr != null) prezzoStr = prezzoStr.replace(",", "."); // Fix virgola
+                if (prezzoStr != null) prezzoStr = prezzoStr.replace(",", ".");
                 gioco.setPrezzoBase(Double.parseDouble(prezzoStr));
                 
                 String scontoStr = request.getParameter("scontoAttivo");
@@ -127,16 +126,30 @@ public class GestioneGiochiServlet extends HttpServlet {
                 dao.doDelete(id);
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return;
+                
             } else if (azione.equals("ripristina")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 dao.doRestore(id);
+                response.sendRedirect("GestioneGiochiServlet?azione=lista");
+                return;
+                
+            // APPROVAZIONI PER GLI SVILUPPATORI
+            } else if (azione.equals("approva")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                dao.doUpdateStatus(id, "APPROVATO");
+                response.sendRedirect("GestioneGiochiServlet?azione=lista");
+                return;
+                
+            } else if (azione.equals("rifiuta")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                // Lo mettiamo in ELIMINATO, così sparisce dallo store ma resta visibile allo sviluppatore come "Ritirato/Rifiutato"
+                dao.doUpdateStatus(id, "ELIMINATO"); 
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
                 return;
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-            // Prepariamo l'errore ESATTO da far leggere a schermo per farti capire cosa si è rotto
             request.setAttribute("erroreForm", "ERRORE SALVATAGGIO: Controlla che il testo non sia troppo lungo per il tuo database o che i numeri siano corretti! Dettaglio: " + e.getMessage());
             
             // Rimettiamo l'utente sul form che stava compilando, per non fargli perdere i dati

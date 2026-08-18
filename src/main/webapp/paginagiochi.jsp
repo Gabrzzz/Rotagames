@@ -61,11 +61,10 @@
 <%-- BOTTONI AZIONE (Carrello e Wishlist) --%>
     <div class="action-buttons-wrapper">
         
-        <form action="CartServlet" method="post" style="margin: 0; flex: 1;">
-            <input type="hidden" name="azione" value="aggiungi">
-            <input type="hidden" name="idVideogioco" value="<%= gioco.getIdVideogioco() %>">
-            <button type="submit" class="btn-cart">Aggiungi al Carrello 🛒</button>
-        </form>
+		<button type="button" class="btn-cart" style="flex: 1;" 
+                onclick="apriModalPiattaforma(<%= gioco.getIdVideogioco() %>, '<%= gioco.getPiattaforma().replace("'", "\\'") %>')">
+            Aggiungi al Carrello 🛒
+        </button>
 
         <%-- Mostriamo il cuoricino solo se l'utente è loggato --%>
         <% if (utenteLoggato != null) { 
@@ -117,6 +116,28 @@
     </div>
 
 </div><%-- fine store-container --%>
+
+<!-- Modal Selezione Piattaforma -->
+    <div id="modalPiattaforma" class="platform-overlay">
+        <div class="platform-modal">
+            <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
+            <h2>Scegli le Piattaforme</h2>
+            <p>Spunta le versioni che desideri aggiungere al carrello:</p>
+            
+            <div id="platformButtonsContainer" class="platform-checkbox-container"></div>
+
+            <button type="button" class="btn-checkout" onclick="inviaPiattaformeMultiple()">Aggiungi Selezionate 🛒</button>
+
+            <form id="formAggiungiCarrello" action="CartServlet" method="post" class="hidden-form">
+                <input type="hidden" name="azione" value="aggiungi">
+                <input type="hidden" name="idVideogioco" id="modalIdVideogioco" value="">
+                <input type="hidden" name="piattaforma" id="modalPiattaformaScelta" value="">
+            </form>
+        </div>
+    </div>
+
+    <!-- Script per far funzionare il carrello e la wishlist -->
+    <script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 
     <%-- SCRIPT AJAX PER IL CUORICINO DELLA WISHLIST --%>
     <script src="${pageContext.request.contextPath}/js/wishlist.js"></script>

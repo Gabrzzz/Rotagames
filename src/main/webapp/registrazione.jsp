@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% String isDev = request.getParameter("dev"); %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +42,18 @@
             <%-- Vincoli password: min 6, max 20 caratteri --%>
             <input type="password" name="password" placeholder="Password (6-20 caratteri)" minlength="6" maxlength="20" required>
             
+			<%-- SEZIONE SVILUPPATORE --%>
+            <div style="text-align: left; margin: 15px 0;">
+                <label style="color: #ccc; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9em;">
+                    <input type="checkbox" name="isSviluppatore" id="isSviluppatoreCheckbox" style="width: auto; margin: 0;" <%= "true".equals(isDev) ? "checked" : "" %>>
+                    Voglio registrarmi come Sviluppatore
+                </label>
+            </div>
+            
+            <div id="studioSviluppoContainer" style="display: <%= "true".equals(isDev) ? "block" : "none" %>;">
+                <input type="text" name="nomeStudio" id="nomeStudioInput" placeholder="Nome del tuo Studio di Sviluppo (Es. Epic Games)" maxlength="100" <%= "true".equals(isDev) ? "required" : "" %>>
+            </div>
+            
             <input type="submit" value="REGISTRATI">
         </form>
         
@@ -48,6 +62,7 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/js/registrazione.js"></script>
+
 
 <jsp:include page="footer.jsp" />
 

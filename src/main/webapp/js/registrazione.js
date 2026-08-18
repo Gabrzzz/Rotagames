@@ -60,6 +60,24 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error('Errore AJAX Nickname:', error));
     });
 
+    // --- GESTIONE CHECKBOX SVILUPPATORE ---
+    const devCheckbox = document.getElementById('isSviluppatoreCheckbox');
+    const studioContainer = document.getElementById('studioSviluppoContainer');
+    const studioInput = document.getElementById('nomeStudioInput');
+
+    if (devCheckbox) {
+        devCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                studioContainer.style.display = 'block';
+                studioInput.required = true;
+            } else {
+                studioContainer.style.display = 'none';
+                studioInput.required = false;
+                studioInput.value = ''; // Pulisce il campo se l'utente cambia idea
+            }
+        });
+    }
+
     // --- BLOCCO DEL FORM ---
     formRegistrazione.addEventListener("submit", function(event) {
         if (!emailValida || !nicknameValido) {

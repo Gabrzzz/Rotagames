@@ -250,6 +250,10 @@ header {
     overflow: hidden;
 }
 
+/* Colori testo Header per Pannello Dev */
+.header-admin-text-dev { color: #FFD700; }
+.admin-link-dev { color: #FFD700; }
+
 /* FOOTER */
 .footer{
 	text-align: center; 
@@ -681,7 +685,7 @@ header {
 }
 
 /* =========================================
-   7. PANNELLO AMMINISTRATORE (admin_dashboard.jsp)
+   7. PANNELLO AMMINISTRATORE E SVILUPPATORE (admin_dashboard.jsp)
    ========================================= */
 
 /* --- Card e Griglia Dashboard --- */
@@ -932,6 +936,70 @@ header {
 .btn-approve:hover {
     background-color: #e6b800;
     box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+}
+
+/* =========================================
+   PANNELLO SVILUPPATORE (Modifiche estetiche Admin)
+   ========================================= */
+
+/* Colori specifici per le Card Statistiche Dev */
+.dev-stat-card-gold { border-bottom-color: #FFD700; }
+.dev-stat-card-gold .num { color: #FFD700; }
+
+.dev-stat-card-green { border-bottom-color: #00FF7F; }
+.dev-stat-card-green .num { color: #00FF7F; }
+
+.dev-stat-card-blue { border-bottom-color: #00E5FF; }
+.dev-stat-card-blue .num { color: #00E5FF; }
+
+/* Bottoni principali stile Dev (Giallo Oro) */
+.btn-dev-action {
+    border-color: #FFD700;
+    color: #FFD700;
+}
+.btn-dev-action:hover {
+    background-color: #FFD700;
+    color: #030D1A;
+}
+
+.btn-dev-add {
+    background-color: #FFD700;
+    color: #000;
+}
+.btn-dev-add:hover {
+    background-color: #e6c200;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Colori specifici per la tabella (Vendite, Ricavi, Stato) */
+.dev-table-sales {
+    color: #00FF7F;
+    font-weight: bold;
+}
+.dev-table-revenue {
+    color: #00E5FF;
+    font-weight: bold;
+}
+
+/* Badge di stato per l'approvazione dei giochi */
+.badge-approved {
+    color: #00FF7F;
+    font-weight: bold;
+}
+.badge-pending {
+    color: #FFD700;
+    font-weight: bold;
+}
+.badge-rejected {
+    color: #FF4444;
+    font-weight: bold;
+}
+
+/* Avvisi nei form Dev */
+.dev-form-notice {
+    color: #FFD700;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 /* =======================================================
@@ -2857,7 +2925,7 @@ input.remember-checkbox {
         width: 100%;
     }
 
-    /* Posizioniamo la X per chiudere più comodamente rispetto al nuovo padding */
+    /* Posizioniamo la X per chiudere piï¿½ comodamente rispetto al nuovo padding */
     .wheel-close-btn {
         top: 10px;
         right: 10px;
@@ -2910,7 +2978,7 @@ input.remember-checkbox {
         height: auto;
     }
 
-    /* Riorganizza i controlli del prezzo e bottoni se lo schermo è minuscolo */
+    /* Riorganizza i controlli del prezzo e bottoni se lo schermo ï¿½ minuscolo */
     .cart-item-actions {
         flex-wrap: wrap;
         justify-content: center;

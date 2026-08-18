@@ -140,7 +140,7 @@ public class VideogiocoDAO {
     
     public Videogioco doRetrieveById(int id) {
         Videogioco gioco = null;
-        String query = "SELECT * FROM videogioco WHERE id_videogioco = ?";
+        String query = "SELECT * FROM Videogioco WHERE id_videogioco = ?";
         
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -152,16 +152,23 @@ public class VideogiocoDAO {
                 gioco = new Videogioco();
                 gioco.setIdVideogioco(rs.getInt("id_videogioco"));
                 gioco.setTitolo(rs.getString("titolo"));
+                gioco.setDescrizione(rs.getString("descrizione"));
                 gioco.setPrezzoBase(rs.getDouble("prezzo_base"));
                 gioco.setScontoAttivo(rs.getInt("sconto_attivo"));
-                gioco.setDescrizione(rs.getString("descrizione"));
                 gioco.setPiattaforma(rs.getString("piattaforma"));
+                gioco.setRequisitiSistema(rs.getString("requisiti_sistema"));
+                gioco.setStatoApprovazione(rs.getString("stato_approvazione"));
                 
                 java.sql.Blob blob = rs.getBlob("copertina");
                 if (blob != null && blob.length() > 0) {
                     byte[] imageBytes = blob.getBytes(1, (int) blob.length());
                     String base64Image = Base64.getEncoder().encodeToString(imageBytes);
                     gioco.setBase64Copertina(base64Image);
+                }
+                
+                int idSviluppatore = rs.getInt("id_sviluppatore");
+                if (!rs.wasNull()) { 
+                    gioco.setIdSviluppatore(idSviluppatore);
                 }
             }
         } catch (SQLException e) {
@@ -197,13 +204,11 @@ public class VideogiocoDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione, copertina) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione, copertina, id_sviluppatore) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = DBConnection.getConnection();
-            
-            // blocchiamo il salvataggio automatico
             conn.setAutoCommit(false); 
 
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -216,9 +221,16 @@ public class VideogiocoDAO {
             ps.setString(6, gioco.getRequisitiSistema());
             ps.setString(7, gioco.getStatoApprovazione());
             ps.setBytes(8, gioco.getCopertina());
+            
+            //Gestione ID Sviluppatore
+            if (gioco.getIdSviluppatore() != null) {
+                ps.setInt(9, gioco.getIdSviluppatore());
+            } else {
+                ps.setNull(9, java.sql.Types.INTEGER);
+            }
 
             ps.executeUpdate();
-
+            
             // Recuperiamo l'ID del nuovo videogioco
             rs = ps.getGeneratedKeys();
             int nuovoId = 0;
@@ -237,7 +249,7 @@ public class VideogiocoDAO {
                     }
                 }
             }
-
+            
             // salvataggio finale
             conn.commit(); 
 
@@ -251,9 +263,7 @@ public class VideogiocoDAO {
                 if (rs != null) rs.close();
                 if (ps != null) ps.close();
                 if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            } catch (SQLException e) { e.printStackTrace(); }
         }
     }
 
@@ -264,36 +274,53 @@ public class VideogiocoDAO {
         PreparedStatement psDeleteGeneri = null;
         PreparedStatement psInsertGeneri = null;
 
-        // Query dinamica per il gioco: se carichiamo una copertina nuova, la aggiorniamo.
-        String query;
         boolean aggiornaCopertina = (gioco.getCopertina() != null && gioco.getCopertina().length > 0);
-        
-        if (aggiornaCopertina) {
-            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, copertina=? WHERE id_videogioco=?";
+        boolean isSviluppatore = (gioco.getIdSviluppatore() != null); 
+
+        String query;
+
+        // Scegliamo la query esatta in base alle condizioni
+        if (isSviluppatore && aggiornaCopertina) {
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, stato_approvazione=?, copertina=? WHERE id_videogioco=? AND id_sviluppatore=?";
+        } else if (isSviluppatore && !aggiornaCopertina) {
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, stato_approvazione=? WHERE id_videogioco=? AND id_sviluppatore=?";
+        } else if (!isSviluppatore && aggiornaCopertina) {
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, stato_approvazione=?, copertina=? WHERE id_videogioco=?";
         } else {
-            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=? WHERE id_videogioco=?";
+            // Se non è sviluppatore (!isSviluppatore) e non aggiorna la copertina (!aggiornaCopertina)
+            query = "UPDATE Videogioco SET titolo=?, descrizione=?, prezzo_base=?, sconto_attivo=?, piattaforma=?, requisiti_sistema=?, stato_approvazione=? WHERE id_videogioco=?";
         }
 
         try {
             conn = DBConnection.getConnection();
-            
             conn.setAutoCommit(false);
 
-            // Aggiorna i dati base del gioco
             psUpdateGioco = conn.prepareStatement(query);
+            
+            // I primi 7 parametri sono uguali per tutte le query
             psUpdateGioco.setString(1, gioco.getTitolo());
             psUpdateGioco.setString(2, gioco.getDescrizione());
             psUpdateGioco.setDouble(3, gioco.getPrezzoBase());
             psUpdateGioco.setInt(4, gioco.getScontoAttivo());
             psUpdateGioco.setString(5, gioco.getPiattaforma());
             psUpdateGioco.setString(6, gioco.getRequisitiSistema());
+            psUpdateGioco.setString(7, gioco.getStatoApprovazione());
 
-            if (aggiornaCopertina) {
-                psUpdateGioco.setBytes(7, gioco.getCopertina());
+            // Inseriamo i parametri finali nello stesso ordine della query scelta
+            if (isSviluppatore && aggiornaCopertina) {
+                psUpdateGioco.setBytes(8, gioco.getCopertina());
+                psUpdateGioco.setInt(9, gioco.getIdVideogioco());
+                psUpdateGioco.setInt(10, gioco.getIdSviluppatore());
+            } else if (isSviluppatore && !aggiornaCopertina) {
                 psUpdateGioco.setInt(8, gioco.getIdVideogioco());
+                psUpdateGioco.setInt(9, gioco.getIdSviluppatore());
+            } else if (!isSviluppatore && aggiornaCopertina) {
+                psUpdateGioco.setBytes(8, gioco.getCopertina());
+                psUpdateGioco.setInt(9, gioco.getIdVideogioco());
             } else {
-                psUpdateGioco.setInt(7, gioco.getIdVideogioco());
+                psUpdateGioco.setInt(8, gioco.getIdVideogioco());
             }
+            
             psUpdateGioco.executeUpdate();
 
             // Elimina tutti i vecchi generi associati a questo gioco
@@ -312,23 +339,18 @@ public class VideogiocoDAO {
                     psInsertGeneri.executeUpdate();
                 }
             }
-
             conn.commit(); 
 
         } catch (SQLException e) {
-            if (conn != null) {
-                try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-            }
-            System.err.println("Errore in VideogiocoDAO.doUpdate: " + e.getMessage());
+            if (conn != null) { try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); } }
+            e.printStackTrace();
         } finally {
             try {
                 if (psUpdateGioco != null) psUpdateGioco.close();
                 if (psDeleteGeneri != null) psDeleteGeneri.close();
                 if (psInsertGeneri != null) psInsertGeneri.close();
                 if (conn != null) conn.close(); 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            } catch (SQLException e) { e.printStackTrace(); }
         }
     }
     
@@ -405,8 +427,85 @@ public class VideogiocoDAO {
         }
         return lista;
     }
+    
+    /**
+     * Recupera i videogiochi di uno sviluppatore INCLUDENDO le statistiche singole.
+     */
+    public synchronized List<Videogioco> doRetrieveBySviluppatore(int idSviluppatore) {
+        List<Videogioco> lista = new ArrayList<>();
+        
+        // Query che recupera il gioco, conta quante volte appare in 'composizione', e somma il prezzo d'acquisto
+        String query = "SELECT v.*, " +
+                       "COUNT(c.id_videogioco) AS copie_vendute, " +
+                       "COALESCE(SUM(c.prezzo_acquisto), 0) AS ricavi_generati " +
+                       "FROM Videogioco v " +
+                       "LEFT JOIN composizione c ON v.id_videogioco = c.id_videogioco " +
+                       "WHERE v.id_sviluppatore = ? " +
+                       "GROUP BY v.id_videogioco " +
+                       "ORDER BY v.id_videogioco DESC";
 
-    // Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            ps.setInt(1, idSviluppatore);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Videogioco gioco = new Videogioco();
+                    gioco.setIdVideogioco(rs.getInt("id_videogioco"));
+                    gioco.setTitolo(rs.getString("titolo"));
+                    gioco.setPrezzoBase(rs.getDouble("prezzo_base"));
+                    gioco.setScontoAttivo(rs.getInt("sconto_attivo"));
+                    gioco.setPiattaforma(rs.getString("piattaforma"));
+                    gioco.setStatoApprovazione(rs.getString("stato_approvazione"));
+                    gioco.setIdSviluppatore(rs.getInt("id_sviluppatore"));
+                    
+                    // Salviamo le statistiche generate al volo dalla query!
+                    gioco.setCopieVendute(rs.getInt("copie_vendute"));
+                    gioco.setRicaviGenerati(rs.getDouble("ricavi_generati"));
+                    
+                    lista.add(gioco);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.doRetrieveBySviluppatore: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    /**
+     * Calcola le statistiche di vendita per la Dashboard dello Sviluppatore.
+     * Restituisce un array: [0] = Totale Giochi, [1] = Copie Vendute, [2] = Ricavi Totali.
+     */
+    public double[] getStatisticheSviluppatore(int idSviluppatore) {
+        double[] stats = new double[3]; // [Giochi, Copie, Ricavi]
+        
+        String query = "SELECT " +
+                       "(SELECT COUNT(*) FROM videogioco WHERE id_sviluppatore = ?) AS totale_giochi, " +
+                       "(SELECT COUNT(*) FROM composizione c JOIN videogioco v ON c.id_videogioco = v.id_videogioco WHERE v.id_sviluppatore = ?) AS copie_vendute, " +
+                       "(SELECT SUM(c.prezzo_acquisto) FROM composizione c JOIN videogioco v ON c.id_videogioco = v.id_videogioco WHERE v.id_sviluppatore = ?) AS ricavi_totali";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            // Impostiamo l'ID per tutte e tre le sotto-query
+            ps.setInt(1, idSviluppatore);
+            ps.setInt(2, idSviluppatore);
+            ps.setInt(3, idSviluppatore);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    stats[0] = rs.getDouble("totale_giochi");
+                    stats[1] = rs.getDouble("copie_vendute");
+                    stats[2] = rs.getDouble("ricavi_totali");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in VideogiocoDAO.getStatisticheSviluppatore: " + e.getMessage());
+        }
+        return stats;
+    }
+    
+    //Aggiorna lo stato di un gioco da ELIMINATO a APPROVATO
     public synchronized boolean doRestore(int idVideogioco) {
         Connection conn = null;
         PreparedStatement ps = null;

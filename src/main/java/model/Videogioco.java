@@ -10,6 +10,8 @@ public class Videogioco {
     private String requisitiSistema;
     private String statoApprovazione;
     private Integer idSviluppatore;
+    private int copieVendute;
+    private double ricaviGenerati;
     private byte[] copertina;
     private String base64Copertina;
 
@@ -50,6 +52,12 @@ public class Videogioco {
         }
         return prezzoBase;
     }
+    
+    public int getCopieVendute() { return copieVendute; }
+    public void setCopieVendute(int copieVendute) { this.copieVendute = copieVendute; }
+
+    public double getRicaviGenerati() { return ricaviGenerati; }
+    public void setRicaviGenerati(double ricaviGenerati) { this.ricaviGenerati = ricaviGenerati; }
     
     public byte[] getCopertina() { return copertina; }
     public void setCopertina(byte[] copertina) { this.copertina = copertina; }

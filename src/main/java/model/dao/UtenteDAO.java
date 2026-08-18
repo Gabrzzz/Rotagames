@@ -71,8 +71,8 @@ public class UtenteDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO Utente (email, nome, cognome, ruolo, nickname, password_hash, saldo_rotelline) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Utente (email, nome, cognome, ruolo, nickname, password_hash, saldo_rotelline, nome_studio_sviluppo) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             conn = DBConnection.getConnection();
@@ -86,6 +86,9 @@ public class UtenteDAO {
             ps.setString(5, utente.getNickname());
             ps.setString(6, utente.getPasswordHash());
             ps.setInt(7, 0); // Il saldo iniziale delle rotelline è 0
+            
+            // Aggiunta l'impostazione per lo studio di sviluppo
+            ps.setString(8, utente.getNomeStudioSviluppo());
 
             ps.executeUpdate();
 

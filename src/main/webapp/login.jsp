@@ -51,16 +51,19 @@
             <input type="password" name="password" placeholder="Password" required>
             
             <div class="remember-me-container">
-    <label class="remember-me-label">
-        <input type="checkbox" name="ricordami" class="remember-checkbox" <%= !savedEmail.isEmpty() ? "checked" : "" %>> 
-        Ricordami
-    </label>
-</div>
+                <label class="remember-me-label">
+                    <input type="checkbox" name="ricordami" class="remember-checkbox" <%= !savedEmail.isEmpty() ? "checked" : "" %>> 
+                    Ricordami
+                </label>
+            </div>
+            
             <input type="submit" value="ENTRA">
         </form>
         
         <span class="link-text">Nuovo giocatore? <a href="registrazione.jsp">Registrati ora</a></span>
-    </div>
+        
+        <%-- NUOVO LINK PER GLI SVILUPPATORI --%>
+        <span class="link-text" style="margin-top: 10px;">Vuoi pubblicare i tuoi titoli? <a href="registrazione.jsp?dev=true" style="color: #FFD700;">Registrati come Sviluppatore</a></span>    </div>
 </div>
 
 <jsp:include page="footer.jsp" />

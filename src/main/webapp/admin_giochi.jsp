@@ -23,14 +23,12 @@
 </head>
 <body>
 
-<header>
-    <h1 class="header-logo-title">RotaGames 🎮 <span class="header-admin-text">| Admin</span></h1>
-    <div class="user-info">
-        <span class="user-rotelline">ADMIN: <%= admin.getNickname() %></span> |
-        <a href="AdminDashboardServlet" class="admin-link">Torna alla Dashboard</a> |
-        <a href="LogoutServlet" class="logout-link">Esci</a>
-    </div>
-</header>
+<jsp:include page="header.jsp">
+    <jsp:param name="tipo" value="backoffice" />
+    <jsp:param name="ruoloLabel" value="ADMIN" />
+    <jsp:param name="linkTesto" value="Torna alla Dashboard" />
+    <jsp:param name="linkUrl" value="AdminDashboardServlet" />
+</jsp:include>
 
 <div class="store-container">
 

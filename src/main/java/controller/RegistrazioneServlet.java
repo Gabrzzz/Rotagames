@@ -22,6 +22,10 @@ public class RegistrazioneServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
+        // parametri per lo sviluppatore
+        String isSviluppatore = request.getParameter("isSviluppatore");
+        String nomeStudio = request.getParameter("nomeStudio");
+        
         // Controllo sui vincoli della Password
         if (password == null || password.length() < 6 || password.length() > 20) {
             request.setAttribute("erroreReg", "Attenzione: La password deve avere tra i 6 e i 20 caratteri.");
@@ -57,10 +61,15 @@ public class RegistrazioneServlet extends HttpServlet {
         nuovoUtente.setCognome(cognome);
         nuovoUtente.setNickname(nickname);
         nuovoUtente.setEmail(email);
-        
-        // Applichiamo la funzione di hash
         nuovoUtente.setPasswordHash(HashUtil.toHash(password)); 
-        nuovoUtente.setRuolo("REGISTRATO"); 
+        
+        // Assegnazione Dinamica del Ruolo e dello Studio
+        if ("on".equals(isSviluppatore)) {
+            nuovoUtente.setRuolo("sviluppatore");
+            nuovoUtente.setNomeStudioSviluppo(nomeStudio);
+        } else {
+            nuovoUtente.setRuolo("REGISTRATO"); 
+        }
 
         dao.doSave(nuovoUtente);
         
