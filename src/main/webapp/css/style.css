@@ -31,13 +31,16 @@ header {
     z-index: 1000;
 }
 
-header h1 { 
-    margin: 0; 
-    color: #00E5FF; 
-    font-size: 1.8em; 
-    text-transform: uppercase; 
-    font-weight: 900; 
+.header-logo-title {
+    margin: 0;
+    color: inherit; 
+    font-size: 1.8em;
+    text-transform: uppercase;
+    font-weight: 900;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
 .user-info { text-align: right; }
@@ -60,8 +63,15 @@ header h1 {
 .btn-guest.solid { background-color: #00E5FF; color: #030D1A; }
 .btn-guest.solid:hover { background-color: #0088CC; color: #fff; border-color: #0088CC;}
 
-.logo-link {
+.logo-link,
+.logo-link:visited,
+.logo-link:active {
     text-decoration: none;
+    color: #00E5FF; 
+}
+
+.logo-link h1 {
+    color: inherit;
 }
 
 .header-nav-link {
@@ -111,7 +121,7 @@ header h1 {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 30px; /* Distanza dal logo */
+    margin-left: 30px; 
     margin-right: auto; 
     height: 45px; 
 }
@@ -650,8 +660,9 @@ header h1 {
 /* 	=================================
 	6. MODULI (Login / Registrazione)
 	================================= */
-.form-wrapper { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
-.form-container { background-color: #09172E; padding: 40px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 320px; }
+.form-wrapper { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 20px;}
+.form-container { background-color: #09172E; padding: 40px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 90%; 
+    max-width: 350px; }
 .form-container h2 { color: #00E5FF; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
 .form-container input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #5C6F8E; border-radius: 4px; background-color: #030D1A; color: #FFFFFF; box-sizing: border-box; outline: none; transition: border-color 0.3s;}
 .form-container input:focus { border-color: #00E5FF; }
@@ -754,7 +765,8 @@ header h1 {
 
 /* --- Form Admin: Dimensioni e Struttura --- */
 .admin-form-wrapper { min-height: auto; margin-top: 30px; }
-.admin-form-container { width: 600px; }
+.admin-form-container { width: 100%; 
+    max-width: 600px; }
 
 .admin-form-section {
     background-color: #030D1A; 
@@ -2616,4 +2628,308 @@ input.remember-checkbox {
 .profilo-colonna::-webkit-scrollbar-thumb {
     background: #00f2ff;
     border-radius: 3px;
+}
+
+/* =======================
+   MEDIA QUERIES (RESPONSIVE)
+   ======================= */
+
+@media (max-width: 992px) {
+    /* Impila tutto in verticale quando manca spazio */
+    header {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px; /* Spazio tra logo, barra e utente */
+    }
+
+    /* Centra la barra di ricerca */
+    .center-search-box {
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-container {
+        margin: 0;
+        width: 100%;
+        max-width: 350px; 
+    }
+
+    /* Evita che la barra attiva sbordi dallo schermo */
+    .search-container.active .search-inner-wrapper {
+        width: 100%;
+    }
+
+    /* Riordina la UI dell'utente affinch  non si accavalli */
+    .user-info {
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap; /* Manda a capo i bottoni se non c'  spazio */
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        line-height: 1.5; /* Migliora la leggibilit  se il testo va a capo */
+    }
+}
+
+/* =======================
+   MEDIA QUERIES (VETRINA)
+   ======================= */
+
+
+@media (max-width: 768px) {
+    .store-container {
+        padding: 30px 15px;     
+    }
+
+    .store-container h2 {
+        font-size: 1.6em;      
+        margin-bottom: 25px;
+    }
+
+    .games-grid {
+        gap: 20px;              
+    }
+}
+
+
+@media (max-width: 480px) {
+    .games-grid {
+        /* Forza 1 singola colonna per evitare che i 280px del minmax 
+           causino overflow su schermi da 320px/360px */
+        grid-template-columns: 1fr; 
+    }
+
+    .game-card {
+        padding: 15px;      
+    }
+
+    .game-cover {
+        height: 180px;          
+    }
+
+    .game-info h3 {
+        font-size: 1.3em;
+    }
+
+    /* Se i bottoni (Carrello, Dettagli, ecc.) sono troppo stretti, li incolonniamo */
+    .action-buttons-index {
+        flex-direction: column; 
+    }
+}
+
+/* =======================
+   MEDIA QUERIES (MODAL PIATTAFORME)
+   ======================= */
+
+@media (max-width: 480px) {
+    /* Riduciamo lo spazio vuoto interno per dare pi  respiro ai contenuti */
+    .platform-modal {
+        padding: 25px 20px; 
+    }
+
+    /* Riduciamo leggermente il titolo per evitare che vada a capo in modo errato */
+    .platform-modal h2 {
+        font-size: 1.4em;
+    }
+
+    /* Passiamo a una singola colonna per i bottoni delle piattaforme */
+    .platform-buttons-grid {
+        grid-template-columns: 1fr; 
+        gap: 10px;                  
+    }
+
+    /* Rendiamo i bottoni leggermente pi  grandi per facilitare il tocco (touch target) */
+    .btn-platform-choice {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+
+    /* Riposizioniamo la X di chiusura per adattarla al nuovo padding */
+    .platform-close-btn {
+        top: 10px;
+        right: 10px;
+    }
+}
+
+/* =======================
+   MEDIA QUERIES (BOTTONI)
+   ======================= */
+
+@media (max-width: 480px) {
+    .action-buttons-wrapper {
+        max-width: 100%; 
+        gap: 10px;      
+        flex-wrap: wrap; 
+    }
+
+    .btn-cart {
+        padding: 15px; 
+        font-size: 1em; 
+    }
+
+    .btn-wishlist {
+        
+        width: 50px;
+        height: 50px;
+        font-size: 1.5em;
+    }
+}
+
+/* =======================
+   7. MEDIA QUERIES (ADMIN DASHBOARD)
+   ======================= */
+
+@media (max-width: 768px) {
+    /* Rende le tabelle scrollabili orizzontalmente su mobile */
+    .admin-table {
+        display: block;       
+        overflow-x: auto;     
+        white-space: nowrap;  
+        border-radius: 0;     
+    }
+
+    /* Riorganizza i bottoni principali della Dashboard (es. Gestione Utenti, Ordini) */
+    .admin-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-admin {
+        width: 100%; 
+    }
+
+    /* Ottimizza i filtri di ricerca (admin_ordini.jsp) */
+    .admin-filter-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .btn-filter, .btn-reset {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (RUOTA DELLA FORTUNA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Riduciamo il padding interno del modal per recuperare spazio laterale */
+    .wheel-modal {
+        padding: 30px 15px;
+    }
+
+    /* Rimpiccioliamo la ruota in modo che entri perfettamente anche su schermi da 320px */
+    .wheel-container {
+        width: 240px;
+        height: 240px;
+        margin-bottom: 25px; 
+    }
+
+    /* Adattiamo il testo dentro gli spicchi (altrimenti sborderebbe) */
+    .spicchio span {
+        font-size: 13px; 
+    }
+    
+    .spicchio {
+        padding-right: 15px; 
+    }
+
+    /* Rimpiccioliamo leggermente la freccia per mantenerla proporzionata */
+    .wheel-pointer {
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 20px solid #00E5FF;
+        top: -10px;
+    }
+
+    /* Ottimizziamo il pulsante "GIRA!" per il touch */
+    .btn-spin {
+        padding: 12px 20px;
+        font-size: 1em;
+        width: 100%;
+    }
+
+    /* Posizioniamo la X per chiudere più comodamente rispetto al nuovo padding */
+    .wheel-close-btn {
+        top: 10px;
+        right: 10px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (CARRELLO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 768px) */
+@media (max-width: 768px) {
+    .cart-container {
+        width: 95%;      
+        padding: 20px;   
+        margin: 20px auto;
+    }
+
+    /* Impila la sezione dei dettagli (immagine/testo) sopra la sezione azioni (prezzo/bottoni) */
+    .cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    /* Allarga la barra delle azioni a tutto schermo per distanziare prezzo e bottoni */
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        background-color: #030D1A; 
+        padding: 15px;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    
+    .cart-item-details {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cart-item-cover {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100%;       
+        max-width: 250px;  
+        height: auto;
+    }
+
+    /* Riorganizza i controlli del prezzo e bottoni se lo schermo è minuscolo */
+    .cart-item-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .cart-item-price {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .cart-item-form-update {
+        margin-right: 0;
+    }
+
+    /* Centra il totale del carrello */
+    .cart-total {
+        text-align: center;
+    }
 }
