@@ -17,79 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/style.css">
     
-    <style>
-        /* stili per integrazione tema dark RotaGames */
-        .profilo-sezione select.titolo-select {
-            background-color: #0b132b !important;
-            color: #00d2ff !important;
-            border: 1px solid #00d2ff !important;
-            padding: 4px 8px !important;
-            border-radius: 6px !important;
-            font-size: 13px !important;
-            font-weight: bold !important;
-            cursor: pointer !important;
-            outline: none !important;
-        }
-
-        .profilo-sezione select.titolo-select option {
-            background-color: #0b132b !important;
-            color: #ffffff !important;
-        }
-
-        .profilo-sezione .btn-salva-titolo {
-            background-color: #00d2ff !important;
-            color: #0b132b !important;
-            border: none !important;
-            border-radius: 6px !important;
-            padding: 4px 8px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-        }
-
-        .profilo-sezione textarea.bio-dark {
-            width: 100% !important;
-            min-height: 80px !important;
-            padding: 8px !important;
-            font-family: inherit !important;
-            font-size: 13px !important;
-            line-height: 1.4 !important;
-            border: 1px solid #00d2ff !important;
-            border-radius: 6px !important;
-            resize: vertical !important;
-            box-sizing: border-box !important;
-            background-color: #0b132b !important;
-            color: #ffffff !important;
-            outline: none !important;
-        }
-
-        .profilo-sezione .btn-salva-bio {
-            width: 100% !important;
-            padding: 6px 12px !important;
-            background-color: #007bff !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-            margin-top: 6px !important;
-        }
-
-        .profilo-sezione .btn-salva-bio:hover {
-            background-color: #0056b3 !important;
-        }
-
-        .bio-mostrata-box {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border-left: 3px solid #00d2ff !important;
-            padding: 8px 10px !important;
-            border-radius: 4px !important;
-            text-align: left !important;
-            word-wrap: break-word !important;
-            white-space: pre-wrap !important;
-            font-size: 13px !important;
-            color: #dddddd !important;
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -239,7 +167,28 @@
         <%-- Badge Personalità --%>
         <div class="profilo-sezione">
             <h2>BADGE PERSONALITÀ</h2>
-            <p><%= (utenteProfilo != null && utenteProfilo.getBadgePersonalita() != null) ? utenteProfilo.getBadgePersonalita() : "Nessun badge ancora ottenuto." %></p>
+            
+            <% if (utenteProfilo != null && utenteProfilo.getBadgePersonalita() != null) { %>
+                <%-- L'utente ha il badge, lo mostriamo --%>
+                <p class="badge-text-highlight">
+                    🏆 <%= utenteProfilo.getBadgePersonalita() %>
+                </p>
+            <% } else { %>
+                <%-- L'utente NON ha il badge --%>
+                <p style="margin-bottom: 10px;">Nessun badge ancora ottenuto.</p>
+                
+                <%-- Mostriamo l'invito solo se è il proprietario del profilo --%>
+                <% if (isProprietario) { %>
+                    <div class="badge-cta-box">
+                        <p class="badge-cta-text">
+                            Scopri che tipo di videogiocatore sei! Completa il test per sbloccare il tuo badge esclusivo.
+                        </p>
+                        <a href="questionario.jsp" class="btn-badge-cta">
+                            Vai al Questionario 🎮
+                        </a>
+                    </div>
+                <% } %>
+            <% } %>
         </div>
 
         <%-- Wishlist --%>
