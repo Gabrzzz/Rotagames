@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         //Ruota fisicamente l'ingranaggio di 60 gradi
         angoloAttuale += 60;
         if (ingranaggio) {
-            ingranaggio.style.transform = `translateX(-50%) rotate(${angoloAttuale}deg)`;
+            ingranaggio.style.transform = ` rotate(${angoloAttuale}deg)`;
         }
 
         // Se c'è solo 1 gioco in tendenza, ferma

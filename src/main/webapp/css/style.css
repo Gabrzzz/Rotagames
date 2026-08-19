@@ -2142,9 +2142,6 @@ input.remember-checkbox {
 }
 
 
-
-
-
 /* =========================================
    16. WISHLIST
    ========================================= */
@@ -2203,7 +2200,7 @@ input.remember-checkbox {
     bottom: 50px; 
 }
 /* =========================================
-   STILI SLIDER ORIZZONTALI (Scontati, Meno 10ï¿½)
+   STILI SLIDER ORIZZONTALI (Scontati, Meno 10%)
    ========================================= */
 .horizontal-slider {
     display: flex;
@@ -2235,109 +2232,129 @@ input.remember-checkbox {
     flex: 0 0 280px; 
     scroll-snap-align: start; 
 }
-/* =========================================
-   NUOVO STILE ROTELLA DIMEZZATA (Tendenze)
-   ========================================= */
-.tendenza-section {
+/* Il contenitore principale che fa da "finestra" */
+.tendenza-section.hero-tendenza {
     position: relative;
     width: 100%;
+    height: 450px; 
+    border-radius: 12px;
+    overflow: hidden;
     margin-bottom: 40px;
-    overflow: hidden; /* Taglia tutto ciï¿½ che esce dalla sezione */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.rotella-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Box del singolo gioco sospeso sopra l'ingranaggio */
+/* Contenitore a tutto schermo per le card */
 .gioco-attivo-container {
-    position: relative;
-    width: 200px;  /* Proporzioni ottimali per 1 sola copertina */
-    height: 280px;
-    margin-bottom: -60px; /* Spinge la card leggermente "dentro" il raggio dell'ingranaggio */
-    z-index: 5; /* Forza il gioco a stare davanti all'ingranaggio */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-/* Stile base nascosto per tutte le copertine */
+/* Le card ora fanno da sfondo (cover) */
 .rotella-card {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-size: cover;
+    background-position: center 25%; /* Taglia l'immagine focalizzandosi sulla parte alta/centrale */
+    
+    /* Effetto di transizione morbida (Cross-Fade) */
     opacity: 0;
-    pointer-events: none;
-    transform: scale(0.9) translateY(15px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    background-color: #1a1a1a;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-    overflow: hidden;
-    border: 2px solid #00E5FF; /* Dettaglio neon azzurro coordinato */
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s;
+    z-index: 1;
 }
 
-/* Stile per la card attiva (l'unica visibile) */
+/* Solo la card attiva diventa visibile */
 .rotella-card.active {
     opacity: 1;
-    pointer-events: auto;
-    transform: scale(1) translateY(0);
+    visibility: visible;
+    z-index: 2;
 }
 
-.rotella-card img {
-    width: 100%;
-    height: 82%;
-    object-fit: cover;
+/* Gradiente scuro sopra l'immagine per far leggere il testo */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(4,20,44,0.95) 0%, rgba(4,20,44,0.3) 50%, rgba(4,20,44,0.8) 100%);
+    z-index: 3;
 }
 
-.gioco-titolo-tendenza {
-    height: 18%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 0 5px;
+/* Posizione del testo e del bottone in basso a sinistra */
+.game-card-link-hero {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 4;
+    text-decoration: none;
 }
 
 .gioco-titolo-tendenza h3 {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #fff;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    color: #ffffff;
+    font-size: 3rem; /* Titolo molto grande */
+    margin: 0 0 15px 0;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+    max-width: 650px; /* Evita che il testo vada sopra la ruota */
+    white-space: normal;
 }
 
-/* Contenitore dell'ingranaggio: alto la metï¿½ del diametro dell'ingranaggio */
-.rotella-container {
-    position: relative;
-    width: 460px;
-    height: 230px; 
-    overflow: hidden; 
+/* Finto bottone per invogliare al click */
+.btn-scopri {
+    display: inline-block;
+    background-color: #00E5FF;
+    color: #0b132b;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
-/* L'ingranaggio centrato che sbuca dal fondo del box */
-.ingranaggio {
+.game-card-link-hero:hover .btn-scopri {
+    background-color: #ffffff;
+}
+
+/* =========================================
+   INGRANAGGIO ANIMATO
+   ========================================= */
+
+/* Posizioniamo il contenitore fisso a destra (centrato verticalmente) */
+.rotella-container.hero-ingranaggio {
     position: absolute;
-    top: 0;
-    left: 50%;
-    width: 460px;
-    height: 460px;
-    transform: translateX(-50%) rotate(0deg);
+    right: -200px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    z-index: 5;
+    
+    /* Previene ombre o contorni strani generati dal browser al click */
+    outline: none;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+/* L'ingranaggio mantiene la transizione elastica e fluida */
+.ingranaggio {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg); 
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1;
     cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none; 
 }
 
 .ingranaggio img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    pointer-events: none; 
 }
 
 /* =========================================
@@ -2826,7 +2843,7 @@ input.remember-checkbox {
     header {
         flex-direction: column;
         padding: 15px;
-        gap: 15px; /* Spazio tra logo, barra e utente */
+        gap: 15px; 
     }
 
     /* Centra la barra di ricerca */
@@ -2851,11 +2868,11 @@ input.remember-checkbox {
     .user-info {
         text-align: center;
         display: flex;
-        flex-wrap: wrap; /* Manda a capo i bottoni se non c'  spazio */
+        flex-wrap: wrap; 
         justify-content: center;
         align-items: center;
         gap: 10px;
-        line-height: 1.5; /* Migliora la leggibilit  se il testo va a capo */
+        line-height: 1.5; 
     }
 }
 
@@ -2964,7 +2981,7 @@ input.remember-checkbox {
 }
 
 /* =======================
-   7. MEDIA QUERIES (ADMIN DASHBOARD)
+   MEDIA QUERIES (ADMIN DASHBOARD)
    ======================= */
 
 @media (max-width: 768px) {
@@ -3118,5 +3135,508 @@ input.remember-checkbox {
     /* Centra il totale del carrello */
     .cart-total {
         text-align: center;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (CHECKOUT)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /*  Riduciamo il padding del form di pagamento per lasciare più spazio agli input */
+    .payment-form-container {
+        padding: 15px 10px;
+    }
+
+    /*  Trasformiamo la riga degli input (es. Scadenza e CVV) in una colonna */
+    .payment-flex-row {
+        flex-direction: column;
+        gap: 10px; 
+    }
+
+    /* Evitiamo che il testo della lista ordine si sovrapponga se i titoli sono lunghi */
+    .checkout-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .checkout-total-box {
+        text-align: center; /* Centriamo il totale per dargli maggiore risalto su mobile */
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (LIBRERIA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    .product-key-box {
+        font-size: 16px;       
+        padding: 15px;        
+        letter-spacing: 1px;   
+    }
+
+    .status-badge {
+        font-size: 11px;       
+        padding: 3px 6px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (STORICO ORDINI)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /*  Impiliamo i dettagli dell'ordine e le azioni (fattura) in verticale */
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 15px;               
+    }
+
+    /*  Resettiamo il margine visto che ora gli elementi sono incolonnati */
+    .no-invoice-text {
+        margin-left: 0; 
+        margin-top: 5px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (MODAL ORDINI E SCROLL)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Manda a capo i bottoni delle azioni se non c'è spazio */
+    .order-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn-order-action {
+        width: 100%; 
+        text-align: center;
+    }
+
+    /* Impila l'immagine dell'ordine e i dettagli in verticale */
+    .order-detail-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Riadatta l'immagine copertina per non sforare dallo schermo */
+    .order-detail-cover, 
+    .order-detail-empty-cover {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+    }
+
+    /*  Annulla il float del prezzo e lo centra sotto il titolo */
+    .order-detail-price {
+        float: none;
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (DETTAGLIO GIOCO E GALLERIA)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* Cambia il layout da orizzontale a verticale */
+    .dettaglio-immagini-wrapper {
+        flex-direction: column;
+        align-items: center; 
+        gap: 15px;
+    }
+
+    /* Rende fluido il contenitore della copertina */
+    .dettaglio-copertina-box {
+        width: 100%;
+        max-width: 300px; 
+    }
+
+    /* Adatta le immagini della copertina al nuovo contenitore */
+    .dettaglio-copertina-box .game-cover,
+    .dettaglio-copertina-img {
+        width: 100% !important;
+        height: auto !important; 
+        margin: 0 auto;
+    }
+
+    /*  Assicura che la galleria prenda tutto lo spazio sottostante */
+    .dettaglio-galleria-box {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (RICERCA AVANZATA E FILTRI)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 992px) */
+@media (max-width: 992px) {
+    /* Impila la sidebar dei filtri e i risultati in verticale */
+    .search-layout {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    /*  La sidebar diventa a tutta larghezza e perde l'effetto sticky */
+    .sidebar-filtri {
+        width: 100%;
+        position: static;      
+        height: auto;
+        max-height: none;      
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Rendiamo la griglia dinamica (invece di 3 fisse, decide il browser in base allo spazio) */
+    .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Riorganizza la barra superiore (Titolo + Menu a tendina per ordinare) */
+    .search-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .sort-filter-box {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Forza 1 singola colonna per i risultati di ricerca */
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Adegua la barra di ricerca centrale (se usata) */
+    .input-ricerca-centrale {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (PAGINE DI ERRORE)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 768px) */
+@media (max-width: 768px) {
+    .error-page-wrapper {
+        padding: 60px 20px; /* Riduciamo lo spazio vuoto sopra e sotto */
+    }
+
+    .error-code-title {
+        font-size: 4.5em;   /* Rimpiccioliamo un po' il codice di errore */
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    .error-page-wrapper {
+        padding: 40px 15px; 
+    }
+
+    .error-code-title {
+        font-size: 3.5em;   /* Dimensione perfetta per un telefono */
+    }
+
+    .error-subtitle {
+        font-size: 1.2em;   /* Adattiamo anche il sottotitolo */
+    }
+
+    .error-desc {
+        font-size: 1em;     /* Testo descrittivo standard */
+        margin-bottom: 30px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (MENU A TENDINA E CHECKBOX)
+   ========================================= */
+
+@media (max-width: 992px) {
+    /*  Centra il menu a tendina visto che l'header è ora in colonna */
+    .dropdown-menu {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%); /* Lo sposta esattamente al centro */
+        width: 100%;
+        min-width: 220px;
+    }
+
+    /* Ingrandisce i link per facilitare il tocco (UX Touch) */
+    .dropdown-item {
+        text-align: center; 
+        padding: 15px 20px; 
+        font-size: 1.05em;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Aumentiamo l'area di clic della checkbox "Ricordami" */
+    .remember-me-label {
+        font-size: 1em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+    input.remember-checkbox {
+        transform: scale(1.2); /* Ingrandisce un po' il quadratino della checkbox */
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (QUIZ STILE EVERHOOD)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi */
+@media (max-width: 768px) {
+    .quiz-question-text {
+        font-size: 2.5rem;    
+        margin-bottom: 40px;  
+    }
+
+    .quiz-options-horizontal {
+        gap: 40px;            /* Dimezza lo spazio orizzontale tra le risposte */
+    }
+
+    .quiz-option-btn {
+        font-size: 2rem;      /* Riduce il font delle risposte */
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti */
+@media (max-width: 480px) {
+    .quiz-question-text {
+        font-size: 1.8rem;    /* Dimensione sicura per evitare che la parola si spezzi */
+        margin-bottom: 30px;
+    }
+
+    .quiz-options-horizontal {
+        flex-direction: column; /* Impila le risposte in verticale per comodità di tocco */
+        gap: 20px;
+    }
+
+    .quiz-option-btn {
+        font-size: 1.5rem;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (WISHLIST E TOAST)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Rende il popup fluido e gli impedisce di toccare i bordi dello schermo */
+    .toast-message {
+        width: 90%;        
+        min-width: auto;     
+        font-size: 0.9em;
+        padding: 12px;
+        bottom: 20px;        
+    }
+
+    /* Modifica l'animazione finale per adattarsi alla nuova partenza */
+    .toast-message.show {
+        bottom: 40px; 
+    }
+
+    /*  Adatta il bottone della wishlist se lo spazio scarseggia */
+    .btn-wishlist-index {
+        width: 44px;         
+        font-size: 1.2em;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (SLIDER E HERO SECTION)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
+@media (max-width: 768px) {
+    /* Riduciamo l'altezza del banner Hero */
+    .tendenza-section.hero-tendenza {
+        height: 350px;
+    }
+
+    /* Riduciamo i margini interni per recuperare spazio */
+    .game-card-link-hero {
+        bottom: 25px;
+        left: 25px;
+    }
+
+    /* Rimpiccioliamo il font del titolo */
+    .gioco-titolo-tendenza h3 {
+        font-size: 2.2rem;
+        max-width: 90%; 
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Card dello slider orizzontale leggermente più strette */
+    .horizontal-slider .game-card {
+        flex: 0 0 240px; 
+    }
+
+    /* Banner Hero ancora più compatto per cellulari */
+    .tendenza-section.hero-tendenza {
+        height: 280px;
+        margin-bottom: 25px;
+    }
+
+    /* Margini ridotti al minimo indispensabile */
+    .game-card-link-hero {
+        bottom: 15px;
+        left: 15px;
+    }
+
+    /*  Titolo proporzionato per i telefoni */
+    .gioco-titolo-tendenza h3 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    /* Bottone "Scopri" più compatto */
+    .btn-scopri {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (INGRANAGGIO ANIMATO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
+@media (max-width: 768px) {
+    .rotella-container.hero-ingranaggio {
+        width: 300px;
+        height: 300px;
+        right: -150px; 
+    }
+}
+
+/* Ottimizzazione per Smartphone (sotto i 480px) */
+@media (max-width: 480px) {
+    .rotella-container.hero-ingranaggio {
+        width: 200px;
+        height: 200px;
+        right: -100px; 
+        top: 35%; 
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (PAGINA PROFILO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 992px) */
+@media (max-width: 992px) {
+    /* Annulliamo le colonne affiancate e lo scorrimento interno */
+    .profilo-layout {
+        flex-direction: column;
+        height: auto; 
+    }
+
+    .profilo-colonna {
+        overflow-y: visible; 
+        padding-right: 0;
+    }
+}
+
+/* Ottimizzazione per Smartphone (sotto i 768px) */
+@media (max-width: 768px) {
+    /* Centriamo l'header del profilo e impiliamo immagine e testi */
+    .profilo-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    /* Rimpiccioliamo drasticamente l'avatar per i telefoni */
+    .profilo-avatar-box {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profilo-titolo {
+        display: block; 
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    /* Rendiamo la tabella degli ordini scrollabile orizzontalmente */
+    .profilo-ordini-tabella {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /*  Riorganizziamo il modulo per cambiare la bio */
+    .profilo-bio-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+    
+    .profilo-bio-input {
+        max-width: 100%;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Riduciamo leggermente i font delle sezioni */
+    .profilo-sezione h2 {
+        font-size: 1.2em;
+    }
+
+    .profilo-nickname {
+        font-size: 1.8em;
+    }
+    
+    /* Riduce i margini per risparmiare spazio */
+    .profilo-header, .profilo-dati-privati, .profilo-sezione {
+        padding: 15px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (MODIFICA PROFILO E CTA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /*  Impiliamo il selettore del titolo e il bottone salva */
+    .profilo-sezione select.titolo-select {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        display: block !important;
+    }
+
+    .profilo-sezione .btn-salva-titolo {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /*  Riduciamo leggermente i margini del box invito (CTA) per recuperare spazio */
+    .badge-cta-box {
+        padding: 10px;
+    }
+
+    .badge-text-highlight {
+        font-size: 14px; 
     }
 }

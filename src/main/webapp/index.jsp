@@ -25,6 +25,7 @@
 <head>
 <meta charset="UTF-8">
 <title>RotaGames - Il tuo negozio di videogiochi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css?v=6">
 </head>
 <body>
@@ -34,43 +35,47 @@
 <div class="store-container">
 
     <h2 class="vetrina-title" style="text-align: center; margin-top: 30px;">In Tendenza</h2>
-    
-    <% if (giochiTendenza != null && !giochiTendenza.isEmpty()) { %>
-        <div class="tendenza-section">
-            <div class="rotella-wrapper">
-                
-                <div class="gioco-attivo-container">
-                    <% 
-                        int count = giochiTendenza.size();
-                        for (int i = 0; i < count; i++) { 
-                            Videogioco g = giochiTendenza.get(i);
-                    %>
-                        <div class="rotella-card <%= (i == 0) ? "active" : "" %>" data-index="<%= i %>">
-                            <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
-                                <div class="cover-container" style="height: 100%;">
-                                    <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
-                                        <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
-                                    <% } else { %>
-                                        <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
-                                    <% } %>
-                                </div>
-                                <div class="gioco-titolo-tendenza">
-                                    <h3><%= g.getTitolo() %></h3>
-                                </div>
-                            </a>
+
+<% if (giochiTendenza != null && !giochiTendenza.isEmpty()) { %>
+    <div class="tendenza-section hero-tendenza">
+        
+        <div class="gioco-attivo-container">
+            <% 
+                int count = giochiTendenza.size();
+                for (int i = 0; i < count; i++) { 
+                    Videogioco g = giochiTendenza.get(i);
+                    // Prepariamo la stringa dell'immagine di sfondo
+                    String bgImage = (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) 
+                                     ? "data:image/jpeg;base64," + g.getBase64Copertina() 
+                                     : "";
+            %>
+                <%-- La card ora fa da sfondo a tutto schermo --%>
+                <div class="rotella-card <%= (i == 0) ? "active" : "" %>" data-index="<%= i %>"
+                     style="background-image: url('<%= bgImage %>');">
+                    
+                    <%-- Sfumatura nera per non far "perdere" il testo e l'ingranaggio sullo sfondo --%>
+                    <div class="hero-overlay"></div>
+
+                    <%-- Testo in basso a sinistra --%>
+                    <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link-hero">
+                        <div class="gioco-titolo-tendenza">
+                            <h3><%= g.getTitolo() %></h3>
+                            <span class="btn-scopri">Scopri di più</span>
                         </div>
-                    <% } %>
+                    </a>
                 </div>
-                
-                <div class="rotella-container">
-                    <div class="ingranaggio" id="ingranaggio">
-                        <img src="${pageContext.request.contextPath}/images/ingranaggio.png" alt="Ingranaggio">
-                    </div>
-                </div>
-                
+            <% } %>
+        </div>
+        
+        <%-- L'ingranaggio posizionato in alto sopra tutto --%>
+        <div class="rotella-container hero-ingranaggio">
+            <div class="ingranaggio" id="ingranaggio">
+                <img src="${pageContext.request.contextPath}/images/ingranaggio.png" alt="Ingranaggio">
             </div>
         </div>
-    <% } %>
+        
+    </div>
+<% } %>
     <h2 class="vetrina-title">Offerte Speciali</h2>
     <div class="horizontal-slider">
         <% 
