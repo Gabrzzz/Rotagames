@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LibreriaDAO {
 
-	public List<Libreria> doRetrieveByUtente(int idUtente) {
+    public List<Libreria> doRetrieveByUtente(int idUtente) {
         List<Libreria> libreriaUtente = new ArrayList<>();
         
         // Questo "Set" ci serve come memoria per non aggiungere due volte lo stesso gioco anche se comprato per piattaforme diverse
@@ -66,6 +66,26 @@ public class LibreriaDAO {
         }
 
         return libreriaUtente;
+    }
+
+    
+    public boolean doUpdateStato(int idUtente, int idGioco, String nuovoStato) {
+        String query = "UPDATE libreria SET stato_avanzamento = ? WHERE id_utente = ? AND id_videogioco = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, nuovoStato);
+            ps.setInt(2, idUtente);
+            ps.setInt(3, idGioco);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     
 }

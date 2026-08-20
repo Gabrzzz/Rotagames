@@ -77,17 +77,17 @@ public class CheckoutServlet extends HttpServlet {
         // Passiamo il nuovo flag booleano al DAO
         boolean successo = dao.doSave(nuovoOrdine, carrello, richiediFattura);
 
-        
-        if (successo) {
+if (successo) {
             
             session.removeAttribute("carrello");
-            
-            // Rimuoviamo il coupon consumato dalla sessione così non rimane attivo sul prossimo acquisto
             session.removeAttribute("couponScontoPercentuale");
             
-            // Messaggio di successo e reindirizzamento alla libreria
-            request.setAttribute("messaggioSuccesso", "Pagamento completato! I giochi sono stati aggiunti al tuo ordine con le relative Product Key.");
-            request.getRequestDispatcher("libreria.jsp").forward(request, response);
+            //  Salviamo il messaggio in SESSIONE (così non si perde nel redirect)
+            session.setAttribute("messaggioSuccesso", "Pagamento completato! I giochi sono stati aggiunti alla tua libreria.");
+            
+            response.sendRedirect("LibreriaServlet");
+            return;
+            
         } else {
             // Errore nel DB
             request.setAttribute("erroreCheckout", "La transazione è fallita. Non ti è stato addebitato nulla, riprova più tardi.");

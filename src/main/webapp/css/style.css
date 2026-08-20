@@ -1464,6 +1464,43 @@ header {
     margin-bottom: 5px;
 }
 
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    user-select: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+/* Colore per "Da giocare" (Azzurro) */
+.status-da_giocare {
+    background-color: #00e5ff22;
+    color: #00e5ff;
+    border: 1px solid #00e5ff;
+}
+
+/* Colore per "Finito" (Verde) */
+.status-finito {
+    background-color: #00ff8822;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+}
+
+/* Colore per "Platinato" (Oro/Viola Platino) */
+.status-platinato {
+    background-color: #ffd70022;
+    color: #f7e4a8;
+    border: 1px solid #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.status-badge:hover {
+    transform: scale(1.08);
+}
+
 /* =========================================
    12. STORICO ORDINI (ordini.jsp)
    ========================================= */
