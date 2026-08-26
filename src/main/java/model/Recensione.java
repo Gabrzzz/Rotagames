@@ -9,6 +9,7 @@ public class Recensione {
     private int voto; // il voto va da 1 a 5
     private String testo;
     private Timestamp dataCreazione;
+    private String avatarUtente;
 
     public Recensione() {}
 
@@ -29,4 +30,12 @@ public class Recensione {
 
     public Timestamp getDataCreazione() { return dataCreazione; }
     public void setDataCreazione(Timestamp dataCreazione) { this.dataCreazione = dataCreazione; }
+    
+    public String getAvatarUtente(){
+        return avatarUtente;
+    }
+
+    public void setAvatarUtente(String avatarUtente){
+        this.avatarUtente = avatarUtente;
+    }
 }

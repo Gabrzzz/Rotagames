@@ -12,11 +12,11 @@ import util.DBConnection;
 
 public class RecensioneDAO {
 
-    public List<Recensione> doRetrieveByVideogioco(int idVideogioco) {
+	public List<Recensione> doRetrieveByVideogioco(int idVideogioco) {
         List<Recensione> lista = new ArrayList<>();
         
-        // Vengono selezionati i dati della recensione e vengono uniti al nickname dell'utente associato
-        String query = "SELECT r.id_recensione, r.id_videogioco, r.testo, r.voto, r.data_creazione, u.nickname " +
+        // CORREZIONE: Aggiunto u.avatar_attivo alla SELECT
+        String query = "SELECT r.id_recensione, r.id_videogioco, r.testo, r.voto, r.data_creazione, u.nickname, u.avatar_attivo " +
                        "FROM Recensione r " +
                        "JOIN Utente u ON r.id_utente = u.id_utente " +
                        "WHERE r.id_videogioco = ? " +
@@ -35,6 +35,7 @@ public class RecensioneDAO {
                 r.setNicknameUtente(rs.getString("nickname"));
                 r.setVoto(rs.getInt("voto"));
                 r.setTesto(rs.getString("testo"));
+                r.setAvatarUtente(rs.getString("avatar_attivo")); // Ora la colonna viene trovata correttamente!
                 
                 java.sql.Timestamp dataPubb = rs.getTimestamp("data_creazione");
                 if (dataPubb != null) {
@@ -96,4 +97,46 @@ public class RecensioneDAO {
         }
         return lista;
     }
+    
+    /*---------------------------------------------------------------------------------------------------
+       salva una nuova recensione nel database (collegandola all'utente e al videogioco in questione)
+      -------------------------------------------------------------------------------------------------------*/
+  public void doSave(Recensione recensione, int idUtente) {
+      String query = "INSERT INTO Recensione (id_videogioco, id_utente, voto, testo, data_creazione) " +
+                     "VALUES (?, ?, ?, ?, NOW())";
+
+      try (Connection con = DBConnection.getConnection();
+           PreparedStatement ps = con.prepareStatement(query)) {
+
+          ps.setInt(1, recensione.getIdVideogioco());
+          ps.setInt(2, idUtente);
+          ps.setInt(3, recensione.getVoto());
+          ps.setString(4, recensione.getTesto());
+
+          ps.executeUpdate();
+      } catch (SQLException e) {
+          System.err.println("Errore in RecensioneDAO.doSave: " + e.getMessage());
+      }
+  }
+  
+  /*---------------------------------------------------------------------------------------------------
+     controllo sul se un utente ha già lasciato una recensione per un determinato videogioco
+    -------------------------------------------------------------------------------------------------------*/
+public boolean giaRecensito(int idUtente, int idVideogioco) {
+   String query = "SELECT COUNT(*) FROM Recensione WHERE id_utente = ? AND id_videogioco = ?";
+   try (Connection con = DBConnection.getConnection();
+        PreparedStatement ps = con.prepareStatement(query)) {
+       
+       ps.setInt(1, idUtente);
+       ps.setInt(2, idVideogioco);
+       
+       ResultSet rs = ps.executeQuery();
+       if (rs.next()) {
+           return rs.getInt(1) > 0;
+       }
+   } catch (SQLException e) {
+       System.err.println("Errore in RecensioneDAO.giaRecensito: " + e.getMessage());
+   }
+   return false;
+}
 }

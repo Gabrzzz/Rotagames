@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ImmagineGiocoDAO {
 
-    //recupera le immagini collegate ad un gioco
+	//recupera le immagini collegate ad un gioco
     public List<ImmagineGioco> doRetrieveByGioco(int idVideogioco) {
         List<ImmagineGioco> lista = new ArrayList<>();
         String query = "SELECT * FROM immagine_gioco WHERE id_Videogioco = ?";
@@ -26,8 +26,19 @@ public class ImmagineGiocoDAO {
 
             while (rs.next()) {
                 ImmagineGioco img = new ImmagineGioco();
-                img.setIdImmagine(rs.getInt("idImmagine"));
-                img.setIdVideogioco(rs.getInt("id_Videogioco"));
+                
+                // Gestione flessibile per i nomi delle colonne
+                try {
+                    img.setIdImmagine(rs.getInt("id_immagine"));
+                } catch (SQLException e) {
+                    img.setIdImmagine(rs.getInt("idImmagine"));
+                }
+
+                try {
+                    img.setIdVideogioco(rs.getInt("id_videogioco"));
+                } catch (SQLException e) {
+                    img.setIdVideogioco(rs.getInt("id_Videogioco"));
+                }
 
                 java.sql.Blob blob = rs.getBlob("immagine");
                 if (blob != null) {
@@ -38,7 +49,7 @@ public class ImmagineGiocoDAO {
                 lista.add(img);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Errore in ImmagineGiocoDAO.doRetrieveByGioco: " + e.getMessage());
         }
         return lista;
     }

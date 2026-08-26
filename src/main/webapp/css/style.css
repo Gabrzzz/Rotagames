@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 /* =========================================
-   ROTAGAMES - FOGLIO DI STILE 
+   ROTAGAMES - FOGLIO DI STILE COMPLETO
    ========================================= */
 
-/* 	===========================
-	1. IMPOSTAZIONI BASE E BODY 
-	===========================	*/
+/*  ===========================
+    1. IMPOSTAZIONI BASE E BODY 
+    =========================== */
 body {
-    background-color: #030D1A; /* Blu scurissimo, quasi nero */
+    background-color: #030D1A;
     color: #FFFFFF;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/*	=======================
-	2. HEADER,NAVIGAZIONE e FOOTER
-	=======================	*/
+/*  =======================
+    2. HEADER, NAVIGAZIONE E FOOTER
+    ======================= */
 header {
     background-color: #09172E;
     padding: 20px 40px;
@@ -25,7 +26,6 @@ header {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -43,10 +43,10 @@ header {
     white-space: nowrap;
 }
 
-.user-info { text-align: right; }
+.user-info { 
+    text-align: right; 
+}
 
-
-/* Bottoni Guest */
 .btn-guest { 
     background-color: transparent; 
     color: #00E5FF; 
@@ -59,9 +59,22 @@ header {
     transition: 0.3s; 
     font-size: 0.9em;
 }
-.btn-guest:hover { background-color: #00E5FF; color: #030D1A; }
-.btn-guest.solid { background-color: #00E5FF; color: #030D1A; }
-.btn-guest.solid:hover { background-color: #0088CC; color: #fff; border-color: #0088CC;}
+
+.btn-guest:hover { 
+    background-color: #00E5FF; 
+    color: #030D1A; 
+}
+
+.btn-guest.solid { 
+    background-color: #00E5FF; 
+    color: #030D1A; 
+}
+
+.btn-guest.solid:hover { 
+    background-color: #0088CC; 
+    color: #fff; 
+    border-color: #0088CC;
+}
 
 .logo-link,
 .logo-link:visited,
@@ -81,9 +94,9 @@ header {
 }
 
 .header-logo-letter {
-    height: 1.1em;           /* Altezza proporzionata a una lettera maiuscola */
-    vertical-align: -8%;    /* Abbassa leggermente l'immagine per allinearla alla linea di base del testo */
-    margin-right: -16px;       /* Lascia un micro-spazio tra la rotella e la lettera 'o' */
+    height: 1.1em;
+    vertical-align: -8%;
+    margin-right: -16px;
 }
 
 .btn-wheel {
@@ -105,13 +118,9 @@ header {
     border-radius: 4px;
 }
 
-
-/* BARRA DI RICERCA A SCOMPARSA */
-
-
-/* --- CONTENITORE CENTRALE DELLA BARRA --- */
+/* --- BARRA DI RICERCA A SCOMPARSA --- */
 .center-search-box {
-    flex: 1; /* Dice alla barra di prendersi tutto lo spazio disponibile al centro */
+    flex: 1;
     max-width: 500px; 
     margin: 0 20px; 
     display: flex;
@@ -126,7 +135,6 @@ header {
     height: 45px; 
 }
 
-/* Bottone tondo con la lente */
 .search-toggle-btn {
     background-color: #04142C;
     color: #00E5FF;
@@ -141,7 +149,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute; /* Lo teniamo bloccato a sinistra */
+    position: absolute;
     left: 0;
     z-index: 2;
 }
@@ -153,10 +161,9 @@ header {
     transform: scale(1.05);
 }
 
-/* La barra che si allarga */
 .search-inner-wrapper {
     position: absolute;
-    left: 0; /* Si espande da sinistra verso destra */
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -166,7 +173,6 @@ header {
     border-radius: 25px; 
     padding: 5px;
     box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
-    
     width: 0;
     opacity: 0;
     pointer-events: none;
@@ -175,21 +181,18 @@ header {
     z-index: 1;
 }
 
-/* CLASSE ATTIVA (Quando si clicca la lente) */
 .search-container.active .search-inner-wrapper {
     width: 400px; 
     opacity: 1;
     pointer-events: auto;
 }
 
-/* Nasconde il bottone tondo iniziale quando la barra Ã¨ aperta */
 .search-container.active .search-toggle-btn {
     opacity: 0;
     pointer-events: none;
     transform: scale(0.5); 
 }
 
-/* Input testo */
 #searchBar {
     flex: 1;
     background: transparent;
@@ -204,7 +207,6 @@ header {
     color: #5C6F8E; 
 }
 
-/* Link Ricerca Avanzata */
 .btn-adv-search {
     color: #00E5FF;
     text-decoration: none;
@@ -220,7 +222,6 @@ header {
     color: #FFFFFF;
 }
 
-/* La X per chiudere */
 .search-close-btn {
     background: none;
     border: none;
@@ -232,14 +233,13 @@ header {
 }
 
 .search-close-btn:hover {
-    color: #FF4444; /* Diventa rosso al passaggio del mouse */
+    color: #FF4444;
 }
 
-/* Risultati Ajax */
 #searchResults {
     position: absolute; 
-    top: 60px; /* Sotto la barra */
-    left: 0; /* Allineato a sinistra con la barra */
+    top: 60px;
+    left: 0;
     width: 400px; 
     background: #09172E;
     border: 1px solid #00E5FF; 
@@ -250,28 +250,27 @@ header {
     overflow: hidden;
 }
 
-/* Colori testo Header per Pannello Dev */
 .header-admin-text-dev { color: #FFD700; }
 .admin-link-dev { color: #FFD700; }
 
-/* FOOTER */
-.footer{
-	text-align: center; 
-	padding: 20px; 
-	background-color: #04142C; 
-	color: #ccc; 
-	margin-top: 40px; 
-	border-top: 1px solid #00E5FF;
+/* --- FOOTER --- */
+.footer {
+    text-align: center; 
+    padding: 20px; 
+    background-color: #04142C; 
+    color: #ccc; 
+    margin-top: 40px; 
+    border-top: 1px solid #00E5FF;
 }
 
-.underfooter{
-	font-size: 12px; 
-	margin-top: 5px;
+.underfooter {
+    font-size: 12px; 
+    margin-top: 5px;
 }
 
-/*	=======================================
-	3. VETRINA E GRIGLIA GIOCHI (index.jsp)
-	=======================================	*/
+/*  =======================================
+    3. VETRINA E GRIGLIA GIOCHI
+    ======================================= */
 .store-container {
     padding: 40px 20px;
     max-width: 1200px;
@@ -308,7 +307,6 @@ header {
     overflow: hidden;
 }
 
-/* Triangolo decorativo dinamico */
 .game-card::after {
     content: '';
     position: absolute;
@@ -328,9 +326,10 @@ header {
     border-color: #00E5FF;
 }
 
-.game-card:hover::after { border-color: transparent #00E5FF transparent transparent; }
+.game-card:hover::after { 
+    border-color: transparent #00E5FF transparent transparent; 
+}
 
-/* --- STILE DELLE COPERTINE --- */
 .game-cover {
     width: 100%;
     height: 220px; 
@@ -341,7 +340,6 @@ header {
     transition: transform 0.3s ease;
 }
 
-/* Effetto zoom sull'immagine quando passiamo col mouse sulla card */
 .game-card:hover .game-cover {
     transform: scale(1.05);
 }
@@ -377,7 +375,6 @@ header {
     font-weight: bold;
 }
 
-/* --- CLASSI PER LA CARD CLICCABILE --- */
 .game-card-link {
     text-decoration: none; 
     color: inherit; 
@@ -398,30 +395,14 @@ header {
     color: #5C6F8E;
 }
 
-.game-title-box {
-    margin-bottom: 0;
-}
-
-.game-title-box h3 {
-    margin-bottom: 5px;
-}
-
-.game-desc-box {
-    margin-top: 5px;
-}
-
-.cart-form {
-    margin: 0;
-}
-
-/* --- Stili varie scritte --- */
+.game-title-box { margin-bottom: 0; }
+.game-title-box h3 { margin-bottom: 5px; }
+.game-desc-box { margin-top: 5px; }
+.cart-form { margin: 0; }
 
 .user-rotelline { color: #FFD700; font-weight: bold; }
-
 .admin-link { color: #00FF7F; text-decoration: none; margin-left: 15px; font-weight: bold; }
-
 .logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
-
 .visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
 
 .vetrina-title { 
@@ -441,15 +422,10 @@ header {
 }
 
 .empty-catalog-title { color: #00E5FF; }
-
 .empty-catalog-desc { color: #A0B0C8; }
 
-/* --- LAYOUT BOTTONE CARRELLO INDEX --- */
-.btn-cart-index {
-    flex: 1; 
-}
+.btn-cart-index { flex: 1; }
 
-/* LAYOUT BOTTONI AZIONE NELLA HOME PAGE*/
 .action-buttons-index {
     display: flex;
     gap: 10px;
@@ -475,9 +451,7 @@ header {
     align-items: center;
 }
 
-.platform-overlay.active {
-    display: flex;
-}
+.platform-overlay.active { display: flex; }
 
 .platform-modal {
     background-color: #09172E; 
@@ -491,7 +465,6 @@ header {
     width: 90%;
 }
 
-/* --- Stili per il Modal Piattaforme --- */
 .platform-checkbox-container { 
     text-align: left; 
     margin: 20px auto; 
@@ -507,18 +480,14 @@ header {
     transition: color 0.2s;
 }
 
-.platform-checkbox-label:hover { 
-    color: #00E5FF; 
-}
+.platform-checkbox-label:hover { color: #00E5FF; }
 
 .platform-checkbox { 
     margin-right: 10px; 
     transform: scale(1.3); 
 }
 
-.hidden-form { 
-    display: none; 
-}
+.hidden-form { display: none; }
 
 .platform-close-btn {
     position: absolute;
@@ -535,7 +504,7 @@ header {
 
 .platform-buttons-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Due colonne per i bottoni delle piattaforme */
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
 
@@ -558,9 +527,9 @@ header {
     transform: translateY(-2px);
 }
 
-/*	===================
-	4. PREZZI E SCONTI 
-	=================== */
+/*  ===================
+    4. PREZZI E SCONTI 
+    =================== */
 .price-container {
     display: flex;
     align-items: center;
@@ -573,17 +542,13 @@ header {
     justify-content: center;
 }
 
-/* Prezzo di base (Bianco) */
 .price-tag {
     font-weight: 800;
     color: #FFFFFF;
     font-size: 1.4em;
 }
 
-/* Prezzo scontato finale (Verde Acqua) */
-.price-tag.discounted-price {
-    color: #7FFFD4;
-}
+.price-tag.discounted-price { color: #7FFFD4; }
 
 .old-price {
     text-decoration: line-through;
@@ -602,9 +567,9 @@ header {
     box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
 }
 
-/* 	=====================
-	5. BOTTONI PRINCIPALI
-	=====================	 */
+/*  =====================
+    5. BOTTONI PRINCIPALI
+    =====================  */
 .btn-cart {
     width: 100%;
     background-color: transparent;
@@ -625,7 +590,6 @@ header {
     color: #030D1A;
 }
 
-/* --- LAYOUT BOTTONI AZIONE NELLA PAGINA GIOCO --- */
 .action-buttons-wrapper {
     display: flex;
     align-items: center;
@@ -634,7 +598,6 @@ header {
     max-width: 400px;
 }
 
-/* --- BOTTONE WISHLIST --- */
 .btn-wishlist {
     background-color: #04142C;
     border: 2px solid #5C6F8E;
@@ -648,7 +611,7 @@ header {
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
-    padding-bottom: 3px; /* Bilancia l'emoji al centro */
+    padding-bottom: 3px;
 }
 
 .btn-wishlist:hover {
@@ -661,23 +624,89 @@ header {
     box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
 }
 
-/* 	=================================
-	6. MODULI (Login / Registrazione)
-	================================= */
-.form-wrapper { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 20px;}
-.form-container { background-color: #09172E; padding: 40px; border-radius: 4px; border: 1px solid rgba(0, 229, 255, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 90%; 
-    max-width: 350px; }
-.form-container h2 { color: #00E5FF; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
-.form-container input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #5C6F8E; border-radius: 4px; background-color: #030D1A; color: #FFFFFF; box-sizing: border-box; outline: none; transition: border-color 0.3s;}
+/*  =================================
+    6. MODULI (LOGIN / REGISTRAZIONE)
+    ================================= */
+.form-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 80vh; 
+    padding: 20px;
+}
+
+.form-container { 
+    background-color: #09172E; 
+    padding: 40px; 
+    border-radius: 4px; 
+    border: 1px solid rgba(0, 229, 255, 0.2); 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+    text-align: center; 
+    width: 90%; 
+    max-width: 350px; 
+}
+
+.form-container h2 { 
+    color: #00E5FF; 
+    margin-bottom: 20px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+.form-container input { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0; 
+    border: 1px solid #5C6F8E; 
+    border-radius: 4px; 
+    background-color: #030D1A; 
+    color: #FFFFFF; 
+    box-sizing: border-box; 
+    outline: none; 
+    transition: border-color 0.3s;
+}
+
 .form-container input:focus { border-color: #00E5FF; }
-.form-container input[type="submit"] { background-color: #00E5FF; color: #030D1A; border: none; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background-color 0.3s; text-transform: uppercase; }
-.form-container input[type="submit"]:hover { background-color: #7FFFD4; color: #030D1A; }
-.error { color: #FF4444; margin-bottom: 15px; font-size: 0.9em; font-weight: bold;}
-.link-text { color: #A0B0C8; font-size: 0.9em; margin-top: 20px; display: block; }
-.link-text a { color: #00E5FF; text-decoration: none; font-weight: bold; transition: color 0.3s;}
+
+.form-container input[type="submit"] { 
+    background-color: #00E5FF; 
+    color: #030D1A; 
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin-top: 15px; 
+    transition: background-color 0.3s; 
+    text-transform: uppercase; 
+}
+
+.form-container input[type="submit"]:hover { 
+    background-color: #7FFFD4; 
+    color: #030D1A; 
+}
+
+.error { 
+    color: #FF4444; 
+    margin-bottom: 15px; 
+    font-size: 0.9em; 
+    font-weight: bold;
+}
+
+.link-text { 
+    color: #A0B0C8; 
+    font-size: 0.9em; 
+    margin-top: 20px; 
+    display: block; 
+}
+
+.link-text a { 
+    color: #00E5FF; 
+    text-decoration: none; 
+    font-weight: bold; 
+    transition: color 0.3s;
+}
+
 .link-text a:hover { color: #7FFFD4; }
 
-/* --- Messaggi di Successo --- */
 .success-msg {
     color: #00FF7F;
     font-weight: bold;
@@ -685,10 +714,8 @@ header {
 }
 
 /* =========================================
-   7. PANNELLO AMMINISTRATORE E SVILUPPATORE (admin_dashboard.jsp)
+   7. PANNELLO AMMINISTRATORE E SVILUPPATORE
    ========================================= */
-
-/* --- Card e Griglia Dashboard --- */
 .admin-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
@@ -748,7 +775,6 @@ header {
     color: #030D1A; 
 }
 
-/* --- Tabelle Admin e Bottoni Azione --- */
 .admin-table { 
     width: 100%; 
     border-collapse: collapse; 
@@ -767,10 +793,8 @@ header {
 .btn-delete { background-color: #FF4444; color: #fff; }
 .btn-add { background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
 
-/* --- Form Admin: Dimensioni e Struttura --- */
 .admin-form-wrapper { min-height: auto; margin-top: 30px; }
-.admin-form-container { width: 100%; 
-    max-width: 600px; }
+.admin-form-container { width: 100%; max-width: 600px; }
 
 .admin-form-section {
     background-color: #030D1A; 
@@ -789,11 +813,7 @@ header {
     margin-top: 15px;
 }
 
-/* Stile Tabella Filtri (admin_ordini.jsp) */
-
-.admin-filter-section {
-    margin-bottom: 20px;
-}
+.admin-filter-section { margin-bottom: 20px; }
 
 .admin-filter-form {
     display: flex;
@@ -824,21 +844,10 @@ header {
     transition: border-color 0.3s;
 }
 
-.filter-input:focus {
-    border-color: #00E5FF;
-}
+.filter-input:focus { border-color: #00E5FF; }
+.btn-filter { padding: 8px 20px; flex: 0; }
+.btn-reset { padding: 8px 15px; text-decoration: none; }
 
-.btn-filter {
-    padding: 8px 20px;
-    flex: 0;
-}
-
-.btn-reset {
-    padding: 8px 15px;
-    text-decoration: none;
-}
-
-/* --- Form Admin: Textarea (Descrizione e Requisiti) --- */
 .form-container textarea {
     width: 100%; 
     padding: 12px; 
@@ -857,7 +866,6 @@ header {
 .textarea-sm { min-height: 80px; }
 .textarea-md { min-height: 100px; }
 
-/* --- Form Admin: Upload Immagini --- */
 .file-upload-label {
     color: #00E5FF; 
     display: block; 
@@ -872,13 +880,8 @@ header {
     padding: 10px 0;
 }
 
-/* --- Messaggio Catalogo Vuoto --- */
-.empty-catalog-cell {
-    text-align: center; 
-    color: #A0B0C8;
-}
+.empty-catalog-cell { text-align: center; color: #A0B0C8; }
 
-/* --- Checkbox Piattaforme Admin --- */
 .checkbox-group {
     display: flex;
     gap: 15px;
@@ -903,19 +906,16 @@ header {
     margin: 0 8px 0 0 !important;
 }
 
-/* --- Stili aggiuntivi per Dashboard, Utenti e Ordini --- */
 .header-admin-text { color: #fff; }
 .admin-link-accent { color: #00E5FF; }
 .title-spaced { margin-top: 50px; }
 .text-unavailable { color: #5C6F8E; font-style: italic; }
 
-/* Riga della tabella per i giochi ritirati */
 .row-ritirato {
     opacity: 0.5;
     background-color: #121f3d;
 }
 
-/* Pulsante Ripristina (Verde neon) */
 .btn-restore {
     background-color: #00FF80;
     color: #030D1A;
@@ -926,7 +926,6 @@ header {
     box-shadow: 0 0 8px rgba(0, 255, 128, 0.6);
 }
 
-/* Pulsante Approva (Giallo/Oro) */
 .btn-approve {
     background-color: #FFCC00; 
     color: #030D1A; 
@@ -938,11 +937,7 @@ header {
     box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
 }
 
-/* =========================================
-   PANNELLO SVILUPPATORE (Modifiche estetiche Admin)
-   ========================================= */
-
-/* Colori specifici per le Card Statistiche Dev */
+/* --- PANNELLO SVILUPPATORE --- */
 .dev-stat-card-gold { border-bottom-color: #FFD700; }
 .dev-stat-card-gold .num { color: #FFD700; }
 
@@ -952,11 +947,11 @@ header {
 .dev-stat-card-blue { border-bottom-color: #00E5FF; }
 .dev-stat-card-blue .num { color: #00E5FF; }
 
-/* Bottoni principali stile Dev (Giallo Oro) */
 .btn-dev-action {
     border-color: #FFD700;
     color: #FFD700;
 }
+
 .btn-dev-action:hover {
     background-color: #FFD700;
     color: #030D1A;
@@ -966,36 +961,19 @@ header {
     background-color: #FFD700;
     color: #000;
 }
+
 .btn-dev-add:hover {
     background-color: #e6c200;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
 
-/* Colori specifici per la tabella (Vendite, Ricavi, Stato) */
-.dev-table-sales {
-    color: #00FF7F;
-    font-weight: bold;
-}
-.dev-table-revenue {
-    color: #00E5FF;
-    font-weight: bold;
-}
+.dev-table-sales { color: #00FF7F; font-weight: bold; }
+.dev-table-revenue { color: #00E5FF; font-weight: bold; }
 
-/* Badge di stato per l'approvazione dei giochi */
-.badge-approved {
-    color: #00FF7F;
-    font-weight: bold;
-}
-.badge-pending {
-    color: #FFD700;
-    font-weight: bold;
-}
-.badge-rejected {
-    color: #FF4444;
-    font-weight: bold;
-}
+.badge-approved { color: #00FF7F; font-weight: bold; }
+.badge-pending { color: #FFD700; font-weight: bold; }
+.badge-rejected { color: #FF4444; font-weight: bold; }
 
-/* Avvisi nei form Dev */
 .dev-form-notice {
     color: #FFD700;
     text-align: center;
@@ -1005,8 +983,6 @@ header {
 /* =======================================================
    8. RUOTA DELLA FORTUNA (OVERLAY MODAL E ANIMAZIONE)
    ======================================================= */
-
-/*Sfondo oscurato*/
 #modalRuota.wheel-overlay {
     position: fixed;
     top: 0;
@@ -1020,12 +996,8 @@ header {
     align-items: center;
 }
 
-/* Attivazione tramite JavaScript */
-#modalRuota.wheel-overlay.active {
-    display: flex;
-}
+#modalRuota.wheel-overlay.active { display: flex; }
 
-/*Il box/pannello centrale*/
 .wheel-modal {
     background-color: #09172E; 
     padding: 40px 35px;
@@ -1039,7 +1011,6 @@ header {
     display: block; 
 }
 
-/* Pulsante di chiusura */
 .wheel-close-btn {
     position: absolute;
     top: 15px;
@@ -1052,11 +1023,8 @@ header {
     transition: color 0.3s;
 }
 
-.wheel-close-btn:hover {
-    color: #00E5FF; 
-}
+.wheel-close-btn:hover { color: #00E5FF; }
 
-/* MARGINI PRECISI PER DISTANZIARE GLI ELEMENTI */
 .wheel-modal h2 {
     color: #FFFFFF;
     margin-top: 0;
@@ -1072,7 +1040,6 @@ header {
     margin-bottom: 35px; 
 }
 
-/*  Il contenitore della ruota */
 .wheel-container {
     position: relative;
     width: 280px;
@@ -1080,7 +1047,6 @@ header {
     margin: 0 auto 35px auto;
 }
 
-/*  L'elemento circolare della ruota */
 .wheel-graphics {
     position: relative;
     width: 100%;
@@ -1092,7 +1058,6 @@ header {
     transition: transform 5s cubic-bezier(0.25, 0.1, 0.1, 1); 
 }
 
-/*L'indicatore/Freccia */
 .wheel-pointer {
     position: absolute;
     top: -15px;
@@ -1107,9 +1072,8 @@ header {
     filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
 }
 
-/* Pulsante di attivazione (GIRA!) */
 .btn-spin {
-	margin-top: 20px;
+    margin-top: 20px;
     display: inline-block;
     background-color: #00E5FF;
     color: #030D1A;
@@ -1130,9 +1094,7 @@ header {
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.5);
 }
 
-.btn-spin:active {
-    transform: scale(0.96);
-}
+.btn-spin:active { transform: scale(0.96); }
 
 .btn-spin:disabled {
     background-color: #112A54;
@@ -1142,7 +1104,6 @@ header {
     transform: none;
 }
 
-/* Stile per gli spicchi di testo */
 .spicchio {
     position: absolute;
     top: 50%;
@@ -1168,7 +1129,7 @@ header {
 }
 
 /* =========================================
-   9. CARRELLO (carrello.jsp)
+   9. CARRELLO
    ========================================= */
 .cart-container {
     max-width: 800px;
@@ -1198,7 +1159,6 @@ header {
 }
 
 .cart-item-info h3 { margin: 0 0 5px 0; color: #fff; }
-
 .cart-item-actions { display: flex; align-items: center; gap: 20px; }
 
 .cart-item-price { 
@@ -1208,9 +1168,7 @@ header {
     margin-right: 15px; 
 }
 
-.cart-item-form-update { 
-    margin-right: 15px; 
-}
+.cart-item-form-update { margin-right: 15px; }
 
 .cart-qty-select {
     width: 65px; 
@@ -1292,12 +1250,19 @@ header {
 }
 
 .empty-cart h3 { color: #fff; font-size: 1.5em; margin-bottom: 10px; }
-
 .empty-cart p { color: #A0B0C8; margin-bottom: 25px; }
 
-.error-cart {background-color: rgba(255, 68, 68, 0.1); color: #FF4444; border: 1px solid #FF4444; padding: 15px; border-radius: 4px; text-align: center; font-weight: bold; margin-bottom: 20px;}
+.error-cart {
+    background-color: rgba(255, 68, 68, 0.1); 
+    color: #FF4444; 
+    border: 1px solid #FF4444; 
+    padding: 15px; 
+    border-radius: 4px; 
+    text-align: center; 
+    font-weight: bold; 
+    margin-bottom: 20px;
+}
 
-/* --- Copertine nel Carrello --- */
 .cart-item-details {
     display: flex;
     align-items: center;
@@ -1328,15 +1293,10 @@ header {
 }
 
 /* =========================================
-   10. CHECKOUT E PAGAMENTO (checkout.jsp)
+   10. CHECKOUT E PAGAMENTO
    ========================================= */
-.checkout-container {
-    max-width: 600px;
-}
-
-.checkout-section {
-    margin-bottom: 30px;
-}
+.checkout-container { max-width: 600px; }
+.checkout-section { margin-bottom: 30px; }
 
 .checkout-list {
     color: #fff;
@@ -1352,9 +1312,7 @@ header {
     padding-bottom: 5px;
 }
 
-.checkout-item-price {
-    color: #00E5FF;
-}
+.checkout-item-price { color: #00E5FF; }
 
 .checkout-total-box {
     text-align: right;
@@ -1364,9 +1322,7 @@ header {
     margin-top: 20px;
 }
 
-.checkout-total-amount {
-    color: #00FF7F;
-}
+.checkout-total-amount { color: #00FF7F; }
 
 .payment-form-container {
     width: 100%;
@@ -1387,13 +1343,8 @@ header {
     gap: 15px;
 }
 
-.payment-flex-col {
-    flex: 1;
-}
-
-.btn-pay {
-    margin-top: 20px;
-}
+.payment-flex-col { flex: 1; }
+.btn-pay { margin-top: 20px; }
 
 .invoice-request-box {
     margin: 20px 0;
@@ -1412,14 +1363,8 @@ header {
     margin: 0;
 }
 
-.invoice-request-checkbox {
-    width: auto;
-    margin: 0;
-}
-
-.invoice-request-text {
-    font-weight: bold;
-}
+.invoice-request-checkbox { width: auto; margin: 0; }
+.invoice-request-text { font-weight: bold; }
 
 .checkout-item-platform { 
     color: #5C6F8E; 
@@ -1427,22 +1372,11 @@ header {
 }
 
 /* =========================================
-   11. LIBRERIA (libreria.jsp)
+   11. LIBRERIA
    ========================================= */
 .game-info-centered {
     text-align: center;
     padding-top: 10px;
-}
-
-.status-badge {
-    display: inline-block;
-    background-color: #ffaa00;
-    color: #000;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 10px;
 }
 
 .product-key-box {
@@ -1464,7 +1398,6 @@ header {
     margin-bottom: 5px;
 }
 
-
 .status-badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -1473,23 +1406,21 @@ header {
     user-select: none;
     transition: all 0.3s ease;
     display: inline-block;
+    margin-bottom: 10px;
 }
 
-/* Colore per "Da giocare" (Azzurro) */
 .status-da_giocare {
     background-color: #00e5ff22;
     color: #00e5ff;
     border: 1px solid #00e5ff;
 }
 
-/* Colore per "Finito" (Verde) */
 .status-finito {
     background-color: #00ff8822;
     color: #00ff88;
     border: 1px solid #00ff88;
 }
 
-/* Colore per "Platinato" (Oro/Viola Platino) */
 .status-platinato {
     background-color: #ffd70022;
     color: #f7e4a8;
@@ -1497,12 +1428,10 @@ header {
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
 
-.status-badge:hover {
-    transform: scale(1.08);
-}
+.status-badge:hover { transform: scale(1.08); }
 
 /* =========================================
-   12. STORICO ORDINI (ordini.jsp)
+   12. STORICO ORDINI E MODAL DETTAGLIO
    ========================================= */
 .order-card {
     background-color: #04142C;
@@ -1515,13 +1444,8 @@ header {
     align-items: center;
 }
 
-.order-info {
-    color: #fff;
-}
-
-.order-info strong {
-    color: #00E5FF;
-}
+.order-info { color: #fff; }
+.order-info strong { color: #00E5FF; }
 
 .no-invoice-text {
     color: #888;
@@ -1529,18 +1453,13 @@ header {
     margin-left: 10px;
 }
 
-/* =========================================
-   BARRA DI SCORRIMENTO PER CONTENITORI MODAL
-   ========================================= */
 .scrollable-container {
     max-height: 60vh; 
     overflow-y: auto; 
     padding-right: 15px;
 }
 
-.scrollable-container::-webkit-scrollbar {
-    width: 8px;
-}
+.scrollable-container::-webkit-scrollbar { width: 8px; }
 
 .scrollable-container::-webkit-scrollbar-track {
     background: #030D1A; 
@@ -1553,11 +1472,8 @@ header {
     border-radius: 4px;
 }
 
-.scrollable-container::-webkit-scrollbar-thumb:hover {
-    background: #7FFFD4; 
-}
+.scrollable-container::-webkit-scrollbar-thumb:hover { background: #7FFFD4; }
 
-/* --- Bottoni e Layout Ordini --- */
 .order-actions { 
     display: flex; 
     gap: 10px; 
@@ -1570,7 +1486,6 @@ header {
     color: #00E5FF;
     padding: 10px 15px; 
     width: auto; 
-    font-weight: bold; 
     border-radius: 4px;
     cursor: pointer; 
     text-decoration: none; 
@@ -1595,7 +1510,6 @@ header {
     border-color: #7FFFD4; 
 }
 
-/* --- Dettaglio Ordine AJAX Modal --- */
 .modal-wide { 
     max-width: 600px; 
     width: 95%; 
@@ -1613,6 +1527,7 @@ header {
     display: flex; gap: 15px; background: #04142C; border: 1px solid #5C6F8E; 
     padding: 15px; border-radius: 6px; margin-bottom: 10px; align-items: center; 
 }
+
 .order-detail-left { flex-shrink: 0; }
 .order-detail-right { flex-grow: 1; }
 
@@ -1631,31 +1546,40 @@ header {
 .order-detail-price { color: #00FF7F; font-size: 1.1em; float: right; font-weight: bold; }
 .order-detail-version { color: #5C6F8E; font-size: 0.9em; }
 .order-detail-version strong { color: #fff; }
+
 .order-detail-key-box { 
     margin-top: 10px; background: #030D1A; border: 1px dashed #00E5FF; padding: 10px; 
     text-align: center; color: #00E5FF; font-family: monospace; font-size: 1.1em; letter-spacing: 1px; 
 }
 
-/* ==========================================
-   13. COPERTINE GIOCHI NELLA PAGINA D'ACQUISTO 
-   ========================================== */
-.dettaglio-gioco-copertina {
-    display: block;
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 2px solid rgba(0, 229, 255, 0.3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+/* ==============================================================================
+   13. COPERTINE GIOCHI NELLA PAGINA DI ACQUISTO E GALLERIA
+   ============================================================================== */
+.dettaglio-top-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: flex-start;
 }
 
-/* Dettaglio gioco: copertina + galleria affiancate */
-.dettaglio-immagini-wrapper {
+.dettaglio-info-box {
+    flex: 1;
     display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.game-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #c6d4df;
+    margin: 0;
+}
+
+.game-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #a4d007;
 }
 
 .dettaglio-copertina-box {
@@ -1663,29 +1587,39 @@ header {
     width: 280px;
 }
 
-.dettaglio-copertina-box .game-cover {
-    width: 100% !important;
-    height: 220px !important;
-    object-fit: cover;
-    border-radius: 4px;
+.dettaglio-copertina-img {
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 8px;
     border: 2px solid rgba(0, 229, 255, 0.3);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    display: block;
 }
 
 .dettaglio-galleria-box {
-    flex: 1;
+    width: 100%;
     overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.dettaglio-galleria-box h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-size: 18px;
 }
 
 .dettaglio-galleria-scroll {
     display: flex;
-    gap: 15px;
+    gap: 16px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
 }
 
-.dettaglio-galleria-scroll::-webkit-scrollbar {
-    height: 6px;
+.dettaglio-galleria-scroll::-webkit-scrollbar { 
+    height: 8px; 
 }
 
 .dettaglio-galleria-scroll::-webkit-scrollbar-track {
@@ -1698,23 +1632,24 @@ header {
     border-radius: 4px;
 }
 
-.dettaglio-copertina-img {
-    width: 280px;
-    height: 220px;
+.dettaglio-galleria-img {
+    width: 420px;
+    height: 240px;
+    flex-shrink: 0;
     object-fit: cover;
-    border-radius: 4px;
-    border: 2px solid rgba(0, 229, 255, 0.3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 0;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
 }
 
 .dettaglio-galleria-img:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
     border-color: #00E5FF;
 }
 
 /* =========================================
-   14. RISULTATI RICERCA AVANZATA (ricerca.js)
+   14. RISULTATI RICERCA AVANZATA
    ========================================= */
 .ajax-game-cover {
     width: 100%; 
@@ -1772,9 +1707,9 @@ header {
     border-color: #00E5FF;
 }
 
-.no-result{
-	color: white;
-	grid-column: 1 / -1;
+.no-result {
+    color: white;
+    grid-column: 1 / -1;
 }
 
 .search-layout { 
@@ -1795,31 +1730,27 @@ header {
     height: fit-content; 
     position: sticky;
     top: 110px; 
-    max-height: calc(100vh - 120px); /* Evita che la sidebar esca dallo schermo */
+    max-height: calc(100vh - 120px);
     overflow-y: auto;
 }
 
-.filter-group { 
-	margin-bottom: 25px; 
-}
+.filter-group { margin-bottom: 25px; }
 
 .filter-group h4 { 
-	color: #fff; 
-	margin-bottom: 10px; 
-	font-size: 16px; 
+    color: #fff; 
+    margin-bottom: 10px; 
+    font-size: 16px; 
 }
 
 .filter-group label { 
-	display: block; 
-	color: #ccc; 
-	margin-bottom: 8px; 
-	font-size: 14px; 
-	cursor: pointer; 
+    display: block; 
+    color: #ccc; 
+    margin-bottom: 8px; 
+    font-size: 14px; 
+    cursor: pointer; 
 }
 
-.results-area { 
-	flex: 1; 
-}
+.results-area { flex: 1; }
 
 .results-grid { 
     display: grid;
@@ -1827,7 +1758,6 @@ header {
     gap: 30px; 
 }
 
-/* barra di ordinamento */
 .search-top-bar {
     display: flex;
     justify-content: space-between;
@@ -1835,10 +1765,7 @@ header {
     margin-bottom: 20px;
 }
 
-.search-top-bar h2 {
-    color: white; 
-    margin: 0;
-}
+.search-top-bar h2 { color: white; margin: 0; }
 
 .sort-filter {
     padding: 8px; 
@@ -1850,7 +1777,6 @@ header {
     cursor: pointer;
 }
 
-/* Elementi della Sidebar */
 .sidebar-title {
     color: #00E5FF; 
     border-bottom: 1px solid #00E5FF; 
@@ -1885,20 +1811,14 @@ header {
     transition: color 0.2s;
 }
 
-.filter-checkbox:hover {
-    color: #00E5FF; 
-}
+.filter-checkbox:hover { color: #00E5FF; }
 
 .text-accent {
     color: #00E5FF;
     font-weight: bold;
 }
 
-/* Elementi della Barra Superiore Risultati  */
-.search-results-title {
-    color: white; 
-    margin: 0;
-}
+.search-results-title { color: white; margin: 0; }
 
 .sort-filter-box {
     display: flex;
@@ -1923,7 +1843,6 @@ header {
     box-shadow: 0 0 8px rgba(0, 229, 255, 0.6); 
 }
 
-/* Stile della barra di ricerca centrale */
 .input-ricerca-centrale {
     width: 100%;
     padding: 10px 20px;
@@ -1936,9 +1855,7 @@ header {
     transition: all 0.3s ease;
 }
 
-.input-ricerca-centrale::placeholder {
-    color: #A0B0C8; 
-}
+.input-ricerca-centrale::placeholder { color: #A0B0C8; }
 
 .input-ricerca-centrale:focus {
     border-color: #00E5FF;
@@ -1947,7 +1864,7 @@ header {
 }
 
 /* =========================================
-   14. PAGINE DI ERRORE (errore.jsp)
+   15. PAGINE DI ERRORE
    ========================================= */
 .error-page-wrapper {
     text-align: center;
@@ -1982,14 +1899,11 @@ header {
     margin-right: auto;
 }
 
-.btn-error-home {
-    padding: 12px 30px;
-}
+.btn-error-home { padding: 12px 30px; }
 
 /* =========================================
-   MENU A TENDINA (DROPDOWN) - HEADER
+   16. MENU A TENDINA (DROPDOWN) - HEADER
    ========================================= */
-
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -1997,7 +1911,6 @@ header {
     vertical-align: middle;
 }
 
-/* Bottone principale del menï¿½ */
 .dropdown-toggle {
     background-color: transparent;
     color: #00E5FF;
@@ -2015,7 +1928,6 @@ header {
     box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
 }
 
-/* Contenitore della lista (nascosto di default) */
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -2031,7 +1943,6 @@ header {
     overflow: hidden;
 }
 
-/* Singolo link nella tendina */
 .dropdown-item {
     color: #ffffff;
     padding: 12px 16px;
@@ -2047,10 +1958,9 @@ header {
     color: #00E5FF;
 }
 
-/* Stile speciale per il tasto Esci */
 .logout-text {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ff4c4c; /*Rosso*/
+    color: #ff4c4c;
 }
 
 .logout-text:hover {
@@ -2058,10 +1968,7 @@ header {
     color: #ff4c4c;
 }
 
-/* Effetto di apertura: quando si passa il mouse sul contenitore, mostra il sottomenï¿½ */
-.user-dropdown:hover .dropdown-menu {
-    display: block;
-}
+.user-dropdown:hover .dropdown-menu { display: block; }
 
 .user-dropdown::after {
     content: "";
@@ -2073,8 +1980,7 @@ header {
     background-color: transparent; 
 }
 
-/* COOKIE "RICORDAMI" LOGIN*/
-
+/* COOKIE "RICORDAMI" LOGIN */
 .remember-me-container {
     text-align: left;
     margin-bottom: 20px;
@@ -2090,16 +1996,15 @@ header {
     gap: 8px;           
 }
 
-/* Blocchiamo le regole globali degli input che rovinano la checkbox */
 input.remember-checkbox {
-    width: auto ;      
-    height: auto ;     
-    margin: 0 ;        
+    width: auto;      
+    height: auto;     
+    margin: 0;        
     cursor: pointer;
 }
 
 /* =========================================
-   SFONDO ANIMATO TUNNEL GENERATIVO
+   17. SFONDO ANIMATO TUNNEL GENERATIVO
    ========================================= */
 .tunnel-canvas {
     position: fixed;
@@ -2107,7 +2012,7 @@ input.remember-checkbox {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -2; /* Dietro al velo nero */
+    z-index: -2;
 }
 
 .tunnel-overlay {
@@ -2116,52 +2021,46 @@ input.remember-checkbox {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(3, 13, 26, 0.3); /* Sfumatura scura a tema RotaGames */
-    z-index: -1; /* Sopra al canvas, ma sotto alle scritte */
+    background-color: rgba(3, 13, 26, 0.3);
+    z-index: -1;
 }
 
 /* =========================================
-   15. QUIZ STILE EVERHOOD & LAYOUT ORIZZONTALE
+   18. QUIZ STILE EVERHOOD
    ========================================= */
-
-/* Contenitore invisibile centrato in mezzo allo schermo */
 .quiz-container {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centratura assoluta perfetta */
+    transform: translate(-50%, -50%);
     width: 100%;
     max-width: 900px;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    z-index: 10; /* Sempre sopra il tunnel */
+    z-index: 10;
 }
 
-/* Domanda: Font stile Everhood grande, bianco con bordo nero netto */
 .quiz-question-text {
     font-family: 'VT323', monospace; 
     font-size: 3.5rem; 
     color: #ffffff;
     margin-bottom: 60px;
     line-height: 1.2;
-    /* Ombra spessa multipla per creare il contorno nero in stile videogioco 8-bit */
     text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 
-/* Contenitore per le risposte */
 .quiz-options-horizontal {
     display: flex;
     justify-content: center;
-    gap: 80px; /* Molto spazio tra le risposte, come in foto */
+    gap: 80px;
     flex-wrap: wrap;
 }
 
-/* Risposte: Nessun bottone, solo testo in ombra che aspetta di essere cliccato */
 .quiz-option-btn {
     background-color: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.4); /* Testo semi-trasparente/scuro di default */
+    color: rgba(255, 255, 255, 0.4);
     font-family: 'VT323', monospace;
     font-size: 2.8rem;
     cursor: pointer;
@@ -2170,20 +2069,17 @@ input.remember-checkbox {
     text-shadow: 2px 2px 0 #000;
 }
 
-/* Effetto Hover (quando ci passi sopra col mouse): si illumina! */
-.quiz-option-btn:hover, .quiz-option-btn:focus {
+.quiz-option-btn:hover, 
+.quiz-option-btn:focus {
     outline: none;
-    color: #ffffff; /* Diventa bianco acceso */
-    transform: scale(1.15); /* Si ingrandisce leggermente */
-    text-shadow: 3px 3px 0 #000, 0 0 20px rgba(255, 255, 255, 0.8); /* Effetto "Glow" */
+    color: #ffffff;
+    transform: scale(1.15);
+    text-shadow: 3px 3px 0 #000, 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
-
 /* =========================================
-   16. WISHLIST
+   19. WISHLIST E TOAST
    ========================================= */
-
-/* STILE CUORICINO NELLA HOME PAGE */
 .btn-wishlist-index {
     background-color: transparent;
     border: 2px solid #5C6F8E;
@@ -2193,7 +2089,6 @@ input.remember-checkbox {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2211,7 +2106,6 @@ input.remember-checkbox {
     box-shadow: 0 0 10px rgba(255, 68, 68, 0.3); 
 }
 
-/* --- STILE DEL POPUP (TOAST NOTIFICATION) --- */
 .toast-message {
     visibility: hidden; 
     min-width: 250px;
@@ -2236,8 +2130,9 @@ input.remember-checkbox {
     opacity: 1;
     bottom: 50px; 
 }
+
 /* =========================================
-   STILI SLIDER ORIZZONTALI (Scontati, Meno 10%)
+   20. SLIDER ORIZZONTALI E SEZIONE HERO TENDENZE
    ========================================= */
 .horizontal-slider {
     display: flex;
@@ -2250,26 +2145,16 @@ input.remember-checkbox {
     scrollbar-color: #555 #222;
 }
 
-.horizontal-slider::-webkit-scrollbar {
-    height: 10px;
-}
-.horizontal-slider::-webkit-scrollbar-track {
-    background: #222;
-    border-radius: 5px;
-}
-.horizontal-slider::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 5px;
-}
-.horizontal-slider::-webkit-scrollbar-thumb:hover {
-    background: #777;
-}
+.horizontal-slider::-webkit-scrollbar { height: 10px; }
+.horizontal-slider::-webkit-scrollbar-track { background: #222; border-radius: 5px; }
+.horizontal-slider::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
+.horizontal-slider::-webkit-scrollbar-thumb:hover { background: #777; }
 
 .horizontal-slider .game-card {
     flex: 0 0 280px; 
     scroll-snap-align: start; 
 }
-/* Il contenitore principale che fa da "finestra" */
+
 .tendenza-section.hero-tendenza {
     position: relative;
     width: 100%;
@@ -2280,7 +2165,6 @@ input.remember-checkbox {
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Contenitore a tutto schermo per le card */
 .gioco-attivo-container {
     position: absolute;
     top: 0;
@@ -2289,7 +2173,6 @@ input.remember-checkbox {
     height: 100%;
 }
 
-/* Le card ora fanno da sfondo (cover) */
 .rotella-card {
     position: absolute;
     top: 0;
@@ -2297,23 +2180,19 @@ input.remember-checkbox {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background-position: center 25%; /* Taglia l'immagine focalizzandosi sulla parte alta/centrale */
-    
-    /* Effetto di transizione morbida (Cross-Fade) */
+    background-position: center 25%;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.6s ease-in-out, visibility 0.6s;
     z-index: 1;
 }
 
-/* Solo la card attiva diventa visibile */
 .rotella-card.active {
     opacity: 1;
     visibility: visible;
     z-index: 2;
 }
 
-/* Gradiente scuro sopra l'immagine per far leggere il testo */
 .hero-overlay {
     position: absolute;
     top: 0; left: 0;
@@ -2322,7 +2201,6 @@ input.remember-checkbox {
     z-index: 3;
 }
 
-/* Posizione del testo e del bottone in basso a sinistra */
 .game-card-link-hero {
     position: absolute;
     bottom: 40px;
@@ -2333,14 +2211,13 @@ input.remember-checkbox {
 
 .gioco-titolo-tendenza h3 {
     color: #ffffff;
-    font-size: 3rem; /* Titolo molto grande */
+    font-size: 3rem;
     margin: 0 0 15px 0;
     text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-    max-width: 650px; /* Evita che il testo vada sopra la ruota */
+    max-width: 650px;
     white-space: normal;
 }
 
-/* Finto bottone per invogliare al click */
 .btn-scopri {
     display: inline-block;
     background-color: #00E5FF;
@@ -2352,15 +2229,9 @@ input.remember-checkbox {
     transition: background-color 0.3s;
 }
 
-.game-card-link-hero:hover .btn-scopri {
-    background-color: #ffffff;
-}
+.game-card-link-hero:hover .btn-scopri { background-color: #ffffff; }
 
-/* =========================================
-   INGRANAGGIO ANIMATO
-   ========================================= */
-
-/* Posizioniamo il contenitore fisso a destra (centrato verticalmente) */
+/* Ingranaggio Animato */
 .rotella-container.hero-ingranaggio {
     position: absolute;
     right: -200px; 
@@ -2369,13 +2240,10 @@ input.remember-checkbox {
     width: 400px;
     height: 400px;
     z-index: 5;
-    
-    /* Previene ombre o contorni strani generati dal browser al click */
     outline: none;
     -webkit-tap-highlight-color: transparent; 
 }
 
-/* L'ingranaggio mantiene la transizione elastica e fluida */
 .ingranaggio {
     width: 100%;
     height: 100%;
@@ -2394,11 +2262,149 @@ input.remember-checkbox {
     pointer-events: none; 
 }
 
-/* =========================================
-   PAGINA DEL PROFILO PERSONALE
-   ========================================= */
+/* SEZIONE BANNER */
+.game-banner {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0b132b;
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    margin-bottom: 35px;
+    padding: 25px;
+    box-sizing: border-box;
+}
 
-/* Header Profilo e Dati Privati Utente (Stili Box Condivisi) */
+.banner-overlay {
+    width: 100%;
+    min-height: 400px;
+    background: linear-gradient(180deg, rgba(3, 13, 26, 0.55) 0%, rgba(3, 13, 26, 0.95) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.banner-card {
+    display: flex;
+    gap: 30px;
+    background: rgba(11, 19, 43, 0.8);
+    border: 1px solid rgba(0, 229, 255, 0.25);
+    border-radius: 12px;
+    padding: 25px;
+    width: 100%;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+.banner-cover {
+    width: 200px;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
+    flex-shrink: 0;
+}
+
+.banner-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.banner-title {
+    color: #FFFFFF;
+    font-size: 2.2rem;
+    margin: 0 0 10px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.banner-description {
+    color: #A0B0C8;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+}
+
+.banner-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(4, 20, 44, 0.6);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.15);
+}
+
+.banner-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00E5FF;
+}
+
+/* banner con sfondo sfocato */
+.banner-bg-subtle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.20;
+    filter: blur(15px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.game-banner .dettaglio-top-section {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+
+.game-banner .game-cover {
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    margin-bottom: 20px;
+    display: block;
+}
+
+.game-banner .dettaglio-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.game-banner .game-description {
+    color: #c6d4df;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.game-banner .game-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #00E5FF;
+}
+
+.game-banner .action-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* =========================================
+   21. PAGINA DEL PROFILO PERSONALE
+   ========================================= */
 .profilo-header,
 .profilo-dati-privati {
     background: #09172E;
@@ -2451,10 +2457,7 @@ input.remember-checkbox {
     font-weight: bold;
 }
 
-/* Dati Privati Utente */
-.profilo-dati-privati {
-    margin-bottom: 40px;
-}
+.profilo-dati-privati { margin-bottom: 40px; }
 
 .profilo-dati-privati h2 {
     color: #00E5FF;
@@ -2472,11 +2475,8 @@ input.remember-checkbox {
     font-size: 1em;
 }
 
-.profilo-dati-privati p strong {
-    color: #FFFFFF;
-}
+.profilo-dati-privati p strong { color: #FFFFFF; }
 
-/* --- Sezioni Generiche (Giochi, Ordini, Recensioni, Wishlist) --- */
 .profilo-sezione {
     background-color: #0b1426;
     border: 1px solid #00f2ff;
@@ -2496,7 +2496,6 @@ input.remember-checkbox {
     margin-bottom: 20px;
 }
 
-/* --- Griglia Giochi e Wishlist --- */
 .profilo-giochi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -2538,7 +2537,6 @@ input.remember-checkbox {
     word-break: break-word;
 }
 
-/* Tabella degli ordini */
 .profilo-ordini-tabella {
     width: 100%;
     border-collapse: collapse;
@@ -2564,9 +2562,7 @@ input.remember-checkbox {
     color: #FFFFFF;
 }
 
-.profilo-ordini-tabella tr:hover {
-    background-color: rgba(0, 229, 255, 0.03);
-}
+.profilo-ordini-tabella tr:hover { background-color: rgba(0, 229, 255, 0.03); }
 
 .profilo-link-fattura {
     color: #00E5FF;
@@ -2583,7 +2579,6 @@ input.remember-checkbox {
     color: #030D1A;
 }
 
-/* Recensioni */
 .recensione-card {
     background: #09172E;
     border: 1px solid rgba(0, 229, 255, 0.15);
@@ -2592,13 +2587,53 @@ input.remember-checkbox {
     margin-bottom: 15px;
 }
 
+.recensioni-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.recensione-autore-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.recensione-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #00E5FF;
+}
+
+.recensione-info-utente {
+    display: flex;
+    flex-direction: column;
+}
+
+.recensione-voto {
+    display: flex;
+    gap: 2px;
+    font-size: 18px;
+}
+
+.stella.piena {
+    color: #ffc107;
+}
+
+.stella.vuota {
+    color: #4a5568;
+}
+
 .recensione-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
 }
 
 .recensione-titolo-gioco {
@@ -2608,34 +2643,24 @@ input.remember-checkbox {
     text-decoration: none;
 }
 
-.recensione-titolo-gioco:hover {
-    text-decoration: underline;
-}
-
-.recensione-voto {
-    color: #FFD700;
-    font-weight: bold;
-}
-
-.recensione-data {
-    color: #5C6F8E;
-    font-size: 0.85em;
-}
+.recensione-titolo-gioco:hover { text-decoration: underline; }
+.recensione-voto { color: #FFD700; font-weight: bold; }
+.recensione-data { color: #5C6F8E; font-size: 0.85em; }
 
 .recensione-testo {
-    color: #A0B0C8;
-    margin: 0;
+    color: #c6d4df;
+    font-size: 14px;
     line-height: 1.5;
+    margin: 0;
+    white-space: pre-line;
 }
 
-/* Messaggi Sezione Vuota */
 .profilo-vuoto {
     color: #5C6F8E;
     font-style: italic;
     margin: 10px 0;
 }
 
-/* Gestione dell'immagine dentro il cerchio */
 .profilo-avatar-img {
     width: 100%;
     height: 100%;
@@ -2644,11 +2669,8 @@ input.remember-checkbox {
     display: block;
 }
 
-.avatar-upload-form input[type="file"] {
-    display: none;
-}
+.avatar-upload-form input[type="file"] { display: none; }
 
-/* Overlay visibile al passaggio del mouse */
 .avatar-edit-overlay {
     position: absolute;
     top: 0;
@@ -2667,14 +2689,9 @@ input.remember-checkbox {
     border-radius: 50%;
 }
 
-.profilo-avatar-box:hover .avatar-edit-overlay {
-    opacity: 1;
-}
+.profilo-avatar-box:hover .avatar-edit-overlay { opacity: 1; }
 
-/*classi per gestire la bio del profilo personale*/
-.profilo-bio-container {
-    margin-top: 12px;
-}
+.profilo-bio-container { margin-top: 12px; }
 
 .profilo-bio-testo {
     color: #A0B0C8;
@@ -2713,129 +2730,115 @@ input.remember-checkbox {
     transition: background 0.2s ease;
 }
 
-.profilo-bio-btn:hover {
-    background: #00B8D4;
-}
+.profilo-bio-btn:hover { background: #00B8D4; }
 
-/*Classi delle colonne scorrevoli per pagina personale*/
 .profilo-layout {
     display: flex;
     gap: 20px;
     width: 95%;
     max-width: 1400px;
     margin: 20px auto;
-    height: calc(100vh - 120px);
+    align-items: flex-start;
 }
 
 .profilo-colonna {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    overflow-y: auto;
-    padding-right: 10px;
 }
 
-.colonna-sinistra {
-    flex: 2;
+.colonna-sinistra { 
+    flex: 2; 
+    min-width: 0; 
 }
 
-.colonna-destra {
-    flex: 0,1;
+.colonna-destra { 
+    flex: 1;
+    min-width: 320px;
+    flex-shrink: 0;
 }
 
-.profilo-colonna::-webkit-scrollbar {
-    width: 6px;
-}
-
+.profilo-colonna::-webkit-scrollbar { width: 6px; }
 .profilo-colonna::-webkit-scrollbar-thumb {
     background: #00f2ff;
     border-radius: 3px;
 }
 
-
-/* =========================================
-   STILI PER LA PAGINA PROFILO
-   ========================================= */
-
 .profilo-sezione select.titolo-select {
-            background-color: #0b132b !important;
-            color: #00d2ff !important;
-            border: 1px solid #00d2ff !important;
-            padding: 4px 8px !important;
-            border-radius: 6px !important;
-            font-size: 13px !important;
-            font-weight: bold !important;
-            cursor: pointer !important;
-            outline: none !important;
-        }
+    background-color: #0b132b !important;
+    color: #00d2ff !important;
+    border: 1px solid #00d2ff !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    outline: none !important;
+}
 
-        .profilo-sezione select.titolo-select option {
-            background-color: #0b132b !important;
-            color: #ffffff !important;
-        }
+.profilo-sezione select.titolo-select option {
+    background-color: #0b132b !important;
+    color: #ffffff !important;
+}
 
-        .profilo-sezione .btn-salva-titolo {
-            background-color: #00d2ff !important;
-            color: #0b132b !important;
-            border: none !important;
-            border-radius: 6px !important;
-            padding: 4px 8px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-        }
+.profilo-sezione .btn-salva-titolo {
+    background-color: #00d2ff !important;
+    color: #0b132b !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
 
-        .profilo-sezione textarea.bio-dark {
-            width: 100% !important;
-            min-height: 80px !important;
-            padding: 8px !important;
-            font-family: inherit !important;
-            font-size: 13px !important;
-            line-height: 1.4 !important;
-            border: 1px solid #00d2ff !important;
-            border-radius: 6px !important;
-            resize: vertical !important;
-            box-sizing: border-box !important;
-            background-color: #0b132b !important;
-            color: #ffffff !important;
-            outline: none !important;
-        }
+.profilo-sezione textarea.bio-dark {
+    width: 100% !important;
+    min-height: 80px !important;
+    padding: 8px !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    border: 1px solid #00d2ff !important;
+    border-radius: 6px !important;
+    resize: vertical !important;
+    box-sizing: border-box !important;
+    background-color: #0b132b !important;
+    color: #ffffff !important;
+    outline: none !important;
+}
 
-        .profilo-sezione .btn-salva-bio {
-            width: 100% !important;
-            padding: 6px 12px !important;
-            background-color: #007bff !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            font-weight: bold !important;
-            margin-top: 6px !important;
-        }
+.profilo-sezione .btn-salva-bio {
+    width: 100% !important;
+    padding: 6px 12px !important;
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    margin-top: 6px !important;
+}
 
-        .profilo-sezione .btn-salva-bio:hover {
-            background-color: #0056b3 !important;
-        }
+.profilo-sezione .btn-salva-bio:hover { background-color: #0056b3 !important; }
 
-        .bio-mostrata-box {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border-left: 3px solid #00d2ff !important;
-            padding: 8px 10px !important;
-            border-radius: 4px !important;
-            text-align: left !important;
-            word-wrap: break-word !important;
-            white-space: pre-wrap !important;
-            font-size: 13px !important;
-            color: #dddddd !important;
-        }
+.bio-mostrata-box {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-left: 3px solid #00d2ff !important;
+    padding: 8px 10px !important;
+    border-radius: 4px !important;
+    text-align: left !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    font-size: 13px !important;
+    color: #dddddd !important;
+}
 
-/* Stile per il badge sbloccato */
 .badge-text-highlight {
     font-size: 16px;
     font-weight: bold;
     color: #00d2ff;
 }
 
-/* Box di invito al questionario */
 .badge-cta-box {
     background-color: rgba(255, 255, 255, 0.05);
     padding: 12px;
@@ -2850,9 +2853,8 @@ input.remember-checkbox {
     margin: 0 0 10px 0;
 }
 
-/* Bottone per avviare il questionario */
 .btn-badge-cta {
-    display: block; /* Sostituisce inline-block + width 100% in modo nativo */
+    display: block;
     text-align: center;
     text-decoration: none;
     background-color: #FFCC00;
@@ -2862,28 +2864,47 @@ input.remember-checkbox {
     box-sizing: border-box;
     border-radius: 6px;
     font-weight: bold;
-    transition: background-color 0.3s ease; /* Effetto morbido al passaggio del mouse */
+    transition: background-color 0.3s ease;
 }
 
-.btn-badge-cta:hover {
-    background-color: #e6b800; /* Giallo leggermente più scuro all'hover */
+.btn-badge-cta:hover { background-color: #e6b800; }
+
+.recensione-gia-presente-box {
+    background-color: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
 }
 
+.recensione-gia-presente-box p {
+    color: #c6d4df;
+    font-size: 14px;
+    margin: 0;
+}
 
+.recensione-gia-presente-box a {
+    color: #00E5FF;
+    font-weight: bold;
+    text-decoration: underline;
+}
 
-/* =======================
-   MEDIA QUERIES (RESPONSIVE)
-   ======================= */
+.recensione-gia-presente-box a:hover {
+    color: #00b8d4;
+}
 
+/* =========================================
+   22. MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
+
+/* --- NAVIGAZIONE & HEADER --- */
 @media (max-width: 992px) {
-    /* Impila tutto in verticale quando manca spazio */
     header {
         flex-direction: column;
         padding: 15px;
         gap: 15px; 
     }
 
-    /* Centra la barra di ricerca */
     .center-search-box {
         margin: 0;
         width: 100%;
@@ -2896,12 +2917,10 @@ input.remember-checkbox {
         max-width: 350px; 
     }
 
-    /* Evita che la barra attiva sbordi dallo schermo */
     .search-container.active .search-inner-wrapper {
         width: 100%;
     }
 
-    /* Riordina la UI dell'utente affinch  non si accavalli */
     .user-info {
         text-align: center;
         display: flex;
@@ -2913,12 +2932,34 @@ input.remember-checkbox {
     }
 }
 
-/* =======================
-   MEDIA QUERIES (VETRINA)
-   ======================= */
-
-
+/* --- DETTAGLIO GIOCO E GALLERIA --- */
 @media (max-width: 768px) {
+    .dettaglio-top-section {
+        flex-direction: column;
+    }
+
+    .dettaglio-immagini-wrapper {
+        flex-direction: column;
+        align-items: center; 
+        gap: 15px;
+    }
+
+    .dettaglio-copertina-box {
+        width: 100%;
+        max-width: 300px; 
+    }
+
+    .dettaglio-copertina-box .game-cover,
+    .dettaglio-copertina-img {
+        width: 100% !important;
+        height: auto !important; 
+        margin: 0 auto;
+    }
+
+    .dettaglio-galleria-box {
+        width: 100%;
+    }
+
     .store-container {
         padding: 30px 15px;     
     }
@@ -2931,73 +2972,99 @@ input.remember-checkbox {
     .games-grid {
         gap: 20px;              
     }
+
+    .admin-table {
+        display: block;       
+        overflow-x: auto;     
+        white-space: nowrap;  
+        border-radius: 0;     
+    }
+
+    .admin-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-admin { width: 100%; }
+
+    .admin-filter-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+
+    .filter-group { width: 100%; }
+
+    .btn-filter, .btn-reset {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .cart-container {
+        width: 95%;      
+        padding: 20px;   
+        margin: 20px auto;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        background-color: #030D1A; 
+        padding: 15px;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 15px;               
+    }
+
+    .no-invoice-text {
+        margin-left: 0; 
+        margin-top: 5px;
+    }
 }
 
-
+/* --- MOBILE COMPATTO --- */
 @media (max-width: 480px) {
     .games-grid {
-        /* Forza 1 singola colonna per evitare che i 280px del minmax 
-           causino overflow su schermi da 320px/360px */
         grid-template-columns: 1fr; 
     }
 
-    .game-card {
-        padding: 15px;      
-    }
+    .game-card { padding: 15px; }
+    .game-cover { height: 180px; }
+    .game-info h3 { font-size: 1.3em; }
 
-    .game-cover {
-        height: 180px;          
-    }
-
-    .game-info h3 {
-        font-size: 1.3em;
-    }
-
-    /* Se i bottoni (Carrello, Dettagli, ecc.) sono troppo stretti, li incolonniamo */
     .action-buttons-index {
         flex-direction: column; 
     }
-}
 
-/* =======================
-   MEDIA QUERIES (MODAL PIATTAFORME)
-   ======================= */
+    .platform-modal { padding: 25px 20px; }
+    .platform-modal h2 { font-size: 1.4em; }
 
-@media (max-width: 480px) {
-    /* Riduciamo lo spazio vuoto interno per dare pi  respiro ai contenuti */
-    .platform-modal {
-        padding: 25px 20px; 
-    }
-
-    /* Riduciamo leggermente il titolo per evitare che vada a capo in modo errato */
-    .platform-modal h2 {
-        font-size: 1.4em;
-    }
-
-    /* Passiamo a una singola colonna per i bottoni delle piattaforme */
     .platform-buttons-grid {
         grid-template-columns: 1fr; 
         gap: 10px;                  
     }
 
-    /* Rendiamo i bottoni leggermente pi  grandi per facilitare il tocco (touch target) */
     .btn-platform-choice {
         padding: 15px;
         font-size: 1.2em;
     }
 
-    /* Riposizioniamo la X di chiusura per adattarla al nuovo padding */
     .platform-close-btn {
         top: 10px;
         right: 10px;
     }
-}
 
-/* =======================
-   MEDIA QUERIES (BOTTONI)
-   ======================= */
-
-@media (max-width: 480px) {
     .action-buttons-wrapper {
         max-width: 100%; 
         gap: 10px;      
@@ -3010,80 +3077,22 @@ input.remember-checkbox {
     }
 
     .btn-wishlist {
-        
         width: 50px;
         height: 50px;
         font-size: 1.5em;
     }
-}
 
-/* =======================
-   MEDIA QUERIES (ADMIN DASHBOARD)
-   ======================= */
+    .wheel-modal { padding: 30px 15px; }
 
-@media (max-width: 768px) {
-    /* Rende le tabelle scrollabili orizzontalmente su mobile */
-    .admin-table {
-        display: block;       
-        overflow-x: auto;     
-        white-space: nowrap;  
-        border-radius: 0;     
-    }
-
-    /* Riorganizza i bottoni principali della Dashboard (es. Gestione Utenti, Ordini) */
-    .admin-actions {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .btn-admin {
-        width: 100%; 
-    }
-
-    /* Ottimizza i filtri di ricerca (admin_ordini.jsp) */
-    .admin-filter-form {
-        flex-direction: column;
-        align-items: stretch; 
-    }
-
-    .filter-group {
-        width: 100%;
-    }
-
-    .btn-filter, .btn-reset {
-        width: 100%;
-        text-align: center;
-        margin-top: 5px;
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (RUOTA DELLA FORTUNA)
-   ========================================= */
-
-@media (max-width: 480px) {
-    /* Riduciamo il padding interno del modal per recuperare spazio laterale */
-    .wheel-modal {
-        padding: 30px 15px;
-    }
-
-    /* Rimpiccioliamo la ruota in modo che entri perfettamente anche su schermi da 320px */
     .wheel-container {
         width: 240px;
         height: 240px;
         margin-bottom: 25px; 
     }
 
-    /* Adattiamo il testo dentro gli spicchi (altrimenti sborderebbe) */
-    .spicchio span {
-        font-size: 13px; 
-    }
-    
-    .spicchio {
-        padding-right: 15px; 
-    }
+    .spicchio span { font-size: 13px; }
+    .spicchio { padding-right: 15px; }
 
-    /* Rimpiccioliamo leggermente la freccia per mantenerla proporzionata */
     .wheel-pointer {
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
@@ -3091,53 +3100,17 @@ input.remember-checkbox {
         top: -10px;
     }
 
-    /* Ottimizziamo il pulsante "GIRA!" per il touch */
     .btn-spin {
         padding: 12px 20px;
         font-size: 1em;
         width: 100%;
     }
 
-    /* Posizioniamo la X per chiudere piï¿½ comodamente rispetto al nuovo padding */
     .wheel-close-btn {
         top: 10px;
         right: 10px;
     }
-}
 
-/* =========================================
-    MEDIA QUERIES (CARRELLO)
-   ========================================= */
-
-/* Ottimizzazione per Tablet (sotto i 768px) */
-@media (max-width: 768px) {
-    .cart-container {
-        width: 95%;      
-        padding: 20px;   
-        margin: 20px auto;
-    }
-
-    /* Impila la sezione dei dettagli (immagine/testo) sopra la sezione azioni (prezzo/bottoni) */
-    .cart-item {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 20px;
-    }
-
-    /* Allarga la barra delle azioni a tutto schermo per distanziare prezzo e bottoni */
-    .cart-item-actions {
-        width: 100%;
-        justify-content: space-between;
-        background-color: #030D1A; 
-        padding: 15px;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
-@media (max-width: 480px) {
-    
     .cart-item-details {
         flex-direction: column;
         text-align: center;
@@ -3151,7 +3124,6 @@ input.remember-checkbox {
         height: auto;
     }
 
-    /* Riorganizza i controlli del prezzo e bottoni se lo schermo ï¿½ minuscolo */
     .cart-item-actions {
         flex-wrap: wrap;
         justify-content: center;
@@ -3165,49 +3137,24 @@ input.remember-checkbox {
         margin-bottom: 5px;
     }
 
-    .cart-item-form-update {
-        margin-right: 0;
-    }
+    .cart-item-form-update { margin-right: 0; }
+    .cart-total { text-align: center; }
 
-    /* Centra il totale del carrello */
-    .cart-total {
-        text-align: center;
-    }
-}
+    .payment-form-container { padding: 15px 10px; }
 
-/* =========================================
-   MEDIA QUERIES (CHECKOUT)
-   ========================================= */
-
-@media (max-width: 480px) {
-    /*  Riduciamo il padding del form di pagamento per lasciare più spazio agli input */
-    .payment-form-container {
-        padding: 15px 10px;
-    }
-
-    /*  Trasformiamo la riga degli input (es. Scadenza e CVV) in una colonna */
     .payment-flex-row {
         flex-direction: column;
         gap: 10px; 
     }
 
-    /* Evitiamo che il testo della lista ordine si sovrapponga se i titoli sono lunghi */
     .checkout-list-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
 
-    .checkout-total-box {
-        text-align: center; /* Centriamo il totale per dargli maggiore risalto su mobile */
-    }
-}
+    .checkout-total-box { text-align: center; }
 
-/* =========================================
-    MEDIA QUERIES (LIBRERIA)
-   ========================================= */
-
-@media (max-width: 480px) {
     .product-key-box {
         font-size: 16px;       
         padding: 15px;        
@@ -3218,33 +3165,7 @@ input.remember-checkbox {
         font-size: 11px;       
         padding: 3px 6px;
     }
-}
 
-/* =========================================
-   MEDIA QUERIES (STORICO ORDINI)
-   ========================================= */
-
-@media (max-width: 768px) {
-    /*  Impiliamo i dettagli dell'ordine e le azioni (fattura) in verticale */
-    .order-card {
-        flex-direction: column;
-        align-items: flex-start; 
-        gap: 15px;               
-    }
-
-    /*  Resettiamo il margine visto che ora gli elementi sono incolonnati */
-    .no-invoice-text {
-        margin-left: 0; 
-        margin-top: 5px;
-    }
-}
-
-/* =========================================
-    MEDIA QUERIES (MODAL ORDINI E SCROLL)
-   ========================================= */
-
-@media (max-width: 480px) {
-    /* Manda a capo i bottoni delle azioni se non c'è spazio */
     .order-actions {
         flex-wrap: wrap;
         justify-content: center;
@@ -3255,13 +3176,11 @@ input.remember-checkbox {
         text-align: center;
     }
 
-    /* Impila l'immagine dell'ordine e i dettagli in verticale */
     .order-detail-item {
         flex-direction: column;
         text-align: center;
     }
 
-    /* Riadatta l'immagine copertina per non sforare dallo schermo */
     .order-detail-cover, 
     .order-detail-empty-cover {
         width: 100%;
@@ -3269,411 +3188,32 @@ input.remember-checkbox {
         height: auto;
     }
 
-    /*  Annulla il float del prezzo e lo centra sotto il titolo */
     .order-detail-price {
         float: none;
         display: block;
         margin-top: 10px;
         text-align: center;
     }
-}
 
-/* =========================================
-   MEDIA QUERIES (DETTAGLIO GIOCO E GALLERIA)
-   ========================================= */
+    /* banner responsive su mobile */
+    .game-banner .dettaglio-top-section {
+        display: block !important;
+    }
 
-@media (max-width: 768px) {
-    /* Cambia il layout da orizzontale a verticale */
-    .dettaglio-immagini-wrapper {
+    .banner-card {
         flex-direction: column;
-        align-items: center; 
-        gap: 15px;
-    }
-
-    /* Rende fluido il contenitore della copertina */
-    .dettaglio-copertina-box {
-        width: 100%;
-        max-width: 300px; 
-    }
-
-    /* Adatta le immagini della copertina al nuovo contenitore */
-    .dettaglio-copertina-box .game-cover,
-    .dettaglio-copertina-img {
-        width: 100% !important;
-        height: auto !important; 
-        margin: 0 auto;
-    }
-
-    /*  Assicura che la galleria prenda tutto lo spazio sottostante */
-    .dettaglio-galleria-box {
-        width: 100%;
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (RICERCA AVANZATA E FILTRI)
-   ========================================= */
-
-/* Ottimizzazione per Tablet e schermi medi (sotto i 992px) */
-@media (max-width: 992px) {
-    /* Impila la sidebar dei filtri e i risultati in verticale */
-    .search-layout {
-        flex-direction: column;
-        padding: 15px;
-    }
-
-    /*  La sidebar diventa a tutta larghezza e perde l'effetto sticky */
-    .sidebar-filtri {
-        width: 100%;
-        position: static;      
-        height: auto;
-        max-height: none;      
-        margin-bottom: 20px;
-        box-sizing: border-box;
-    }
-
-    /* Rendiamo la griglia dinamica (invece di 3 fisse, decide il browser in base allo spazio) */
-    .results-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
-@media (max-width: 480px) {
-    /* Riorganizza la barra superiore (Titolo + Menu a tendina per ordinare) */
-    .search-top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .sort-filter-box {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    /* Forza 1 singola colonna per i risultati di ricerca */
-    .results-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Adegua la barra di ricerca centrale (se usata) */
-    .input-ricerca-centrale {
-        font-size: 14px;
-        padding: 10px 15px;
-    }
-}
-
-/* =========================================
-    MEDIA QUERIES (PAGINE DI ERRORE)
-   ========================================= */
-
-/* Ottimizzazione per Tablet (sotto i 768px) */
-@media (max-width: 768px) {
-    .error-page-wrapper {
-        padding: 60px 20px; /* Riduciamo lo spazio vuoto sopra e sotto */
-    }
-
-    .error-code-title {
-        font-size: 4.5em;   /* Rimpiccioliamo un po' il codice di errore */
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
-@media (max-width: 480px) {
-    .error-page-wrapper {
-        padding: 40px 15px; 
-    }
-
-    .error-code-title {
-        font-size: 3.5em;   /* Dimensione perfetta per un telefono */
-    }
-
-    .error-subtitle {
-        font-size: 1.2em;   /* Adattiamo anche il sottotitolo */
-    }
-
-    .error-desc {
-        font-size: 1em;     /* Testo descrittivo standard */
-        margin-bottom: 30px;
-    }
-}
-
-/* =========================================
-    MEDIA QUERIES (MENU A TENDINA E CHECKBOX)
-   ========================================= */
-
-@media (max-width: 992px) {
-    /*  Centra il menu a tendina visto che l'header è ora in colonna */
-    .dropdown-menu {
-        right: auto;
-        left: 50%;
-        transform: translateX(-50%); /* Lo sposta esattamente al centro */
-        width: 100%;
-        min-width: 220px;
-    }
-
-    /* Ingrandisce i link per facilitare il tocco (UX Touch) */
-    .dropdown-item {
-        text-align: center; 
-        padding: 15px 20px; 
-        font-size: 1.05em;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Aumentiamo l'area di clic della checkbox "Ricordami" */
-    .remember-me-label {
-        font-size: 1em;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    
-    input.remember-checkbox {
-        transform: scale(1.2); /* Ingrandisce un po' il quadratino della checkbox */
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (QUIZ STILE EVERHOOD)
-   ========================================= */
-
-/* Ottimizzazione per Tablet e schermi medi */
-@media (max-width: 768px) {
-    .quiz-question-text {
-        font-size: 2.5rem;    
-        margin-bottom: 40px;  
-    }
-
-    .quiz-options-horizontal {
-        gap: 40px;            /* Dimezza lo spazio orizzontale tra le risposte */
-    }
-
-    .quiz-option-btn {
-        font-size: 2rem;      /* Riduce il font delle risposte */
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti */
-@media (max-width: 480px) {
-    .quiz-question-text {
-        font-size: 1.8rem;    /* Dimensione sicura per evitare che la parola si spezzi */
-        margin-bottom: 30px;
-    }
-
-    .quiz-options-horizontal {
-        flex-direction: column; /* Impila le risposte in verticale per comodità di tocco */
-        gap: 20px;
-    }
-
-    .quiz-option-btn {
-        font-size: 1.5rem;
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (WISHLIST E TOAST)
-   ========================================= */
-
-@media (max-width: 480px) {
-    /* Rende il popup fluido e gli impedisce di toccare i bordi dello schermo */
-    .toast-message {
-        width: 90%;        
-        min-width: auto;     
-        font-size: 0.9em;
-        padding: 12px;
-        bottom: 20px;        
-    }
-
-    /* Modifica l'animazione finale per adattarsi alla nuova partenza */
-    .toast-message.show {
-        bottom: 40px; 
-    }
-
-    /*  Adatta il bottone della wishlist se lo spazio scarseggia */
-    .btn-wishlist-index {
-        width: 44px;         
-        font-size: 1.2em;
-    }
-}
-
-/* =========================================
-    MEDIA QUERIES (SLIDER E HERO SECTION)
-   ========================================= */
-
-/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
-@media (max-width: 768px) {
-    /* Riduciamo l'altezza del banner Hero */
-    .tendenza-section.hero-tendenza {
-        height: 350px;
-    }
-
-    /* Riduciamo i margini interni per recuperare spazio */
-    .game-card-link-hero {
-        bottom: 25px;
-        left: 25px;
-    }
-
-    /* Rimpiccioliamo il font del titolo */
-    .gioco-titolo-tendenza h3 {
-        font-size: 2.2rem;
-        max-width: 90%; 
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
-@media (max-width: 480px) {
-    /* Card dello slider orizzontale leggermente più strette */
-    .horizontal-slider .game-card {
-        flex: 0 0 240px; 
-    }
-
-    /* Banner Hero ancora più compatto per cellulari */
-    .tendenza-section.hero-tendenza {
-        height: 280px;
-        margin-bottom: 25px;
-    }
-
-    /* Margini ridotti al minimo indispensabile */
-    .game-card-link-hero {
-        bottom: 15px;
-        left: 15px;
-    }
-
-    /*  Titolo proporzionato per i telefoni */
-    .gioco-titolo-tendenza h3 {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
-    }
-
-    /* Bottone "Scopri" più compatto */
-    .btn-scopri {
-        padding: 8px 16px;
-        font-size: 12px;
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (INGRANAGGIO ANIMATO)
-   ========================================= */
-
-/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
-@media (max-width: 768px) {
-    .rotella-container.hero-ingranaggio {
-        width: 300px;
-        height: 300px;
-        right: -150px; 
-    }
-}
-
-/* Ottimizzazione per Smartphone (sotto i 480px) */
-@media (max-width: 480px) {
-    .rotella-container.hero-ingranaggio {
-        width: 200px;
-        height: 200px;
-        right: -100px; 
-        top: 35%; 
-    }
-}
-
-/* =========================================
-    MEDIA QUERIES (PAGINA PROFILO)
-   ========================================= */
-
-/* Ottimizzazione per Tablet (sotto i 992px) */
-@media (max-width: 992px) {
-    /* Annulliamo le colonne affiancate e lo scorrimento interno */
-    .profilo-layout {
-        flex-direction: column;
-        height: auto; 
-    }
-
-    .profilo-colonna {
-        overflow-y: visible; 
-        padding-right: 0;
-    }
-}
-
-/* Ottimizzazione per Smartphone (sotto i 768px) */
-@media (max-width: 768px) {
-    /* Centriamo l'header del profilo e impiliamo immagine e testi */
-    .profilo-header {
-        flex-direction: column;
+        align-items: center;
         text-align: center;
-        padding: 20px 15px;
     }
 
-    /* Rimpiccioliamo drasticamente l'avatar per i telefoni */
-    .profilo-avatar-box {
-        width: 150px;
-        height: 150px;
+    .banner-cover {
+        width: 100%;
+        max-width: 220px;
+        height: auto;
     }
 
-    .profilo-titolo {
-        display: block; 
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
-    /* Rendiamo la tabella degli ordini scrollabile orizzontalmente */
-    .profilo-ordini-tabella {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    /*  Riorganizziamo il modulo per cambiare la bio */
-    .profilo-bio-form {
+    .banner-action-bar {
         flex-direction: column;
-        align-items: stretch; 
-    }
-    
-    .profilo-bio-input {
-        max-width: 100%;
-    }
-}
-
-/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
-@media (max-width: 480px) {
-    /* Riduciamo leggermente i font delle sezioni */
-    .profilo-sezione h2 {
-        font-size: 1.2em;
-    }
-
-    .profilo-nickname {
-        font-size: 1.8em;
-    }
-    
-    /* Riduce i margini per risparmiare spazio */
-    .profilo-header, .profilo-dati-privati, .profilo-sezione {
-        padding: 15px;
-    }
-}
-
-/* =========================================
-   MEDIA QUERIES (MODIFICA PROFILO E CTA)
-   ========================================= */
-
-@media (max-width: 480px) {
-    /*  Impiliamo il selettore del titolo e il bottone salva */
-    .profilo-sezione select.titolo-select {
-        width: 100% !important;
-        margin-bottom: 10px !important;
-        display: block !important;
-    }
-
-    .profilo-sezione .btn-salva-titolo {
-        width: 100% !important;
-        display: block !important;
-    }
-
-    /*  Riduciamo leggermente i margini del box invito (CTA) per recuperare spazio */
-    .badge-cta-box {
-        padding: 10px;
-    }
-
-    .badge-text-highlight {
-        font-size: 14px; 
+        width: 100%;
     }
 }
