@@ -69,4 +69,16 @@ public class ImmagineGiocoDAO {
             e.printStackTrace();
         }
     }
+    
+ // Elimina una singola immagine tramite il suo ID
+    public void doDelete(int idImmagine) {
+        String query = "DELETE FROM immagine_gioco WHERE idImmagine = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, idImmagine);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

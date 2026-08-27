@@ -45,11 +45,25 @@ public class GestioneGiochiSviluppatoreServlet extends HttpServlet {
             if (gioco != null && gioco.getIdSviluppatore() != null && gioco.getIdSviluppatore() == sviluppatore.getIdUtente()) {
                 request.setAttribute("giocoDaModificare", gioco);
                 request.setAttribute("generiGioco", dao.getGeneriByIdVideogioco(id));
+                request.setAttribute("immaginiGalleria", new model.dao.ImmagineGiocoDAO().doRetrieveByGioco(id));
                 request.setAttribute("vista", "formModifica");
                 request.getRequestDispatcher("sviluppatore_giochi.jsp").forward(request, response);
             } else {
                 response.sendRedirect("GestioneGiochiSviluppatoreServlet?azione=lista");
             }
+            
+        //Eliminazione della singola immagine
+        } else if ("eliminaImmagine".equals(azione)) {
+            int idImg = Integer.parseInt(request.getParameter("idImmagine"));
+            int idGioco = Integer.parseInt(request.getParameter("idVideogioco"));
+            
+            // Sicurezza: Verifichiamo che il gioco sia davvero suo prima di fargli cancellare l'immagine
+            Videogioco gioco = dao.doRetrieveById(idGioco);
+            if (gioco != null && gioco.getIdSviluppatore() != null && gioco.getIdSviluppatore() == sviluppatore.getIdUtente()) {
+                new model.dao.ImmagineGiocoDAO().doDelete(idImg);
+            }
+            response.sendRedirect("GestioneGiochiSviluppatoreServlet?azione=mostraFormModifica&id=" + idGioco);
+            return;
             
         } else if ("ritira".equals(azione)) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -105,17 +119,34 @@ public class GestioneGiochiSviluppatoreServlet extends HttpServlet {
                 gioco.setCopertina(bytes);
             }
 
-            if ("aggiungi".equals(azione)) {
-                dao.doSave(gioco, generi);
-            } else if ("modifica".equals(azione)) {
-                gioco.setIdVideogioco(Integer.parseInt(request.getParameter("idVideogioco")));
-                dao.doUpdate(gioco, generi);
-            }
+            	// Salvataggio con recupero ID
+                int idGenerato = -1;
+                if ("aggiungi".equals(azione)) {
+                    idGenerato = dao.doSave(gioco, generi); // Ora restituisce l'ID
+                } else if ("modifica".equals(azione)) {
+                    idGenerato = Integer.parseInt(request.getParameter("idVideogioco"));
+                    gioco.setIdVideogioco(idGenerato);
+                    dao.doUpdate(gioco, generi);
+                }
+                
+                //Salvataggio multiplo delle foto galleria
+                if (idGenerato > 0) {
+                    model.dao.ImmagineGiocoDAO imgDao = new model.dao.ImmagineGiocoDAO();
+                    for (Part p : request.getParts()) {
+                        if ("galleriaImmagini".equals(p.getName()) && p.getSize() > 0) {
+                            byte[] bytesImg = new byte[(int) p.getSize()];
+                            try (InputStream isImg = p.getInputStream()) {
+                                isImg.read(bytesImg);
+                            }
+                            imgDao.doSave(idGenerato, bytesImg);
+                        }
+                    }
+                }
             
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        response.sendRedirect("GestioneGiochiSviluppatoreServlet?azione=lista");
+	        } catch (Exception e) {
+	                e.printStackTrace();
+	        }
+	            
+            response.sendRedirect("GestioneGiochiSviluppatoreServlet?azione=lista");
     }
 }

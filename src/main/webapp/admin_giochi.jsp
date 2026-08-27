@@ -165,6 +165,11 @@
                         <span class="form-section-title">Carica Copertina (JPG/PNG):</span>
                         <input type="file" name="copertinaFile" accept="image/*">
                     </div>
+                   
+                    <div class="admin-form-section">
+					    <span class="form-section-title">Galleria Immagini (Opzionale):</span>
+					    <input type="file" name="galleriaImmagini" accept="image/*" multiple>
+					</div>
                     
                     <input type="submit" value="Salva nel Catalogo">
                     <div class="link-text">
@@ -250,6 +255,30 @@
                         <span class="form-section-title">Modifica Copertina (JPG/PNG):</span>
                         <input type="file" name="copertinaFile" accept="image/*">                    
                     </div>
+                    
+                    <div class="admin-form-section">
+					    <span class="form-section-title">Galleria Immagini Attuale:</span>
+					    <div class="gallery-container">
+					    <%
+					        java.util.List<model.ImmagineGioco> galleria = (java.util.List<model.ImmagineGioco>) request.getAttribute("immaginiGalleria");
+					        if (galleria != null && !galleria.isEmpty()) {
+					            for (model.ImmagineGioco img : galleria) {
+					    %>
+					            <div class="gallery-item">
+					                <img src="data:image/jpeg;base64,<%= img.getBase64Immagine() %>" class="gallery-img">
+					                <a href="GestioneGiochiServlet?azione=eliminaImmagine&idImmagine=<%= img.getIdImmagine() %>&idVideogioco=<%= gioco.getIdVideogioco() %>"
+					                   class="btn-delete-img"
+					                   onclick="return confirm('Vuoi eliminare questa immagine dalla galleria?');">X</a>
+					            </div>
+					    <%      }
+					        } else { %>
+					            <span style="color: #A0B0C8; font-size: 0.9em; font-style: italic;">Nessuna immagine in galleria.</span>
+					    <%  } %>
+					    </div>
+					    
+					    <span class="form-section-title">Aggiungi altre immagini:</span>
+					    <input type="file" name="galleriaImmagini" accept="image/*" multiple>
+					</div>
                     
                     <input type="submit" value="Salva Modifiche">
                     <div class="link-text">

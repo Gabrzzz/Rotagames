@@ -164,6 +164,35 @@
                         <input type="file" name="copertinaFile" accept="image/*" <%= vista.equals("formAggiungi") ? "required" : "" %>>
                     </div>
                     
+                    <div class="admin-form-section">
+    
+					    <%-- Mostriamo la galleria vecchia SOLO se stiamo modificando un gioco esistente --%>
+					    <% if (vista.equals("formModifica")) { %>
+					        <span class="form-section-title">Galleria Immagini Attuale:</span>
+					        <div class="gallery-container">
+					        <%
+					            java.util.List<model.ImmagineGioco> galleria = (java.util.List<model.ImmagineGioco>) request.getAttribute("immaginiGalleria");
+					            if (galleria != null && !galleria.isEmpty()) {
+					                for (model.ImmagineGioco img : galleria) {
+					        %>
+					                <div class="gallery-item">
+					                    <img src="data:image/jpeg;base64,<%= img.getBase64Immagine() %>" class="gallery-img">
+					                    <a href="GestioneGiochiSviluppatoreServlet?azione=eliminaImmagine&idImmagine=<%= img.getIdImmagine() %>&idVideogioco=<%= gioco.getIdVideogioco() %>"
+					                       class="btn-delete-img"
+					                       onclick="return confirm('Vuoi eliminare questa immagine dalla galleria?');">X</a>
+					                </div>
+					        <%      }
+					            } else { %>
+					                <span style="color: #A0B0C8; font-size: 0.9em; font-style: italic;">Nessuna immagine in galleria.</span>
+					        <%  } %>
+					        </div>
+					    <% } %>
+					    
+					    <%-- Il tasto per caricare nuove foto lo lasciamo SEMPRE visibile --%>
+					    <span class="form-section-title"><%= vista.equals("formModifica") ? "Aggiungi altre immagini:" : "Galleria Immagini (Opzionale):" %></span>
+					    <input type="file" name="galleriaImmagini" accept="image/*" multiple>
+					</div>
+					                    
                     <input type="submit" value="Sottoponi per Approvazione">
                     <div class="link-text">
                         <a href="GestioneGiochiSviluppatoreServlet?azione=lista">Annulla e torna al catalogo</a>

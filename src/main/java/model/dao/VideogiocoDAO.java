@@ -198,11 +198,12 @@ public class VideogiocoDAO {
         return generi;
     }
     
-    // Salvataggio nuovo gioco nel database 
-    public synchronized void doSave(Videogioco gioco, String[] generi) {
+    // Salvataggio nuovo gioco nel database (restituisce un int che sarebbe l'ID del gioco) 
+    public synchronized int doSave(Videogioco gioco, String[] generi) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int nuovoId = -1; // Variabile per catturare l'ID
 
         String query = "INSERT INTO Videogioco (titolo, descrizione, prezzo_base, sconto_attivo, piattaforma, requisiti_sistema, stato_approvazione, copertina, id_sviluppatore) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -231,13 +232,11 @@ public class VideogiocoDAO {
 
             ps.executeUpdate();
             
-            // Recuperiamo l'ID del nuovo videogioco
             rs = ps.getGeneratedKeys();
-            int nuovoId = 0;
             if (rs.next()) {
-                nuovoId = rs.getInt(1);
+                nuovoId = rs.getInt(1); // Catturiamo il nuovo ID
             }
-
+            
             // Se abbiamo ottenuto l'ID e l'admin ha spuntato dei generi, popoliamo la tabella ponte
             if (nuovoId > 0 && generi != null && generi.length > 0) {
                 String queryGenere = "INSERT INTO videogioco_genere (id_videogioco, nome_genere) VALUES (?, ?)";
@@ -257,7 +256,6 @@ public class VideogiocoDAO {
             if (conn != null) {
                 try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             }
-            System.err.println("Errore in VideogiocoDAO.doSave: " + e.getMessage());
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -265,6 +263,8 @@ public class VideogiocoDAO {
                 if (conn != null) conn.close();
             } catch (SQLException e) { e.printStackTrace(); }
         }
+        
+        return nuovoId; // Restituiamo l'ID alla Servlet
     }
 
     // Metodo per aggiornare un videogioco esistente e i suoi generi

@@ -106,10 +106,27 @@ public class GestioneGiochiServlet extends HttpServlet {
                 // 5. Salvataggio su Database
                 String[] generiSelezionati = request.getParameterValues("generi");
                 
+                //Salvataggio con recupero ID
+                int idGenerato = -1;
                 if (azione.equals("aggiungi")) {
-                    dao.doSave(gioco, generiSelezionati);
+                    idGenerato = dao.doSave(gioco, generiSelezionati);
                 } else {
+                    idGenerato = gioco.getIdVideogioco(); // Se modifichiamo, l'ID lo sappiamo già
                     dao.doUpdate(gioco, generiSelezionati); 
+                }
+                
+                //Salvataggio multiplo delle foto galleria
+                if (idGenerato > 0) {
+                    model.dao.ImmagineGiocoDAO imgDao = new model.dao.ImmagineGiocoDAO();
+                    for (Part p : request.getParts()) {
+                        if ("galleriaImmagini".equals(p.getName()) && p.getSize() > 0) {
+                            byte[] bytesImg = new byte[(int) p.getSize()];
+                            try (InputStream is = p.getInputStream()) {
+                                is.read(bytesImg);
+                            }
+                            imgDao.doSave(idGenerato, bytesImg);
+                        }
+                    }
                 }
                 
                 response.sendRedirect("GestioneGiochiServlet?azione=lista");
@@ -119,7 +136,15 @@ public class GestioneGiochiServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 request.setAttribute("giocoDaModificare", dao.doRetrieveById(id));
                 request.setAttribute("generiGioco", dao.getGeneriByIdVideogioco(id));
+                request.setAttribute("immaginiGalleria", new model.dao.ImmagineGiocoDAO().doRetrieveByGioco(id));
                 request.setAttribute("vista", "formModifica");
+                
+            } else if (azione.equals("eliminaImmagine")) {
+                int idImg = Integer.parseInt(request.getParameter("idImmagine"));
+                int idGioco = Integer.parseInt(request.getParameter("idVideogioco"));
+                new model.dao.ImmagineGiocoDAO().doDelete(idImg);
+                response.sendRedirect("GestioneGiochiServlet?azione=mostraFormModifica&id=" + idGioco);
+                return;
                 
             } else if (azione.equals("elimina")) {
                 int id = Integer.parseInt(request.getParameter("id"));
