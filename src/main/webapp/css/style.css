@@ -3300,61 +3300,74 @@ input.remember-checkbox {
 	    background-color: #04142C;
 	    border: 1px solid #00E5FF;
 	    border-radius: 10px;
-	    padding: 25px;
+	    padding: 30px;
 	    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
 	    box-sizing: border-box;
 	    width: 100%;
-	    height: 100%; /* Si estende lungo tutta l'altezza disponibile */
+	    height: 100%;
 	}
 	
 	.scheda-tecnica-box h3 {
 	    color: #00E5FF;
-	    font-size: 1.3rem;
+	    font-size: 1.4rem;
 	    margin-top: 0;
-	    margin-bottom: 22px;
+	    margin-bottom: 25px;
 	    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
-	    padding-bottom: 10px;
+	    padding-bottom: 12px;
 	    text-transform: uppercase;
-	    letter-spacing: 1px;
+	    letter-spacing: 1.5px;
 	}
 	
 	.info-group {
-	    margin-bottom: 25px;
+	    margin-bottom: 30px;
 	}
 	
 	.info-label {
 	    display: block;
-	    font-size: 0.85rem;
+	    font-size: 0.95rem;
 	    color: #8a99ad;
 	    text-transform: uppercase;
-	    margin-bottom: 8px;
+	    margin-bottom: 10px;
 	    font-weight: bold;
+	    letter-spacing: 1px;
 	}
 	
 	.info-value {
 	    color: #ffffff;
 	    font-weight: 500;
-	    font-size: 1rem;
+	    font-size: 1.15rem;
+	}
+	
+	.piattaforme-tags {
+	    display: flex;
+	    flex-direction: column;
+	    gap: 8px;
+	    align-items: flex-start;
 	}
 	
 	.badge-piattaforma {
-	    display: inline-block;
+	    display: block;
+	    width: 100%; /* Occupa tutta la larghezza della riga */
+	    box-sizing: border-box;
+	    text-align: center;
 	    background: rgba(0, 229, 255, 0.1);
 	    color: #00E5FF;
 	    border: 1px solid #00E5FF;
-	    padding: 6px 14px;
-	    border-radius: 4px;
-	    font-size: 0.9rem;
+	    padding: 8px 14px;
+	    border-radius: 6px;
+	    font-size: 1rem; /* Font badge ingrandito */
 	    font-weight: bold;
+	    letter-spacing: 1px;
 	}
 	
+	/*testo dei requisiti di sistema*/
 	.requisiti-testo {
 	    color: #d1d5db;
-	    font-size: 0.9rem;
+	    font-size: 1rem; /* Font requisiti ingrandito */
 	    white-space: pre-line;
-	    line-height: 1.5;
+	    line-height: 1.6;
 	    background: rgba(255, 255, 255, 0.03);
-	    padding: 15px;
+	    padding: 16px;
 	    border-radius: 6px;
 	    border-left: 3px solid #00E5FF;
 	    margin: 0;
@@ -3370,4 +3383,79 @@ input.remember-checkbox {
         width: 100%;
         position: static;
     }
+    
+    /*=====================================
+      RICERCA UTENTE
+      =====================================*/
+      
+      /* contenitore della barra di ricerca */
+	.search-container {
+	    position: relative;
+	    display: inline-block;
+	}
+	
+	/* icona del bottone */
+	.search-toggle-btn {
+	    background: transparent;
+	    border: none;
+	    color: #fff;
+	    font-size: 18px;
+	    cursor: pointer;
+	    padding: 5px 10px;
+	}
+	
+	.search-inner-wrapper {
+	    display: none;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    z-index: 1000;
+	    background: #0b132b;
+	    border: 1px solid #00d2ff;
+	    border-radius: 20px;
+	    padding: 2px 8px;
+	    align-items: center;
+	    white-space: nowrap;
+	}
+	
+	.search-inner-wrapper.active {
+	    display: flex !important;
+	}
+	
+	.search-inner-wrapper input {
+	    background: transparent;
+	    border: none;
+	    color: #fff;
+	    outline: none;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	    width: 180px;
+	}
+	
+	/* tasto chiusura della barra */
+	.search-close-btn {
+	    background: transparent;
+	    border: none;
+	    color: #ff4d4d;
+	    font-size: 14px;
+	    cursor: pointer;
+	    margin-left: 5px;
+	}
+	
+	/* tendina dei risultati AJAX */
+	#userSearchResults {
+	    display: none;
+	    position: absolute;
+	    top: 100%;
+	    left: 0;
+	    right: 0;
+	    background-color: #0b132b;
+	    border: 1px solid #00d2ff;
+	    border-radius: 8px;
+	    max-height: 250px;
+	    overflow-y: auto;
+	    z-index: 1001;
+	    margin-top: 5px;
+	    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	}
 }

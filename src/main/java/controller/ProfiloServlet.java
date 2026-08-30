@@ -35,12 +35,41 @@ public class ProfiloServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
 
-        if (utenteLoggato == null) {
+        //Lettura dell'ID
+        String idParam = request.getParameter("id");
+        Utente utenteDaMostrare = null;
+        boolean isProprietario = false;
+
+        if (idParam != null && !idParam.trim().isEmpty()) {
+            try {
+                int idCercato = Integer.parseInt(idParam);
+                //Se l'ID cercato corrisponde a quello in sessione, mostra il proprio profilo
+                if (utenteLoggato != null && utenteLoggato.getIdUtente() == idCercato) {
+                    utenteDaMostrare = utenteLoggato;
+                    isProprietario = true;
+                } else {
+                    //Altrimenti recupera i dati dell'utente visitato dal DB
+                    UtenteDAO utenteDao = new UtenteDAO();
+                    utenteDaMostrare = utenteDao.doRetrieveById(idCercato);
+                    isProprietario = false;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("ID Utente non valido: " + idParam);
+            }
+        } else {
+        	//Se nell'URL non c'è nessun ID utente, significa che stai aprendo la tua "Area Personale"
+            utenteDaMostrare = utenteLoggato;
+            isProprietario = true;
+        }
+
+        /*Per cercare un utente bisogna essere loggati, quindi:
+          se non c'è né un utente cercato né un utente loggato, forza il login*/
+        if (utenteDaMostrare == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        int idUtente = utenteLoggato.getIdUtente();
+        int idUtente = utenteDaMostrare.getIdUtente();
 
         // Recupero Libreria Giochi
         LibreriaDAO libreriaDao = new LibreriaDAO();
@@ -62,12 +91,12 @@ public class ProfiloServlet extends HttpServlet {
         List<Videogioco> wishlistUtente = videogiocoDao.getWishlistByUtente(idUtente);
         if (wishlistUtente == null) wishlistUtente = new ArrayList<>();
 
-        request.setAttribute("utenteProfilo", utenteLoggato);
+        request.setAttribute("utenteProfilo", utenteDaMostrare);
         request.setAttribute("giochiPosseduti", giochiPosseduti);
         request.setAttribute("ordiniUtente", ordiniUtente);
         request.setAttribute("recensioniUtente", recensioniUtente);
         request.setAttribute("wishlistUtente", wishlistUtente);
-        request.setAttribute("isProprietario", true);
+        request.setAttribute("isProprietario", isProprietario);
 
         request.getRequestDispatcher("/profilo.jsp").forward(request, response);
     }

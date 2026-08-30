@@ -63,6 +63,31 @@
             <div id="searchResults"></div>
         </div>
 
+        <%-- Ricerca Utenti --%>
+        <div class="user-search-container" id="userSearchContainer" style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+
+            <button id="userSearchBtn" type="button" style="background: rgba(11, 19, 43, 0.8); border: 1px solid #00d2ff; border-radius: 50%; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; color: #00d2ff; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,210,255,0.3); padding: 0;">
+			    <span style="pointer-events: none;">👤</span>
+			</button>
+
+            <div class="user-search-inner-wrapper" id="userSearchInner" style="display: none; position: relative; z-index: 1000; background: #0b132b; border: 1px solid #00d2ff; border-radius: 20px; padding: 2px 8px; align-items: center; white-space: nowrap; margin-left: 5px;">
+                <form id="userSearchForm" onsubmit="return false;" style="display: flex; align-items: center; margin: 0; padding: 0;">
+                    <input type="text" 
+                           id="userSearchBar" 
+                           name="query" 
+                           data-context-path="${pageContext.request.contextPath}"
+                           placeholder="Cerca utente per nickname..." 
+                           autocomplete="off" 
+                           required
+                           style="background: transparent; border: none; color: #fff; outline: none; padding: 5px 10px; font-size: 13px; width: 180px;">
+                </form>
+
+                <button class="user-search-close-btn" id="userSearchCloseBtn" type="button" style="background: transparent; border: none; color: #ff4d4d; font-size: 14px; cursor: pointer; margin-left: 5px;">✖</button>
+            </div>
+
+            <div id="userSearchResults" style="display: none; position: absolute; top: 100%; left: 0; width: 240px; background-color: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1001; margin-top: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);"></div>
+        </div>
+
         <div class="user-info">
             <% if (utenteLoggatoHeader != null) { %>
 
@@ -108,8 +133,49 @@
         </div>
 
 	<script src="${pageContext.request.contextPath}/js/header.js"></script>
+    <script src="${pageContext.request.contextPath}/js/ricercaUtenti.js?v=2.0"></script>
 
-    <% } /* fine dell' if per l'header minimale */ %>
+    <% } %>
+    
+    <%--script per far funzionare il pulsante della barra di ricerca utente --%>
+    <script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    var btn = document.getElementById("userSearchBtn");
+	    var innerWrapper = document.getElementById("userSearchInner");
+	    var closeBtn = document.getElementById("userSearchCloseBtn");
+	    var inputBar = document.getElementById("userSearchBar");
+
+	    if (btn && innerWrapper) {
+	        btn.addEventListener("click", function(e) {
+	            e.stopPropagation();
+	            if (innerWrapper.style.display === "none" || innerWrapper.style.display === "") {
+	                innerWrapper.style.display = "flex";
+	                if (inputBar) inputBar.focus();
+	            } else {
+	                innerWrapper.style.display = "none";
+	            }
+	        });
+	    }
+
+	    //chiusura tramite pulsante
+	    if (closeBtn && innerWrapper) {
+	        closeBtn.addEventListener("click", function(e) {
+	            e.stopPropagation();
+	            innerWrapper.style.display = "none";
+	        });
+	    }
+
+	    //previene la sottomissione del modulo al pulsante Invio
+	    if (inputBar) {
+	        inputBar.addEventListener("keydown", function(e) {
+	            if (e.key === "Enter") {
+	                e.preventDefault();
+	            }
+	        });
+	    }
+	});
+	</script>
+
 </header>
 
 <% if (utenteLoggatoHeader != null && !"minimal".equals(tipoHeader) && !"backoffice".equals(tipoHeader)) { %>

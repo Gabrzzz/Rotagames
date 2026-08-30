@@ -79,7 +79,6 @@
 	            <%-- Galleria scorrevole (posizionata sotto l'immagine della copertina)--%>
 	            <% if (immagini != null && !immagini.isEmpty()) { %>
 		        <div class="dettaglio-galleria-box">
-			        <h3>Galleria Screenshot</h3>
 			        <div class="dettaglio-galleria-scroll">
 				        <% for (ImmagineGioco img : immagini) { %>
 					        <img src="data:image/jpeg;base64,<%= img.getBase64Immagine() %>"
@@ -160,19 +159,30 @@
 	        <%-- Colonna di destra: scheda con piattaforme del gioco, nome autore, etc) --%>
 	        <aside class="colonna-sidebar">
 	            <div class="scheda-tecnica-box">
-	                <h3>Scheda Tecnica</h3>
-
+	                <h3>Altre info</h3>
+	                
 	                <div class="info-group">
-	                    <span class="info-label">Sviluppatore</span>
+	                    <span class="info-label">Pubblicato da</span>
 	                    <span class="info-value">
-	                        <%= (gioco.getIdSviluppatore() != null) ? "ID Sviluppatore: " + gioco.getIdSviluppatore() : "Non specificato" %>
+	                        <%= request.getAttribute("nomeSviluppatore") != null ? request.getAttribute("nomeSviluppatore") : "RotaGames" %>
 	                    </span>
 	                </div>
 
 	                <div class="info-group">
 	                    <span class="info-label">Piattaforme</span>
 	                    <div class="piattaforme-tags">
-	                        <span class="badge-piattaforma"><%= gioco.getPiattaforma() %></span>
+	                        <% 
+	                            if (gioco.getPiattaforma() != null && !gioco.getPiattaforma().isEmpty()) {
+	                                String[] listaPiattaforme = gioco.getPiattaforma().split(",");
+	                                for (String p : listaPiattaforme) { 
+	                        %>
+	                                    <span class="badge-piattaforma"><%= p.trim() %></span>
+	                        <% 
+	                                }
+	                            } else { 
+	                        %>
+	                                <span class="badge-piattaforma">Non specificate</span>
+	                        <% } %>
 	                    </div>
 	                </div>
 

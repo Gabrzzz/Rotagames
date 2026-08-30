@@ -15,6 +15,8 @@ import model.Recensione;
 import model.dao.RecensioneDAO;
 import model.ImmagineGioco;
 import model.dao.ImmagineGiocoDAO;
+import model.dao.UtenteDAO;
+import model.Utente;
 
 @WebServlet("/DettaglioGiocoServlet")
 public class DettaglioGiocoServlet extends HttpServlet {
@@ -37,6 +39,15 @@ public class DettaglioGiocoServlet extends HttpServlet {
         //vengono recuperate le recensioni
         RecensioneDAO recensioneDao = new RecensioneDAO();
         List<Recensione> recensioni = recensioneDao.doRetrieveByVideogioco(idGioco);
+        
+        //viene recuperato il nickname dello sviluppatore
+        if (gioco != null && gioco.getIdSviluppatore() != null) {
+            UtenteDAO utenteDao = new UtenteDAO();
+            Utente sviluppatore = utenteDao.doRetrieveById(gioco.getIdSviluppatore());
+            if (sviluppatore != null) {
+                request.setAttribute("nomeSviluppatore", sviluppatore.getNickname()); // NUOVO
+            }
+        }
         
         request.setAttribute("gioco", gioco);
         request.setAttribute("immagini", immagini);

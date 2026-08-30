@@ -35,14 +35,6 @@
                      src="<%= request.getContextPath() %>/images/<%= (utenteProfilo != null && utenteProfilo.getAvatarAttivo() != null && !utenteProfilo.getAvatarAttivo().trim().isEmpty()) ? utenteProfilo.getAvatarAttivo() : "RotaLogo.png" %>" 
                      alt="Avatar" 
                      onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
-    
-                <% if (isProprietario) { %>
-                    <form action="ProfiloServlet" method="post" enctype="multipart/form-data" class="avatar-upload-form">
-                        <input type="hidden" name="azione" value="aggiornaAvatar">
-                        <input type="file" name="avatarFile" id="avatarInput" accept="image/*" style="display: none;" onchange="this.form.submit()">
-                        <label for="avatarInput" class="avatar-edit-overlay">✏️ Cambia</label>
-                    </form>
-                <% } %>
             </div>
         
             <%-- SEZIONE NICKNAME CON MODIFICA PER IL PROPRIETARIO --%>
@@ -67,30 +59,14 @@
             </div>
             
             <%-- SEZIONE TITOLO --%>
-            <div class="titolo-container" style="margin: 6px 0 12px 0; display: flex; align-items: center; justify-content: flex-start;">
-                <% if (isProprietario) { %>
-                    <form action="ProfiloServlet" method="post" style="display: inline-flex; align-items: center; gap: 6px;">
-                        <input type="hidden" name="azione" value="aggiornaTitolo">
-                        <select name="titoloSelezionato" class="titolo-select" style="font-size: 15px !important; padding: 5px 10px !important;">
-                            <% 
-                                String titoloAttivo = (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null) ? utenteProfilo.getTitoloAttivo() : "Novellino";
-                                List<String> titoliPosseduti = (List<String>) request.getAttribute("titoliPosseduti");
-                                if (titoliPosseduti != null && !titoliPosseduti.isEmpty()) {
-                                    for (String t : titoliPosseduti) {
-                            %>
-                                        <option value="<%= t %>" <%= t.equals(titoloAttivo) ? "selected" : "" %>><%= t %></option>
-                            <% 
-                                    }
-                                } else { 
-                            %>
-                                    <option value="<%= titoloAttivo %>" selected><%= titoloAttivo %></option>
-                            <% } %>
-                        </select>
-                        <button type="submit" title="Salva titolo" class="btn-salva-titolo" style="font-size: 15px !important; padding: 5px 10px !important;">💾</button>
-                    </form>
-                <% } else { %>
-                    <p class="titolo-attivo" style="margin: 0; font-weight: bold; color: #00d2ff; font-size: 15px; text-align: left;"><%= (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null) ? utenteProfilo.getTitoloAttivo() : "Novellino" %></p>
-                <% } %>
+            <div class="titolo-container" style="margin: 8px 0 14px 0; display: flex; align-items: center; justify-content: flex-start; gap: 8px;">
+                <span style="font-weight: bold; color: #aaa; font-size: 14px;">Titolo:</span>
+                
+                <div style="background: rgba(0, 210, 255, 0.1); border: 1px solid #00d2ff; border-radius: 6px; padding: 3px 10px; display: inline-block;">
+                    <p class="titolo-attivo" style="margin: 0; font-weight: bold; color: #00d2ff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <%= (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null) ? utenteProfilo.getTitoloAttivo() : "Novellino" %>
+                    </p>
+                </div>
             </div>
             
             <%-- SEZIONE BIO --%>
@@ -145,19 +121,57 @@
         </div>
 
         <%-- Box Recensioni lasciate --%>
-        <div class="profilo-sezione">
-            <h2>LE TUE RECENSIONI</h2>
-            <% if (recensioniUtente != null && !recensioniUtente.isEmpty()) { %>
-                <% for (Recensione rec : recensioniUtente) { %>
-                    <div class="recensione-item">
-                        <p>Voto: <%= rec.getVoto() %>/5</p>
-                        <p><%= rec.getTesto() %></p>
-                    </div>
-                <% } %>
-            <% } else { %>
-                <p><%= utenteProfilo != null ? utenteProfilo.getNickname() : "L'utente" %> non ha lasciato nessuna recensione.</p>
-            <% } %>
-        </div>
+		<div class="profile-section-box" style="background: #0b132b; border: 1px solid #00d2ff; border-radius: 10px; padding: 20px; margin-top: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+		    
+		    <h3 style="color: #00d2ff; border-left: 4px solid #00d2ff; padding-left: 10px; margin-bottom: 20px; text-transform: uppercase; font-size: 16px;">
+		        LE RECENSIONI DI <%= utenteProfilo.getNickname() %>
+		    </h3>
+		    <div class="profile-reviews-container" style="display: flex; flex-direction: column; gap: 15px;">
+		        <% 
+		            List<Recensione> listaRecensioni = (List<Recensione>) request.getAttribute("recensioniUtente");
+		            if (listaRecensioni != null && !listaRecensioni.isEmpty()) {
+		                model.dao.VideogiocoDAO vDao = new model.dao.VideogiocoDAO();
+		
+		                for (Recensione r : listaRecensioni) {
+		                    int voto = r.getVoto(); 
+		                    StringBuilder stelle = new StringBuilder();
+		                    for (int i = 1; i <= 5; i++) {
+		                        if (i <= voto) {
+		                            stelle.append("★");
+		                        } else {
+		                            stelle.append("☆");
+		                        }
+		                    }
+		
+		                    model.Videogioco g = vDao.doRetrieveById(r.getIdVideogioco());
+		                    String nomeGioco = (g != null) ? g.getTitolo() : "Videogioco";
+		        %>
+		            <div class="review-card-item" style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(0, 210, 255, 0.3); border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+		                
+		                <%-- Intestazione della scheda della valutazione: nome del gioco e stelle della valutazionesa --%>
+		                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; margin-bottom: 10px;">
+		                    <span style="font-weight: bold; color: #00d2ff; font-size: 15px;">
+		                         <%= nomeGioco %>
+		                    </span>
+		                    <span style="color: #FFD700; font-size: 16px; letter-spacing: 2px;">
+		                        <%= stelle.toString() %>
+		                    </span>
+		                </div>
+		
+		                <%-- Testo della recensione --%>
+		                <div style="color: #e0e0e0; font-size: 14px; line-height: 1.4;">
+		                    <%= r.getTesto() %>
+		                </div>
+		
+		            </div>
+		        <% 
+		                }
+		            } else { 
+		        %>
+		            <p style="color: #aaa; font-style: italic;">Nessuna recensione pubblicata.</p>
+		        <% } %>
+		    </div>
+		</div>
 
     </div>
 
@@ -212,7 +226,7 @@
                     <% } %>
                 </div>
             <% } else { %>
-                <p class="profilo-vuoto">La tua wishlist è vuota.</p>
+                <p class="profilo-vuoto">La wishlist è vuota.</p>
             <% } %>
         </div>
 

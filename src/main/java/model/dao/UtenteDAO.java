@@ -347,4 +347,29 @@ public class UtenteDAO {
         return esito;
     }
     
+    /* Classe per la ricerca utente: cerca gli utenti tramite la stringa inserita nella barra. */
+    public List<Utente> doRetrieveByNicknameSearch(String query) {
+        List<Utente> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Utente WHERE nickname LIKE ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + query + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Utente u = new Utente();
+                    u.setIdUtente(rs.getInt("id_utente"));
+                    u.setNickname(rs.getString("nickname"));
+                    u.setAvatarAttivo(rs.getString("avatar_attivo"));
+                    u.setTitoloAttivo(rs.getString("titolo_attivo"));
+                    lista.add(u);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in UtenteDAO.doRetrieveByNicknameSearch: " + e.getMessage());
+        }
+        return lista;
+    }
+    
 }
