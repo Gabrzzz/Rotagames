@@ -53,7 +53,20 @@
 	                    <%-- info gioco --%>
 	                    <div class="dettaglio-info-box">
 	                        <p class="game-description"><%= gioco.getDescrizione() %></p>
-	                        <span class="game-price"><%= gioco.getPrezzoBase() %>€</span>
+	                        
+	                        <div class="price-container">
+							    <% if (gioco.getScontoAttivo() > 0) { 
+							        double prezzoScontato = gioco.getPrezzoBase() - (gioco.getPrezzoBase() * gioco.getScontoAttivo() / 100.0);
+							    %>
+							        <span class="discount-badge">-<%= gioco.getScontoAttivo() %>%</span>
+							        <div class="price-column">
+							            <span class="old-price"><%= String.format("%.2f", gioco.getPrezzoBase()) %>€</span>
+							            <span class="game-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
+							        </div>
+							    <% } else { %>
+							        <span class="game-price"><%= String.format("%.2f", gioco.getPrezzoBase()) %>€</span>
+							    <% } %>
+							</div>
 	
 	                        <%-- BOTTONI AZIONE (Carrello e Wishlist) --%>
 	                        <div class="action-buttons-wrapper">
