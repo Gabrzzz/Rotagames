@@ -115,14 +115,56 @@
             </div>
             
             <%-- SEZIONE TITOLO --%>
-            <div class="titolo-container" style="margin: 8px 0 14px 0; display: flex; align-items: center; justify-content: flex-start; gap: 8px;">
+            <div class="titolo-container" style="margin: 8px 0 14px 0; display: flex; align-items: center; justify-content: flex-start; gap: 8px; position: relative;">
                 <span style="font-weight: bold; color: #aaa; font-size: 14px;">Titolo:</span>
                 
-                <div style="background: rgba(0, 210, 255, 0.1); border: 1px solid #00d2ff; border-radius: 6px; padding: 3px 10px; display: inline-block;">
+                <% String titoloAttivo = (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null && !utenteProfilo.getTitoloAttivo().trim().isEmpty()) ? utenteProfilo.getTitoloAttivo() : "Novellino"; %>
+                
+                <%-- Bordo del titolo cliccabile --%>
+                <div style="background: rgba(0, 210, 255, 0.1); border: 1px solid #00d2ff; border-radius: 6px; padding: 3px 10px; display: flex; align-items: center; gap: 8px; cursor: <%= isProprietario ? "pointer" : "default" %>;"
+                     <%= isProprietario ? "onclick=\"document.getElementById('titoloSelectorMenu').style.display = document.getElementById('titoloSelectorMenu').style.display === 'none' ? 'flex' : 'none';\"" : "" %>>
                     <p class="titolo-attivo" style="margin: 0; font-weight: bold; color: #00d2ff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
-                        <%= (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null) ? utenteProfilo.getTitoloAttivo() : "Novellino" %>
+                        <%= titoloAttivo %>
                     </p>
+                    <% if (isProprietario) { %>
+                        <span style="font-size: 11px;" title="Cambia Titolo">✏️</span>
+                    <% } %>
                 </div>
+
+                <%-- MENU SCELTA TITOLO (Nascosto di default) --%>
+                <% if (isProprietario) { 
+                    List<String> titoliPosseduti = (List<String>) request.getAttribute("titoliPosseduti");
+                %>
+                <div id="titoloSelectorMenu" style="display: none; position: absolute; top: 100%; left: 45px; background: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; padding: 15px; flex-direction: column; gap: 8px; min-width: 200px; box-shadow: 0 4px 15px rgba(0,0,0,0.7); z-index: 100;">
+                    <h4 style="margin: 0 0 5px 0; color: #00d2ff; font-size: 13px; text-transform: uppercase;">I tuoi Titoli</h4>
+                    
+                    <%-- Opzione 1: Titolo di Base --%>
+                    <form action="ProfiloServlet" method="post" style="margin: 0; width: 100%;">
+                        <input type="hidden" name="azione" value="aggiornaTitolo">
+                        <input type="hidden" name="titoloSelezionato" value="Novellino">
+                        <button type="submit" style="width: 100%; text-align: left; background: <%= "Novellino".equals(titoloAttivo) ? "rgba(0, 255, 136, 0.2)" : "transparent" %>; border: <%= "Novellino".equals(titoloAttivo) ? "1px solid #00ff88" : "1px solid rgba(255,255,255,0.2)" %>; border-radius: 4px; padding: 6px 10px; color: white; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; transition: all 0.2s;">
+                            Novellino
+                        </button>
+                    </form>
+
+                    <%-- Opzioni 2: Titoli Acquistati --%>
+                    <% if (titoliPosseduti != null && !titoliPosseduti.isEmpty()) {
+                        for (String t : titoliPosseduti) { 
+                            boolean isThisTitleActive = t.equals(titoloAttivo);
+                    %>
+                        <form action="ProfiloServlet" method="post" style="margin: 0; width: 100%;">
+                            <input type="hidden" name="azione" value="aggiornaTitolo">
+                            <input type="hidden" name="titoloSelezionato" value="<%= t %>">
+                            <button type="submit" style="width: 100%; text-align: left; background: <%= isThisTitleActive ? "rgba(0, 255, 136, 0.2)" : "transparent" %>; border: <%= isThisTitleActive ? "1px solid #00ff88" : "1px solid rgba(255,255,255,0.2)" %>; border-radius: 4px; padding: 6px 10px; color: white; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; transition: all 0.2s;">
+                                <%= t %>
+                            </button>
+                        </form>
+                    <%  }
+                       } else { %>
+                           <p style="font-size: 11px; color: #aaa; margin: 5px 0 0 0;">Nessun titolo speciale.<br><a href="ShopServlet" style="color: #00E5FF; text-decoration: underline;">Visita lo shop!</a></p>
+                    <% } %>
+                </div>
+                <% } %>
             </div>
             
             <%-- SEZIONE BIO --%>

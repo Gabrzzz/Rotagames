@@ -45,12 +45,10 @@ public class ProfiloServlet extends HttpServlet {
         if (idParam != null && !idParam.trim().isEmpty()) {
             try {
                 int idCercato = Integer.parseInt(idParam);
-                //Se l'ID cercato corrisponde a quello in sessione, mostra il proprio profilo
                 if (utenteLoggato != null && utenteLoggato.getIdUtente() == idCercato) {
                     utenteDaMostrare = utenteLoggato;
                     isProprietario = true;
                 } else {
-                    //Altrimenti recupera i dati dell'utente visitato dal DB
                     UtenteDAO utenteDao = new UtenteDAO();
                     utenteDaMostrare = utenteDao.doRetrieveById(idCercato);
                     isProprietario = false;
@@ -59,13 +57,10 @@ public class ProfiloServlet extends HttpServlet {
                 System.err.println("ID Utente non valido: " + idParam);
             }
         } else {
-            //Se nell'URL non c'è nessun ID utente, significa che stai aprendo la tua "Area Personale"
             utenteDaMostrare = utenteLoggato;
             isProprietario = true;
         }
 
-        /*Per cercare un utente bisogna essere loggati, quindi:
-          se non c'è né un utente cercato né un utente loggato, forza il login*/
         if (utenteDaMostrare == null) {
             response.sendRedirect("login.jsp");
             return;
@@ -73,29 +68,27 @@ public class ProfiloServlet extends HttpServlet {
 
         int idUtente = utenteDaMostrare.getIdUtente();
 
-        // Recupero Libreria Giochi
         LibreriaDAO libreriaDao = new LibreriaDAO();
         List<Libreria> giochiPosseduti = libreriaDao.doRetrieveByUtente(idUtente);
         if (giochiPosseduti == null) giochiPosseduti = new ArrayList<>();
 
-        // Recupero Ordini
         OrdineDAO ordineDao = new OrdineDAO();
         List<Ordine> ordiniUtente = ordineDao.doRetrieveByUtente(idUtente);
         if (ordiniUtente == null) ordiniUtente = new ArrayList<>();
 
-        // Recupero Recensioni
         RecensioneDAO recensioneDao = new RecensioneDAO();
         List<Recensione> recensioniUtente = recensioneDao.doRetrieveByUtente(idUtente);
         if (recensioniUtente == null) recensioniUtente = new ArrayList<>();
 
-        // Recupero Wishlist
         VideogiocoDAO videogiocoDao = new VideogiocoDAO();
         List<Videogioco> wishlistUtente = videogiocoDao.getWishlistByUtente(idUtente);
         if (wishlistUtente == null) wishlistUtente = new ArrayList<>();
 
-        // --- RECUPERO AVATAR POSSEDUTI PER IL MENU A TENDINA ---
+        // --- RECUPERO AVATAR E TITOLI POSSEDUTI PER I MENU A TENDINA ---
         List<String> avatarPosseduti = new ArrayList<>();
-        if (isProprietario) { // Li carichiamo solo se stai guardando il TUO profilo
+        List<String> titoliPosseduti = new ArrayList<>();
+        
+        if (isProprietario) { 
             try {
                 OggettoShopDAO shopDao = new OggettoShopDAO();
                 List<OggettoShop> tuttoCatalogo = shopDao.doRetrieveAll();
@@ -103,22 +96,22 @@ public class ProfiloServlet extends HttpServlet {
                 
                 if (tuttoCatalogo != null && idAcquistati != null) {
                     for (OggettoShop obj : tuttoCatalogo) {
-                        // LA MODIFICA È STATA APPLICATA QUI SOTTO:
-                        if (obj.getTipo() != null && 
-                            obj.getTipo().trim().equalsIgnoreCase("AVATAR") && 
-                            idAcquistati.contains(obj.getIdOggetto())) {
-                            
-                            avatarPosseduti.add(obj.getValore());
+                        if (obj.getTipo() != null && idAcquistati.contains(obj.getIdOggetto())) {
+                            if (obj.getTipo().trim().equalsIgnoreCase("AVATAR")) {
+                                avatarPosseduti.add(obj.getValore());
+                            } else if (obj.getTipo().trim().equalsIgnoreCase("TITOLO")) {
+                                titoliPosseduti.add(obj.getValore());
+                            }
                         }
                     }
                 }
             } catch (Exception e) {
-                System.err.println("Errore caricamento avatar: " + e.getMessage());
+                System.err.println("Errore caricamento oggetti shop: " + e.getMessage());
             }
         }
+        
         request.setAttribute("avatarPosseduti", avatarPosseduti);
-        // -------------------------------------------------------
-
+        request.setAttribute("titoliPosseduti", titoliPosseduti);
         request.setAttribute("utenteProfilo", utenteDaMostrare);
         request.setAttribute("giochiPosseduti", giochiPosseduti);
         request.setAttribute("ordiniUtente", ordiniUtente);
@@ -166,15 +159,12 @@ public class ProfiloServlet extends HttpServlet {
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
                 
-            // --- BLOCCO PER RIMUOVERE L'AVATAR (Torna al default) ---
             } else if ("rimuoviAvatar".equals(azione)) {
-                
                 utenteLoggato.setAvatarAttivo(null);
                 UtenteDAO utenteDao = new UtenteDAO();
                 utenteDao.doUpdateAvatar(utenteLoggato.getIdUtente(), null);
                 session.setAttribute("utenteLoggato", utenteLoggato);
                 
-            // --- NUOVO BLOCCO PER IMPOSTARE L'AVATAR DAL MENU RAPIDO ---
             } else if ("impostaAvatarShop".equals(azione)) {
                 String nomeAvatar = request.getParameter("nomeAvatar");
                 if (nomeAvatar != null && !nomeAvatar.trim().isEmpty()) {
@@ -183,29 +173,24 @@ public class ProfiloServlet extends HttpServlet {
                     utenteDao.doUpdateAvatar(utenteLoggato.getIdUtente(), nomeAvatar);
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
-            // -----------------------------------------------------------
                 
-            // gestione aggiornamento Nickname
             } else if ("aggiornaNickname".equals(azione)) {
                 String nuovoNickname = request.getParameter("nuovoNickname");
                 if (nuovoNickname != null && !nuovoNickname.trim().isEmpty()) {
                     nuovoNickname = nuovoNickname.trim();
                     utenteLoggato.setNickname(nuovoNickname);
                     UtenteDAO utenteDao = new UtenteDAO();
-                    
                     utenteDao.doUpdateNickname(utenteLoggato.getIdUtente(), nuovoNickname);
-                    
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
-            // Gestione aggiornamento Titolo
+                
+            // --- GESTIONE AGGIORNAMENTO TITOLO ---
             } else if ("aggiornaTitolo".equals(azione)) {
                 String titoloSelezionato = request.getParameter("titoloSelezionato");
                 if (titoloSelezionato != null && !titoloSelezionato.trim().isEmpty()) {
                     utenteLoggato.setTitoloAttivo(titoloSelezionato);
                     UtenteDAO utenteDao = new UtenteDAO();
-                    
                     utenteDao.doUpdateTitoloAttivo(utenteLoggato.getIdUtente(), titoloSelezionato);
-                    
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
             }
