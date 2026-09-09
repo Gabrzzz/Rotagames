@@ -54,7 +54,7 @@
                 <div class="shop-item-icon">
                     <% if ("AVATAR".equals(art.getTipo())) { %>
                         <%-- Mostra l'avatar acquistabile (puoi inserire immagini reali nella cartella /images/avatars/) --%>
-                        <img src="${pageContext.request.contextPath}/images/avatars/<%= art.getValore() %>" alt="Avatar" class="avatar-preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #00E5FF;">
+                        <img src="${pageContext.request.contextPath}/images/avatar/<%= art.getValore() %>" alt="Avatar" class="avatar-preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #00E5FF;">
                     <% } else if ("COUPON".equals(art.getTipo())) { %>
                         <span style="font-size: 3em;">🎟️</span>
                     <% } else { %>

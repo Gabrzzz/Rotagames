@@ -30,11 +30,67 @@
         
         <%-- Box Avatar, Nickname, Titolo e Bio --%>
         <div class="profilo-sezione">
-            <div class="profilo-avatar-box">
-                <img class="profilo-avatar-img" 
-                     src="<%= request.getContextPath() %>/images/<%= (utenteProfilo != null && utenteProfilo.getAvatarAttivo() != null && !utenteProfilo.getAvatarAttivo().trim().isEmpty()) ? utenteProfilo.getAvatarAttivo() : "RotaLogo.png" %>" 
-                     alt="Avatar" 
-                     onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
+           <%-- CONTENITORE FLEX: Affianca l'avatar e il menù di selezione --%>
+            <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 25px;">
+                
+                <%-- AVATAR ATTUALE --%>
+                <div class="profilo-avatar-box" style="position: relative; cursor: pointer; margin: 0;" 
+                     onclick="document.getElementById('avatarSelectorMenu').style.display = document.getElementById('avatarSelectorMenu').style.display === 'none' ? 'flex' : 'none';">
+                    <%
+                        String avatarAttivo = (utenteProfilo != null && utenteProfilo.getAvatarAttivo() != null && !utenteProfilo.getAvatarAttivo().trim().isEmpty()) 
+                                              ? utenteProfilo.getAvatarAttivo() : null;
+                        
+                        String percorsoAvatar = (avatarAttivo != null) 
+                                                ? request.getContextPath() + "/images/avatar/" + avatarAttivo 
+                                                : request.getContextPath() + "/images/RotaLogo.png";
+                    %>
+                    <img class="profilo-avatar-img" 
+                         src="<%= percorsoAvatar %>" 
+                         alt="Avatar" 
+                         onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
+        
+                    <% if (isProprietario) { %>
+                        <div class="avatar-edit-overlay" style="display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                            ✏️ Modifica
+                        </div>
+                    <% } %>
+                </div>
+
+                <%-- MENU SCELTA AVATAR (Nascosto di default, si apre al click) --%>
+                <% if (isProprietario) { 
+                    List<String> avatarPosseduti = (List<String>) request.getAttribute("avatarPosseduti");
+                %>
+                <div id="avatarSelectorMenu" style="display: none; background: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; padding: 15px; flex-wrap: wrap; gap: 10px; max-width: 320px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                    <h4 style="width: 100%; margin: 0 0 10px 0; color: #00d2ff; font-size: 13px; text-transform: uppercase;">
+    I tuoi Avatar (Trovati: <%= (avatarPosseduti != null) ? avatarPosseduti.size() : 0 %>)
+</h4>
+                    <%-- 1. Opzione: Logo di Default --%>
+                    <form action="ProfiloServlet" method="post" style="margin: 0;">
+                        <input type="hidden" name="azione" value="rimuoviAvatar">
+                        <button type="submit" title="Logo RotaGames (Default)" style="background: transparent; border: <%= (avatarAttivo == null) ? "2px solid #00ff88" : "2px solid transparent" %>; border-radius: 50%; padding: 2px; cursor: pointer; transition: transform 0.2s;">
+                            <img src="<%= request.getContextPath() %>/images/RotaLogo.png" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                        </button>
+                    </form>
+
+                    <%-- 2. Opzioni: Avatar acquistati --%>
+                    <% if (avatarPosseduti != null && !avatarPosseduti.isEmpty()) {
+                        for (String av : avatarPosseduti) { 
+                            boolean isThisActive = (avatarAttivo != null && avatarAttivo.equals(av));
+                    %>
+                        <form action="ProfiloServlet" method="post" style="margin: 0;">
+                            <input type="hidden" name="azione" value="impostaAvatarShop">
+                            <input type="hidden" name="nomeAvatar" value="<%= av %>">
+                            <button type="submit" title="<%= av %>" style="background: transparent; border: <%= isThisActive ? "2px solid #00ff88" : "2px solid transparent" %>; border-radius: 50%; padding: 2px; cursor: pointer; transition: transform 0.2s;">
+                                <img src="<%= request.getContextPath() %>/images/avatar/<%= av %>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
+                            </button>
+                        </form>
+                    <%  }
+                       } else { %>
+                           <p style="font-size: 11px; color: #aaa; margin: 0; width: 100%;">Non possiedi avatar speciali.<br><a href="ShopServlet" style="color: #00E5FF;">Visita lo shop!</a></p>
+                    <% } %>
+                </div>
+                <% } %>
+
             </div>
         
             <%-- SEZIONE NICKNAME CON MODIFICA PER IL PROPRIETARIO --%>

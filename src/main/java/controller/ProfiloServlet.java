@@ -19,6 +19,8 @@ import model.Ordine;
 import model.Recensione;
 import model.Utente;
 import model.Videogioco;
+import model.OggettoShop;
+import model.dao.OggettoShopDAO;
 import model.dao.LibreriaDAO;
 import model.dao.OrdineDAO;
 import model.dao.RecensioneDAO;
@@ -57,7 +59,7 @@ public class ProfiloServlet extends HttpServlet {
                 System.err.println("ID Utente non valido: " + idParam);
             }
         } else {
-        	//Se nell'URL non c'è nessun ID utente, significa che stai aprendo la tua "Area Personale"
+            //Se nell'URL non c'è nessun ID utente, significa che stai aprendo la tua "Area Personale"
             utenteDaMostrare = utenteLoggato;
             isProprietario = true;
         }
@@ -90,6 +92,32 @@ public class ProfiloServlet extends HttpServlet {
         VideogiocoDAO videogiocoDao = new VideogiocoDAO();
         List<Videogioco> wishlistUtente = videogiocoDao.getWishlistByUtente(idUtente);
         if (wishlistUtente == null) wishlistUtente = new ArrayList<>();
+
+        // --- RECUPERO AVATAR POSSEDUTI PER IL MENU A TENDINA ---
+        List<String> avatarPosseduti = new ArrayList<>();
+        if (isProprietario) { // Li carichiamo solo se stai guardando il TUO profilo
+            try {
+                OggettoShopDAO shopDao = new OggettoShopDAO();
+                List<OggettoShop> tuttoCatalogo = shopDao.doRetrieveAll();
+                List<Integer> idAcquistati = shopDao.doRetrieveAcquistati(idUtente);
+                
+                if (tuttoCatalogo != null && idAcquistati != null) {
+                    for (OggettoShop obj : tuttoCatalogo) {
+                        // LA MODIFICA È STATA APPLICATA QUI SOTTO:
+                        if (obj.getTipo() != null && 
+                            obj.getTipo().trim().equalsIgnoreCase("AVATAR") && 
+                            idAcquistati.contains(obj.getIdOggetto())) {
+                            
+                            avatarPosseduti.add(obj.getValore());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Errore caricamento avatar: " + e.getMessage());
+            }
+        }
+        request.setAttribute("avatarPosseduti", avatarPosseduti);
+        // -------------------------------------------------------
 
         request.setAttribute("utenteProfilo", utenteDaMostrare);
         request.setAttribute("giochiPosseduti", giochiPosseduti);
@@ -137,6 +165,26 @@ public class ProfiloServlet extends HttpServlet {
                     utenteDao.doUpdateAvatar(utenteLoggato.getIdUtente(), fileName);
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
+                
+            // --- BLOCCO PER RIMUOVERE L'AVATAR (Torna al default) ---
+            } else if ("rimuoviAvatar".equals(azione)) {
+                
+                utenteLoggato.setAvatarAttivo(null);
+                UtenteDAO utenteDao = new UtenteDAO();
+                utenteDao.doUpdateAvatar(utenteLoggato.getIdUtente(), null);
+                session.setAttribute("utenteLoggato", utenteLoggato);
+                
+            // --- NUOVO BLOCCO PER IMPOSTARE L'AVATAR DAL MENU RAPIDO ---
+            } else if ("impostaAvatarShop".equals(azione)) {
+                String nomeAvatar = request.getParameter("nomeAvatar");
+                if (nomeAvatar != null && !nomeAvatar.trim().isEmpty()) {
+                    utenteLoggato.setAvatarAttivo(nomeAvatar);
+                    UtenteDAO utenteDao = new UtenteDAO();
+                    utenteDao.doUpdateAvatar(utenteLoggato.getIdUtente(), nomeAvatar);
+                    session.setAttribute("utenteLoggato", utenteLoggato);
+                }
+            // -----------------------------------------------------------
+                
             // gestione aggiornamento Nickname
             } else if ("aggiornaNickname".equals(azione)) {
                 String nuovoNickname = request.getParameter("nuovoNickname");
