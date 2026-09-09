@@ -1648,6 +1648,31 @@ header {
     border-color: #00E5FF;
 }
 
+/* dimensioni fisse per l'immagine --- */
+.lightbox-img-unico {
+    width: 950px !important;
+    height: 750px !important;
+    max-width: 950px !important;
+    max-height: 750px !important;
+    object-fit: contain !important;
+}
+
+.lightbox-nav-btn {
+    font-size: 40px !important;       /* Dimensione della freccia */
+    color: white !important;          /* Colore bianco */
+    background: rgba(0, 0, 0, 0.5);   /* Sfondo semitrasparente */
+    border: none !important;
+    padding: 15px 20px !important;    /* Area cliccabile */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.2s;
+}
+
+/* Effetto al passaggio del mouse */
+.lightbox-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3); 
+}
+
 /* Classi per rendere cliccabili le immagini della galleria */
 .dettaglio-galleria-img {
     cursor: pointer;
@@ -2943,12 +2968,6 @@ input.remember-checkbox {
         justify-content: center;
     }
 
-    .search-container {
-        margin: 0;
-        width: 100%;
-        max-width: 350px; 
-    }
-
     .search-container.active .search-inner-wrapper {
         width: 100%;
     }
@@ -3490,4 +3509,5 @@ input.remember-checkbox {
 	    margin-top: 5px;
 	    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 	}
+
 }

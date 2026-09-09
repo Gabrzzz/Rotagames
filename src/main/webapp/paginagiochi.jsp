@@ -245,32 +245,25 @@
 	    <%-- click e l'ingrandimento delle immagini della galleria --%>
 	    
 	    <%-- riquadro a schermo intero per ingrandire le immagini della galleria --%>
-	    <div id="lightboxModalUnico" style="display: none; position: fixed; z-index: 99999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; cursor: pointer;">
-	        <img id="lightboxImgUnico" src="" alt="Anteprima ingrandita" style="max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);">
-	    </div>
+	    
+	    
+	    
+		<%-- box immagine della galleria screenshot--%>
+		<div id="lightboxModalUnico" style="display: none; position: fixed; z-index: 99999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center; cursor: pointer;">
+		
+	        <%-- freccetta per scambiare le immagini (passando all'immagine precedente)--%>
+	        <button type="button" class="lightbox-nav-btn lightbox-prev">❮</button>
+	        
+	        <%-- immagine tra le due frecce--%>
+	        <img class="lightbox-img-unico" src="" alt="Anteprima ingrandita">
+	        
+		    <%-- freccetta per scambiare le immagini (passando all'immagine successiva)--%>
+	        <button type="button" class="lightbox-nav-btn lightbox-next">❯</button>
+
+		</div>
 	
-	    <%-- gestione dell'ingrandimento --%>
-	    <script>
-	    document.addEventListener("DOMContentLoaded", function() {
-	        const galleriaImmagini = document.querySelectorAll(".dettaglio-galleria-img");
-	        const modal = document.getElementById("lightboxModalUnico");
-	        const modalImg = document.getElementById("lightboxImgUnico");
-	
-	        if (modal && modalImg) {
-	            galleriaImmagini.forEach(img => {
-	                img.style.cursor = "pointer";
-	                img.addEventListener("click", function() {
-	                    modal.style.setProperty("display", "flex", "important");
-	                    modalImg.src = this.src;
-	                });
-	            });
-	
-	            modal.addEventListener("click", function() {
-	                modal.style.setProperty("display", "none", "important");
-	            });
-	        }
-	    });
-	    </script>
+	    <%-- richiamo script esterno di js --%>
+	    <script src="${pageContext.request.contextPath}/js/immaginezoom.js"></script>
 	    
 	</body>
 </html>

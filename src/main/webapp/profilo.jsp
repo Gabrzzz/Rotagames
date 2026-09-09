@@ -229,6 +229,47 @@
                 <p class="profilo-vuoto">La wishlist è vuota.</p>
             <% } %>
         </div>
+        
+		<%-- Ricerca Utenti --%>
+        <div class="profilo-sezione">
+            <h2>CERCA UTENTE</h2>
+            <div class="user-search-container-static" id="userSearchContainer" style="position: relative; width: 100%;">
+                <div class="user-search-inner-wrapper" id="userSearchInner" style="position: relative; width: 100%; opacity: 1; pointer-events: auto; transform: none; background-color: #04142C; border: 1px solid #00d2ff; border-radius: 6px; padding: 5px; box-sizing: border-box; display: flex; align-items: center;">
+                    <form id="userSearchForm" onsubmit="return false;" class="user-search-form-element" style="width: 100%; margin: 0;">
+                        <input type="text" 
+                               id="userSearchBar" 
+                               name="query" 
+                               data-context-path="${pageContext.request.contextPath}"
+                               placeholder="Cerca utente per nickname..." 
+                               autocomplete="off" 
+                               required
+                               class="user-search-input"
+                               style="width: 100%; background: transparent; border: none; color: white; padding: 8px 10px; font-size: 14px; outline: none;">
+                    </form>
+                </div>
+                
+                <div id="userSearchResults" class="user-search-results-dropdown" style="position: absolute; top: 100%; left: 0; width: 100%; background: #09172E; border: 1px solid #00d2ff; border-radius: 6px; z-index: 1000; box-shadow: 0 8px 25px rgba(0,0,0,0.7); margin-top: 5px; overflow: hidden;"></div>
+            </div>
+        </div>
+        
+        <script src="${pageContext.request.contextPath}/js/ricercaUtenti.js?v=2.0"></script>
+        
+        <%-- Script di gestione della barra (senza logica di toggle a comparsa) --%>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var inputBar = document.getElementById("userSearchBar");
+        
+            // Previene la sottomissione del modulo al tasto Invio
+            if (inputBar) {
+                inputBar.name = "query"; // Assicura che funzioni con lo script di ricerca esistente
+                inputBar.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+        </script>
 
     </div>
 
