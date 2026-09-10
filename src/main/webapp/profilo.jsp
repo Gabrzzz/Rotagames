@@ -172,10 +172,11 @@
                 <% if (isProprietario) { %>
                 <form action="ProfiloServlet" method="post" style="display: flex; flex-direction: column; align-items: center;">
                     <input type="hidden" name="azione" value="aggiornaBio">
-                    <textarea name="bio" class="bio-dark" rows="3" placeholder="Scrivi una bio..."><%= (utenteProfilo != null && utenteProfilo.getBio() != null) ? utenteProfilo.getBio() : "" %></textarea>
-                    <button type="submit" class="btn-salva-bio">Salva Bio</button>
+                    <textarea name="bio" class="bio-dark" rows="3" maxlength="100" placeholder="Scrivi una bio (max 100 caratteri)..."><%= (utenteProfilo != null && utenteProfilo.getBio() != null) ? utenteProfilo.getBio() : "" %></textarea>
+                    <button type="submit" class="btn-salva-bio" style="margin-top: 8px;">Salva Bio</button>
                 </form>
                 <% } else { %>
+                	<%-- controllo per evitare di poter inserire bio dalle pagine degli altri --%>
                     <div class="bio-mostrata-box">
                         <%= (utenteProfilo != null && utenteProfilo.getBio() != null && !utenteProfilo.getBio().trim().isEmpty()) ? utenteProfilo.getBio() : "Nessuna bio inserita." %>
                     </div>
@@ -199,7 +200,7 @@
             <% if (giochiPosseduti != null && !giochiPosseduti.isEmpty()) { %>
                 <div class="profilo-giochi-grid">
                     <% for (Libreria lib : giochiPosseduti) { %>
-                        <a href="DettaglioGiocoServlet?id=<%= lib.getIdGioco() %>" class="profilo-gioco-card">
+                        <a href="<%= request.getContextPath() %>/DettaglioGiocoServlet?id=<%= lib.getIdVideogioco() %>" class="profilo-gioco-card">
                             <% if (lib.getVideogioco() != null && lib.getVideogioco().getBase64Copertina() != null) { %>
                                 <img class="profilo-gioco-copertina" 
                                      src="data:image/jpeg;base64,<%= lib.getVideogioco().getBase64Copertina() %>" 
@@ -209,7 +210,7 @@
                                      src="<%= request.getContextPath() %>/images/RotaLogo.png" 
                                      alt="Gioco">
                             <% } %>
-                            <span class="profilo-gioco-titolo"><%= (lib.getVideogioco() != null) ? lib.getVideogioco().getTitolo() : ("Gioco #" + lib.getIdGioco()) %></span>
+                            <span class="profilo-gioco-titolo"><%= (lib.getVideogioco() != null) ? lib.getVideogioco().getTitolo() : ("Gioco #" + lib.getIdVideogioco()) %></span>
                         </a>
                     <% } %>
                 </div>
