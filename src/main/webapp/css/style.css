@@ -20,7 +20,7 @@ body {
     ======================= */
 header {
     background-color: #09172E;
-    padding: 20px 40px;
+    padding: 20px 24px;
     border-bottom: 2px solid #00E5FF;
     display: flex;
     justify-content: space-between;
@@ -130,7 +130,7 @@ header {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 30px; 
+    margin-left: 28px; 
     margin-right: auto; 
     height: 45px; 
 }
@@ -290,7 +290,7 @@ header {
 
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 30px;
 }
 
@@ -332,7 +332,8 @@ header {
 
 .game-cover {
     width: 100%;
-    height: 220px; 
+    aspect-ratio: 16 / 9; 
+    height: auto; 
     object-fit: cover; 
     border-radius: 4px;
     margin-bottom: 15px;
@@ -388,6 +389,9 @@ header {
 }
 
 .empty-cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
     background-color: #04142C; 
     display: flex; 
     align-items: center; 
@@ -401,7 +405,7 @@ header {
 .cart-form { margin: 0; }
 
 .user-rotelline { color: #FFD700; font-weight: bold; }
-.admin-link { color: #00FF7F; text-decoration: none; margin-left: 15px; font-weight: bold; }
+.admin-link { color: #00FF7F; text-decoration: none; font-weight: bold; }
 .logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
 .visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
 
@@ -1972,12 +1976,19 @@ header {
     background-color: transparent;
     color: #00E5FF;
     border: 1px solid rgba(0, 229, 255, 0.5);
-    padding: 8px 15px;
-    border-radius: 5px;
+    width: 42px; 
+    height: 42px; 
+    border-radius: 50%; 
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 1em;
+    font-size: 1.2em; 
     transition: all 0.3s ease;
+    padding: 0; 
+    
+    position: relative;
+    z-index: 2;
 }
 
 .dropdown-toggle:hover {
@@ -1988,53 +1999,81 @@ header {
 .dropdown-menu {
     display: none;
     position: absolute;
-    right: 0;
+    right: -5px; 
     top: 100%; 
-    background-color: #09172E;
-    min-width: 180px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8);
+    background-color: #04142C; 
+    min-width: 210px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 229, 255, 0.1);
     z-index: 1000;
     border: 1px solid rgba(0, 229, 255, 0.3);
-    border-radius: 5px;
-    margin-top: 10px; 
-    overflow: hidden;
+    border-radius: 10px;
+    margin-top: 18px; 
+}
+
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 20px; /* Posizione sotto il cerchio */
+    width: 12px;
+    height: 12px;
+    background-color: #04142C;
+    border-top: 1px solid rgba(0, 229, 255, 0.3);
+    border-left: 1px solid rgba(0, 229, 255, 0.3);
+    transform: rotate(45deg);
 }
 
 .dropdown-item {
     color: #ffffff;
-    padding: 12px 16px;
+    padding: 12px 20px;
     text-decoration: none;
     display: block;
     text-align: left;
-    transition: background-color 0.2s;
+    transition: all 0.25s ease;
     font-size: 0.95em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separatore */
 }
 
+/* Arrotondiamo il primo e ultimo elemento per non sbordare dagli angoli */
+.dropdown-item:first-child { border-radius: 10px 10px 0 0; }
+.dropdown-item:last-child { border-radius: 0 0 10px 10px; border-bottom: none; }
+
 .dropdown-item:hover {
-    background-color: #04142C;
+    background-color: rgba(0, 229, 255, 0.08);
     color: #00E5FF;
+    padding-left: 28px; 
 }
 
 .logout-text {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 76, 76, 0.2);
     color: #ff4c4c;
 }
 
 .logout-text:hover {
-    background-color: rgba(255, 76, 76, 0.1);
+    background-color: rgba(255, 76, 76, 0.08);
     color: #ff4c4c;
+    padding-left: 28px;
 }
 
-.user-dropdown:hover .dropdown-menu { display: block; }
+.user-dropdown:hover .dropdown-menu { 
+    display: block; 
+    animation: fadeIn 0.2s ease-out; 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 .user-dropdown::after {
     content: "";
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 15px; 
-    background-color: transparent; 
+    top: 0%;
+	left: -20px; 
+    width: 200%; 
+    height: 60px;
+    background-color: trasparent; 
+    z-index: 1;
 }
 
 /* COOKIE "RICORDAMI" LOGIN */
@@ -2191,26 +2230,57 @@ input.remember-checkbox {
 /* =========================================
    20. SLIDER ORIZZONTALI E SEZIONE HERO TENDENZE
    ========================================= */
+
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px; 
+}
+   
 .horizontal-slider {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory; 
     gap: 20px;
     padding: 20px 5px; 
-    margin-bottom: 40px;
-    scrollbar-width: thin;
-    scrollbar-color: #555 #222;
+    
+    /* Nascondiamo la barra di scorrimento nativa */
+    scrollbar-width: none; 
 }
-
-.horizontal-slider::-webkit-scrollbar { height: 10px; }
-.horizontal-slider::-webkit-scrollbar-track { background: #222; border-radius: 5px; }
-.horizontal-slider::-webkit-scrollbar-thumb { background: #555; border-radius: 5px; }
-.horizontal-slider::-webkit-scrollbar-thumb:hover { background: #777; }
 
 .horizontal-slider .game-card {
-    flex: 0 0 280px; 
+    flex: 0 0 340px; 
     scroll-snap-align: start; 
 }
+
+.slider-btn {
+    background-color: rgba(4, 20, 44, 0.9);
+    color: #00E5FF;
+    border: 2px solid #00E5FF;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.slider-btn:hover {
+    background-color: #00E5FF;
+    color: #030D1A;
+    transform: scale(1.1);
+}
+
+/* Posizioniamo delle freccie ai due bordi */
+.left-btn { left: -30px; }
+.right-btn { right: -30px; }
 
 .tendenza-section.hero-tendenza {
     position: relative;
@@ -3018,10 +3088,6 @@ input.remember-checkbox {
     .store-container h2 {
         font-size: 1.6em;      
         margin-bottom: 25px;
-    }
-
-    .games-grid {
-        gap: 20px;              
     }
 
     .admin-table {

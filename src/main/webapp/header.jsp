@@ -86,7 +86,7 @@
                     <% } %>
 
                     <div class="user-dropdown">
-                        <button class="dropdown-toggle">Area Personale ▼</button>
+                        <button class="dropdown-toggle" title="Area Personale">👤</button>
                         <div class="dropdown-menu">
                             <%-- Voci dell'area personale --%>
                             <a href="ProfiloServlet" class="dropdown-item">👤 Il mio Profilo</a>

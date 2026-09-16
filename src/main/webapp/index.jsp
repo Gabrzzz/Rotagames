@@ -77,129 +77,141 @@
     </div>
 <% } %>
     <h2 class="vetrina-title">Offerte Speciali</h2>
-    <div class="horizontal-slider">
-        <% 
-            if (giochiScontati != null && !giochiScontati.isEmpty()) {
-                for (Videogioco g : giochiScontati) {
-        %>
-            <div class="game-card">
-                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
-                    <div class="cover-container">
-                        <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
-                            <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
-                        <% } else { %>
-                            <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
-                        <% } %>
-                    </div>
-                    <div class="game-info game-title-box">
-                        <h3><%= g.getTitolo() %></h3>
-                    </div>
-                </a> 
-                <div class="game-info game-desc-box">
-                    <p><%= g.getDescrizione() %></p>
-                </div>
-                <div>
-                    <div class="game-meta">
-                        <div class="price-container">
-                            <% if (g.getScontoAttivo() > 0) { 
-                                double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0);
-                            %>
-                                <span class="discount-badge">-<%= g.getScontoAttivo() %>%</span>
-                                <div class="price-column">
-                                    <span class="old-price"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
-                                    <span class="price-tag discounted-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
-                                </div>
-                            <% } else { %>
-                                <span class="price-tag"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
-                            <% } %>
-                        </div>
-                        <span class="platform-tag"><%= g.getPiattaforma() %></span>
-                    </div>
-                    <div class="action-buttons-index">
-                        <button type="button" class="btn-cart btn-cart-index" 
-                                onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
-                            AL CARRELLO 🛒
-                        </button>
-                        <% if (utenteLoggato != null) { 
-                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
-                        %>
-                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
-                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
-                                <%= inWishlist ? "❤️" : "🤍" %>
-                            </button>
-                        <% } %>
-                    </div>
-                </div>
-            </div> 
-        <% 
-                }
-            } else { 
-        %>
-            <p style="padding-left: 20px;">Nessun gioco in sconto al momento.</p>
-        <% } %>
-    </div>
+    
+    <div class="slider-wrapper">
+    <button class="slider-btn left-btn" onclick="scorriSlider(this, -360)">&#10094;</button>
+	    <div class="horizontal-slider">
+	        <% 
+	            if (giochiScontati != null && !giochiScontati.isEmpty()) {
+	                for (Videogioco g : giochiScontati) {
+	        %>
+	            <div class="game-card">
+	                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
+	                    <div class="cover-container">
+	                        <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
+	                            <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
+	                        <% } else { %>
+	                            <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
+	                        <% } %>
+	                    </div>
+	                    <div class="game-info game-title-box">
+	                        <h3><%= g.getTitolo() %></h3>
+	                    </div>
+	                </a> 
+	                <div class="game-info game-desc-box">
+	                    <p><%= g.getDescrizione() %></p>
+	                </div>
+	                <div>
+	                    <div class="game-meta">
+	                        <div class="price-container">
+	                            <% if (g.getScontoAttivo() > 0) { 
+	                                double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0);
+	                            %>
+	                                <span class="discount-badge">-<%= g.getScontoAttivo() %>%</span>
+	                                <div class="price-column">
+	                                    <span class="old-price"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+	                                    <span class="price-tag discounted-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
+	                                </div>
+	                            <% } else { %>
+	                                <span class="price-tag"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+	                            <% } %>
+	                        </div>
+	                        <span class="platform-tag"><%= g.getPiattaforma() %></span>
+	                    </div>
+	                    <div class="action-buttons-index">
+	                        <button type="button" class="btn-cart btn-cart-index" 
+	                                onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+	                            AL CARRELLO 🛒
+	                        </button>
+	                        <% if (utenteLoggato != null) { 
+	                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+	                        %>
+	                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
+	                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
+	                                <%= inWishlist ? "❤️" : "🤍" %>
+	                            </button>
+	                        <% } %>
+	                    </div>
+	                </div>
+	            </div> 
+	        <% 
+	                }
+	            } else { 
+	        %>
+	            <p style="padding-left: 20px;">Nessun gioco in sconto al momento.</p>
+	        <% } %>
+	    </div>
+	<button class="slider-btn right-btn" onclick="scorriSlider(this, 360)">&#10095;</button>
+	</div>
+
     <h2 class="vetrina-title">A meno di 10€</h2>
-    <div class="horizontal-slider">
-        <% 
-            if (giochiMeno10 != null && !giochiMeno10.isEmpty()) {
-                for (Videogioco g : giochiMeno10) {
-        %>
-            <div class="game-card">
-                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
-                    <div class="cover-container">
-                        <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
-                            <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
-                        <% } else { %>
-                            <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
-                        <% } %>
-                    </div>
-                    <div class="game-info game-title-box">
-                        <h3><%= g.getTitolo() %></h3>
-                    </div>
-                </a> 
-                <div class="game-info game-desc-box">
-                    <p><%= g.getDescrizione() %></p>
-                </div>
-                <div>
-                    <div class="game-meta">
-                        <div class="price-container">
-                            <% if (g.getScontoAttivo() > 0) { 
-                                double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0);
-                            %>
-                                <span class="discount-badge">-<%= g.getScontoAttivo() %>%</span>
-                                <div class="price-column">
-                                    <span class="old-price"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
-                                    <span class="price-tag discounted-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
-                                </div>
-                            <% } else { %>
-                                <span class="price-tag"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
-                            <% } %>
-                        </div>
-                        <span class="platform-tag"><%= g.getPiattaforma() %></span>
-                    </div>
-                    <div class="action-buttons-index">
-                        <button type="button" class="btn-cart btn-cart-index" 
-                                onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
-                            AL CARRELLO 🛒
-                        </button>
-                        <% if (utenteLoggato != null) { 
-                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
-                        %>
-                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
-                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
-                                <%= inWishlist ? "❤️" : "🤍" %>
-                            </button>
-                        <% } %>
-                    </div>
-                </div>
-            </div> 
-        <% 
-                }
-            } else { 
-        %>
-            <p style="padding-left: 20px;">Nessun gioco a meno di 10€ al momento.</p>
-        <% } %>
-    </div>
+    
+    <div class="slider-wrapper">
+    <button class="slider-btn left-btn" onclick="scorriSlider(this, -360)">&#10094;</button>
+	    <div class="horizontal-slider">
+	        <% 
+	            if (giochiMeno10 != null && !giochiMeno10.isEmpty()) {
+	                for (Videogioco g : giochiMeno10) {
+	        %>
+	            <div class="game-card">
+	                <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
+	                    <div class="cover-container">
+	                        <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
+	                            <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
+	                        <% } else { %>
+	                            <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
+	                        <% } %>
+	                    </div>
+	                    <div class="game-info game-title-box">
+	                        <h3><%= g.getTitolo() %></h3>
+	                    </div>
+	                </a> 
+	                <div class="game-info game-desc-box">
+	                    <p><%= g.getDescrizione() %></p>
+	                </div>
+	                <div>
+	                    <div class="game-meta">
+	                        <div class="price-container">
+	                            <% if (g.getScontoAttivo() > 0) { 
+	                                double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0);
+	                            %>
+	                                <span class="discount-badge">-<%= g.getScontoAttivo() %>%</span>
+	                                <div class="price-column">
+	                                    <span class="old-price"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+	                                    <span class="price-tag discounted-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
+	                                </div>
+	                            <% } else { %>
+	                                <span class="price-tag"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+	                            <% } %>
+	                        </div>
+	                        <span class="platform-tag"><%= g.getPiattaforma() %></span>
+	                    </div>
+	                    <div class="action-buttons-index">
+	                        <button type="button" class="btn-cart btn-cart-index" 
+	                                onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+	                            AL CARRELLO 🛒
+	                        </button>
+	                        <% if (utenteLoggato != null) { 
+	                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+	                        %>
+	                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
+	                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
+	                                <%= inWishlist ? "❤️" : "🤍" %>
+	                            </button>
+	                        <% } %>
+	                    </div>
+	                </div>
+	            </div> 
+	        <% 
+	                }
+	            } else { 
+	        %>
+	            <p style="padding-left: 20px;">Nessun gioco a meno di 10€ al momento.</p>
+	        <% } %>
+	    </div>
+    <button class="slider-btn right-btn" onclick="scorriSlider(this, 360)">&#10095;</button>
+	</div>
+	
     </div> <div id="modalPiattaforma" class="platform-overlay">
     <div class="platform-modal">
         <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
@@ -222,9 +234,11 @@
 
 <jsp:include page="footer.jsp" />
 
+<script src="${pageContext.request.contextPath}/js/index.js"></script>
 <script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
 <script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 <script src="${pageContext.request.contextPath}/js/rotella.js"></script>
+
 
 </body>
 </html>
