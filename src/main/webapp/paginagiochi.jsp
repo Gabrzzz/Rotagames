@@ -133,7 +133,6 @@
 			        <% } %>
 	
 	                <%-- lista recensioni --%>
-	                <%-- lista recensioni --%>
 	                <% if (recensioni != null && !recensioni.isEmpty()) { %>
 	                    <div class="recensioni-list">
 	                        <% for (Recensione rec : recensioni) { %>
@@ -201,9 +200,9 @@
 
 	                <div class="info-group requisiti-box">
 	                    <span class="info-label">Requisiti di Sistema</span>
-	                    <p class="requisiti-testo">
-	                        <%= (gioco.getRequisitiSistema() != null && !gioco.getRequisitiSistema().isEmpty()) ? gioco.getRequisitiSistema() : "Requisiti standard non specificati." %>
-	                    </p>
+	                    <p class="requisiti-testo" id="box-requisiti">
+					        <%= (gioco.getRequisitiSistema() != null && !gioco.getRequisitiSistema().isEmpty()) ? gioco.getRequisitiSistema() : "Requisiti standard non specificati." %>
+					    </p>
 	                </div>
 	            </div>
 	        </aside>
@@ -264,6 +263,7 @@
 	
 	    <%-- richiamo script esterno di js --%>
 	    <script src="${pageContext.request.contextPath}/js/immaginezoom.js"></script>
+	    <script src="${pageContext.request.contextPath}/js/requisiti.js"></script>
 	    
 	</body>
 </html>
