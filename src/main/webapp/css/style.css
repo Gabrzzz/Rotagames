@@ -720,13 +720,14 @@ header {
 /* =========================================
    7. PANNELLO AMMINISTRATORE E SVILUPPATORE
    ========================================= */
+
+/* --- 7.1 LAYOUT E DASHBOARD --- */
 .admin-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 30px; 
     margin-top: 30px; 
 }
-
 .admin-stat-card { 
     background: #09172E; 
     border: 1px solid rgba(0, 229, 255, 0.2); 
@@ -736,30 +737,10 @@ header {
     border-bottom: 4px solid #00E5FF; 
     transition: transform 0.3s ease;
 }
-
 .admin-stat-card:hover { transform: translateY(-5px); }
-
-.admin-stat-card h3 { 
-    color: #A0B0C8; 
-    margin-top: 0; 
-    text-transform: uppercase; 
-    font-size: 1.1em; 
-}
-
-.admin-stat-card .num { 
-    font-size: 3em; 
-    color: #00E5FF; 
-    font-weight: 900; 
-    margin: 10px 0; 
-}
-
-.admin-actions { 
-    margin-top: 40px; 
-    display: flex; 
-    gap: 20px; 
-    flex-wrap: wrap; 
-}
-
+.admin-stat-card h3 { color: #A0B0C8; margin-top: 0; text-transform: uppercase; font-size: 1.1em; }
+.admin-stat-card .num { font-size: 3em; color: #00E5FF; font-weight: 900; margin: 10px 0; }
+.admin-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
 .btn-admin { 
     padding: 15px 30px; 
     background-color: transparent; 
@@ -773,12 +754,13 @@ header {
     flex: 1;
     text-align: center;
 }
-
 .btn-admin:hover { 
-    background-color: #00E5FF; 
-    color: #030D1A; 
+	background-color: #00E5FF; 
+	color: #030D1A; 
 }
+.title-spaced { margin-top: 50px; }
 
+/* --- 7.2 TABELLE ADMIN --- */
 .admin-table { 
     width: 100%; 
     border-collapse: collapse; 
@@ -787,117 +769,32 @@ header {
     border-radius: 8px; 
     overflow: hidden; 
 }
-
 .admin-table th { background-color: #00E5FF; color: #04142C; padding: 15px; text-align: left; }
 .admin-table td { padding: 15px; border-bottom: 1px solid #04142C; color: #fff; }
 .admin-table tr:hover { background-color: #09172E; }
+.empty-catalog-cell { text-align: center; color: #A0B0C8; }
+.row-ritirato { opacity: 0.5; background-color: #121f3d; }
+.text-unavailable { color: #5C6F8E; font-style: italic; }
 
+/* Bottoni Azioni Tabella */
 .btn-action { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 5px; }
 .btn-edit { background-color: #FFD700; color: #000; }
 .btn-delete { background-color: #FF4444; color: #fff; }
-.btn-add { background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+.btn-add { 
+	background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px;
+	text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; 
+	}
+.btn-restore { background-color: #00FF80; color: #030D1A; }
+.btn-restore:hover { background-color: #00cc66; box-shadow: 0 0 8px rgba(0, 255, 128, 0.6); }
+.btn-approve { background-color: #FFCC00; color: #030D1A; font-weight: bold; }
+.btn-approve:hover { background-color: #e6b800; box-shadow: 0 0 8px rgba(255, 204, 0, 0.6); }
 
+/* --- 7.3 FORM ADMIN E GENERICI --- */
 .admin-form-wrapper { min-height: auto; margin-top: 30px; }
 .admin-form-container { width: 100%; max-width: 600px; }
-
-.admin-form-section {
-    background-color: #030D1A; 
-    border: 1px solid #5C6F8E; 
-    border-radius: 4px; 
-    padding: 12px; 
-    margin: 10px 0; 
-    text-align: left;
-}
-
-.form-section-title {
-    color: #00E5FF; 
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-    margin-top: 15px;
-}
-
-/* REQUISITI DI SISTEMA (JSON) */
-
-/* Griglia per i form di inserimento (Admin e Sviluppatore) */
-.requisiti-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-/* Su cellulare la griglia diventa a una sola colonna */
-@media (max-width: 768px) {
-    .requisiti-form-grid {
-        grid-template-columns: 1fr; 
-    }
-}
-
-/* Stile per l'elenco stampato nella pagina del gioco */
-.requisiti-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.requisiti-list li {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed rgba(0, 229, 255, 0.2);
-    color: #c6d4df;
-    font-size: 0.95em;
-    line-height: 1.4;
-}
-
-.requisiti-list li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.requisiti-list strong {
-    color: #00E5FF; 
-}
-
-
-/*ADMIN ORDINI*/
-.admin-filter-section { margin-bottom: 20px; }
-
-.admin-filter-form {
-    display: flex;
-    gap: 15px;
-    align-items: flex-end;
-    flex-wrap: wrap;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter-label {
-    color: #ccc;
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.9em;
-}
-
-.filter-input {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #5C6F8E;
-    background-color: #030D1A;
-    color: white;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.filter-input:focus { border-color: #00E5FF; }
-.btn-filter { padding: 8px 20px; flex: 0; }
-.btn-reset { padding: 8px 15px; text-decoration: none; }
-
-.form-container textarea {
+.admin-form-section { background-color: #030D1A; border: 1px solid #5C6F8E; border-radius: 4px; padding: 12px; margin: 10px 0; text-align: left; }
+.form-section-title { color: #00E5FF; font-weight: bold; display: block; margin-bottom: 10px; margin-top: 15px; }
+.form-container textarea { 
     width: 100%; 
     padding: 12px; 
     margin: 10px 0; 
@@ -906,85 +803,28 @@ header {
     background-color: #030D1A; 
     color: #FFFFFF; 
     box-sizing: border-box; 
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.3s;
+    resize: vertical; 
+    outline: none; 
+    transition: border-color 0.3s; 
 }
-
 .form-container textarea:focus { border-color: #00E5FF; }
 .textarea-sm { min-height: 80px; }
 .textarea-md { min-height: 100px; }
+.form-container input[type="file"] { background-color: transparent; border: none; padding: 10px 0; }
 
-.file-upload-label {
-    color: #00E5FF; 
-    display: block; 
-    margin-top: 15px; 
-    text-align: left; 
-    font-weight: bold;
-}
+.checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin: 10px 0; padding: 12px; background-color: #030D1A; border: 1px solid #5C6F8E; border-radius: 4px; }
+.checkbox-group label { color: #fff; display: flex; align-items: center; cursor: pointer; margin: 0; }
+.checkbox-group input[type="checkbox"] { width: auto; margin: 0 8px 0 0; }
 
-.form-container input[type="file"] {
-    background-color: transparent; 
-    border: none; 
-    padding: 10px 0;
-}
-
-.empty-catalog-cell { text-align: center; color: #A0B0C8; }
-
-.checkbox-group {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin: 10px 0;
-    padding: 12px;
-    background-color: #030D1A;
-    border: 1px solid #5C6F8E;
-    border-radius: 4px;
-}
-
-.checkbox-group label {
-    color: #fff;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin: 0;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: auto;
-    margin: 0 8px 0 0;
-}
-
-.header-admin-text { color: #fff; }
-.admin-link-accent { color: #00E5FF; }
-.title-spaced { margin-top: 50px; }
-.text-unavailable { color: #5C6F8E; font-style: italic; }
-
-.row-ritirato {
-    opacity: 0.5;
-    background-color: #121f3d;
-}
-
-.btn-restore {
-    background-color: #00FF80;
-    color: #030D1A;
-}
-
-.btn-restore:hover {
-    background-color: #00cc66; 
-    box-shadow: 0 0 8px rgba(0, 255, 128, 0.6);
-}
-
-.btn-approve {
-    background-color: #FFCC00; 
-    color: #030D1A; 
-    font-weight: bold;
-}
-
-.btn-approve:hover {
-    background-color: #e6b800;
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
-}
+/* --- 7.4 FILTRI ORDINI --- */
+.admin-filter-section { margin-bottom: 20px; }
+.admin-filter-form { display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
+.filter-group { display: flex; flex-direction: column; }
+.filter-label { color: #ccc; display: block; margin-bottom: 5px; font-size: 0.9em; }
+.filter-input { padding: 8px; border-radius: 4px; border: 1px solid #5C6F8E; background-color: #030D1A; color: white; outline: none; transition: border-color 0.3s; }
+.filter-input:focus { border-color: #00E5FF; }
+.btn-filter { padding: 8px 20px; flex: 0; }
+.btn-reset { padding: 8px 15px; text-decoration: none; }
 
 /* --- PANNELLO SVILUPPATORE --- */
 .dev-stat-card-gold { border-bottom-color: #FFD700; }
@@ -3444,7 +3284,7 @@ input.remember-checkbox {
 }
 
 /* ==========================================
-   LAYOUT PAGINA GIOCHI A DUE COLONNE
+   24. LAYOUT PAGINA GIOCHI A DUE COLONNE
    ========================================== */
 
 	
@@ -3635,4 +3475,49 @@ input.remember-checkbox {
 	    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 	}
 
+}
+
+/* =========================================
+   24. REQUISITI DI SISTEMA (JSON)
+   ========================================= */
+
+/* Griglia per i form di inserimento (Admin e Sviluppatore) */
+.requisiti-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Su cellulare la griglia diventa a una sola colonna */
+@media (max-width: 768px) {
+    .requisiti-form-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Stile per l'elenco stampato nella pagina del gioco */
+.requisiti-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.requisiti-list li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(0, 229, 255, 0.2);
+    color: #c6d4df;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+.requisiti-list li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.requisiti-list strong {
+    color: #00E5FF; 
 }
