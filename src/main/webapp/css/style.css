@@ -1664,7 +1664,7 @@ header {
     display: flex;
     gap: 16px;
     overflow-x: auto;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .dettaglio-galleria-scroll::-webkit-scrollbar { 
@@ -1688,7 +1688,8 @@ header {
     object-fit: cover;
     border-radius: 6px;
     border: 2px solid transparent;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    margin: 8px;
     cursor: pointer;
 }
 
@@ -3126,7 +3127,18 @@ input.remember-checkbox {
 
     .dettaglio-galleria-box {
         width: 100%;
+        overflow-x: auto;
+	    overflow-y: visible;
+	    margin-top: 20px;
+	    margin-bottom: 30px;
+	    padding-top: 10px;
+	    padding-bottom: 10px;
     }
+    
+    /* classe che impedisce il ttaglio dei bordi e dello zoom sulle immagini della galleria */
+	.dettaglio-galleria-scroll {
+	    overflow-y: visible;
+	}
 
     .store-container {
         padding: 30px 15px;     
