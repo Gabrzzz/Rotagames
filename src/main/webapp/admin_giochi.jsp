@@ -141,10 +141,20 @@
                         </div>
                     </div>
 
-                    <div class="admin-form-section">
-                        <span class="form-section-title">Requisiti di Sistema:</span>
-                        <textarea name="requisitiSistema" class="textarea-sm" placeholder="Requisiti di Sistema (es. OS, CPU, RAM, GPU...)" maxlength="800" required></textarea>
-                    </div>
+					<div class="admin-form-section">
+					    <span class="form-section-title">Requisiti di Sistema:</span>
+					    
+					    <!-- Griglia per i campi separati -->
+					    <div class="requisiti-form-grid">
+					        <input type="text" id="req-os" placeholder="Sistema Operativo (es. Windows 10)">
+					        <input type="text" id="req-cpu" placeholder="Processore (es. Intel i5 / Ryzen 5)">
+					        <input type="text" id="req-ram" placeholder="RAM (es. 8 GB)">
+					        <input type="text" id="req-gpu" placeholder="Scheda Video (es. RTX 4050)">
+					        <input type="text" id="req-storage" placeholder="Spazio Richiesto (es. 50 GB)">
+					    </div>
+												
+							<input type="hidden" name="requisitiSistema" id="requisitiSistemaJSON" value="">
+					</div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Prezzo Base (€):</span>
@@ -227,14 +237,25 @@
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="generi" value="JRPG" <%= cleanGeneri.contains("JRPG") ? "checked='checked'" : "" %>> JRPG</label>
                             <label><input type="checkbox" name="generi" value="Metroidvania" <%= cleanGeneri.contains("METROIDVANIA") ? "checked='checked'" : "" %>> Metroidvania</label>
-                            <label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked='checked'" : "" %>> Action</label>
+                            <label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked='checked'" : "" %>> Azione</label>
                         </div>
                     </div>
                     
-                    <div class="admin-form-section">
-                        <span class="form-section-title">Requisiti di Sistema:</span>
-                        <textarea name="requisitiSistema" class="textarea-sm" maxlength="800" required><%= gioco.getRequisitiSistema() != null ? gioco.getRequisitiSistema() : "Requisiti non specificati." %></textarea>                    
-                    </div>
+					<div class="admin-form-section">
+					    <span class="form-section-title">Requisiti di Sistema:</span>
+					    
+					    <!-- Griglia per i campi separati -->
+					    <div class="requisiti-form-grid">
+					        <input type="text" id="req-os" placeholder="Sistema Operativo (es. Windows 10)">
+					        <input type="text" id="req-cpu" placeholder="Processore (es. Intel i5 / Ryzen 5)">
+					        <input type="text" id="req-ram" placeholder="RAM (es. 8 GB)">
+					        <input type="text" id="req-gpu" placeholder="Scheda Video (es. RTX 4050)">
+					        <input type="text" id="req-storage" placeholder="Spazio Richiesto (es. 50 GB)">
+					    </div>
+					
+					    <input type="hidden" name="requisitiSistema" id="requisitiSistemaJSON" 
+					           value="<%= (gioco.getRequisitiSistema() != null) ? gioco.getRequisitiSistema().replace("\"", "&quot;") : "" %>">
+					</div>
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Prezzo Base (€):</span>
@@ -291,5 +312,6 @@
 
 </div>
 
+<script src="${pageContext.request.contextPath}/js/requisiti.js"></script>
 </body>
 </html>
