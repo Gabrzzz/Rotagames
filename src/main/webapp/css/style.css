@@ -2927,24 +2927,33 @@ input.remember-checkbox {
    22. MEDIA QUERIES (RESPONSIVE)
    ========================================= */
 
-/* --- NAVIGAZIONE & HEADER --- */
 @media (max-width: 992px) {
+    /* Impila tutto in verticale quando manca spazio */
     header {
         flex-direction: column;
         padding: 15px;
         gap: 15px; 
     }
 
+    /* Centra la barra di ricerca */
     .center-search-box {
         margin: 0;
         width: 100%;
         justify-content: center;
     }
 
+    .search-container {
+        margin: 0;
+        width: 100%;
+        max-width: 350px; 
+    }
+
+    /* Evita che la barra attiva sbordi dallo schermo */
     .search-container.active .search-inner-wrapper {
         width: 100%;
     }
 
+    /* Riordina la UI dell'utente affinch  non si accavalli */
     .user-info {
         text-align: center;
         display: flex;
@@ -2956,45 +2965,12 @@ input.remember-checkbox {
     }
 }
 
-/* --- DETTAGLIO GIOCO E GALLERIA --- */
+/* =======================
+   MEDIA QUERIES (VETRINA)
+   ======================= */
+
+
 @media (max-width: 768px) {
-    .dettaglio-top-section {
-        flex-direction: column;
-    }
-
-    .dettaglio-immagini-wrapper {
-        flex-direction: column;
-        align-items: center; 
-        gap: 15px;
-    }
-
-    .dettaglio-copertina-box {
-        width: 100%;
-        max-width: 300px; 
-    }
-
-    .dettaglio-copertina-box .game-cover,
-    .dettaglio-copertina-img {
-        width: 100;
-        height: auto; 
-        margin: 0 auto;
-    }
-
-    .dettaglio-galleria-box {
-        width: 100%;
-        overflow-x: auto;
-	    overflow-y: visible;
-	    margin-top: 20px;
-	    margin-bottom: 30px;
-	    padding-top: 10px;
-	    padding-bottom: 10px;
-    }
-    
-    /* classe che impedisce il ttaglio dei bordi e dello zoom sulle immagini della galleria */
-	.dettaglio-galleria-scroll {
-	    overflow-y: visible;
-	}
-
     .store-container {
         padding: 30px 15px;     
     }
@@ -3002,100 +2978,86 @@ input.remember-checkbox {
     .store-container h2 {
         font-size: 1.6em;      
         margin-bottom: 25px;
+
     }
 
-    .admin-table {
-        display: block;       
-        overflow-x: auto;     
-        white-space: nowrap;  
-        border-radius: 0;     
-    }
+    .games-grid {
+        gap: 20px;              
 
-    .admin-actions {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .btn-admin { width: 100%; }
-
-    .admin-filter-form {
-        flex-direction: column;
-        align-items: stretch; 
-    }
-
-    .filter-group { width: 100%; }
-
-    .btn-filter, .btn-reset {
-        width: 100%;
-        text-align: center;
-        margin-top: 5px;
-    }
-
-    .cart-container {
-        width: 95%;      
-        padding: 20px;   
-        margin: 20px auto;
-    }
-
-    .cart-item {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 20px;
-    }
-
-    .cart-item-actions {
-        width: 100%;
-        justify-content: space-between;
-        background-color: #030D1A; 
-        padding: 15px;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .order-card {
-        flex-direction: column;
-        align-items: flex-start; 
-        gap: 15px;               
-    }
-
-    .no-invoice-text {
-        margin-left: 0; 
-        margin-top: 5px;
     }
 }
 
-/* --- MOBILE COMPATTO --- */
+
 @media (max-width: 480px) {
     .games-grid {
+        /* Forza 1 singola colonna per evitare che i 280px del minmax 
+           causino overflow su schermi da 320px/360px */
         grid-template-columns: 1fr; 
     }
 
-    .game-card { padding: 15px; }
-    .game-cover { height: 180px; }
-    .game-info h3 { font-size: 1.3em; }
+    .game-card {
+        padding: 15px;      
+    }
 
+    .game-cover {
+        height: 180px;          
+    }
+
+    .game-info h3 {
+        font-size: 1.3em;
+
+    }
+
+    /* Se i bottoni (Carrello, Dettagli, ecc.) sono troppo stretti, li incolonniamo */
     .action-buttons-index {
         flex-direction: column; 
     }
+}
 
-    .platform-modal { padding: 25px 20px; }
-    .platform-modal h2 { font-size: 1.4em; }
+/* =======================
+   MEDIA QUERIES (MODAL PIATTAFORME)
+   ======================= */
+
+@media (max-width: 480px) {
+    /* Riduciamo lo spazio vuoto interno per dare pi  respiro ai contenuti */
+    .platform-modal {
+        padding: 25px 20px; 
+    }
+
+    /* Riduciamo leggermente il titolo per evitare che vada a capo in modo errato */
+    .platform-modal h2 {
+        font-size: 1.4em;
+
+
+
+    }
+
+    /* Passiamo a una singola colonna per i bottoni delle piattaforme */
+
 
     .platform-buttons-grid {
         grid-template-columns: 1fr; 
         gap: 10px;                  
     }
 
+    /* Rendiamo i bottoni leggermente pi  grandi per facilitare il tocco (touch target) */
     .btn-platform-choice {
         padding: 15px;
         font-size: 1.2em;
     }
 
+    /* Riposizioniamo la X di chiusura per adattarla al nuovo padding */
     .platform-close-btn {
         top: 10px;
         right: 10px;
     }
+}
 
+/* =======================
+   MEDIA QUERIES (BOTTONI)
+   ======================= */
+
+@media (max-width: 480px) {
     .action-buttons-wrapper {
         max-width: 100%; 
         gap: 10px;      
@@ -3108,22 +3070,80 @@ input.remember-checkbox {
     }
 
     .btn-wishlist {
+        
         width: 50px;
         height: 50px;
         font-size: 1.5em;
     }
+}
 
-    .wheel-modal { padding: 30px 15px; }
+/* =======================
+   MEDIA QUERIES (ADMIN DASHBOARD)
+   ======================= */
 
+@media (max-width: 768px) {
+    /* Rende le tabelle scrollabili orizzontalmente su mobile */
+    .admin-table {
+        display: block;       
+        overflow-x: auto;     
+        white-space: nowrap;  
+        border-radius: 0;     
+    }
+
+    /* Riorganizza i bottoni principali della Dashboard (es. Gestione Utenti, Ordini) */
+    .admin-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-admin {
+        width: 100%; 
+    }
+
+    /* Ottimizza i filtri di ricerca (admin_ordini.jsp) */
+    .admin-filter-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .btn-filter, .btn-reset {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (RUOTA DELLA FORTUNA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Riduciamo il padding interno del modal per recuperare spazio laterale */
+    .wheel-modal {
+        padding: 30px 15px;
+    }
+
+    /* Rimpiccioliamo la ruota in modo che entri perfettamente anche su schermi da 320px */
     .wheel-container {
         width: 240px;
         height: 240px;
         margin-bottom: 25px; 
     }
 
-    .spicchio span { font-size: 13px; }
-    .spicchio { padding-right: 15px; }
+    /* Adattiamo il testo dentro gli spicchi (altrimenti sborderebbe) */
+    .spicchio span {
+        font-size: 13px; 
+    }
+    
+    .spicchio {
+        padding-right: 15px; 
+    }
 
+    /* Rimpiccioliamo leggermente la freccia per mantenerla proporzionata */
     .wheel-pointer {
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
@@ -3131,17 +3151,53 @@ input.remember-checkbox {
         top: -10px;
     }
 
+    /* Ottimizziamo il pulsante "GIRA!" per il touch */
     .btn-spin {
         padding: 12px 20px;
         font-size: 1em;
         width: 100%;
     }
 
+    /* Posizioniamo la X per chiudere pi� comodamente rispetto al nuovo padding */
     .wheel-close-btn {
         top: 10px;
         right: 10px;
     }
+}
 
+/* =========================================
+    MEDIA QUERIES (CARRELLO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 768px) */
+@media (max-width: 768px) {
+    .cart-container {
+        width: 95%;      
+        padding: 20px;   
+        margin: 20px auto;
+    }
+
+    /* Impila la sezione dei dettagli (immagine/testo) sopra la sezione azioni (prezzo/bottoni) */
+    .cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    /* Allarga la barra delle azioni a tutto schermo per distanziare prezzo e bottoni */
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        background-color: #030D1A; 
+        padding: 15px;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    
     .cart-item-details {
         flex-direction: column;
         text-align: center;
@@ -3155,6 +3211,7 @@ input.remember-checkbox {
         height: auto;
     }
 
+    /* Riorganizza i controlli del prezzo e bottoni se lo schermo � minuscolo */
     .cart-item-actions {
         flex-wrap: wrap;
         justify-content: center;
@@ -3168,24 +3225,49 @@ input.remember-checkbox {
         margin-bottom: 5px;
     }
 
-    .cart-item-form-update { margin-right: 0; }
-    .cart-total { text-align: center; }
+    .cart-item-form-update {
+        margin-right: 0;
+    }
 
-    .payment-form-container { padding: 15px 10px; }
+    /* Centra il totale del carrello */
+    .cart-total {
+        text-align: center;
+    }
+}
 
+/* =========================================
+   MEDIA QUERIES (CHECKOUT)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /*  Riduciamo il padding del form di pagamento per lasciare pi� spazio agli input */
+    .payment-form-container {
+        padding: 15px 10px;
+    }
+
+    /*  Trasformiamo la riga degli input (es. Scadenza e CVV) in una colonna */
     .payment-flex-row {
         flex-direction: column;
         gap: 10px; 
     }
 
+    /* Evitiamo che il testo della lista ordine si sovrapponga se i titoli sono lunghi */
     .checkout-list-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
 
-    .checkout-total-box { text-align: center; }
+    .checkout-total-box {
+        text-align: center; /* Centriamo il totale per dargli maggiore risalto su mobile */
+    }
+}
 
+/* =========================================
+    MEDIA QUERIES (LIBRERIA)
+   ========================================= */
+
+@media (max-width: 480px) {
     .product-key-box {
         font-size: 16px;       
         padding: 15px;        
@@ -3196,7 +3278,33 @@ input.remember-checkbox {
         font-size: 11px;       
         padding: 3px 6px;
     }
+}
 
+/* =========================================
+   MEDIA QUERIES (STORICO ORDINI)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /*  Impiliamo i dettagli dell'ordine e le azioni (fattura) in verticale */
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 15px;               
+    }
+
+    /*  Resettiamo il margine visto che ora gli elementi sono incolonnati */
+    .no-invoice-text {
+        margin-left: 0; 
+        margin-top: 5px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (MODAL ORDINI E SCROLL)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Manda a capo i bottoni delle azioni se non c'� spazio */
     .order-actions {
         flex-wrap: wrap;
         justify-content: center;
@@ -3207,11 +3315,13 @@ input.remember-checkbox {
         text-align: center;
     }
 
+    /* Impila l'immagine dell'ordine e i dettagli in verticale */
     .order-detail-item {
         flex-direction: column;
         text-align: center;
     }
 
+    /* Riadatta l'immagine copertina per non sforare dallo schermo */
     .order-detail-cover, 
     .order-detail-empty-cover {
         width: 100%;
@@ -3219,35 +3329,418 @@ input.remember-checkbox {
         height: auto;
     }
 
+    /*  Annulla il float del prezzo e lo centra sotto il titolo */
     .order-detail-price {
         float: none;
         display: block;
         margin-top: 10px;
         text-align: center;
     }
+}
 
-    /* banner responsive su mobile */
-    .game-banner .dettaglio-top-section {
-        display: block;
-    }
+/* =========================================
+   MEDIA QUERIES (DETTAGLIO GIOCO E GALLERIA)
+   ========================================= */
 
-    .banner-card {
+@media (max-width: 768px) {
+    /* Cambia il layout da orizzontale a verticale */
+    .dettaglio-immagini-wrapper {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: center; 
+        gap: 15px;
     }
 
-    .banner-cover {
+    /* Rende fluido il contenitore della copertina */
+    .dettaglio-copertina-box {
         width: 100%;
-        max-width: 220px;
-        height: auto;
+        max-width: 300px; 
     }
 
-    .banner-action-bar {
-        flex-direction: column;
+    /* Adatta le immagini della copertina al nuovo contenitore */
+    .dettaglio-copertina-box .game-cover,
+    .dettaglio-copertina-img {
+        width: 100% !important;
+        height: auto !important; 
+        margin: 0 auto;
+    }
+
+    /*  Assicura che la galleria prenda tutto lo spazio sottostante */
+    .dettaglio-galleria-box {
         width: 100%;
     }
 }
+
+/* =========================================
+   MEDIA QUERIES (RICERCA AVANZATA E FILTRI)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 992px) */
+@media (max-width: 992px) {
+    /* Impila la sidebar dei filtri e i risultati in verticale */
+    .search-layout {
+        flex-direction: column;
+        padding: 15px;
+
+    }
+
+    /*  La sidebar diventa a tutta larghezza e perde l'effetto sticky */
+    .sidebar-filtri {
+        width: 100%;
+        position: static;      
+        height: auto;
+        max-height: none;      
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Rendiamo la griglia dinamica (invece di 3 fisse, decide il browser in base allo spazio) */
+    .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Riorganizza la barra superiore (Titolo + Menu a tendina per ordinare) */
+    .search-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .sort-filter-box {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Forza 1 singola colonna per i risultati di ricerca */
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Adegua la barra di ricerca centrale (se usata) */
+    .input-ricerca-centrale {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (PAGINE DI ERRORE)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 768px) */
+@media (max-width: 768px) {
+    .error-page-wrapper {
+        padding: 60px 20px; /* Riduciamo lo spazio vuoto sopra e sotto */
+    }
+
+    .error-code-title {
+        font-size: 4.5em;   /* Rimpiccioliamo un po' il codice di errore */
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    .error-page-wrapper {
+        padding: 40px 15px; 
+    }
+
+    .error-code-title {
+        font-size: 3.5em;   /* Dimensione perfetta per un telefono */
+    }
+
+    .error-subtitle {
+        font-size: 1.2em;   /* Adattiamo anche il sottotitolo */
+    }
+
+    .error-desc {
+        font-size: 1em;     /* Testo descrittivo standard */
+        margin-bottom: 30px;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (MENU A TENDINA E CHECKBOX)
+   ========================================= */
+
+@media (max-width: 992px) {
+    /*  Centra il menu a tendina visto che l'header � ora in colonna */
+    .dropdown-menu {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%); /* Lo sposta esattamente al centro */
+        width: 100%;
+        min-width: 220px;
+    }
+
+    /* Ingrandisce i link per facilitare il tocco (UX Touch) */
+    .dropdown-item {
+        text-align: center; 
+        padding: 15px 20px; 
+        font-size: 1.05em;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Aumentiamo l'area di clic della checkbox "Ricordami" */
+    .remember-me-label {
+        font-size: 1em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+    input.remember-checkbox {
+        transform: scale(1.2); /* Ingrandisce un po' il quadratino della checkbox */
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (QUIZ STILE EVERHOOD)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi */
+@media (max-width: 768px) {
+    .quiz-question-text {
+        font-size: 2.5rem;    
+        margin-bottom: 40px;  
+    }
+
+    .quiz-options-horizontal {
+        gap: 40px;            /* Dimezza lo spazio orizzontale tra le risposte */
+    }
+
+    .quiz-option-btn {
+        font-size: 2rem;      /* Riduce il font delle risposte */
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti */
+@media (max-width: 480px) {
+    .quiz-question-text {
+        font-size: 1.8rem;    /* Dimensione sicura per evitare che la parola si spezzi */
+        margin-bottom: 30px;
+    }
+
+    .quiz-options-horizontal {
+        flex-direction: column; /* Impila le risposte in verticale per comodit� di tocco */
+        gap: 20px;
+    }
+
+    .quiz-option-btn {
+        font-size: 1.5rem;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (WISHLIST E TOAST)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* Rende il popup fluido e gli impedisce di toccare i bordi dello schermo */
+    .toast-message {
+        width: 90%;        
+        min-width: auto;     
+        font-size: 0.9em;
+        padding: 12px;
+        bottom: 20px;        
+    }
+
+    /* Modifica l'animazione finale per adattarsi alla nuova partenza */
+    .toast-message.show {
+        bottom: 40px; 
+    }
+
+    /*  Adatta il bottone della wishlist se lo spazio scarseggia */
+    .btn-wishlist-index {
+        width: 44px;         
+        font-size: 1.2em;
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (SLIDER E HERO SECTION)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
+@media (max-width: 768px) {
+    /* Riduciamo l'altezza del banner Hero */
+    .tendenza-section.hero-tendenza {
+        height: 350px;
+    }
+
+    /* Riduciamo i margini interni per recuperare spazio */
+    .game-card-link-hero {
+        bottom: 25px;
+        left: 25px;
+    }
+
+    /* Rimpiccioliamo il font del titolo */
+    .gioco-titolo-tendenza h3 {
+        font-size: 2.2rem;
+        max-width: 90%; 
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Card dello slider orizzontale leggermente pi� strette */
+    .horizontal-slider .game-card {
+        flex: 0 0 240px; 
+    }
+
+    /* Banner Hero ancora pi� compatto per cellulari */
+    .tendenza-section.hero-tendenza {
+        height: 280px;
+        margin-bottom: 25px;
+    }
+
+    /* Margini ridotti al minimo indispensabile */
+    .game-card-link-hero {
+        bottom: 15px;
+        left: 15px;
+    }
+
+    /*  Titolo proporzionato per i telefoni */
+    .gioco-titolo-tendenza h3 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    /* Bottone "Scopri" pi� compatto */
+    .btn-scopri {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (INGRANAGGIO ANIMATO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
+@media (max-width: 768px) {
+    .rotella-container.hero-ingranaggio {
+        width: 300px;
+        height: 300px;
+        right: -150px; 
+    }
+}
+
+/* Ottimizzazione per Smartphone (sotto i 480px) */
+@media (max-width: 480px) {
+    .rotella-container.hero-ingranaggio {
+        width: 200px;
+        height: 200px;
+        right: -100px; 
+        top: 35%; 
+    }
+}
+
+/* =========================================
+    MEDIA QUERIES (PAGINA PROFILO)
+   ========================================= */
+
+/* Ottimizzazione per Tablet (sotto i 992px) */
+@media (max-width: 992px) {
+    /* Annulliamo le colonne affiancate e lo scorrimento interno */
+    .profilo-layout {
+        flex-direction: column;
+        height: auto; 
+    }
+
+    .profilo-colonna {
+        overflow-y: visible; 
+        padding-right: 0;
+    }
+}
+
+/* Ottimizzazione per Smartphone (sotto i 768px) */
+@media (max-width: 768px) {
+    /* Centriamo l'header del profilo e impiliamo immagine e testi */
+    .profilo-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    /* Rimpiccioliamo drasticamente l'avatar per i telefoni */
+    .profilo-avatar-box {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profilo-titolo {
+        display: block; 
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    /* Rendiamo la tabella degli ordini scrollabile orizzontalmente */
+    .profilo-ordini-tabella {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /*  Riorganizziamo il modulo per cambiare la bio */
+    .profilo-bio-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+    
+    .profilo-bio-input {
+        max-width: 100%;
+    }
+}
+
+/* Ottimizzazione per Smartphone compatti (sotto i 480px) */
+@media (max-width: 480px) {
+    /* Riduciamo leggermente i font delle sezioni */
+    .profilo-sezione h2 {
+        font-size: 1.2em;
+    }
+
+    .profilo-nickname {
+        font-size: 1.8em;
+    }
+    
+    /* Riduce i margini per risparmiare spazio */
+    .profilo-header, .profilo-dati-privati, .profilo-sezione {
+        padding: 15px;
+    }
+}
+
+/* =========================================
+   MEDIA QUERIES (MODIFICA PROFILO E CTA)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /*  Impiliamo il selettore del titolo e il bottone salva */
+    .profilo-sezione select.titolo-select {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        display: block !important;
+    }
+
+    .profilo-sezione .btn-salva-titolo {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /*  Riduciamo leggermente i margini del box invito (CTA) per recuperare spazio */
+    .badge-cta-box {
+        padding: 10px;
+    }
+
+    .badge-text-highlight {
+        font-size: 14px; 
+    }
+}
+
+
+
 
 /* =========================================
    23. GALLERIA IMMAGINI 
