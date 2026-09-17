@@ -2964,45 +2964,47 @@ input.remember-checkbox {
 }
 
 .profilo-sezione textarea.bio-dark {
-    width: 100% !important;
-    min-height: 80px !important;
-    padding: 8px !important;
-    font-family: inherit !important;
-    font-size: 13px !important;
-    line-height: 1.4 !important;
-    border: 1px solid #00d2ff !important;
-    border-radius: 6px !important;
-    resize: vertical !important;
-    box-sizing: border-box !important;
-    background-color: #0b132b !important;
-    color: #ffffff !important;
-    outline: none !important;
+    width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+    border: 1px solid #00d2ff;
+    border-radius: 6px;
+    resize: vertical;
+    box-sizing: border-box;
+    background-color: #0b132b;
+    color: #ffffff;
+    outline: none;
 }
 
 .profilo-sezione .btn-salva-bio {
-    width: 100% !important;
-    padding: 6px 12px !important;
-    background-color: #007bff !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 6px !important;
-    cursor: pointer !important;
-    font-weight: bold !important;
-    margin-top: 6px !important;
+    width: 100%;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 6px;
 }
 
-.profilo-sezione .btn-salva-bio:hover { background-color: #0056b3 !important; }
+.profilo-sezione .btn-salva-bio:hover {
+	background-color: #0056b3;
+	}
 
 .bio-mostrata-box {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    border-left: 3px solid #00d2ff !important;
-    padding: 8px 10px !important;
-    border-radius: 4px !important;
-    text-align: left !important;
-    word-wrap: break-word !important;
-    white-space: pre-wrap !important;
-    font-size: 13px !important;
-    color: #dddddd !important;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid #00d2ff;
+    padding: 8px 10px;
+    border-radius: 4px;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 13px;
+    color: #dddddd;
 }
 
 .badge-text-highlight {
@@ -3117,8 +3119,8 @@ input.remember-checkbox {
 
     .dettaglio-copertina-box .game-cover,
     .dettaglio-copertina-img {
-        width: 100% !important;
-        height: auto !important; 
+        width: 100;
+        height: auto; 
         margin: 0 auto;
     }
 
@@ -3359,7 +3361,7 @@ input.remember-checkbox {
 
     /* banner responsive su mobile */
     .game-banner .dettaglio-top-section {
-        display: block !important;
+        display: block;
     }
 
     .banner-card {
@@ -3435,11 +3437,11 @@ input.remember-checkbox {
 
 	
 	.gioco-container-flex {
-	    display: grid !important;
-	    grid-template-columns: 70% 30% !important;
-	    gap: 30px !important;
-	    width: 100% !important;
-	    align-items: stretch !important;
+	    display: grid;
+	    grid-template-columns: 70% 30%;
+	    gap: 30px;
+	    width: 100%;
+	    align-items: stretch;
 	    margin-top: 20px;
 	    box-sizing: border-box;
 	}
@@ -3452,7 +3454,7 @@ input.remember-checkbox {
 	
 	/* Colonna di destra */
 	.colonna-sidebar {
-	    width: 100% !important;
+	    width: 100%;
 	    display: flex;
 	    flex-direction: column;
 	}
@@ -3581,7 +3583,7 @@ input.remember-checkbox {
 	}
 	
 	.search-inner-wrapper.active {
-	    display: flex !important;
+	    display: flex;
 	}
 	
 	.search-inner-wrapper input {
