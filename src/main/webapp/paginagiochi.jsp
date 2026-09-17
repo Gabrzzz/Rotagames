@@ -99,7 +99,7 @@
 					    <% } %>
 				    </div>
 			    </div>
-		        <% } %> 
+		        <% } %>
 	
 	            <%-- SEZIONE RECENSIONI --%>
 	            <div class="recensioni-container">
