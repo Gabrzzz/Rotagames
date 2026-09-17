@@ -200,6 +200,7 @@ header {
 
 #searchBar {
     flex: 1;
+    min-width: 0;
     background: transparent;
     border: none;
     color: white;
@@ -215,9 +216,9 @@ header {
 .btn-adv-search {
     color: #00E5FF;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: bold;
-    padding: 8px 15px;
+    padding: 8px 8px;
     border-left: 1px solid rgba(0, 229, 255, 0.3);
     white-space: nowrap;
     transition: color 0.2s;
@@ -1974,8 +1975,15 @@ header {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    /* Usiamo margin-top evitare conflitti su mobile */
+    from { 
+        opacity: 0; 
+        margin-top: 8px; 
+    }
+    to { 
+        opacity: 1; 
+        margin-top: 18px; 
+    }
 }
 
 .user-dropdown::after {
@@ -2947,7 +2955,6 @@ input.remember-checkbox {
         gap: 15px; 
         width: 100%;
         box-sizing: border-box;
-        overflow-x: hidden; /* Aggiunto per sicurezza contro sbordamenti */
     }
 
     /* --- INIZIO NUOVE REGOLE PER IL TITOLO E IL LOGO --- */
@@ -3559,16 +3566,22 @@ input.remember-checkbox {
    ========================================= */
 
 @media (max-width: 992px) {
-    /*  Centra il menu a tendina visto che l'header � ora in colonna */
-    .dropdown-menu {
+    /*  Centra il menu a tendina visto che l'header è ora in colonna */
+	.dropdown-menu {
         right: auto;
         left: 50%;
-        transform: translateX(-50%); /* Lo sposta esattamente al centro */
+        transform: translateX(-69%); /* Lo sposta esattamente al centro */
         width: 100%;
         min-width: 220px;
     }
+    
+    .dropdown-menu::before {
+        right: 56px; 
+        left: auto;   
+        transform: translateX(-50%) rotate(45deg); /* Lo allinea perfettamente e mantiene l'inclinazione */
+    }
 
-    /* Ingrandisce i link per facilitare il tocco (UX Touch) */
+    /* Ingrandisce i link per facilitare il tocco */
     .dropdown-item {
         text-align: center; 
         padding: 15px 20px; 
@@ -4000,82 +4013,6 @@ input.remember-checkbox {
         width: 100%;
         position: static;
     }
-    
-    /*=====================================
-      RICERCA UTENTE
-      =====================================*/
-      
-      /* contenitore della barra di ricerca */
-	.search-container {
-	    position: relative;
-	    display: inline-block;
-	}
-	
-	/* icona del bottone */
-	.search-toggle-btn {
-	    background: transparent;
-	    border: none;
-	    color: #fff;
-	    font-size: 18px;
-	    cursor: pointer;
-	    padding: 5px 10px;
-	}
-	
-	.search-inner-wrapper {
-	    display: none;
-	    position: absolute;
-	    top: 0;
-	    left: 0;
-	    z-index: 1000;
-	    background: #0b132b;
-	    border: 1px solid #00d2ff;
-	    border-radius: 20px;
-	    padding: 2px 8px;
-	    align-items: center;
-	    white-space: nowrap;
-	}
-	
-	.search-inner-wrapper.active {
-	    display: flex;
-	}
-	
-	.search-inner-wrapper input {
-	    background: transparent;
-	    border: none;
-	    color: #fff;
-	    outline: none;
-	    padding: 5px 10px;
-	    font-size: 13px;
-	    width: 180px;
-	}
-	
-	/* tasto chiusura della barra */
-	.search-close-btn {
-	    background: transparent;
-	    border: none;
-	    color: #ff4d4d;
-	    font-size: 14px;
-	    cursor: pointer;
-	    margin-left: 5px;
-	}
-	
-	/* tendina dei risultati AJAX */
-	#userSearchResults {
-	    display: none;
-	    position: absolute;
-	    top: 100%;
-	    left: 0;
-	    right: 0;
-	    background-color: #0b132b;
-	    border: 1px solid #00d2ff;
-	    border-radius: 8px;
-	    max-height: 250px;
-	    overflow-y: auto;
-	    z-index: 1001;
-	    margin-top: 5px;
-	    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-	}
-
 }
 
 /* =========================================
@@ -4122,3 +4059,4 @@ input.remember-checkbox {
 .requisiti-list strong {
     color: #00E5FF; 
 }
+
