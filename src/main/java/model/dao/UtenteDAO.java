@@ -50,6 +50,7 @@ public class UtenteDAO {
                 utente.setTitoloAttivo(rs.getString("titolo_attivo"));
                 utente.setAvatarAttivo(rs.getString("avatar_attivo"));
                 utente.setBio(rs.getString("bio"));
+                utente.setBannato(rs.getBoolean("is_bannato"));
             }
 
         } catch (SQLException e) {
@@ -128,6 +129,7 @@ public class UtenteDAO {
                 u.setSaldoRotelline(rs.getInt("saldo_rotelline"));
                 u.setTitoloAttivo(rs.getString("titolo_attivo"));
                 u.setAvatarAttivo(rs.getString("avatar_attivo"));
+                u.setBannato(rs.getBoolean("is_bannato"));
                 
                 listaUtenti.add(u);
             }
@@ -168,6 +170,19 @@ public class UtenteDAO {
             }
         }
         return rows > 0;
+    }
+    
+    //Metodo per bannare un utente
+    public void impostaBan(int idUtente, boolean statoBan) {
+        String query = "UPDATE utente SET is_bannato = ? WHERE id_utente = ?";
+        try (Connection con = util.DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setBoolean(1, statoBan);
+            ps.setInt(2, idUtente);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     // Metodo per il controllo AJAX dell'email
@@ -274,6 +289,7 @@ public class UtenteDAO {
                 utente.setTitoloAttivo(rs.getString("titolo_attivo"));
                 utente.setAvatarAttivo(rs.getString("avatar_attivo"));
                 utente.setBio(rs.getString("bio"));
+                utente.setBannato(rs.getBoolean("is_bannato"));
             }
         } catch (SQLException e) {
             System.err.println("Errore in UtenteDAO.doRetrieveById: " + e.getMessage());
@@ -350,7 +366,7 @@ public class UtenteDAO {
     /* Classe per la ricerca utente: cerca gli utenti tramite la stringa inserita nella barra. */
     public List<Utente> doRetrieveByNicknameSearch(String query) {
         List<Utente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Utente WHERE nickname LIKE ?";
+        String sql = "SELECT * FROM Utente WHERE nickname LIKE ? AND (is_bannato = FALSE OR is_bannato IS NULL)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {

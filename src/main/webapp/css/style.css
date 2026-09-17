@@ -780,6 +780,21 @@ header {
 .btn-action { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 5px; }
 .btn-edit { background-color: #FFD700; color: #000; }
 .btn-delete { background-color: #FF4444; color: #fff; }
+.btn-hard-delete {
+    background-color: #8B0000;
+    color: #fff;
+    margin-left: 5px;
+}
+
+.btn-hard-delete:hover {
+    background-color: #5a0000;
+}
+
+.admin-immune-text {
+    color: #666;
+    font-style: italic;
+    font-weight: bold;
+}
 .btn-add { 
 	background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px;
 	text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; 

@@ -31,6 +31,8 @@ public class Utente {
     private String avatarAttivo;
     private String titoloAttivo;
     
+    private boolean isBannato;
+    
     // Costruttore vuoto
     public Utente() {
     }
@@ -38,7 +40,8 @@ public class Utente {
     // Costruttore completo
     public Utente(int idUtente, String email, String nome, String cognome, String via, String cap,
             String citta, String ruolo, String nickname, String passwordHash, int saldoRotelline,
-            Date dataUltimoGiroRuota, String generePreferito, String nomeStudioSviluppo) {
+            Date dataUltimoGiroRuota, String generePreferito, String nomeStudioSviluppo, String bio, 
+            String badgePersonalita, String avatarAttivo, String titoloAttivo, boolean isBannato) {
         this.idUtente = idUtente;
         this.email = email;
         this.nome = nome;
@@ -53,17 +56,11 @@ public class Utente {
         this.dataUltimoGiroRuota = dataUltimoGiroRuota;
         this.generePreferito = generePreferito;
         this.nomeStudioSviluppo = nomeStudioSviluppo;
-    }
-
-    public Utente(int idUtente, String email, String nome, String cognome, String via, String cap,
-            String citta, String ruolo, String nickname, String passwordHash, int saldoRotelline,
-            Date dataUltimoGiroRuota, String generePreferito, String nomeStudioSviluppo, String bio,
-            String badgePersonalita, String avatarAttivo, String titoloAttivo) {
-        this(idUtente, email, nome, cognome, via, cap, citta, ruolo, nickname, passwordHash, saldoRotelline, dataUltimoGiroRuota, generePreferito, nomeStudioSviluppo);
         this.bio = bio;
         this.badgePersonalita = badgePersonalita;
         this.avatarAttivo = avatarAttivo;
         this.titoloAttivo = titoloAttivo;
+        this.isBannato = isBannato;
     }
 
     public int getIdUtente() {
@@ -209,6 +206,14 @@ public class Utente {
 
     public void setTitoloAttivo(String titoloAttivo) {
         this.titoloAttivo = titoloAttivo;
+    }
+    
+    public boolean isBannato() { 
+    	return isBannato;
+    }
+    
+    public void setBannato(boolean isBannato) { 
+    	this.isBannato = isBannato; 
     }
 
     @Override

@@ -39,6 +39,13 @@ public class LoginServlet extends HttpServlet {
         Utente utente = utenteDAO.doRetrieveByEmailAndPassword(email, passwordCifrata);
 
         if (utente != null) {
+
+        	if (utente.isBannato()) {
+        	    request.setAttribute("erroreLogin", "Il tuo account è stato sospeso dall'amministratore.");
+        	    request.getRequestDispatcher("login.jsp").forward(request, response);
+        	    return;
+        	}
+        	
             HttpSession session = request.getSession();
             session.setAttribute("utenteLoggato", utente);
             

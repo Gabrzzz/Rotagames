@@ -49,9 +49,26 @@
                     <td><strong><%= u.getNickname() %></strong></td>
                     <td><%= u.getRuolo() %></td>
                     <td>🪙 <%= u.getSaldoRotelline() %></td>
-                    <td>
-                        <a href="EliminaUtenteServlet?email=<%= u.getEmail() %>" class="btn-action btn-delete" onclick="return confirm('Sicuro di voler bannare/eliminare questo utente?');">Ban</a>
-                    </td>
+					<td>
+					    <% if (!"AMMINISTRATORE".equals(u.getRuolo())) { %>
+					        <% if (!u.isBannato()) { %>
+					            <a href="GestioneUtentiServlet?azione=impostaBan&id=<%= u.getIdUtente() %>&stato=true" 
+					               class="btn-action btn-delete" 
+					               onclick="return confirm('Sospendere questo utente?');">Ban</a>
+					        <% } else { %>
+					            <a href="GestioneUtentiServlet?azione=impostaBan&id=<%= u.getIdUtente() %>&stato=false" 
+					               class="btn-action btn-add" 
+					               onclick="return confirm('Riattivare questo utente?');">Sbanna</a>
+					        <% } %>
+					        
+							<a href="GestioneUtentiServlet?azione=elimina&id=<%= u.getIdUtente() %>" 
+							   class="btn-action btn-hard-delete" 
+							   onclick="return confirm('ATTENZIONE: Eliminare fisicamente l\'account dal DB? L\'operazione è irreversibile.');">Elimina</a>
+							   
+							<% } else { %>
+							    <span class="admin-immune-text">L'Admin non si può eliminare</span>							
+					    <% } %>
+					</td>
                 </tr>
             <%  }
                } else { %>

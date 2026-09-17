@@ -20,13 +20,45 @@ public class GestioneUtentiServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente admin = (Utente) session.getAttribute("utenteLoggato");
         
+        // Controllo di sicurezza: solo gli admin possono accedere
         if (admin == null || !"AMMINISTRATORE".equals(admin.getRuolo())) {
             response.sendRedirect("login.jsp");
             return;
         }
 
+        String azione = request.getParameter("azione");
+        UtenteDAO utenteDAO = new UtenteDAO();
+
+     // FASE DELLE AZIONI
+        if (azione != null) {
+            String idParam = request.getParameter("id");
+            if (idParam != null) {
+                try {
+                    int idUtente = Integer.parseInt(idParam);
+                    
+                    // Recuperiamo l'utente bersaglio dal DB per leggerne il ruolo
+                    Utente bersaglio = utenteDAO.doRetrieveById(idUtente);
+                    
+                    // Eseguiamo l'azione SOLO se il bersaglio esiste e NON è un amministratore
+                    if (bersaglio != null && !"AMMINISTRATORE".equals(bersaglio.getRuolo())) {
+                        if ("impostaBan".equals(azione)) {
+                            boolean stato = Boolean.parseBoolean(request.getParameter("stato"));
+                            utenteDAO.impostaBan(idUtente, stato); 
+                        } else if ("elimina".equals(azione)) {
+                            utenteDAO.doDelete(idUtente);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Errore formato ID utente: " + e.getMessage());
+                }
+            }
+            
+            response.sendRedirect("GestioneUtentiServlet");
+            return; 
+        }
+
+        // 2. FASE DI VISUALIZZAZIONE (Se l'admin sta solo aprendo la pagina)
         try {
-            UtenteDAO utenteDAO = new UtenteDAO();
             List<Utente> listaUtenti = utenteDAO.doRetrieveAll();
             request.setAttribute("listaUtenti", listaUtenti);
         } catch (Exception e) {
@@ -35,5 +67,9 @@ public class GestioneUtentiServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin_utenti.jsp");
         dispatcher.forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 }
