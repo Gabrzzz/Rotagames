@@ -388,4 +388,21 @@ public class UtenteDAO {
         return lista;
     }
     
+ // Metodo per verificare se un utente ha effettuato almeno un ordine
+    public boolean haFattoOrdini(int idUtente) {
+        String query = "SELECT id_ordine FROM ordine WHERE id_utente = ? LIMIT 1"; 
+        
+        try (Connection con = util.DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            
+            ps.setInt(1, idUtente);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Ritorna true se trova almeno una riga (quindi ha almeno un ordine)
+            }
+        } catch (SQLException e) {
+            System.err.println("Errore in haFattoOrdini: " + e.getMessage());
+        }
+        return false;
+    }
+    
 }
