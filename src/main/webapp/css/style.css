@@ -13,6 +13,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 /*  =======================
@@ -2940,7 +2945,38 @@ input.remember-checkbox {
         flex-direction: column;
         padding: 15px;
         gap: 15px; 
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden; /* Aggiunto per sicurezza contro sbordamenti */
     }
+
+    /* --- INIZIO NUOVE REGOLE PER IL TITOLO E IL LOGO --- */
+    .logo-link {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center; /* Centra il logo */
+    }
+
+    .header-logo-title {
+        font-size: 1.8rem; /* Riduce la dimensione del font su mobile */
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        white-space: normal; 
+        word-wrap: break-word; /* Forza a capo se troppo lungo */
+        display: flex;
+        flex-wrap: wrap; /* Permette al "DEV STUDIO" di andare sotto se non c'è spazio */
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .header-admin-text {
+        font-size: 1.2rem; /* Adatta il testo DEV STUDIO / ADMIN */
+        white-space: nowrap;
+    }
+    /* --- FINE NUOVE REGOLE --- */
 
     /* Centra la barra di ricerca */
     .center-search-box {
@@ -2958,9 +2994,10 @@ input.remember-checkbox {
     /* Evita che la barra attiva sbordi dallo schermo */
     .search-container.active .search-inner-wrapper {
         width: 100%;
+        box-sizing: border-box;
     }
 
-    /* Riordina la UI dell'utente affinch  non si accavalli */
+    /* Riordina la UI dell'utente affinché non si accavalli */
     .user-info {
         text-align: center;
         display: flex;
@@ -2969,6 +3006,8 @@ input.remember-checkbox {
         align-items: center;
         gap: 10px;
         line-height: 1.5; 
+        width: 100%; /* Forza a rispettare i margini */
+        box-sizing: border-box; /* Assorbe i margini/padding */
     }
 }
 
@@ -3084,45 +3123,92 @@ input.remember-checkbox {
     }
 }
 
-/* =======================
-   MEDIA QUERIES (ADMIN DASHBOARD)
-   ======================= */
-
+/* ==========================================
+   MEDIA QUERIES (ADMIN E DEV DASHBOARDS)
+   ========================================== */
 @media (max-width: 768px) {
-    /* Rende le tabelle scrollabili orizzontalmente su mobile */
-    .admin-table {
-        display: block;       
-        overflow-x: auto;     
-        white-space: nowrap;  
-        border-radius: 0;     
+    
+    /* Sicurezza per il container principale */
+    .store-container {
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 15px;
+        padding-right: 15px;
+        overflow-x: hidden; 
     }
 
-    /* Riorganizza i bottoni principali della Dashboard (es. Gestione Utenti, Ordini) */
-    .admin-actions {
+    /* Incolonna la griglia delle statistiche */
+    .admin-grid {
+        display: flex;
         flex-direction: column;
         gap: 15px;
+        width: 100%;
     }
 
-    .btn-admin {
+    /* Evita lo sbordamento delle card (include quelle dello sviluppatore) */
+    .admin-stat-card, 
+    .dev-stat-card-gold, 
+    .dev-stat-card-green, 
+    .dev-stat-card-blue {
+        width: 100%;
+        box-sizing: border-box; 
+        margin: 0;
+    }
+
+    /* Gestione contenitore dei bottoni d'azione principali */
+    .admin-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-admin, 
+    .btn-dev-action {
+        width: 100%;
+        box-sizing: border-box; 
+        margin: 0; 
+        text-align: center; 
+    }
+   
+       
+    .table-responsive-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; 
+        margin-bottom: 20px;
+        border: 1px solid #1c2738; 
+        border-radius: 8px;
+    }
+
+    .admin-table {
+        width: 100%;
+        min-width: 600px; 
+        margin: 0;
+        border-collapse: collapse;
+    }
+    
+    
+    .admin-table td:last-child { /*Last child per i bottoni */
+        display: flex;
+        flex-direction: column; 
+        gap: 8px; 
+        align-items: stretch; 
+        justify-content: center;
+        padding: 10px; 
+    }
+
+    .admin-table .btn-action {
+        box-sizing: border-box;
+        margin: 0; 
+        padding: 8px 10px; 
+        font-size: 0.85rem;
+        text-align: center;
         width: 100%; 
     }
-
-    /* Ottimizza i filtri di ricerca (admin_ordini.jsp) */
-    .admin-filter-form {
-        flex-direction: column;
-        align-items: stretch; 
-    }
-
-    .filter-group {
-        width: 100%;
-    }
-
-    .btn-filter, .btn-reset {
-        width: 100%;
-        text-align: center;
-        margin-top: 5px;
-    }
 }
+
 
 /* =========================================
    MEDIA QUERIES (RUOTA DELLA FORTUNA)

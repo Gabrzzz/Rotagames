@@ -39,6 +39,7 @@
         
         <a href="GestioneGiochiSviluppatoreServlet?azione=mostraFormAggiungi" class="btn-add btn-dev-add">➕ Sottoponi Nuovo Gioco</a>
 
+<div class="table-responsive-wrapper">
         <table class="admin-table">
             <thead>
                 <tr>
@@ -90,6 +91,7 @@
                 <% } %>
             </tbody>
         </table>
+	</div>
 
     <% } else if (vista.equals("formAggiungi") || vista.equals("formModifica")) { 
         Videogioco gioco = vista.equals("formModifica") ? (Videogioco) request.getAttribute("giocoDaModificare") : new Videogioco();
