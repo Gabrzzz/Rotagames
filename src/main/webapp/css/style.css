@@ -906,8 +906,8 @@ header {
 }
 
 .checkbox-group input[type="checkbox"] {
-    width: auto !important;
-    margin: 0 8px 0 0 !important;
+    width: auto;
+    margin: 0 8px 0 0;
 }
 
 .header-admin-text { color: #fff; }
@@ -1654,19 +1654,19 @@ header {
 
 /* dimensioni fisse per l'immagine --- */
 .lightbox-img-unico {
-    width: 950px !important;
-    height: 750px !important;
-    max-width: 950px !important;
-    max-height: 750px !important;
-    object-fit: contain !important;
+    width: 950px;
+    height: 750px;
+    max-width: 950px;
+    max-height: 750px;
+    object-fit: contain;
 }
 
 .lightbox-nav-btn {
-    font-size: 40px !important;       /* Dimensione della freccia */
-    color: white !important;          /* Colore bianco */
-    background: rgba(0, 0, 0, 0.5);   /* Sfondo semitrasparente */
-    border: none !important;
-    padding: 15px 20px !important;    /* Area cliccabile */
+    font-size: 40px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 15px 20px;
     cursor: pointer;
     border-radius: 5px;
     transition: background 0.2s;
@@ -2892,30 +2892,30 @@ input.remember-checkbox {
 }
 
 .profilo-sezione select.titolo-select {
-    background-color: #0b132b !important;
-    color: #00d2ff !important;
-    border: 1px solid #00d2ff !important;
-    padding: 4px 8px !important;
-    border-radius: 6px !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-    outline: none !important;
+    background-color: #0b132b;
+    color: #00d2ff;
+    border: 1px solid #00d2ff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
 }
 
 .profilo-sezione select.titolo-select option {
-    background-color: #0b132b !important;
-    color: #ffffff !important;
+    background-color: #0b132b;
+    color: #ffffff;
 }
 
 .profilo-sezione .btn-salva-titolo {
-    background-color: #00d2ff !important;
-    color: #0b132b !important;
-    border: none !important;
-    border-radius: 6px !important;
-    padding: 4px 8px !important;
-    cursor: pointer !important;
-    font-weight: bold !important;
+    background-color: #00d2ff;
+    color: #0b132b;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .profilo-sezione textarea.bio-dark {
