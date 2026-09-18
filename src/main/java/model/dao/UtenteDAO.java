@@ -405,4 +405,24 @@ public class UtenteDAO {
         return false;
     }
     
+ // Metodo per aggiornare l'indirizzo di fatturazione dell'utente
+    public boolean doUpdateIndirizzo(int idUtente, String via, String cap, String citta) {
+        String query = "UPDATE Utente SET via = ?, cap = ?, citta = ? WHERE id_utente = ?";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, via);
+            ps.setString(2, cap);
+            ps.setString(3, citta);
+            ps.setInt(4, idUtente);
+
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.err.println("Errore in UtenteDAO.doUpdateIndirizzo: " + e.getMessage());
+            return false;
+        }
+    }
+    
 }

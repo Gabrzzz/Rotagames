@@ -184,13 +184,79 @@
             </div>
         </div>
 
-        <%-- Box I tuoi dati --%>
+	<%-- Box I tuoi dati --%>
         <div class="profilo-sezione">
-            <h2>I TUOI DATI</h2>
             <% if (utenteProfilo != null) { %>
-                <p><strong>Email:</strong> <%= utenteProfilo.getEmail() %></p>
-                <p><strong>Nome:</strong> <%= utenteProfilo.getNome() %> <%= utenteProfilo.getCognome() %></p>
-                <p><strong>Saldo Rotelline:</strong> <%= utenteProfilo.getSaldoRotelline() %> 🪙</p>
+                <div class="profilo-dati-flex">
+                    
+                    <%-- COLONNA SINISTRA: Info Base --%>
+                    <div class="profilo-dati-col">
+                        <div class="profilo-dati-header">
+                            <h2>I TUOI DATI</h2>
+                        </div>
+                        <p class="profilo-testo"><strong>Email:</strong> <%= utenteProfilo.getEmail() %></p>
+                        <p class="profilo-testo"><strong>Nome:</strong> <%= utenteProfilo.getNome() %> <%= utenteProfilo.getCognome() %></p>
+                        <p class="profilo-testo"><strong>Saldo Rotelline:</strong> <%= utenteProfilo.getSaldoRotelline() %> 🪙</p>
+                    </div>
+    
+                    <%-- COLONNA DESTRA: Indirizzo Fatturazione --%>
+                    <div class="profilo-dati-col">
+                        <div class="profilo-dati-header">
+                            <h2>FATTURAZIONE</h2>
+                            <% if (isProprietario) { %>
+                                <button type="button" class="btn-modifica-dati" onclick="document.getElementById('formIndirizzo').style.display = document.getElementById('formIndirizzo').style.display === 'none' ? 'block' : 'none';">
+                                    ✏️ Modifica
+                                </button>
+                            <% } %>
+                        </div>
+                
+                        <% 
+                            String via = (utenteProfilo.getVia() != null) ? utenteProfilo.getVia() : "";
+                            String cap = (utenteProfilo.getCap() != null) ? utenteProfilo.getCap() : "";
+                            String citta = (utenteProfilo.getCitta() != null) ? utenteProfilo.getCitta() : "";
+                            boolean hasIndirizzo = !via.isEmpty() || !cap.isEmpty() || !citta.isEmpty();
+                        %>
+                
+                        <% if (hasIndirizzo) { %>
+                            <p class="profilo-testo"><strong>Via:</strong> <%= via %></p>
+                            <p class="profilo-testo"><strong>Città:</strong> <%= citta %> (<%= cap %>)</p>
+                        <% } else { %>
+                            <p class="profilo-testo" style="color: #aaa; font-style: italic;">Nessun indirizzo inserito.</p>
+                        <% } %>
+                
+                        <% if (isProprietario) { %>
+                            <form id="formIndirizzo" action="ProfiloServlet" method="post" class="form-fatturazione">
+                                <input type="hidden" name="azione" value="aggiornaIndirizzo">
+                                
+                                <div class="form-fatturazione-group">
+                                    <label>Via e Civico</label>
+                                    <input type="text" name="via" value="<%= via %>" 
+                                           required minlength="4" maxlength="70" 
+                                           placeholder="Es. Via Roma, 10">
+                                </div>
+                                
+                                <div class="form-fatturazione-row">
+                                    <div class="form-fatturazione-group" style="flex: 1; margin-bottom: 0;">
+                                        <label>CAP</label>
+                                        <input type="text" name="cap" value="<%= cap %>" 
+                                               required minlength="5" maxlength="5" pattern="[0-9]{5}" 
+                                               title="Il CAP deve contenere esattamente 5 numeri (es. 84100)" 
+                                               placeholder="Es. 84100">
+                                    </div>
+                                    <div class="form-fatturazione-group" style="flex: 2; margin-bottom: 0;">
+                                        <label>Città</label>
+                                        <input type="text" name="citta" value="<%= citta %>" 
+                                               required minlength="2" maxlength="40" pattern="[a-zA-ZàèìòùÀÈÌÒÙ\'\s]+" 
+                                               title="Inserisci una città valida (solo lettere, spazi o apostrofi)" 
+                                               placeholder="Es. Salerno">
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn-salva-indirizzo">Salva Indirizzo</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
             <% } %>
         </div>
 

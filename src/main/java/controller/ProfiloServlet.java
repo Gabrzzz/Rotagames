@@ -193,6 +193,25 @@ public class ProfiloServlet extends HttpServlet {
                     utenteDao.doUpdateTitoloAttivo(utenteLoggato.getIdUtente(), titoloSelezionato);
                     session.setAttribute("utenteLoggato", utenteLoggato);
                 }
+             // --- GESTIONE AGGIORNAMENTO INDIRIZZO FATTURAZIONE ---
+            } else if ("aggiornaIndirizzo".equals(azione)) {
+                String via = request.getParameter("via");
+                String cap = request.getParameter("cap");
+                String citta = request.getParameter("citta");
+
+                if (via != null && cap != null && citta != null) {
+                    // Aggiorna l'oggetto in memoria
+                    utenteLoggato.setVia(via.trim());
+                    utenteLoggato.setCap(cap.trim());
+                    utenteLoggato.setCitta(citta.trim());
+
+                    // Chiama il DAO per salvare nel database
+                    UtenteDAO utenteDao = new UtenteDAO();
+                    utenteDao.doUpdateIndirizzo(utenteLoggato.getIdUtente(), via.trim(), cap.trim(), citta.trim());
+                    
+                    // Aggiorna la sessione per mostrare subito le modifiche sulla pagina
+                    session.setAttribute("utenteLoggato", utenteLoggato);
+                }
             }
         }
 

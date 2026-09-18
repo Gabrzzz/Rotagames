@@ -58,6 +58,24 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
         
+     // --- AGGIORNAMENTO INDIRIZZO FATTURAZIONE ---
+        String viaCheckout = request.getParameter("viaCheckout");
+        String capCheckout = request.getParameter("capCheckout");
+        String cittaCheckout = request.getParameter("cittaCheckout");
+
+        if (viaCheckout != null && capCheckout != null && cittaCheckout != null) {
+            // Aggiorna l'oggetto in memoria
+            utente.setVia(viaCheckout.trim());
+            utente.setCap(capCheckout.trim());
+            utente.setCitta(cittaCheckout.trim());
+
+            // Salva le modifiche nel database dell'utente
+            model.dao.UtenteDAO utenteDao = new model.dao.UtenteDAO();
+            utenteDao.doUpdateIndirizzo(utente.getIdUtente(), viaCheckout.trim(), capCheckout.trim(), cittaCheckout.trim());
+            
+            // Aggiorna l'oggetto in sessione così il profilo rifletterà le modifiche al prossimo caricamento
+            session.setAttribute("utenteLoggato", utente);
+        }
 
 
         Ordine nuovoOrdine = new Ordine();

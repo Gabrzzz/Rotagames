@@ -46,8 +46,9 @@ public class FatturaServlet extends HttpServlet {
 
         try (Connection con = DBConnection.getConnection()) {
             
-            // 1. Estrazione Dati Cliente e Ordine
-            String queryCliente = "SELECT o.data_acquisto, u.nome, u.cognome, u.email " +
+        	// 1. Estrazione Dati Cliente e Ordine
+            // Aggiunti via, cap e citta alla query
+            String queryCliente = "SELECT o.data_acquisto, u.nome, u.cognome, u.email, u.via, u.cap, u.citta " +
                                   "FROM ordine o JOIN utente u ON o.id_utente = u.id_utente WHERE o.id_ordine = ?";
             PreparedStatement psCliente = con.prepareStatement(queryCliente);
             psCliente.setInt(1, idOrdine);
@@ -62,6 +63,20 @@ public class FatturaServlet extends HttpServlet {
                 document.add(new Paragraph("Fatturato a:").setBold());
                 document.add(new Paragraph(rsCliente.getString("nome") + " " + rsCliente.getString("cognome")));
                 document.add(new Paragraph(rsCliente.getString("email")));
+                
+                // Estrazione e stampa dell'indirizzo di fatturazione
+                String via = rsCliente.getString("via");
+                String cap = rsCliente.getString("cap");
+                String citta = rsCliente.getString("citta");
+                
+                // Controllo per evitare di stampare "null" se i dati mancano
+                if (via != null && !via.trim().isEmpty() && cap != null && citta != null) {
+                    document.add(new Paragraph(via));
+                    document.add(new Paragraph(citta + " (" + cap + ")"));
+                } else {
+                    document.add(new Paragraph("Indirizzo non fornito"));
+                }
+                
                 document.add(new Paragraph("Data Acquisto: " + rsCliente.getTimestamp("data_acquisto") + "\n"));
             }
 
