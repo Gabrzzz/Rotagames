@@ -15,6 +15,7 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
+    
 }
 *, *::before, *::after {
     box-sizing: border-box;
@@ -267,6 +268,8 @@ header {
     color: #ccc; 
     margin-top: 40px; 
     border-top: 1px solid #00E5FF;
+    width: 100;
+    flex-shrink: 0;
 }
 
 .underfooter {
@@ -1841,10 +1844,18 @@ header {
 /* =========================================
    15. PAGINE DI ERRORE
    ========================================= */
+
 .error-page-wrapper {
     text-align: center;
     padding: 100px 20px;
-    min-height: 50vh;
+    
+    
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    box-sizing: border-box;
 }
 
 .error-code-title {
@@ -1874,7 +1885,10 @@ header {
     margin-right: auto;
 }
 
-.btn-error-home { padding: 12px 30px; }
+.btn-error-home { 
+    padding: 12px 30px; 
+}
+  
 
 /* =========================================
    16. MENU A TENDINA (DROPDOWN) - HEADER
@@ -3527,17 +3541,35 @@ input.remember-checkbox {
 }
 
 /* =========================================
-    MEDIA QUERIES (PAGINE DI ERRORE)
+   MEDIA QUERIES (PAGINE DI ERRORE)
    ========================================= */
 
 /* Ottimizzazione per Tablet (sotto i 768px) */
 @media (max-width: 768px) {
+    /* 1. Applichiamo la regola per il footer incollato SOLO su mobile/tablet */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    footer {
+        flex-shrink: 0;
+        width: 100%;
+    }
+
+    /* 2. Il wrapper si espande per spingere giù il footer */
     .error-page-wrapper {
-        padding: 60px 20px; /* Riduciamo lo spazio vuoto sopra e sotto */
+        padding: 60px 20px; 
+        flex: 1; /* La "molla" che spinge il footer verso il basso */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .error-code-title {
-        font-size: 4.5em;   /* Rimpiccioliamo un po' il codice di errore */
+        font-size: 4.5em;   
     }
 }
 
@@ -3548,15 +3580,15 @@ input.remember-checkbox {
     }
 
     .error-code-title {
-        font-size: 3.5em;   /* Dimensione perfetta per un telefono */
+        font-size: 3.5em;   
     }
 
     .error-subtitle {
-        font-size: 1.2em;   /* Adattiamo anche il sottotitolo */
+        font-size: 1.2em;   
     }
 
     .error-desc {
-        font-size: 1em;     /* Testo descrittivo standard */
+        font-size: 1em;     
         margin-bottom: 30px;
     }
 }
@@ -3845,8 +3877,62 @@ input.remember-checkbox {
     }
 }
 
+/* ==========================================
+   MEDIA QUERIES (PAGINA GIOCO - DETTAGLIO)
+   ========================================== */
 
+@media (max-width: 992px) {
+    
+    /* FORZA LA GRIGLIA A 1 SOLA COLONNA */
+    .gioco-container-flex {
+        display: block !important; /* Disattiva la griglia del tutto per sicurezza */
+        width: 100%;
+    }
 
+    .colonna-main {
+        width: 100% !important;
+        margin-bottom: 25px;
+    }
+
+    .colonna-sidebar {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* Riorganizza l'intestazione: copertina sopra, info sotto */
+    .dettaglio-top-section {
+        display: flex !important;
+        flex-direction: column !important; 
+        align-items: center; 
+        text-align: center; 
+    }
+
+    .dettaglio-copertina-box {
+        width: 100%; 
+        max-width: 280px; 
+        margin: 0 auto 20px auto; 
+    }
+
+    .dettaglio-info-box {
+        width: 100%;
+        padding: 0; 
+    }
+    
+    .price-container {
+        justify-content: center;
+    }
+
+    .action-buttons-wrapper {
+        display: flex;
+        flex-direction: column; 
+        width: 100%;
+        gap: 10px;
+    }
+
+    .btn-cart, .btn-wishlist {
+        width: 100% !important; 
+    }
+}
 
 /* =========================================
    23. GALLERIA IMMAGINI 

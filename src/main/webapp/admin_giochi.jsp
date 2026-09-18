@@ -49,6 +49,7 @@
         
         <a href="GestioneGiochiServlet?azione=mostraFormAggiungi" class="btn-add">➕ Aggiungi Nuovo Gioco</a>
 
+	<div class="table-responsive-wrapper">
         <table class="admin-table">
             <thead>
                 <tr>
@@ -106,7 +107,7 @@
                 <% } %>
             </tbody>
         </table>
-
+	</div>
     <%-- VISTA 2: FORM AGGIUNTA --%>
     <% } else if (vista.equals("formAggiungi")) { %>
         <h2 class="vetrina-title">Aggiungi Nuovo Gioco</h2>

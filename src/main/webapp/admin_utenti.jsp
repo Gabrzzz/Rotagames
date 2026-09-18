@@ -32,6 +32,7 @@
 <div class="store-container">
     <h2 class="vetrina-title">Gestione Utenti Iscritti</h2>
 
+<div class="table-responsive-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
@@ -90,6 +91,7 @@
 		    <% } %>
 		</tbody>
     </table>
+    </div>
 </div>
 
 </body>

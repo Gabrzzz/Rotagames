@@ -61,6 +61,7 @@
         </form>
     </div>
 
+<div class="table-responsive-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
@@ -97,6 +98,7 @@
             <% } %>
         </tbody>
     </table>
+    </div>
 </div>
 
 </body>
