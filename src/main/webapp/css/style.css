@@ -1857,6 +1857,14 @@ header {
     background-color: #04142C;
 }
 
+/* SCROLLBAR PERSONALIZZATA PER I FILTRI */
+
+.sidebar-filtri {
+    scrollbar-width: thin;
+    scrollbar-color: #00E5FF #0b132b;
+}
+
+
 /* =========================================
    15. PAGINE DI ERRORE
    ========================================= */

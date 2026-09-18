@@ -25,7 +25,6 @@ public class DBConnection {
                 
                 // Stabiliamo la connessione attiva verso lo schema rotagames
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                System.out.println("Connessione al database rotagames stabilita con successo.");
             }
         } catch (ClassNotFoundException e) {
             System.err.println("Errore: Driver JDBC MySQL non trovato nel Build Path.");

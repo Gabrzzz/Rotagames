@@ -135,9 +135,18 @@
                     <div class="admin-form-section">
                         <span class="form-section-title">Genere:</span>
                         <div class="checkbox-group">
-                            <label><input type="checkbox" name="generi" value="JRPG" <%= cleanGeneri.contains("JRPG") ? "checked" : "" %>> JRPG</label>
-                            <label><input type="checkbox" name="generi" value="Metroidvania" <%= cleanGeneri.contains("METROIDVANIA") ? "checked" : "" %>> Metroidvania</label>
-                            <label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked" : "" %>> Azione</label>
+                            <label><input type="checkbox" name="generi" value="JRPG" <%= cleanGeneri.contains("JRPG") ? "checked='checked'" : "" %>> JRPG</label>
+							<label><input type="checkbox" name="generi" value="Metroidvania" <%= cleanGeneri.contains("METROIDVANIA") ? "checked='checked'" : "" %>> Metroidvania</label>
+							<label><input type="checkbox" name="generi" value="Azione" <%= cleanGeneri.contains("AZIONE") ? "checked='checked'" : "" %>> Azione</label>
+							<label><input type="checkbox" name="generi" value="Avventura" <%= cleanGeneri.contains("AVVENTURA") ? "checked='checked'" : "" %>> Avventura</label>
+							<label><input type="checkbox" name="generi" value="FPS" <%= cleanGeneri.contains("FPS") ? "checked='checked'" : "" %>> FPS</label>
+							<label><input type="checkbox" name="generi" value="GDR" <%= cleanGeneri.contains("GDR") ? "checked='checked'" : "" %>> GDR</label>
+							<label><input type="checkbox" name="generi" value="Strategia" <%= cleanGeneri.contains("STRATEGIA") ? "checked='checked'" : "" %>> Strategia</label>
+							<label><input type="checkbox" name="generi" value="Sport" <%= cleanGeneri.contains("SPORT") ? "checked='checked'" : "" %>> Sport</label>
+							<label><input type="checkbox" name="generi" value="Platform" <%= cleanGeneri.contains("PLATFORM") ? "checked='checked'" : "" %>> Platform</label>
+							<label><input type="checkbox" name="generi" value="Picchiaduro" <%= cleanGeneri.contains("PICCHIADURO") ? "checked='checked'" : "" %>> Picchiaduro</label>
+							<label><input type="checkbox" name="generi" value="Simulazione" <%= cleanGeneri.contains("SIMULAZIONE") ? "checked='checked'" : "" %>> Simulazione</label>
+							<label><input type="checkbox" name="generi" value="Puzzle" <%= cleanGeneri.contains("PUZZLE") ? "checked='checked'" : "" %>> Puzzle</label>
                         </div>
                     </div>
 

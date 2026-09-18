@@ -703,6 +703,7 @@ public class VideogiocoDAO {
                     Videogioco v = new Videogioco();
                     v.setIdVideogioco(rs.getInt("id_videogioco")); 
                     v.setTitolo(rs.getString("titolo"));
+                    v.setDescrizione(rs.getString("descrizione"));
                     v.setPiattaforma(rs.getString("piattaforma"));
                     v.setPrezzoBase(rs.getDouble("prezzo_base"));
                     v.setScontoAttivo(rs.getInt("sconto_attivo"));

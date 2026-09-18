@@ -36,6 +36,15 @@
                 <label class="filter-checkbox"><input type="checkbox" name="genere" value="JRPG"> JRPG</label>
                 <label class="filter-checkbox"><input type="checkbox" name="genere" value="Metroidvania"> Metroidvania</label>
                 <label class="filter-checkbox"><input type="checkbox" name="genere" value="Azione"> Azione</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Avventura"> Avventura</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="FPS"> FPS</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="GDR"> GDR</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Strategia"> Strategia</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Sport"> Sport</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Platform"> Platform</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Picchiaduro"> Picchiaduro</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Simulazione"> Simulazione</label>
+				<label class="filter-checkbox"><input type="checkbox" name="genere" value="Puzzle"> Puzzle</label>
             </div>
         </aside>
 
