@@ -212,6 +212,117 @@
     <button class="slider-btn right-btn" onclick="scorriSlider(this, 360)">&#10095;</button>
 	</div>
 	
+	<h2 class="vetrina-title">
+        <% if (utenteLoggato != null && utenteLoggato.getBadgePersonalita() != null && !utenteLoggato.getBadgePersonalita().trim().isEmpty()) { %>
+            A chi è <%= utenteLoggato.getBadgePersonalita() %> Michele Rotella consiglia:
+        <% } else { %>
+            Titoli consigliati da Michele Rotella!
+        <% } %>
+    </h2>
+    
+    <div class="slider-wrapper">
+        <%
+            if (utenteLoggato == null) {
+        %>
+            <%-- se l'utente non ha effettuato l'accesso --%>
+            <div style="width: 100%; text-align: center; padding: 40px 20px; color: #fff;">
+                <p style="font-size: 16px; margin-bottom: 15px;">Se non effettui l'accesso non potrai osservare i titoli consigliati... Non vorrai mica che il Signor Rotella si offenda?</p>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="login.jsp" class="btn-guest" style="padding: 10px 20px; text-decoration: none;">Accedi</a>
+                    <a href="registrazione.jsp" class="btn-guest solid" style="padding: 10px 20px; text-decoration: none;">Registrati</a>
+                </div>
+            </div>
+        <% 
+            } else if (utenteLoggato.getBadgePersonalita() == null || utenteLoggato.getBadgePersonalita().trim().isEmpty()) {
+        %>
+            <%-- se l'utente ha effettuato il login ma senza test della personalità completato --%>
+            <div style="width: 100%; text-align: center; padding: 40px 20px; color: #fff;">
+                <p style="font-size: 16px; margin-bottom: 15px;">Male, male, male... Prima non avevi effettuato l'accesso, ora non hai fatto il test della personalità; cosa farai dopo? Comprerai i giochi dalla concorrenza di Michele Rotella?...</p>
+                <a href="ProfiloServlet" class="btn-guest solid" style="padding: 10px 20px; text-decoration: none; display: inline-block;">Vai al Profilo</a>
+            </div>
+        <% 
+            } else {
+                // se l'utente e loggato con test della personalità effettuato
+                String badgeUtente = utenteLoggato.getBadgePersonalita();
+                String genereScelto = "";
+                
+                if ("Socializzatore".equalsIgnoreCase(badgeUtente)) {
+                    genereScelto = "JRPG";
+                } else if ("Esploratore".equalsIgnoreCase(badgeUtente)) {
+                    genereScelto = "Avventura";
+                } else if ("Collezionista".equalsIgnoreCase(badgeUtente)) {
+                    genereScelto = "Metroidvania";
+                } else if ("Competitivo".equalsIgnoreCase(badgeUtente)) {
+                    genereScelto = "FPS";
+                }
+                
+                // giochi filtrati per genere del bedge personalità
+                List<Videogioco> giochiPersonalita = dao.filtraCatalogo(null, genereScelto, null, null);
+        %>
+            
+            <button class="slider-btn left-btn" onclick="scorriSlider(this, -360)">&#10094;</button>
+            <div class="horizontal-slider">
+                <% 
+                    if (giochiPersonalita != null && !giochiPersonalita.isEmpty()) {
+                        for (Videogioco g : giochiPersonalita) {
+                %>
+                    <div class="game-card">
+                        <a href="DettaglioGiocoServlet?id=<%= g.getIdVideogioco() %>" class="game-card-link">
+                            <div class="cover-container">
+                                <% if (g.getBase64Copertina() != null && !g.getBase64Copertina().isEmpty()) { %>
+                                    <img src="data:image/jpeg;base64,<%= g.getBase64Copertina() %>" alt="Copertina <%= g.getTitolo() %>" class="game-cover">
+                                <% } else { %>
+                                    <div class="game-cover empty-cover"><span>Nessuna Copertina</span></div>
+                                <% } %>
+                            </div>
+                            <div class="game-info game-title-box">
+                                <h3><%= g.getTitolo() %></h3>
+                            </div>
+                        </a> 
+                        <div class="game-info game-desc-box">
+                            <p><%= g.getDescrizione() %></p>
+                        </div>
+                        <div>
+                            <div class="game-meta">
+                                <div class="price-container">
+                                    <% if (g.getScontoAttivo() > 0) { 
+                                        double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0);
+                                    %>
+                                        <span class="discount-badge">-<%= g.getScontoAttivo() %>%</span>
+                                        <div class="price-column">
+                                            <span class="old-price"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+                                            <span class="price-tag discounted-price"><%= String.format("%.2f", prezzoScontato) %>€</span>
+                                        </div>
+                                    <% } else { %>
+                                        <span class="price-tag"><%= String.format("%.2f", g.getPrezzoBase()) %>€</span>
+                                    <% } %>
+                                </div>
+                                <span class="platform-tag"><%= g.getPiattaforma() %></span>
+                            </div>
+                            <div class="action-buttons-index">
+                                <button type="button" class="btn-cart btn-cart-index" 
+                                        onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+                                    AL CARRELLO 🛒
+                                </button>
+                                <% boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco()); %>
+                                <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
+                                        onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
+                                    <%= inWishlist ? "❤️" : "🤍" %>
+                                </button>
+                            </div>
+                        </div>
+                    </div> 
+                <% 
+                        }
+                    } else { 
+                %>
+                    <p style="padding-left: 20px; color: #fff;">Michele Rotella ha fatto cilecca! Non è riuscito a trovare proprio nulla da consigliarti quest'oggi.</p>
+                <% } %>
+            </div>
+            <button class="slider-btn right-btn" onclick="scorriSlider(this, 360)">&#10095;</button>
+        <% } %>
+    </div>
+	
     </div> <div id="modalPiattaforma" class="platform-overlay">
     <div class="platform-modal">
         <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
