@@ -4,10 +4,13 @@
    ROTAGAMES - FOGLIO DI STILE COMPLETO
    ========================================= */
 
+
+
 /*  ===========================
     1. IMPOSTAZIONI BASE E BODY 
     =========================== */
 body {
+    
     background-color: #030D1A;
     color: #FFFFFF;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,8 +18,11 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
-    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -266,10 +272,11 @@ header {
     padding: 20px; 
     background-color: #04142C; 
     color: #ccc; 
-    margin-top: 40px; 
+    margin-top: auto; /* Spinge automaticamente il footer sul fondo */
     border-top: 1px solid #00E5FF;
-    width: 100;
+    width: 100%; /* Aggiunta l'unità di misura % */
     flex-shrink: 0;
+    box-sizing: border-box; /* Evita che il padding causi scroll orizzontale */
 }
 
 .underfooter {
@@ -281,9 +288,12 @@ header {
     3. VETRINA E GRIGLIA GIOCHI
     ======================================= */
 .store-container {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px; /* Metti la larghezza massima che desideri per i monitor grandi */
+    margin: 0 auto; /* Centra il contenitore sullo schermo */
+    box-sizing: border-box;
+    padding-left: 15px; /* Margini di sicurezza interni */
+    padding-right: 15px;
 }
 
 .store-container h2 {
@@ -780,19 +790,36 @@ header {
 }
 .admin-table th { background-color: #00E5FF; color: #04142C; padding: 15px; text-align: left; }
 .admin-table td { padding: 15px; border-bottom: 1px solid #04142C; color: #fff; }
+
+/* NUOVA REGOLA: Gestione layout flessibile per l'ultima colonna (Azioni) */
+.admin-table td:last-child {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 8px; 
+    align-items: center;
+}
+
 .admin-table tr:hover { background-color: #09172E; }
 .empty-catalog-cell { text-align: center; color: #A0B0C8; }
 .row-ritirato { opacity: 0.5; background-color: #121f3d; }
 .text-unavailable { color: #5C6F8E; font-style: italic; }
 
 /* Bottoni Azioni Tabella */
-.btn-action { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.9em; margin-right: 5px; }
+.btn-action { 
+    padding: 6px 12px; 
+    border-radius: 4px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 0.9em; 
+    white-space: nowrap; /* Evita che il testo si spezzi a metà */
+}
+
 .btn-edit { background-color: #FFD700; color: #000; }
 .btn-delete { background-color: #FF4444; color: #fff; }
+
 .btn-hard-delete {
     background-color: #8B0000;
     color: #fff;
-    margin-left: 5px;
 }
 
 .btn-hard-delete:hover {
@@ -805,16 +832,16 @@ header {
     font-weight: bold;
 }
 .client-immune-text{
-	color: #666;
+    color: #666;
     font-style: italic;
     font-weight: bold;
     font-size: 0.9em; 
     margin-left: 5px;
 }
 .btn-add { 
-	background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px;
-	text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; 
-	}
+    background-color: #00FF7F; color: #000; padding: 10px 20px; border-radius: 4px;
+    text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 20px; 
+}
 .btn-restore { background-color: #00FF80; color: #030D1A; }
 .btn-restore:hover { background-color: #00cc66; box-shadow: 0 0 8px rgba(0, 255, 128, 0.6); }
 .btn-approve { background-color: #FFCC00; color: #030D1A; font-weight: bold; }
@@ -3503,7 +3530,27 @@ input.remember-checkbox {
     .checkout-total-box {
         text-align: center; /* Centriamo il totale per dargli maggiore risalto su mobile */
     }
+    
+    
+    /* Impila le colonne del checkout in verticale */
+    .checkout-flex-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 30px; 
+    }
+
+    /* Sposta la colonna sinistra (Dati di Pagamento) in basso */
+    .checkout-flex-layout .checkout-colonna:nth-child(1) {
+        order: 2;
+    }
+
+    /* Sposta la colonna destra (Fatturazione) in alto */
+    .checkout-flex-layout .checkout-colonna:nth-child(2) {
+        order: 1;
+    }
 }
+
+
 
 /* =========================================
     MEDIA QUERIES (LIBRERIA)
@@ -3829,6 +3876,24 @@ input.remember-checkbox {
     MEDIA QUERIES (SLIDER E HERO SECTION)
    ========================================= */
 
+/* Ottimizzazione per Tablet grandi e iPad (sotto i 1024px) */
+@media (max-width: 1024px) {
+    /* Riporta i bottoni dello slider all'interno dello schermo */
+    .left-btn { 
+        left: 10px; 
+    }
+    .right-btn { 
+        right: 10px; 
+    }
+
+    /* Impedisce allo slider wrapper di causare overflow */
+    .slider-wrapper {
+        max-width: 100%;
+        overflow: hidden;
+        padding: 5px 0; /* Previene il taglio netto delle ombre dei bottoni */
+    }
+}
+
 /* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
 @media (max-width: 768px) {
     /* Riduciamo l'altezza del banner Hero */
@@ -3881,16 +3946,25 @@ input.remember-checkbox {
     }
 }
 
+
+
 /* =========================================
    MEDIA QUERIES (INGRANAGGIO ANIMATO)
    ========================================= */
+
+/* Ottimizzazione per iPad Pro e Tablet grandi (sotto i 1024px) */
+@media (max-width: 1024px) {
+    .rotella-container.hero-ingranaggio {
+        right: -150px; /* Lo facciamo rientrare un po' per non farlo scomparire del tutto */
+    }
+}
 
 /* Ottimizzazione per Tablet e schermi medi (sotto i 768px) */
 @media (max-width: 768px) {
     .rotella-container.hero-ingranaggio {
         width: 300px;
         height: 300px;
-        right: -150px; 
+        right: -120px; /* Regolato leggermente per fare scala con la nuova misura sopra */
     }
 }
 
@@ -3908,8 +3982,8 @@ input.remember-checkbox {
     MEDIA QUERIES (PAGINA PROFILO)
    ========================================= */
 
-/* Ottimizzazione per Tablet (sotto i 992px) */
-@media (max-width: 992px) {
+/* Ottimizzazione per iPad Pro e Tablet (sotto i 1024px) */
+@media (max-width: 1024px) {
     /* Annulliamo le colonne affiancate e lo scorrimento interno */
     .profilo-layout {
         flex-direction: column;
@@ -3919,6 +3993,13 @@ input.remember-checkbox {
     .profilo-colonna {
         overflow-y: visible; 
         padding-right: 0;
+    }
+
+    /* Impila i riquadri 'I Tuoi Dati' e 'Fatturazione' per dare spazio ai bottoni */
+    .profilo-dati-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 }
 

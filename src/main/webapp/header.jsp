@@ -21,6 +21,8 @@
         }
     }
 %>
+
+
 <header>
     <a href="index.jsp" class="logo-link">
         <h1 class="header-logo-title">
