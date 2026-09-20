@@ -18,6 +18,9 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 *, *::before, *::after {
@@ -291,6 +294,7 @@ header {
     box-sizing: border-box;
     padding-left: 15px; /* Margini di sicurezza interni */
     padding-right: 15px;
+    margin-bottom: 50px;
 }
 
 .store-container h2 {
