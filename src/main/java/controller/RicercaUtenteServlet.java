@@ -34,8 +34,13 @@ public class RicercaUtenteServlet extends HttpServlet {
 
         if (query != null && !query.trim().isEmpty()) {
             UtenteDAO utenteDAO = new UtenteDAO();
+            
+            //Escludiamo l'utente loggato attualmente
+            Utente utenteLoggato = (Utente) request.getSession().getAttribute("utenteLoggato");
+            int idEscluso = (utenteLoggato != null) ? utenteLoggato.getIdUtente() : -1;
+            
             //recupero della lista di utenti dal DB
-            List<Utente> listaUtenti = utenteDAO.doRetrieveByNicknameSearch(query.trim());
+            List<Utente> listaUtenti = utenteDAO.doRetrieveByNicknameSearch(query.trim(), idEscluso);
 
             jsonResponse.append("[");
             if (listaUtenti != null && !listaUtenti.isEmpty()) {

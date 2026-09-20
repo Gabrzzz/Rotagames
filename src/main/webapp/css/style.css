@@ -15,8 +15,8 @@ body {
     padding: 0;
     max-width: 100%;
     overflow-x: hidden;
-    
 }
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -268,7 +268,7 @@ header {
     color: #ccc; 
     margin-top: 40px; 
     border-top: 1px solid #00E5FF;
-    width: 100;
+    width: 100%;
     flex-shrink: 0;
 }
 
@@ -284,6 +284,7 @@ header {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    flex: 1;
 }
 
 .store-container h2 {
@@ -2186,6 +2187,31 @@ input.remember-checkbox {
     bottom: 50px; 
 }
 
+.action-buttons-wishlist {
+    display: flex;
+    flex-direction: row; 
+    gap: 10px;
+    margin-top: 15px;
+    align-items: stretch;
+}
+
+.action-buttons-wishlist .btn-cart {
+    flex: 1; 
+    margin: 0;
+}
+
+.action-buttons-wishlist .btn-wishlist {
+    flex: 0 0 45px;
+    width: 45px;
+    height: 45px;
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* =========================================
    20. SLIDER ORIZZONTALI E SEZIONE HERO TENDENZE
    ========================================= */
@@ -3089,7 +3115,7 @@ input.remember-checkbox {
    22. MEDIA QUERIES (RESPONSIVE)
    ========================================= */
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
     /* Impila tutto in verticale quando manca spazio */
     header {
         flex-direction: column;
@@ -3823,6 +3849,7 @@ input.remember-checkbox {
         width: 44px;         
         font-size: 1.2em;
     }
+    
 }
 
 /* =========================================

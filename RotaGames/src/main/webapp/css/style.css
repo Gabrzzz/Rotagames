@@ -513,8 +513,8 @@ header h1 {
 }
 
 .checkbox-group input[type="checkbox"] {
-    width: auto !important;
-    margin: 0 8px 0 0 !important;
+    width: auto;
+    margin: 0 8px 0 0;
 }
 
 /* --- Stili aggiuntivi per Dashboard, Utenti e Ordini --- */

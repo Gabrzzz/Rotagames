@@ -5,3 +5,6 @@ build/classes/controller/ProfiloServlet.class
 build/classes/controller/RegistrazioneServlet.class
 build/classes/model/dao/UtenteDAO.class
 build/classes/model/dao/VideogiocoDAO.class
+build/classes/controller/RicercaUtenteServlet.class
+build/classes/controller/RicercaUtentiAjaxServlet.class
+build/classes/model/dao/UtenteDAO.class

@@ -363,15 +363,18 @@ public class UtenteDAO {
         return esito;
     }
     
-    /* Classe per la ricerca utente: cerca gli utenti tramite la stringa inserita nella barra. */
-    public List<Utente> doRetrieveByNicknameSearch(String query) {
+    /* Classe per la ricerca utente: cerca gli utenti tramite la stringa inserita nella barra,
+       escludendo l'utente che sta effettuando la ricerca */
+    public List<Utente> doRetrieveByNicknameSearch(String query, int idEscluso) {
         List<Utente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Utente WHERE nickname LIKE ? AND (is_bannato = FALSE OR is_bannato IS NULL)";
+        String sql = "SELECT * FROM Utente WHERE nickname LIKE ? AND (is_bannato = FALSE OR is_bannato IS NULL) AND id_utente != ?";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, "%" + query + "%");
+            ps.setInt(2, idEscluso); //Settiamo l'ID da scartare
+            
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Utente u = new Utente();

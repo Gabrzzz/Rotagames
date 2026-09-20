@@ -42,18 +42,17 @@
                             <span class="platform-tag"><%= g.getPiattaforma() %></span>
                         </div>
                         
-                        <%-- NUOVI BOTTONI: Ora usano il Modal per la piattaforma --%>
-                        <div style="display: flex; gap: 10px;">
-                            <button type="button" class="btn-cart" style="flex: 1;" 
-                                    onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
-                                AL CARRELLO 🛒
-                            </button>
-                            
-                            <button class="btn-wishlist active" style="width: 45px; height: 45px; flex-shrink: 0;" title="Rimuovi" 
-                                    onclick="rimuoviDaWishlist(<%= g.getIdVideogioco() %>)">
-                                ✖
-                            </button>
-                        </div>
+						<div class="action-buttons-wishlist">
+						    <button type="button" class="btn-cart" 
+						            onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+						        AL CARRELLO 🛒
+						    </button>
+						    
+						    <button class="btn-wishlist active" title="Rimuovi" 
+						            onclick="rimuoviDaWishlist(<%= g.getIdVideogioco() %>)">
+						        ✖
+						    </button>
+						</div>
                     </div>
 
             <%  } 

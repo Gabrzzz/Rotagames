@@ -62,8 +62,8 @@
                 %>
                 <div id="avatarSelectorMenu" style="display: none; background: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; padding: 15px; flex-wrap: wrap; gap: 10px; max-width: 320px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
                     <h4 style="width: 100%; margin: 0 0 10px 0; color: #00d2ff; font-size: 13px; text-transform: uppercase;">
-    I tuoi Avatar (Trovati: <%= (avatarPosseduti != null) ? avatarPosseduti.size() : 0 %>)
-</h4>
+					    I tuoi Avatar (Trovati: <%= (avatarPosseduti != null) ? avatarPosseduti.size() : 0 %>)
+					</h4>
                     <%-- 1. Opzione: Logo di Default --%>
                     <form action="ProfiloServlet" method="post" style="margin: 0;">
                         <input type="hidden" name="azione" value="rimuoviAvatar">
@@ -184,81 +184,77 @@
             </div>
         </div>
 
-	<%-- Box I tuoi dati --%>
+	<%-- Box I tuoi dati (Visibile SOLO al proprietario dell'account) --%>
+        <% if (utenteProfilo != null && isProprietario) { %>
         <div class="profilo-sezione">
-            <% if (utenteProfilo != null) { %>
-                <div class="profilo-dati-flex">
-                    
-                    <%-- COLONNA SINISTRA: Info Base --%>
-                    <div class="profilo-dati-col">
-                        <div class="profilo-dati-header">
-                            <h2>I TUOI DATI</h2>
-                        </div>
-                        <p class="profilo-testo"><strong>Email:</strong> <%= utenteProfilo.getEmail() %></p>
-                        <p class="profilo-testo"><strong>Nome:</strong> <%= utenteProfilo.getNome() %> <%= utenteProfilo.getCognome() %></p>
-                        <p class="profilo-testo"><strong>Saldo Rotelline:</strong> <%= utenteProfilo.getSaldoRotelline() %> 🪙</p>
+            <div class="profilo-dati-flex">
+                
+                <%-- COLONNA SINISTRA: Info Base --%>
+                <div class="profilo-dati-col">
+                    <div class="profilo-dati-header">
+                        <h2>I TUOI DATI</h2>
                     </div>
-    
-                    <%-- COLONNA DESTRA: Indirizzo Fatturazione --%>
-                    <div class="profilo-dati-col">
-                        <div class="profilo-dati-header">
-                            <h2>FATTURAZIONE</h2>
-                            <% if (isProprietario) { %>
-                                <button type="button" class="btn-modifica-dati" onclick="document.getElementById('formIndirizzo').style.display = document.getElementById('formIndirizzo').style.display === 'none' ? 'block' : 'none';">
-                                    ✏️ Modifica
-                                </button>
-                            <% } %>
-                        </div>
-                
-                        <% 
-                            String via = (utenteProfilo.getVia() != null) ? utenteProfilo.getVia() : "";
-                            String cap = (utenteProfilo.getCap() != null) ? utenteProfilo.getCap() : "";
-                            String citta = (utenteProfilo.getCitta() != null) ? utenteProfilo.getCitta() : "";
-                            boolean hasIndirizzo = !via.isEmpty() || !cap.isEmpty() || !citta.isEmpty();
-                        %>
-                
-                        <% if (hasIndirizzo) { %>
-                            <p class="profilo-testo"><strong>Via:</strong> <%= via %></p>
-                            <p class="profilo-testo"><strong>Città:</strong> <%= citta %> (<%= cap %>)</p>
-                        <% } else { %>
-                            <p class="profilo-testo" style="color: #aaa; font-style: italic;">Nessun indirizzo inserito.</p>
-                        <% } %>
-                
-                        <% if (isProprietario) { %>
-                            <form id="formIndirizzo" action="ProfiloServlet" method="post" class="form-fatturazione">
-                                <input type="hidden" name="azione" value="aggiornaIndirizzo">
-                                
-                                <div class="form-fatturazione-group">
-                                    <label>Via e Civico</label>
-                                    <input type="text" name="via" value="<%= via %>" 
-                                           required minlength="4" maxlength="70" 
-                                           placeholder="Es. Via Roma, 10">
-                                </div>
-                                
-                                <div class="form-fatturazione-row">
-                                    <div class="form-fatturazione-group" style="flex: 1; margin-bottom: 0;">
-                                        <label>CAP</label>
-                                        <input type="text" name="cap" value="<%= cap %>" 
-                                               required minlength="5" maxlength="5" pattern="[0-9]{5}" 
-                                               title="Il CAP deve contenere esattamente 5 numeri (es. 84100)" 
-                                               placeholder="Es. 84100">
-                                    </div>
-                                    <div class="form-fatturazione-group" style="flex: 2; margin-bottom: 0;">
-                                        <label>Città</label>
-                                        <input type="text" name="citta" value="<%= citta %>" 
-                                               required minlength="2" maxlength="40" pattern="[a-zA-ZàèìòùÀÈÌÒÙ\'\s]+" 
-                                               title="Inserisci una città valida (solo lettere, spazi o apostrofi)" 
-                                               placeholder="Es. Salerno">
-                                    </div>
-                                </div>
-                                
-                                <button type="submit" class="btn-salva-indirizzo">Salva Indirizzo</button>
-                            </form>
-                        <% } %>
-                    </div>
+                    <p class="profilo-testo"><strong>Email:</strong> <%= utenteProfilo.getEmail() %></p>
+                    <p class="profilo-testo"><strong>Nome:</strong> <%= utenteProfilo.getNome() %> <%= utenteProfilo.getCognome() %></p>
+                    <p class="profilo-testo"><strong>Saldo Rotelline:</strong> <%= utenteProfilo.getSaldoRotelline() %> 🪙</p>
                 </div>
-            <% } %>
+
+                <%-- COLONNA DESTRA: Indirizzo Fatturazione --%>
+                <div class="profilo-dati-col">
+                    <div class="profilo-dati-header">
+                        <h2>FATTURAZIONE</h2>
+                        <button type="button" class="btn-modifica-dati" onclick="document.getElementById('formIndirizzo').style.display = document.getElementById('formIndirizzo').style.display === 'none' ? 'block' : 'none';">
+                            ✏️ Modifica
+                        </button>
+                    </div>
+            
+                    <% 
+                        String via = (utenteProfilo.getVia() != null) ? utenteProfilo.getVia() : "";
+                        String cap = (utenteProfilo.getCap() != null) ? utenteProfilo.getCap() : "";
+                        String citta = (utenteProfilo.getCitta() != null) ? utenteProfilo.getCitta() : "";
+                        boolean hasIndirizzo = !via.isEmpty() || !cap.isEmpty() || !citta.isEmpty();
+                    %>
+            
+                    <% if (hasIndirizzo) { %>
+                        <p class="profilo-testo"><strong>Via:</strong> <%= via %></p>
+                        <p class="profilo-testo"><strong>Città:</strong> <%= citta %> (<%= cap %>)</p>
+                    <% } else { %>
+                        <p class="profilo-testo" style="color: #aaa; font-style: italic;">Nessun indirizzo inserito.</p>
+                    <% } %>
+            
+                    <form id="formIndirizzo" action="ProfiloServlet" method="post" class="form-fatturazione">
+                        <input type="hidden" name="azione" value="aggiornaIndirizzo">
+                        
+                        <div class="form-fatturazione-group">
+                            <label>Via e Civico</label>
+                            <input type="text" name="via" value="<%= via %>" 
+                                   required minlength="4" maxlength="70" 
+                                   placeholder="Es. Via Roma, 10">
+                        </div>
+                        
+                        <div class="form-fatturazione-row">
+                            <div class="form-fatturazione-group" style="flex: 1; margin-bottom: 0;">
+                                <label>CAP</label>
+                                <input type="text" name="cap" value="<%= cap %>" 
+                                       required minlength="5" maxlength="5" pattern="[0-9]{5}" 
+                                       title="Il CAP deve contenere esattamente 5 numeri (es. 84100)" 
+                                       placeholder="Es. 84100">
+                            </div>
+                            <div class="form-fatturazione-group" style="flex: 2; margin-bottom: 0;">
+                                <label>Città</label>
+                                <input type="text" name="citta" value="<%= citta %>" 
+                                       required minlength="2" maxlength="40" pattern="[a-zA-ZàèìòùÀÈÌÒÙ\'\s]+" 
+                                       title="Inserisci una città valida (solo lettere, spazi o apostrofi)" 
+                                       placeholder="Es. Salerno">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-salva-indirizzo">Salva Indirizzo</button>
+                    </form>
+                </div>
+            </div>
         </div>
+        <% } %>
 
         <%-- Box Libreria giochi --%>
         <div class="profilo-sezione">
@@ -395,7 +391,8 @@
             <% } %>
         </div>
         
-		<%-- Ricerca Utenti --%>
+		<%-- Ricerca Utenti (Visibile SOLO al proprietario dell'account) --%>
+        <% if (isProprietario) { %>
         <div class="profilo-sezione">
             <h2>CERCA UTENTE</h2>
             <div class="user-search-container-static" id="userSearchContainer" style="position: relative; width: 100%;">
@@ -415,7 +412,7 @@
                 
                 <div id="userSearchResults" class="user-search-results-dropdown" style="position: absolute; top: 100%; left: 0; width: 100%; background: #09172E; border: 1px solid #00d2ff; border-radius: 6px; z-index: 1000; box-shadow: 0 8px 25px rgba(0,0,0,0.7); margin-top: 5px; overflow: hidden;"></div>
             </div>
-        </div>
+        </div>       
         
         <script src="${pageContext.request.contextPath}/js/ricercaUtenti.js?v=2.0"></script>
         
@@ -435,6 +432,7 @@
             }
         });
         </script>
+        <% } %>
 
     </div>
 

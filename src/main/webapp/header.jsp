@@ -92,7 +92,7 @@
                             <a href="ProfiloServlet" class="dropdown-item">👤 Il mio Profilo</a>
                             <a href="LibreriaServlet" class="dropdown-item">🎮 La mia Libreria</a>
                             <a href="OrdiniServlet" class="dropdown-item">📦 I miei Ordini</a>
-
+							<a href="WishlistServlet" class="dropdown-item">🎁 La tua Wishlist</a>
                             <a href="ShopServlet" class="dropdown-item">🎡 Negozio Premi</a>
 
                             <a href="LogoutServlet" class="dropdown-item logout-text">Esci</a>
