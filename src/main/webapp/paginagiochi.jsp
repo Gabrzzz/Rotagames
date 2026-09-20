@@ -180,6 +180,24 @@
 	                        <%= request.getAttribute("nomeSviluppatore") != null ? request.getAttribute("nomeSviluppatore") : "RotaGames" %>
 	                    </span>
 	                </div>
+	                
+	                <div class="info-group">
+	                    <span class="info-label">Generi</span>
+	                    <div class="piattaforme-tags">
+	                        <% 
+	                            List<String> listaGeneri = new model.dao.VideogiocoDAO().getGeneriByIdVideogioco(gioco.getIdVideogioco());
+	                            if (listaGeneri != null && !listaGeneri.isEmpty()) {
+	                                for (String gen : listaGeneri) { 
+	                        %>
+	                                    <span class="badge-piattaforma"><%= gen.trim() %></span>
+	                        <% 
+	                                }
+	                            } else { 
+	                        %>
+	                                <span class="badge-piattaforma">Non specificati</span>
+	                        <% } %>
+	                    </div>
+	                </div>
 
 	                <div class="info-group">
 	                    <span class="info-label">Piattaforme</span>

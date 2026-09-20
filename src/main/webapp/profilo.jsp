@@ -30,11 +30,10 @@
         <%-- Box Avatar, Nickname, Titolo e Bio --%>
         <div class="profilo-sezione">
            <%-- CONTENITORE FLEX: Affianca l'avatar e il menù di selezione --%>
-            <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 25px;">
+            <div class="profilo-avatar-menu-container">
                 
                 <%-- AVATAR ATTUALE --%>
-                <div class="profilo-avatar-box" style="position: relative; cursor: pointer; margin: 0;" 
-                     onclick="document.getElementById('avatarSelectorMenu').style.display = document.getElementById('avatarSelectorMenu').style.display === 'none' ? 'flex' : 'none';">
+                <div id="avatarBox" class="profilo-avatar-box profilo-avatar-box-interactive">
                     <%
                         String avatarAttivo = (utenteProfilo != null && utenteProfilo.getAvatarAttivo() != null && !utenteProfilo.getAvatarAttivo().trim().isEmpty()) 
                                               ? utenteProfilo.getAvatarAttivo() : null;
@@ -49,7 +48,7 @@
                          onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
         
                     <% if (isProprietario) { %>
-                        <div class="avatar-edit-overlay" style="display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                        <div class="avatar-edit-overlay avatar-edit-overlay-flex">
                             ✏️ Modifica
                         </div>
                     <% } %>
@@ -59,15 +58,15 @@
                 <% if (isProprietario) { 
                     List<String> avatarPosseduti = (List<String>) request.getAttribute("avatarPosseduti");
                 %>
-                <div id="avatarSelectorMenu" style="display: none; background: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; padding: 15px; flex-wrap: wrap; gap: 10px; max-width: 320px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-                    <h4 style="width: 100%; margin: 0 0 10px 0; color: #00d2ff; font-size: 13px; text-transform: uppercase;">
+                <div id="avatarSelectorMenu" class="avatar-selector-menu" style="display: none;">
+                    <h4 class="avatar-selector-title">
 					    I tuoi Avatar (Trovati: <%= (avatarPosseduti != null) ? avatarPosseduti.size() : 0 %>)
 					</h4>
                     <%-- 1. Opzione: Logo di Default --%>
-                    <form action="ProfiloServlet" method="post" style="margin: 0;">
+                    <form action="ProfiloServlet" method="post" class="avatar-form-inline">
                         <input type="hidden" name="azione" value="rimuoviAvatar">
-                        <button type="submit" title="Logo RotaGames (Default)" style="background: transparent; border: <%= (avatarAttivo == null) ? "2px solid #00ff88" : "2px solid transparent" %>; border-radius: 50%; padding: 2px; cursor: pointer; transition: transform 0.2s;">
-                            <img src="<%= request.getContextPath() %>/images/RotaLogo.png" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                        <button type="submit" title="Logo RotaGames (Default)" class="avatar-option-btn <%= (avatarAttivo == null) ? "avatar-btn-active" : "avatar-btn-inactive" %>">
+                            <img src="<%= request.getContextPath() %>/images/RotaLogo.png" class="avatar-option-img">
                         </button>
                     </form>
 
@@ -76,16 +75,16 @@
                         for (String av : avatarPosseduti) { 
                             boolean isThisActive = (avatarAttivo != null && avatarAttivo.equals(av));
                     %>
-                        <form action="ProfiloServlet" method="post" style="margin: 0;">
+                        <form action="ProfiloServlet" method="post" class="avatar-form-inline">
                             <input type="hidden" name="azione" value="impostaAvatarShop">
                             <input type="hidden" name="nomeAvatar" value="<%= av %>">
-                            <button type="submit" title="<%= av %>" style="background: transparent; border: <%= isThisActive ? "2px solid #00ff88" : "2px solid transparent" %>; border-radius: 50%; padding: 2px; cursor: pointer; transition: transform 0.2s;">
-                                <img src="<%= request.getContextPath() %>/images/avatar/<%= av %>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
+                            <button type="submit" title="<%= av %>" class="avatar-option-btn <%= isThisActive ? "avatar-btn-active" : "avatar-btn-inactive" %>">
+                                <img src="<%= request.getContextPath() %>/images/avatar/<%= av %>" class="avatar-option-img" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/images/RotaLogo.png';">
                             </button>
                         </form>
                     <%  }
                        } else { %>
-                           <p style="font-size: 11px; color: #aaa; margin: 0; width: 100%;">Non possiedi avatar speciali.<br><a href="ShopServlet" style="color: #00E5FF;">Visita lo shop!</a></p>
+                           <p class="avatar-empty-text">Non possiedi avatar speciali.<br><a href="ShopServlet" class="avatar-shop-link">Visita lo shop!</a></p>
                     <% } %>
                 </div>
                 <% } %>
@@ -93,9 +92,9 @@
             </div>
         
             <%-- SEZIONE NICKNAME CON MODIFICA PER IL PROPRIETARIO --%>
-            <div class="nickname-container" style="margin-top: 10px; margin-bottom: 4px; display: flex; align-items: center; justify-content: flex-start;">
+            <div class="nickname-container profilo-nickname-wrapper">
                 <% if (isProprietario) { %>
-                    <form action="ProfiloServlet" method="post" style="display: inline-flex; align-items: center; gap: 6px;">
+                    <form action="ProfiloServlet" method="post" class="nickname-edit-form">
                         <input type="hidden" name="azione" value="aggiornaNickname">
                         <input type="text" 
                                name="nuovoNickname" 
@@ -105,28 +104,27 @@
                                maxlength="20"
                                pattern="^[a-zA-Z0-9_]+$"
                                title="Il nickname deve contenere da 3 a 20 caratteri alfanumerici o underscore"
-                               style="background-color: #0b132b; color: #fff; border: 1px solid #00d2ff; padding: 4px 8px; border-radius: 6px; font-size: 20px; font-weight: bold; font-family: inherit; width: 180px; outline: none;">
-                        <button type="submit" title="Salva Nickname" class="btn-salva-titolo" style="font-size: 15px !important; padding: 5px 10px !important;">💾</button>
+                               class="nickname-input-field">
+                        <button type="submit" title="Salva Nickname" class="btn-salva-titolo nickname-save-btn">💾</button>
                     </form>
                 <% } else { %>
-                    <h3 style="margin: 0; color: #fff; font-size: 22px; text-align: left;"><%= utenteProfilo != null ? utenteProfilo.getNickname() : "" %></h3>
+                    <h3 class="nickname-display-heading"><%= utenteProfilo != null ? utenteProfilo.getNickname() : "" %></h3>
                 <% } %>
             </div>
             
             <%-- SEZIONE TITOLO --%>
-            <div class="titolo-container" style="margin: 8px 0 14px 0; display: flex; align-items: center; justify-content: flex-start; gap: 8px; position: relative;">
-                <span style="font-weight: bold; color: #aaa; font-size: 14px;">Titolo:</span>
+            <div class="titolo-container profilo-titolo-wrapper">
+                <span class="titolo-label-prefix">Titolo:</span>
                 
                 <% String titoloAttivo = (utenteProfilo != null && utenteProfilo.getTitoloAttivo() != null && !utenteProfilo.getTitoloAttivo().trim().isEmpty()) ? utenteProfilo.getTitoloAttivo() : "Novellino"; %>
                 
                 <%-- Bordo del titolo cliccabile --%>
-                <div style="background: rgba(0, 210, 255, 0.1); border: 1px solid #00d2ff; border-radius: 6px; padding: 3px 10px; display: flex; align-items: center; gap: 8px; cursor: <%= isProprietario ? "pointer" : "default" %>;"
-                     <%= isProprietario ? "onclick=\"document.getElementById('titoloSelectorMenu').style.display = document.getElementById('titoloSelectorMenu').style.display === 'none' ? 'flex' : 'none';\"" : "" %>>
-                    <p class="titolo-attivo" style="margin: 0; font-weight: bold; color: #00d2ff; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                <div id="titoloClickableBox" class="titolo-clickable-box <%= isProprietario ? "titolo-clickable-cursor" : "titolo-default-cursor" %>">
+                    <p class="titolo-attivo">
                         <%= titoloAttivo %>
                     </p>
                     <% if (isProprietario) { %>
-                        <span style="font-size: 11px;" title="Cambia Titolo">✏️</span>
+                        <span class="titolo-edit-icon" title="Cambia Titolo">✏️</span>
                     <% } %>
                 </div>
 
@@ -134,14 +132,14 @@
                 <% if (isProprietario) { 
                     List<String> titoliPosseduti = (List<String>) request.getAttribute("titoliPosseduti");
                 %>
-                <div id="titoloSelectorMenu" style="display: none; position: absolute; top: 100%; left: 45px; background: #0b132b; border: 1px solid #00d2ff; border-radius: 8px; padding: 15px; flex-direction: column; gap: 8px; min-width: 200px; box-shadow: 0 4px 15px rgba(0,0,0,0.7); z-index: 100;">
-                    <h4 style="margin: 0 0 5px 0; color: #00d2ff; font-size: 13px; text-transform: uppercase;">I tuoi Titoli</h4>
+                <div id="titoloSelectorMenu" class="titolo-selector-menu" style="display: none;">
+                    <h4 class="titolo-selector-heading">I tuoi Titoli</h4>
                     
                     <%-- Opzione 1: Titolo di Base --%>
-                    <form action="ProfiloServlet" method="post" style="margin: 0; width: 100%;">
+                    <form action="ProfiloServlet" method="post" class="titolo-form-block">
                         <input type="hidden" name="azione" value="aggiornaTitolo">
                         <input type="hidden" name="titoloSelezionato" value="Novellino">
-                        <button type="submit" style="width: 100%; text-align: left; background: <%= "Novellino".equals(titoloAttivo) ? "rgba(0, 255, 136, 0.2)" : "transparent" %>; border: <%= "Novellino".equals(titoloAttivo) ? "1px solid #00ff88" : "1px solid rgba(255,255,255,0.2)" %>; border-radius: 4px; padding: 6px 10px; color: white; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; transition: all 0.2s;">
+                        <button type="submit" class="titolo-option-btn <%= "Novellino".equals(titoloAttivo) ? "titolo-option-active" : "titolo-option-inactive" %>">
                             Novellino
                         </button>
                     </form>
@@ -151,28 +149,28 @@
                         for (String t : titoliPosseduti) { 
                             boolean isThisTitleActive = t.equals(titoloAttivo);
                     %>
-                        <form action="ProfiloServlet" method="post" style="margin: 0; width: 100%;">
+                        <form action="ProfiloServlet" method="post" class="titolo-form-block">
                             <input type="hidden" name="azione" value="aggiornaTitolo">
                             <input type="hidden" name="titoloSelezionato" value="<%= t %>">
-                            <button type="submit" style="width: 100%; text-align: left; background: <%= isThisTitleActive ? "rgba(0, 255, 136, 0.2)" : "transparent" %>; border: <%= isThisTitleActive ? "1px solid #00ff88" : "1px solid rgba(255,255,255,0.2)" %>; border-radius: 4px; padding: 6px 10px; color: white; cursor: pointer; text-transform: uppercase; font-weight: bold; font-size: 12px; transition: all 0.2s;">
+                            <button type="submit" class="titolo-option-btn <%= isThisTitleActive ? "titolo-option-active" : "titolo-option-inactive" %>">
                                 <%= t %>
                             </button>
                         </form>
                     <%  }
                        } else { %>
-                           <p style="font-size: 11px; color: #aaa; margin: 5px 0 0 0;">Nessun titolo speciale.<br><a href="ShopServlet" style="color: #00E5FF; text-decoration: underline;">Visita lo shop!</a></p>
+                           <p class="titolo-empty-text">Nessun titolo speciale.<br><a href="ShopServlet" class="titolo-shop-link">Visita lo shop!</a></p>
                     <% } %>
                 </div>
                 <% } %>
             </div>
             
             <%-- SEZIONE BIO --%>
-            <div class="bio-container" style="margin-top: 12px; width: 100%;">
+            <div class="bio-container">
                 <% if (isProprietario) { %>
-                <form action="ProfiloServlet" method="post" style="display: flex; flex-direction: column; align-items: center;">
+                <form action="ProfiloServlet" method="post" class="bio-form-wrapper">
                     <input type="hidden" name="azione" value="aggiornaBio">
                     <textarea name="bio" class="bio-dark" rows="3" maxlength="100" placeholder="Scrivi una bio (max 100 caratteri)..."><%= (utenteProfilo != null && utenteProfilo.getBio() != null) ? utenteProfilo.getBio() : "" %></textarea>
-                    <button type="submit" class="btn-salva-bio" style="margin-top: 8px;">Salva Bio</button>
+                    <button type="submit" class="btn-salva-bio bio-save-btn-margin">Salva Bio</button>
                 </form>
                 <% } else { %>
                 	<%-- controllo per evitare di poter inserire bio dalle pagine degli altri --%>
@@ -202,7 +200,7 @@
                 <div class="profilo-dati-col">
                     <div class="profilo-dati-header">
                         <h2>FATTURAZIONE</h2>
-                        <button type="button" class="btn-modifica-dati" onclick="document.getElementById('formIndirizzo').style.display = document.getElementById('formIndirizzo').style.display === 'none' ? 'block' : 'none';">
+                        <button type="button" id="btnModificaFatturazione" class="btn-modifica-dati">
                             ✏️ Modifica
                         </button>
                     </div>
@@ -218,10 +216,10 @@
                         <p class="profilo-testo"><strong>Via:</strong> <%= via %></p>
                         <p class="profilo-testo"><strong>Città:</strong> <%= citta %> (<%= cap %>)</p>
                     <% } else { %>
-                        <p class="profilo-testo" style="color: #aaa; font-style: italic;">Nessun indirizzo inserito.</p>
+                        <p class="profilo-testo profilo-indirizzo-assente">Nessun indirizzo inserito.</p>
                     <% } %>
             
-                    <form id="formIndirizzo" action="ProfiloServlet" method="post" class="form-fatturazione">
+                    <form id="formIndirizzo" action="ProfiloServlet" method="post" class="form-fatturazione" style="display: none;">
                         <input type="hidden" name="azione" value="aggiornaIndirizzo">
                         
                         <div class="form-fatturazione-group">
@@ -232,14 +230,14 @@
                         </div>
                         
                         <div class="form-fatturazione-row">
-                            <div class="form-fatturazione-group" style="flex: 1; margin-bottom: 0;">
+                            <div class="form-fatturazione-group form-fatturazione-group-cap">
                                 <label>CAP</label>
                                 <input type="text" name="cap" value="<%= cap %>" 
                                        required minlength="5" maxlength="5" pattern="[0-9]{5}" 
                                        title="Il CAP deve contenere esattamente 5 numeri (es. 84100)" 
                                        placeholder="Es. 84100">
                             </div>
-                            <div class="form-fatturazione-group" style="flex: 2; margin-bottom: 0;">
+                            <div class="form-fatturazione-group form-fatturazione-group-citta">
                                 <label>Città</label>
                                 <input type="text" name="citta" value="<%= citta %>" 
                                        required minlength="2" maxlength="40" pattern="[a-zA-ZàèìòùÀÈÌÒÙ\'\s]+" 
@@ -281,12 +279,12 @@
         </div>
 
         <%-- Box Recensioni lasciate --%>
-		<div class="profile-section-box" style="background: #0b132b; border: 1px solid #00d2ff; border-radius: 10px; padding: 20px; margin-top: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+		<div class="profile-section-box profile-section-box-custom">
 		    
-		    <h3 style="color: #00d2ff; border-left: 4px solid #00d2ff; padding-left: 10px; margin-bottom: 20px; text-transform: uppercase; font-size: 16px;">
+		    <h3 class="profile-reviews-title">
 		        LE RECENSIONI DI <%= utenteProfilo.getNickname() %>
 		    </h3>
-		    <div class="profile-reviews-container" style="display: flex; flex-direction: column; gap: 15px;">
+		    <div class="profile-reviews-container">
 		        <% 
 		            List<Recensione> listaRecensioni = (List<Recensione>) request.getAttribute("recensioniUtente");
 		            if (listaRecensioni != null && !listaRecensioni.isEmpty()) {
@@ -306,20 +304,20 @@
 		                    model.Videogioco g = vDao.doRetrieveById(r.getIdVideogioco());
 		                    String nomeGioco = (g != null) ? g.getTitolo() : "Videogioco";
 		        %>
-		            <div class="review-card-item" style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(0, 210, 255, 0.3); border-radius: 8px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+		            <div class="review-card-item">
 		                
 		                <%-- Intestazione della scheda della valutazione: nome del gioco e stelle della valutazionesa --%>
-		                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; margin-bottom: 10px;">
-		                    <span style="font-weight: bold; color: #00d2ff; font-size: 15px;">
+		                <div class="review-card-header">
+		                    <span class="review-game-title">
 		                         <%= nomeGioco %>
 		                    </span>
-		                    <span style="color: #FFD700; font-size: 16px; letter-spacing: 2px;">
+		                    <span class="review-stars">
 		                        <%= stelle.toString() %>
 		                    </span>
 		                </div>
 		
 		                <%-- Testo della recensione --%>
-		                <div style="color: #e0e0e0; font-size: 14px; line-height: 1.4;">
+		                <div class="review-card-text">
 		                    <%= r.getTesto() %>
 		                </div>
 		
@@ -328,7 +326,7 @@
 		                }
 		            } else { 
 		        %>
-		            <p style="color: #aaa; font-style: italic;">Nessuna recensione pubblicata.</p>
+		            <p class="profile-reviews-empty">Nessuna recensione pubblicata.</p>
 		        <% } %>
 		    </div>
 		</div>
@@ -349,7 +347,7 @@
                 </p>
             <% } else { %>
                 <%-- L'utente NON ha il badge --%>
-                <p style="margin-bottom: 10px;">Nessun badge ancora ottenuto.</p>
+                <p class="badge-missing-text">Nessun badge ancora ottenuto.</p>
                 
                 <%-- Mostriamo l'invito solo se è il proprietario del profilo --%>
                 <% if (isProprietario) { %>
@@ -394,9 +392,9 @@
         <% if (isProprietario) { %>
         <div class="profilo-sezione">
             <h2>CERCA UTENTE</h2>
-            <div class="user-search-container-static" id="userSearchContainer" style="position: relative; width: 100%;">
-                <div class="user-search-inner-wrapper" id="userSearchInner" style="position: relative; width: 100%; opacity: 1; pointer-events: auto; transform: none; background-color: #04142C; border: 1px solid #00d2ff; border-radius: 6px; padding: 5px; box-sizing: border-box; display: flex; align-items: center;">
-                    <form id="userSearchForm" onsubmit="return false;" class="user-search-form-element" style="width: 100%; margin: 0;">
+            <div class="user-search-container-static" id="userSearchContainer">
+                <div class="user-search-inner-wrapper" id="userSearchInner">
+                    <form id="userSearchForm" onsubmit="return false;" class="user-search-form-element">
                         <input type="text" 
                                id="userSearchBar" 
                                name="query" 
@@ -404,33 +402,15 @@
                                placeholder="Cerca utente per nickname..." 
                                autocomplete="off" 
                                required
-                               class="user-search-input"
-                               style="width: 100%; background: transparent; border: none; color: white; padding: 8px 10px; font-size: 14px; outline: none;">
+                               class="user-search-input">
                     </form>
                 </div>
                 
-                <div id="userSearchResults" class="user-search-results-dropdown" style="position: absolute; top: 100%; left: 0; width: 100%; background: #09172E; border: 1px solid #00d2ff; border-radius: 6px; z-index: 1000; box-shadow: 0 8px 25px rgba(0,0,0,0.7); margin-top: 5px; overflow: hidden;"></div>
+                <div id="userSearchResults" class="user-search-results-dropdown"></div>
             </div>
         </div>       
         
         <script src="${pageContext.request.contextPath}/js/ricercaUtenti.js?v=2.0"></script>
-        
-        <%-- Script di gestione della barra (senza logica di toggle a comparsa) --%>
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var inputBar = document.getElementById("userSearchBar");
-        
-            // Previene la sottomissione del modulo al tasto Invio
-            if (inputBar) {
-                inputBar.name = "query"; // Assicura che funzioni con lo script di ricerca esistente
-                inputBar.addEventListener("keydown", function(e) {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                    }
-                });
-            }
-        });
-        </script>
         <% } %>
 
     </div>
@@ -438,6 +418,9 @@
 </div>
 
 <jsp:include page="footer.jsp" />
+
+<%-- Inclusione del nuovo file JavaScript separato --%>
+<script src="${pageContext.request.contextPath}/js/profilo.js?v=2.0"></script>
 
 </body>
 </html>

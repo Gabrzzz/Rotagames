@@ -215,7 +215,7 @@
 	
 	<h2 class="vetrina-title">
         <% if (utenteLoggato != null && utenteLoggato.getBadgePersonalita() != null && !utenteLoggato.getBadgePersonalita().trim().isEmpty()) { %>
-            A chi è <%= utenteLoggato.getBadgePersonalita() %> Michele Rotella consiglia:
+            A chi è "<%= utenteLoggato.getBadgePersonalita() %>", Michele Rotella consiglia:
         <% } else { %>
             Titoli consigliati da Michele Rotella!
         <% } %>
@@ -226,20 +226,20 @@
             if (utenteLoggato == null) {
         %>
             <%-- se l'utente non ha effettuato l'accesso --%>
-            <div style="width: 100%; text-align: center; padding: 40px 20px; color: #fff;">
-                <p style="font-size: 16px; margin-bottom: 15px;">Se non effettui l'accesso non potrai osservare i titoli consigliati... Non vorrai mica che il Signor Rotella si offenda?</p>
-                <div style="display: flex; justify-content: center; gap: 15px;">
-                    <a href="login.jsp" class="btn-guest" style="padding: 10px 20px; text-decoration: none;">Accedi</a>
-                    <a href="registrazione.jsp" class="btn-guest solid" style="padding: 10px 20px; text-decoration: none;">Registrati</a>
+            <div class="guest-message-container">
+                <p class="guest-message-text">Se non effettui l'accesso non potrai osservare i titoli consigliati... Non vorrai mica che il Signor Rotella si offenda?</p>
+                <div class="guest-buttons-container">
+                    <a href="login.jsp" class="btn-guest">Accedi</a>
+                    <a href="registrazione.jsp" class="btn-guest solid">Registrati</a>
                 </div>
             </div>
         <% 
             } else if (utenteLoggato.getBadgePersonalita() == null || utenteLoggato.getBadgePersonalita().trim().isEmpty()) {
         %>
             <%-- se l'utente ha effettuato il login ma senza test della personalità completato --%>
-            <div style="width: 100%; text-align: center; padding: 40px 20px; color: #fff;">
-                <p style="font-size: 16px; margin-bottom: 15px;">Male, male, male... Prima non avevi effettuato l'accesso, ora non hai fatto il test della personalità; cosa farai dopo? Comprerai i giochi dalla concorrenza di Michele Rotella?...</p>
-                <a href="ProfiloServlet" class="btn-guest solid" style="padding: 10px 20px; text-decoration: none; display: inline-block;">Vai al Profilo</a>
+            <div class="guest-message-container">
+                <p class="guest-message-text">Male, male, male... Prima non avevi effettuato l'accesso, ora non hai fatto il test della personalità; cosa farai dopo? Comprerai i giochi dalla concorrenza di Michele Rotella?...</p>
+                <a href="ProfiloServlet" class="btn-guest solid profile-btn-inline">Vai al Profilo</a>
             </div>
         <% 
             } else {
@@ -317,7 +317,7 @@
                         }
                     } else { 
                 %>
-                    <p style="padding-left: 20px; color: #fff;">Michele Rotella ha fatto cilecca! Non è riuscito a trovare proprio nulla da consigliarti quest'oggi.</p>
+                    <p class="empty-catalog-msg">Michele Rotella ha fatto cilecca! Non è riuscito a trovare proprio nulla da consigliarti quest'oggi.</p>
                 <% } %>
             </div>
             <button class="slider-btn right-btn" onclick="scorriSlider(this, 360)">&#10095;</button>
