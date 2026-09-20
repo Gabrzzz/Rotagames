@@ -264,7 +264,13 @@ header {
 }
 
 .header-admin-text-dev { color: #FFD700; }
+
+
+.user-rotelline { color: #FFD700; font-weight: bold; }
+.admin-link { color: #00FF7F; text-decoration: none; font-weight: bold; }
 .admin-link-dev { color: #FFD700; }
+.logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
+.visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
 
 /* --- FOOTER --- */
 .footer {
@@ -423,11 +429,6 @@ header {
 .game-title-box h3 { margin-bottom: 5px; }
 .game-desc-box { margin-top: 5px; }
 .cart-form { margin: 0; }
-
-.user-rotelline { color: #FFD700; font-weight: bold; }
-.admin-link { color: #00FF7F; text-decoration: none; font-weight: bold; }
-.logout-link { color: #FF4444; text-decoration: none; font-weight: bold; margin-left: 15px; }
-.visitor-msg { color: #A0B0C8; margin-right: 10px; font-style: italic; }
 
 .vetrina-title { 
     color: #00E5FF; 
@@ -737,6 +738,34 @@ header {
     margin-bottom: 15px;
 }
 
+/* --- Stili specifici per Registrazione --- */
+.validation-msg {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.dev-checkbox-container {
+    text-align: left;
+    margin: 15px 0;
+}
+
+.dev-checkbox-label {
+    color: #ccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.dev-checkbox {
+    width: auto;
+    margin: 0;
+}
+
 /* =========================================
    7. PANNELLO AMMINISTRATORE E SVILUPPATORE
    ========================================= */
@@ -779,6 +808,19 @@ header {
 	color: #030D1A; 
 }
 .title-spaced { margin-top: 50px; }
+
+.admin-error-banner {
+    background-color: #ff4a4a;
+    color: white;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    border: 2px solid #fff;
+}
 
 /* --- 7.2 TABELLE ADMIN --- */
 .admin-table { 
@@ -928,6 +970,12 @@ header {
     margin-bottom: 20px;
 }
 
+.no-img-gallery {
+	color: #A0B0C8; 
+	font-size: 0.9em; 
+	font-style: italic
+}
+
 /* =======================================================
    8. RUOTA DELLA FORTUNA (OVERLAY MODAL E ANIMAZIONE)
    ======================================================= */
@@ -1002,7 +1050,15 @@ header {
     border-radius: 50%;
     border: 6px solid #0088CC; 
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    background-color: #04142C;
+    /* Inserito il gradiente tolto dall'HTML */
+    background: conic-gradient(
+        #00E5FF 0deg 60deg,   /* Spicchio 0: Niente */
+        #04142C 60deg 120deg, /* Spicchio 1: 5 Rotelline */
+        #0088CC 120deg 180deg,/* Spicchio 2: 10 Rotelline */
+        #00E5FF 180deg 240deg,/* Spicchio 3: 20 Rotelline */
+        #04142C 240deg 300deg,/* Spicchio 4: 50 Rotelline */
+        #0088CC 300deg 360deg /* Spicchio 5: Jackpot */
+    );
     transition: transform 5s cubic-bezier(0.25, 0.1, 0.1, 1); 
 }
 
@@ -1074,6 +1130,14 @@ header {
     font-size: 16px;
     text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); 
+}
+
+/* Stile per il messaggio di errore della ruota */
+.wheel-error-msg {
+    color: #E63946;
+    margin-top: 15px;
+    font-weight: bold;
+    display: none;
 }
 
 /* =========================================
@@ -1240,6 +1304,30 @@ header {
     border: 1px solid rgba(0, 229, 255, 0.2);
 }
 
+/* --- Stili specifici per Coupon e Totali Carrello --- */
+.cart-old-price {
+    font-size: 18px;
+    color: #ff4c4c;
+    text-decoration: line-through;
+    margin-right: 15px;
+}
+
+.cart-coupon-discount {
+    font-size: 16px;
+    color: #00FF80;
+    margin-right: 15px;
+}
+
+.cart-total-amount.text-success {
+    color: #00FF80;
+}
+
+.cart-coupon-warning {
+    color: #FFCC00;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
 /* =========================================
    10. CHECKOUT E PAGAMENTO
    ========================================= */
@@ -1335,9 +1423,26 @@ header {
     font-size: 0.85em; 
 }
 
+/* Stile specifico per il riquadro di fatturazione */
+.billing-form-container {
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
 /* =========================================
    11. LIBRERIA
    ========================================= */
+.libreria-success-banner {
+    background-color: #00E5FF;
+    color: #000;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
 .game-info-centered {
     text-align: center;
     padding-top: 10px;
@@ -1371,6 +1476,7 @@ header {
     transition: all 0.3s ease;
     display: inline-block;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .status-da_giocare {
@@ -2158,6 +2264,17 @@ input.remember-checkbox {
     color: #ffffff;
     transform: scale(1.15);
     text-shadow: 3px 3px 0 #000, 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+/* Posizionamento assoluto per il contenitore delle opzioni */
+.quiz-options-positioned {
+    display: none; /* Nascosto di default, lo mostra il JS */
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 10;
 }
 
 /* =========================================
@@ -3238,8 +3355,8 @@ input.remember-checkbox {
 }
 
 .nickname-save-btn {
-    font-size: 15px !important;
-    padding: 5px 10px !important;
+    font-size: 15px;
+    padding: 5px 10px;
 }
 
 .nickname-display-heading {
@@ -3517,7 +3634,317 @@ input.remember-checkbox {
 }
 
 /* =========================================
-   22. MEDIA QUERIES (RESPONSIVE)
+   22. GALLERIA IMMAGINI 
+   ========================================= */
+.gallery-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    width: 120px;
+    height: 68px;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.btn-delete-img {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #FF4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    transition: all 0.2s ease;
+}
+
+.btn-delete-img:hover {
+    background: #CC0000;
+    transform: scale(1.1);
+}
+
+/* ==========================================
+   23. LAYOUT PAGINA GIOCHI A DUE COLONNE
+   ========================================== */
+
+	
+	.gioco-container-flex {
+	    display: grid;
+	    grid-template-columns: 70% 30%;
+	    gap: 30px;
+	    width: 100%;
+	    align-items: stretch;
+	    margin-top: 20px;
+	    box-sizing: border-box;
+	}
+	
+	/* Colonna di sinistra */
+	.colonna-main {
+	    min-width: 0;
+	    width: 100%;
+	}
+	
+	/* Colonna di destra */
+	.colonna-sidebar {
+	    width: 100%;
+	    display: flex;
+	    flex-direction: column;
+	}
+	
+	/* Box scheda tecnica */
+	.scheda-tecnica-box {
+	    background-color: #04142C;
+	    border: 1px solid #00E5FF;
+	    border-radius: 10px;
+	    padding: 30px;
+	    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+	    box-sizing: border-box;
+	    width: 100%;
+	    height: 100%;
+	}
+	
+	.scheda-tecnica-box h3 {
+	    color: #00E5FF;
+	    font-size: 1.4rem;
+	    margin-top: 0;
+	    margin-bottom: 25px;
+	    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+	    padding-bottom: 12px;
+	    text-transform: uppercase;
+	    letter-spacing: 1.5px;
+	}
+	
+	.info-group {
+	    margin-bottom: 30px;
+	}
+	
+	.info-label {
+	    display: block;
+	    font-size: 0.95rem;
+	    color: #8a99ad;
+	    text-transform: uppercase;
+	    margin-bottom: 10px;
+	    font-weight: bold;
+	    letter-spacing: 1px;
+	}
+	
+	.info-value {
+	    color: #ffffff;
+	    font-weight: 500;
+	    font-size: 1.15rem;
+	}
+	
+	.piattaforme-tags {
+	    display: flex;
+	    flex-direction: column;
+	    gap: 8px;
+	    align-items: flex-start;
+	}
+	
+	.badge-piattaforma {
+	    display: block;
+	    width: 100%; /* Occupa tutta la larghezza della riga */
+	    box-sizing: border-box;
+	    text-align: center;
+	    background: rgba(0, 229, 255, 0.1);
+	    color: #00E5FF;
+	    border: 1px solid #00E5FF;
+	    padding: 8px 14px;
+	    border-radius: 6px;
+	    font-size: 1rem; /* Font badge ingrandito */
+	    font-weight: bold;
+	    letter-spacing: 1px;
+	}
+	
+	/*testo dei requisiti di sistema*/
+	.requisiti-testo {
+	    color: #d1d5db;
+	    font-size: 1rem; /* Font requisiti ingrandito */
+	    white-space: pre-line;
+	    line-height: 1.6;
+	    background: rgba(255, 255, 255, 0.03);
+	    padding: 16px;
+	    border-radius: 6px;
+	    border-left: 3px solid #00E5FF;
+	    margin: 0;
+	}
+
+/* Responsive per schermi piccoli */
+@media (max-width: 900px) {
+    .gioco-container-flex {
+        flex-direction: column;
+    }
+    
+    .colonna-sidebar {
+        width: 100%;
+        position: static;
+    }
+}
+
+/* =========================================
+   24. REQUISITI DI SISTEMA (JSON)
+   ========================================= */
+
+/* Griglia per i form di inserimento (Admin e Sviluppatore) */
+.requisiti-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Su cellulare la griglia diventa a una sola colonna */
+@media (max-width: 768px) {
+    .requisiti-form-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Stile per l'elenco stampato nella pagina del gioco */
+.requisiti-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.requisiti-list li {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(0, 229, 255, 0.2);
+    color: #c6d4df;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+.requisiti-list li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.requisiti-list strong {
+    color: #00E5FF; 
+}
+
+/* ==========================================================
+	25. GIOCHI CONSIGLIATI PER IL BEDGE PERSONALITA'
+   ========================================================== */
+.guest-message-container {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    color: #fff;
+}
+
+.guest-message-text {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.guest-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-guest {
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.profile-btn-inline {
+    display: inline-block;
+}
+
+.empty-catalog-msg {
+    padding-left: 20px;
+    color: #fff;
+}
+
+/* =========================================
+   26. NEGOZIO A PREMI (SHOP)
+   ========================================= */
+.shop-msg-box {
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.shop-grid {
+    margin-top: 30px;
+}
+
+/* Allinea e centra perfettamente le icone e gli avatar */
+.shop-item-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+}
+
+.shop-avatar-preview {
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%; 
+    border: 2px solid #00E5FF;
+    object-fit: cover;
+}
+
+.shop-icon-large {
+    font-size: 3em;
+    display: inline-block;
+    line-height: 1;
+}
+
+.shop-game-info {
+    margin: 15px 0;
+    text-align: center; /* Centra il testo sotto l'icona */
+}
+
+.btn-cart:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status-cassa {
+    background-color: #555;
+}
+
+.status-attivo {
+    background-color: #00FF80;
+    color: #030D1A;
+    font-weight: bold;
+}
+
+.btn-equipaggia {
+    background-color: #0088CC;
+}
+
+.btn-equipaggia:hover {
+    background-color: #006699;
+}
+
+/* =========================================
+   27. MEDIA QUERIES (RESPONSIVE)
    ========================================= */
 
 @media (max-width: 1200px) {
@@ -4052,8 +4479,8 @@ input.remember-checkbox {
     /* Adatta le immagini della copertina al nuovo contenitore */
     .dettaglio-copertina-box .game-cover,
     .dettaglio-copertina-img {
-        width: 100% !important;
-        height: auto !important; 
+        width: 100%;
+        height: auto; 
         margin: 0 auto;
     }
 
@@ -4471,14 +4898,14 @@ input.remember-checkbox {
 @media (max-width: 480px) {
     /*  Impiliamo il selettore del titolo e il bottone salva */
     .profilo-sezione select.titolo-select {
-        width: 100% !important;
-        margin-bottom: 10px !important;
-        display: block !important;
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
     }
 
     .profilo-sezione .btn-salva-titolo {
-        width: 100% !important;
-        display: block !important;
+        width: 100%;
+        display: block;
     }
 
     /*  Riduciamo leggermente i margini del box invito (CTA) per recuperare spazio */
@@ -4499,24 +4926,24 @@ input.remember-checkbox {
     
     /* FORZA LA GRIGLIA A 1 SOLA COLONNA */
     .gioco-container-flex {
-        display: block !important; /* Disattiva la griglia del tutto per sicurezza */
+        display: block; /* Disattiva la griglia del tutto per sicurezza */
         width: 100%;
     }
 
     .colonna-main {
-        width: 100% !important;
+        width: 100%;
         margin-bottom: 25px;
     }
 
     .colonna-sidebar {
-        width: 100% !important;
-        display: block !important;
+        width: 100%;
+        display: block;
     }
 
     /* Riorganizza l'intestazione: copertina sopra, info sotto */
     .dettaglio-top-section {
-        display: flex !important;
-        flex-direction: column !important; 
+        display: flex;
+        flex-direction: column; 
         align-items: center; 
         text-align: center; 
     }
@@ -4544,253 +4971,6 @@ input.remember-checkbox {
     }
 
     .btn-cart, .btn-wishlist {
-        width: 100% !important; 
+        width: 100%; 
     }
-}
-
-/* =========================================
-   23. GALLERIA IMMAGINI 
-   ========================================= */
-.gallery-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-}
-
-.gallery-item {
-    position: relative;
-    width: 120px;
-    height: 68px;
-}
-
-.gallery-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.btn-delete-img {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #FF4444;
-    color: white;
-    text-decoration: none;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    transition: all 0.2s ease;
-}
-
-.btn-delete-img:hover {
-    background: #CC0000;
-    transform: scale(1.1);
-}
-
-/* ==========================================
-   24. LAYOUT PAGINA GIOCHI A DUE COLONNE
-   ========================================== */
-
-	
-	.gioco-container-flex {
-	    display: grid;
-	    grid-template-columns: 70% 30%;
-	    gap: 30px;
-	    width: 100%;
-	    align-items: stretch;
-	    margin-top: 20px;
-	    box-sizing: border-box;
-	}
-	
-	/* Colonna di sinistra */
-	.colonna-main {
-	    min-width: 0;
-	    width: 100%;
-	}
-	
-	/* Colonna di destra */
-	.colonna-sidebar {
-	    width: 100%;
-	    display: flex;
-	    flex-direction: column;
-	}
-	
-	/* Box scheda tecnica */
-	.scheda-tecnica-box {
-	    background-color: #04142C;
-	    border: 1px solid #00E5FF;
-	    border-radius: 10px;
-	    padding: 30px;
-	    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
-	    box-sizing: border-box;
-	    width: 100%;
-	    height: 100%;
-	}
-	
-	.scheda-tecnica-box h3 {
-	    color: #00E5FF;
-	    font-size: 1.4rem;
-	    margin-top: 0;
-	    margin-bottom: 25px;
-	    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
-	    padding-bottom: 12px;
-	    text-transform: uppercase;
-	    letter-spacing: 1.5px;
-	}
-	
-	.info-group {
-	    margin-bottom: 30px;
-	}
-	
-	.info-label {
-	    display: block;
-	    font-size: 0.95rem;
-	    color: #8a99ad;
-	    text-transform: uppercase;
-	    margin-bottom: 10px;
-	    font-weight: bold;
-	    letter-spacing: 1px;
-	}
-	
-	.info-value {
-	    color: #ffffff;
-	    font-weight: 500;
-	    font-size: 1.15rem;
-	}
-	
-	.piattaforme-tags {
-	    display: flex;
-	    flex-direction: column;
-	    gap: 8px;
-	    align-items: flex-start;
-	}
-	
-	.badge-piattaforma {
-	    display: block;
-	    width: 100%; /* Occupa tutta la larghezza della riga */
-	    box-sizing: border-box;
-	    text-align: center;
-	    background: rgba(0, 229, 255, 0.1);
-	    color: #00E5FF;
-	    border: 1px solid #00E5FF;
-	    padding: 8px 14px;
-	    border-radius: 6px;
-	    font-size: 1rem; /* Font badge ingrandito */
-	    font-weight: bold;
-	    letter-spacing: 1px;
-	}
-	
-	/*testo dei requisiti di sistema*/
-	.requisiti-testo {
-	    color: #d1d5db;
-	    font-size: 1rem; /* Font requisiti ingrandito */
-	    white-space: pre-line;
-	    line-height: 1.6;
-	    background: rgba(255, 255, 255, 0.03);
-	    padding: 16px;
-	    border-radius: 6px;
-	    border-left: 3px solid #00E5FF;
-	    margin: 0;
-	}
-
-/* Responsive per schermi piccoli */
-@media (max-width: 900px) {
-    .gioco-container-flex {
-        flex-direction: column;
-    }
-    
-    .colonna-sidebar {
-        width: 100%;
-        position: static;
-    }
-}
-
-/* =========================================
-   24. REQUISITI DI SISTEMA (JSON)
-   ========================================= */
-
-/* Griglia per i form di inserimento (Admin e Sviluppatore) */
-.requisiti-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-/* Su cellulare la griglia diventa a una sola colonna */
-@media (max-width: 768px) {
-    .requisiti-form-grid {
-        grid-template-columns: 1fr; 
-    }
-}
-
-/* Stile per l'elenco stampato nella pagina del gioco */
-.requisiti-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.requisiti-list li {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed rgba(0, 229, 255, 0.2);
-    color: #c6d4df;
-    font-size: 0.95em;
-    line-height: 1.4;
-}
-
-.requisiti-list li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.requisiti-list strong {
-    color: #00E5FF; 
-}
-
-/* ==========================================================
-	GIOCHI CONSIGLIATI PER IL BEDGE PERSONALITA'
-   ========================================================== */
-.guest-message-container {
-    width: 100%;
-    text-align: center;
-    padding: 40px 20px;
-    color: #fff;
-}
-
-.guest-message-text {
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.guest-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.btn-guest {
-    padding: 10px 20px;
-    text-decoration: none;
-}
-
-.profile-btn-inline {
-    display: inline-block;
-}
-
-.empty-catalog-msg {
-    padding-left: 20px;
-    color: #fff;
 }

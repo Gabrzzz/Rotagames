@@ -206,7 +206,7 @@
 					                </div>
 					        <%      }
 					            } else { %>
-					                <span style="color: #A0B0C8; font-size: 0.9em; font-style: italic;">Nessuna immagine in galleria.</span>
+					                <span class="no-img-gallery">Nessuna immagine in galleria.</span>
 					        <%  } %>
 					        </div>
 					    <% } %>

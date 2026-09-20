@@ -28,7 +28,7 @@
 <div id="quizContainer" class="quiz-container">
     </div>
 
-<div id="optionsContainer" class="quiz-options-horizontal" style="display: none; position: absolute; top: 65%; left: 50%; transform: translateX(-50%); width: 100%; z-index: 10;">
+<div id="optionsContainer" class="quiz-options-horizontal quiz-options-positioned">
     </div>
 
 <script src="${pageContext.request.contextPath}/js/quiz.js"></script>

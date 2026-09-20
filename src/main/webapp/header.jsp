@@ -84,7 +84,7 @@
                     <% if ("AMMINISTRATORE".equals(utenteLoggatoHeader.getRuolo())) { %>
                         <a href="AdminDashboardServlet" class="admin-link">⚙️ Pannello Admin</a> |
                     <% } else if ("sviluppatore".equalsIgnoreCase(utenteLoggatoHeader.getRuolo())) { %>
-                        <a href="SviluppatoreDashboardServlet" class="admin-link" style="color: #FFD700;">🛠️ Pannello Dev</a> |
+                        <a href="SviluppatoreDashboardServlet" class="admin-link admin-link-dev">🛠️ Pannello Dev</a> |
                     <% } %>
 
                     <div class="user-dropdown">

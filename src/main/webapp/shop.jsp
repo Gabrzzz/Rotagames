@@ -33,19 +33,19 @@
 
     <%-- Messaggi di feedback --%>
     <% if (session.getAttribute("messaggioShop") != null) { %>
-        <div class="success-msg" style="margin: 20px auto; max-width: 800px; text-align: center;">
+        <div class="success-msg shop-msg-box">
             <%= session.getAttribute("messaggioShop") %>
             <% session.removeAttribute("messaggioShop"); %>
         </div>
     <% } %>
     <% if (session.getAttribute("erroreShop") != null) { %>
-        <div class="error" style="margin: 20px auto; max-width: 800px; text-align: center;">
+        <div class="error shop-msg-box">
             <%= session.getAttribute("erroreShop") %>
             <% session.removeAttribute("erroreShop"); %>
         </div>
     <% } %>
 
-    <div class="games-grid" style="margin-top: 30px;">
+    <div class="games-grid shop-grid">
         <% if (catalogo != null) { 
             for (OggettoShop art : catalogo) { 
                 boolean giaPosseduto = posseduti != null && posseduti.contains(art.getIdOggetto());
@@ -54,16 +54,15 @@
             <div class="game-card shop-card">
                 <div class="shop-item-icon">
                     <% if ("AVATAR".equals(art.getTipo())) { %>
-                        <%-- Mostra l'avatar acquistabile (puoi inserire immagini reali nella cartella /images/avatars/) --%>
-                        <img src="${pageContext.request.contextPath}/images/avatar/<%= art.getValore() %>" alt="Avatar" class="avatar-preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #00E5FF;">
+                        <img src="${pageContext.request.contextPath}/images/avatar/<%= art.getValore() %>" alt="Avatar" class="shop-avatar-preview">
                     <% } else if ("COUPON".equals(art.getTipo())) { %>
-                        <span style="font-size: 3em;">🎟️</span>
+                        <span class="shop-icon-large">🎟️</span>
                     <% } else { %>
-                        <span style="font-size: 3em;">🎖️</span>
+                        <span class="shop-icon-large">🎖️</span>
                     <% } %>
                 </div>
 
-                <div class="game-info" style="margin: 15px 0;">
+                <div class="game-info shop-game-info">
                     <h3><%= art.getNome() %></h3>
                     <p class="shop-desc"><%= art.getDescrizione() %></p>
                 </div>
@@ -74,21 +73,22 @@
                             <input type="hidden" name="azione" value="compra">
                             <input type="hidden" name="idOggetto" value="<%= art.getIdOggetto() %>">
                             <input type="hidden" name="costo" value="<%= art.getCostoRotelline() %>">
-                            <button type="submit" class="btn-cart" <%= utente.getSaldoRotelline() < art.getCostoRotelline() ? "disabled style='opacity: 0.5; cursor: not-allowed;'" : "" %>>
+                            <%-- Utilizziamo l'attributo 'disabled' nativo di HTML per delegare lo stile al CSS --%>
+                            <button type="submit" class="btn-cart" <%= utente.getSaldoRotelline() < art.getCostoRotelline() ? "disabled" : "" %>>
                                 Compra per 🪙 <%= art.getCostoRotelline() %>
                             </button>
                         </form>
                     <% } else { %>
                         <% if ("COUPON".equals(art.getTipo())) { %>
-                            <span class="status-badge" style="background-color: #555;">Disponibile in cassa</span>
+                            <span class="status-badge status-cassa">Disponibile in cassa</span>
                         <% } else if (equipaggiato) { %>
-                            <span class="status-badge" style="background-color: #00FF80; color: #030D1A; font-weight: bold;">Attivo ✔</span>
+                            <span class="status-badge status-attivo">Attivo ✔</span>
                         <% } else { %>
                             <form action="ShopServlet" method="post">
                                 <input type="hidden" name="azione" value="equipaggia">
                                 <input type="hidden" name="tipo" value="<%= art.getTipo() %>">
                                 <input type="hidden" name="valore" value="<%= art.getValore() %>">
-                                <button type="submit" class="btn-checkout" style="background-color: #0088CC;">Equipaggia</button>
+                                <button type="submit" class="btn-checkout btn-equipaggia">Equipaggia</button>
                             </form>
                         <% } %>
                     <% } %>

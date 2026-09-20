@@ -40,7 +40,7 @@
         String messaggioSuccesso = (String) session.getAttribute("messaggioSuccesso");
         if (messaggioSuccesso != null) { 
     %>
-        <div style="background-color: #00E5FF; color: #000; padding: 15px; margin-bottom: 25px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+        <div class="libreria-success-banner">
             🎉 <%= messaggioSuccesso %>
         </div>
     <% 
@@ -81,8 +81,7 @@
                     <%-- BADGE CLICCABILE --%>
                     <span class="status-badge status-<%= statoRaw.toLowerCase() %>" 
                           data-stato="<%= statoRaw %>" 
-                          onclick="cambiaStatoGioco(<%= g.getIdVideogioco() %>, this)"
-                          style="cursor: pointer;" 
+                          onclick="cambiaStatoGioco(<%= g.getIdVideogioco() %>, this)" 
                           title="Clicca per cambiare lo stato">
                         <%= testoMostrato %>
                     </span>

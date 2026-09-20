@@ -118,7 +118,7 @@
             <div class="checkout-colonna">
                 <h2 class="vetrina-title">FATTURAZIONE</h2>
                 
-                <div class="form-container payment-form-container" style="background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2);">
+                <div class="form-container payment-form-container billing-form-container">
                     
                     <%
                         // Recuperiamo i dati correnti dell'utente per precompilare i campi
@@ -127,10 +127,10 @@
                         String cittaFatt = (utenteLoggato != null && utenteLoggato.getCitta() != null) ? utenteLoggato.getCitta() : "";
                     %>
                     
-                    <p class="indirizzo-formattazione-info">
+                    <p class="indirizzo-fatturazione-info">
                         Controlla o inserisci l'indirizzo a cui intestare l'ordine. Se lo modifichi qui, verrà aggiornato anche nel tuo profilo.
                     </p>
-
+                    
                     <div>
                         <label class="payment-label">Via e Civico</label>
                         <input type="text" name="viaCheckout" value="<%= viaFatt %>" 

@@ -36,7 +36,7 @@
 <%-- Banner per mostrare gli errori catturati dalla Servlet --%>
     <% String erroreForm = (String) request.getAttribute("erroreForm"); 
        if (erroreForm != null) { %>
-        <div style="background-color: #ff4a4a; color: white; padding: 15px; margin: 20px auto; max-width: 800px; border-radius: 8px; text-align: center; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.5); border: 2px solid #fff;">
+        <div class="admin-error-banner">
             ⚠️ <%= erroreForm %>
         </div>
     <% } %>
@@ -313,7 +313,7 @@
 					            </div>
 					    <%      }
 					        } else { %>
-					            <span style="color: #A0B0C8; font-size: 0.9em; font-style: italic;">Nessuna immagine in galleria.</span>
+					            <span class="no-img-gallery">Nessuna immagine in galleria.</span>
 					    <%  } %>
 					    </div>
 					    

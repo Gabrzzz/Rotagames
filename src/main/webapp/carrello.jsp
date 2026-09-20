@@ -118,17 +118,17 @@
             }
         %>
 
-        <div class="cart-total">
+		<div class="cart-total">
             <% if (scontoApplicato > 0 && totaleScontato < totale) { %>
                 <%-- Se il coupon ha abbassato il prezzo, mostra il confronto --%>
-                <span style="font-size: 18px; color: #ff4c4c; text-decoration: line-through; margin-right: 15px;"><%= String.format("%.2f", totale) %>€</span>
-                <span style="font-size: 16px; color: #00FF80; margin-right: 15px;">Coupon (<%= scontoApplicato %>%): -<%= String.format("%.2f", totale - totaleScontato) %>€</span>
+                <span class="cart-old-price"><%= String.format("%.2f", totale) %>€</span>
+                <span class="cart-coupon-discount">Coupon (<%= scontoApplicato %>%): -<%= String.format("%.2f", totale - totaleScontato) %>€</span>
                 <br><br>
-                Totale Scontato: <span class="cart-total-amount" style="color: #00FF80;"><%= String.format("%.2f", totaleScontato) %>€</span>
+                Totale Scontato: <span class="cart-total-amount text-success"><%= String.format("%.2f", totaleScontato) %>€</span>
             
             <% } else if (scontoApplicato > 0 && totaleScontato == totale) { %>
                 <%-- Se ha applicato il coupon ma nel carrello c'erano solo giochi già in saldo --%>
-                <div style="color: #FFCC00; font-size: 14px; margin-bottom: 10px;">
+                <div class="cart-coupon-warning">
                     ⚠️ Il coupon del <%= scontoApplicato %>% è attivo, ma non applicabile ai titoli già in saldo.
                 </div>
                 Totale: <span class="cart-total-amount"><%= String.format("%.2f", totale) %>€</span>
