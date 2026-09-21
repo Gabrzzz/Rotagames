@@ -1179,7 +1179,7 @@ header {
     margin-right: 15px; 
 }
 
-.cart-item-form-update { margin-right: 15px; }
+.cart-item-form-update { margin-right: 15px; margin-left: 45px; }
 
 .cart-qty-select {
     width: 65px; 
