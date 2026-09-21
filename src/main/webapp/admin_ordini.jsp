@@ -22,6 +22,7 @@
     <title>Gestione Ordini - RotaGames Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/responsive.css">
     <%@ include file="head.jsp" %>
 </head>
 <body>
@@ -101,6 +102,8 @@
     </table>
     </div>
 </div>
+
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

@@ -1,0 +1,625 @@
+/* =========================================
+   ROTAGAMES - STILI RESPONSIVE
+   ========================================= */
+
+/* =========================================
+   OTTIMIZZAZIONI PC PICCOLI E TABLET (1200px - 992px)
+   ========================================= */
+
+@media (max-width: 1200px) {
+    /* --- HEADER E NAVIGAZIONE --- */
+    header {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px; 
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .logo-link {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        text-align: center; 
+    }
+    .header-logo-title {
+        font-size: 1.8rem; 
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        white-space: normal; 
+        word-wrap: break-word; 
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    .header-admin-text {
+        font-size: 1.2rem; 
+        white-space: nowrap;
+    }
+    .center-search-box {
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+    .search-container {
+        margin: 0;
+        width: 100%;
+        max-width: 350px; 
+    }
+    .search-container.active .search-inner-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .user-info {
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        line-height: 1.5; 
+        width: 100%; 
+        box-sizing: border-box; 
+    }
+}
+
+@media (max-width: 1024px) {
+    /* --- SLIDER E HERO --- */
+    .left-btn { left: 10px; }
+    .right-btn { right: 10px; }
+    .slider-wrapper {
+        max-width: 100%;
+        overflow: hidden;
+        padding: 5px 0; 
+    }
+    .rotella-container.hero-ingranaggio {
+        right: -150px; 
+    }
+
+    /* --- PROFILO PERSONALE --- */
+    .profilo-layout {
+        flex-direction: column;
+        height: auto; 
+    }
+    .profilo-colonna {
+        overflow-y: visible; 
+        padding-right: 0;
+    }
+    .profilo-dati-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    /* --- HEADER (MENU A TENDINA) --- */
+    .dropdown-menu {
+        right: auto;
+        left: 50%;
+        transform: translateX(-69%); 
+        width: 100%;
+        min-width: 220px;
+    }
+    .dropdown-menu::before {
+        right: 56px; 
+        left: auto;   
+        transform: translateX(-50%) rotate(45deg); 
+    }
+    .dropdown-item {
+        text-align: center; 
+        padding: 15px 20px; 
+        font-size: 1.05em;
+    }
+
+    /* --- RICERCA AVANZATA --- */
+    .search-layout {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .sidebar-filtri {
+        width: 100%;
+        position: static;      
+        height: auto;
+        max-height: none;      
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+    .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+    }
+
+    /* --- DETTAGLIO GIOCO --- */
+    .gioco-container-flex {
+        display: block; 
+        width: 100%;
+    }
+    .colonna-main {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .colonna-sidebar {
+        width: 100%;
+        display: block;
+    }
+    .dettaglio-top-section {
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+    }
+    .dettaglio-copertina-box {
+        width: 100%; 
+        max-width: 280px; 
+        margin: 0 auto 20px auto; 
+    }
+    .dettaglio-info-box {
+        width: 100%;
+        padding: 0; 
+    }
+    .price-container {
+        justify-content: center;
+    }
+    .action-buttons-wrapper {
+        display: flex;
+        flex-direction: column; 
+        width: 100%;
+        gap: 10px;
+    }
+    .btn-cart, .btn-wishlist {
+        width: 100%; 
+    }
+}
+
+@media (max-width: 900px) {
+    /* --- DETTAGLIO GIOCO (LAYOUT A DUE COLONNE) --- */
+    .gioco-container-flex {
+        flex-direction: column;
+    }
+    .colonna-sidebar {
+        width: 100%;
+        position: static;
+    }
+}
+
+/* =========================================
+   OTTIMIZZAZIONI TABLET (768px)
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* --- LAYOUT GENERALE E FOOTER --- */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    footer {
+        flex-shrink: 0;
+        width: 100%;
+    }
+
+    /* --- VETRINA GIOCHI --- */
+    .store-container { padding: 30px 15px; }
+    .store-container h2 { font-size: 1.6em; margin-bottom: 25px; }
+    .games-grid { gap: 20px; }
+    
+    /* --- PANNELLI ADMIN E DEV --- */
+    .admin-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+    .admin-stat-card, .dev-stat-card-gold, .dev-stat-card-green, .dev-stat-card-blue {
+        width: 100%;
+        box-sizing: border-box; 
+        margin: 0;
+    }
+    .admin-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .admin-filter-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    .filter-group, .filter-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .btn-filter, .btn-reset {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+    .btn-admin, .btn-dev-action {
+        width: 100%;
+        box-sizing: border-box; 
+        margin: 0; 
+        text-align: center; 
+    }
+    .table-responsive-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; 
+        margin-bottom: 20px;
+        border: 1px solid #1c2738; 
+        border-radius: 8px;
+    }
+    .admin-table {
+        width: 100%;
+        min-width: 600px; 
+        margin: 0;
+        border-collapse: collapse;
+    }
+	.admin-table td:last-child { 
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding: 15px 10px; 
+    }
+    .admin-table .btn-action {
+        display: block; 
+        box-sizing: border-box;
+        margin: 0 auto 8px auto; 
+        padding: 8px 10px; 
+        font-size: 0.85rem;
+        text-align: center;
+        width: 100%; 
+    }
+    .admin-table .btn-action:last-child {
+        margin-bottom: 0; 
+    }
+    .text-unavailable {
+        display: block;
+        margin: auto;
+    }
+
+    /* --- CARRELLO --- */
+    .cart-container {
+        width: 95%;      
+        padding: 20px;   
+        margin: 20px auto;
+    }
+    .cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+        background-color: #030D1A; 
+        padding: 15px;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* --- STORICO ORDINI --- */
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start; 
+        gap: 15px;               
+    }
+    .no-invoice-text {
+        margin-left: 0; 
+        margin-top: 5px;
+    }
+
+    /* --- DETTAGLIO GIOCO E GALLERIA --- */
+    .dettaglio-immagini-wrapper {
+        flex-direction: column;
+        align-items: center; 
+        gap: 15px;
+    }
+    .dettaglio-copertina-box {
+        width: 100%;
+        max-width: 300px; 
+    }
+    .dettaglio-copertina-box .game-cover,
+    .dettaglio-copertina-img {
+        width: 100%;
+        height: auto; 
+        margin: 0 auto;
+    }
+    .dettaglio-galleria-box { width: 100%; }
+
+    /* --- PAGINE DI ERRORE --- */
+    .error-page-wrapper {
+        padding: 60px 20px; 
+        flex: 1; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .error-code-title { font-size: 4.5em; }
+
+    /* --- QUIZ EVERHOOD --- */
+    .quiz-question-text {
+        font-size: 2.5rem;    
+        margin-bottom: 40px;  
+    }
+    .quiz-options-horizontal { gap: 40px; }
+    .quiz-option-btn { font-size: 2rem; }
+
+    /* --- SLIDER E HERO --- */
+    .tendenza-section.hero-tendenza { height: 350px; }
+    .game-card-link-hero { bottom: 25px; left: 25px; }
+    .gioco-titolo-tendenza h3 {
+        font-size: 2.2rem;
+        max-width: 90%; 
+    }
+    .rotella-container.hero-ingranaggio {
+        width: 300px;
+        height: 300px;
+        right: -120px; 
+    }
+
+    /* --- PROFILO PERSONALE --- */
+    .profilo-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 15px;
+    }
+    .profilo-avatar-box {
+        width: 150px;
+        height: 150px;
+    }
+    .profilo-titolo {
+        display: block; 
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .profilo-ordini-tabella {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .profilo-bio-form {
+        flex-direction: column;
+        align-items: stretch; 
+    }
+    .profilo-bio-input { max-width: 100%; }
+
+    /* --- FORM REQUISITI --- */
+    .requisiti-form-grid {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* =========================================
+   OTTIMIZZAZIONI SMARTPHONE COMPATTI (480px)
+   ========================================= */
+
+@media (max-width: 480px) {
+    /* --- VETRINA --- */
+    .games-grid { grid-template-columns: 1fr; }
+    .game-card { padding: 15px; }
+    .game-cover { height: 180px; }
+    .game-info h3 { font-size: 1.3em; }
+    .action-buttons-index { flex-direction: column; }
+
+    /* --- MODAL PIATTAFORME --- */
+    .platform-modal { padding: 25px 20px; }
+    .platform-modal h2 { font-size: 1.4em; }
+    .platform-buttons-grid {
+        grid-template-columns: 1fr; 
+        gap: 10px;                  
+    }
+    .btn-platform-choice {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+    .platform-close-btn { top: 10px; right: 10px; }
+
+    /* --- BOTTONI GLOBALI --- */
+    .action-buttons-wrapper {
+        max-width: 100%; 
+        gap: 10px;      
+        flex-wrap: wrap; 
+    }
+    .btn-cart { padding: 15px; font-size: 1em; }
+    .btn-wishlist { width: 50px; height: 50px; font-size: 1.5em; }
+
+    /* --- RUOTA DELLA FORTUNA --- */
+    .wheel-modal { padding: 30px 15px; }
+    .wheel-container {
+        width: 240px;
+        height: 240px;
+        margin-bottom: 25px; 
+    }
+    .spicchio span { font-size: 13px; }
+    .spicchio { padding-right: 15px; }
+    .wheel-pointer {
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 20px solid #00E5FF;
+        top: -10px;
+    }
+    .btn-spin {
+        padding: 12px 20px;
+        font-size: 1em;
+        width: 100%;
+    }
+    .wheel-close-btn { top: 10px; right: 10px; }
+
+    /* --- CARRELLO --- */
+    .cart-item-details {
+        flex-direction: column;
+        text-align: center;
+    }
+    .cart-item-cover {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100%;       
+        max-width: 250px;  
+        height: auto;
+    }
+    .cart-item-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .cart-item-price {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    .cart-item-form-update { margin-right: 0; }
+    .cart-total { text-align: center; }
+
+    /* --- CHECKOUT E PAGAMENTO --- */
+    .payment-form-container { padding: 15px 10px; }
+    .payment-flex-row {
+        flex-direction: column;
+        gap: 10px; 
+    }
+    .checkout-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .checkout-total-box { text-align: center; }
+    .checkout-flex-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 30px; 
+    }
+    .checkout-flex-layout .checkout-colonna:nth-child(1) { order: 2; }
+    .checkout-flex-layout .checkout-colonna:nth-child(2) { order: 1; }
+
+    /* --- LIBRERIA --- */
+    .product-key-box {
+        font-size: 16px;       
+        padding: 15px;        
+        letter-spacing: 1px;   
+    }
+    .status-badge {
+        font-size: 11px;       
+        padding: 3px 6px;
+    }
+
+    /* --- STORICO ORDINI MODAL --- */
+    .order-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .btn-order-action { width: 100%; text-align: center; }
+    .order-detail-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    .order-detail-cover, .order-detail-empty-cover {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+    }
+    .order-detail-price {
+        float: none;
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    /* --- RICERCA AVANZATA --- */
+    .search-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .sort-filter-box {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .results-grid { grid-template-columns: 1fr; }
+    .input-ricerca-centrale {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    /* --- PAGINE DI ERRORE --- */
+    .error-page-wrapper { padding: 40px 15px; }
+    .error-code-title { font-size: 3.5em; }
+    .error-subtitle { font-size: 1.2em; }
+    .error-desc { font-size: 1em; margin-bottom: 30px; }
+
+    /* --- CHECKBOX RICORDAMI --- */
+    .remember-me-label {
+        font-size: 1em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    input.remember-checkbox { transform: scale(1.2); }
+
+    /* --- QUIZ --- */
+    .quiz-question-text {
+        font-size: 1.8rem;    
+        margin-bottom: 30px;
+    }
+    .quiz-options-horizontal {
+        flex-direction: column; 
+        gap: 20px;
+    }
+    .quiz-option-btn { font-size: 1.5rem; }
+
+    /* --- TOAST WISHLIST --- */
+    .toast-message {
+        width: 90%;        
+        min-width: auto;     
+        font-size: 0.9em;
+        padding: 12px;
+        bottom: 20px;        
+    }
+    .toast-message.show { bottom: 40px; }
+    .btn-wishlist-index {
+        width: 44px;         
+        font-size: 1.2em;
+    }
+
+    /* --- SLIDER E HERO --- */
+    .horizontal-slider .game-card { flex: 0 0 240px; }
+    .tendenza-section.hero-tendenza {
+        height: 280px;
+        margin-bottom: 25px;
+    }
+    .game-card-link-hero { bottom: 15px; left: 15px; }
+    .gioco-titolo-tendenza h3 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+    .btn-scopri {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    .rotella-container.hero-ingranaggio {
+        width: 200px;
+        height: 200px;
+        right: -100px; 
+        top: 35%; 
+    }
+
+    /* --- PROFILO PERSONALE E CTA --- */
+    .profilo-sezione h2 { font-size: 1.2em; }
+    .profilo-nickname { font-size: 1.8em; }
+    .profilo-header, .profilo-dati-privati, .profilo-sezione { padding: 15px; }
+    .profilo-sezione select.titolo-select {
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .profilo-sezione .btn-salva-titolo {
+        width: 100%;
+        display: block;
+    }
+    .badge-cta-box { padding: 10px; }
+    .badge-text-highlight { font-size: 14px; }
+}

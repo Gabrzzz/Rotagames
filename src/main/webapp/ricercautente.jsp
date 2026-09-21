@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <title>Ricerca Utenti - RotaGames</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/responsive.css">
     <%@ include file="head.jsp" %>
 </head>
 <body>

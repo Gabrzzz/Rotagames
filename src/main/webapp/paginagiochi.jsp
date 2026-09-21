@@ -24,6 +24,7 @@
 	    <title><%= gioco.getTitolo() %></title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+	    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/responsive.css">
 	    <%@ include file="head.jsp" %>
 	</head>
 	<body>
@@ -281,6 +282,8 @@
 	    <script src="${pageContext.request.contextPath}/js/immaginezoom.js"></script>
 	    <script src="${pageContext.request.contextPath}/js/requisiti.js"></script>
 	    <script src="${pageContext.request.contextPath}/js/paginagiochi.js"></script>
+	    
+	    <jsp:include page="footer.jsp" />
 	    
 	</body>
 </html>
