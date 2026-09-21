@@ -6,6 +6,9 @@
    OTTIMIZZAZIONI PC PICCOLI E TABLET (1200px - 992px)
    ========================================= */
 
+/* Nascondiamo le componenti esclusive per Mobile sui PC */
+.mobile-dropdown-only, .mobile-cart-icon { display: none; }
+
 @media (max-width: 1200px) {
     /* --- HEADER E NAVIGAZIONE --- */
     header {
@@ -32,7 +35,7 @@
         flex-wrap: wrap; 
         justify-content: center;
         align-items: center;
-        gap: 5px;
+        gap: 0px;
     }
     .header-admin-text {
         font-size: 1.2rem; 
@@ -62,6 +65,12 @@
         line-height: 1.5; 
         width: 100%; 
         box-sizing: border-box; 
+    }
+    
+    .slider-wrapper {
+        max-width: 100%;
+        overflow: hidden;
+        padding: 5px 0; 
     }
 }
 
@@ -97,21 +106,21 @@
 @media (max-width: 992px) {
     /* --- HEADER (MENU A TENDINA) --- */
     .dropdown-menu {
-        right: auto;
-        left: 50%;
-        transform: translateX(-69%); 
-        width: 100%;
-        min-width: 220px;
+        right: -5px;
+        left: auto;
+        transform: none; 
+        width: auto;
+        min-width: 200px;
     }
     .dropdown-menu::before {
-        right: 56px; 
+        right: 20px; 
         left: auto;   
-        transform: translateX(-50%) rotate(45deg); 
+        transform: rotate(45deg); 
     }
     .dropdown-item {
         text-align: center; 
-        padding: 15px 20px; 
-        font-size: 1.05em;
+        padding: 9px 20px; 
+        font-size: 0.9em;
     }
 
     /* --- RICERCA AVANZATA --- */
@@ -190,11 +199,125 @@
    ========================================= */
 
 @media (max-width: 768px) {
+
+	/* =========================
+       HEADER MOBILE COMPATTO 
+       =========================*/
+       
+    /* Nascondiamo gli elementi lunghi del PC */
+    body header .hide-on-mobile { display: none; }
+
+    /* Mostriamo gli elementi specifici per cellulare */
+    body header .mobile-dropdown-only { display: block; }
+    body header a.mobile-cart-icon { 
+        display: inline-block; 
+        font-size: 1.4rem; 
+        text-decoration: none; 
+        margin-right: 5px; 
+    }
+
+    /* Layout Barra Orizzontale */
+    body header {
+    	display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        position: fixed;
+    }
+
+    body header .search-container {
+        order: 1;
+        flex: 1 1 0; /* Impone una larghezza flessibile basata sullo spazio rimanente */
+        width: auto; 
+        max-width: none;
+        margin: 0;
+        display: flex;
+        justify-content: flex-start;
+        position: static;
+    }
+
+    body header .search-inner-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        z-index: 1050;
+        width: 0; 
+    }
+    body header .search-container.active .search-inner-wrapper {
+        width: calc(100% - 29px); /* Si espande da parte a parte */
+    }
+
+    /* logo al centro */
+    body header .logo-link {
+        order: 2;
+        flex: 0 0 auto; 
+        width: auto;
+        max-width: none;
+        margin: 0;
+        text-align: center;
+    }
+    body header .header-logo-title {
+        font-size: 1.3rem; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap; 
+        margin: 0;
+    }
+    body header .header-logo-letter {
+        height: 1.2em;
+        margin-right: -11px; 
+    }
+
+    /* PROFILO E CARRELLO */
+    body header .user-info {
+        order: 3;
+        flex: 1 1 0;
+        width: auto;
+        max-width: none;
+        margin: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0px;
+        flex-wrap: nowrap;
+    }
+    
+    body header .search-toggle-btn {
+        position: relative; 
+        left: auto;
+        margin-left: 2px;
+    }
+    
+    body header .header-admin-text {
+        font-size: 1.1rem;
+        margin-left: 5px;
+    }
+    
+    /* LAYOUT HEADER DASHBOARD ADMIN*/
+    body header .admin-header-info {
+        flex: 1 1 100%; /* Impone l'andata a capo occupando tutto lo schermo orizzontale */
+        font-size: 0.8rem;
+        justify-content: center;
+        margin-top: 8px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    
+    body header:has(.admin-header-info) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     /* --- LAYOUT GENERALE E FOOTER --- */
     body {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        padding-top: 80px;
     }
     footer {
         flex-shrink: 0;
@@ -202,7 +325,7 @@
     }
 
     /* --- VETRINA GIOCHI --- */
-    .store-container { padding: 30px 15px; }
+    .store-container { padding: 0px 15px; }
     .store-container h2 { font-size: 1.6em; margin-bottom: 25px; }
     .games-grid { gap: 20px; }
     
