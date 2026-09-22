@@ -37,7 +37,7 @@
                             </div>
                         </a>
                         
-                        <div class="game-meta" style="margin-top: 15px;">
+                        <div class="game-meta inline-meta-margin">
                             <%-- Calcolo del prezzo per mostrare correttamente lo sconto se presente --%>
                             <% double prezzoScontato = g.getPrezzoBase() - (g.getPrezzoBase() * g.getScontoAttivo() / 100.0); %>
                             <span class="price-tag"><%= String.format("%.2f", prezzoScontato) %>€</span>
@@ -46,12 +46,12 @@
                         
 						<div class="action-buttons-wishlist">
 						    <button type="button" class="btn-cart" 
-						            onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
+						            data-id="<%= g.getIdVideogioco() %>" data-piattaforma="<%= g.getPiattaforma().replace("'", "\\'") %>">
 						        AL CARRELLO 🛒
 						    </button>
 						    
 						    <button class="btn-wishlist active" title="Rimuovi" 
-						            onclick="rimuoviDaWishlist(<%= g.getIdVideogioco() %>)">
+						            data-id="<%= g.getIdVideogioco() %>">
 						        ✖
 						    </button>
 						</div>
@@ -69,14 +69,14 @@
 
 	<div id="modalPiattaforma" class="platform-overlay">
 	    <div class="platform-modal">
-	        <button class="platform-close-btn" onclick="chiudiModalPiattaforma()">✖</button>
+	        <button type="button" class="platform-close-btn" id="closeModalBtn">✖</button>
 	        <h2>Scegli le Piattaforme</h2>
 	        <p>Spunta le versioni che desideri aggiungere al carrello:</p>
 	        
 	        <div id="platformButtonsContainer" class="platform-checkbox-container">
 	        </div>
 	
-	        <button type="button" class="btn-checkout" onclick="inviaPiattaformeMultiple()">Aggiungi Selezionate 🛒</button>
+	        <button type="button" class="btn-checkout" id="submitPlatformBtn">Aggiungi Selezionate 🛒</button>
 	
 	        <form id="formAggiungiCarrello" action="CartServlet" method="post" class="hidden-form">
 	            <input type="hidden" name="azione" value="aggiungi">
@@ -87,12 +87,9 @@
 	</div>
 
 <script src="${pageContext.request.contextPath}/js/carrello.js"></script>
-
-	<script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
+<script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
 
     <jsp:include page="footer.jsp" />
 
-	
-	
 </body>
 </html>

@@ -165,5 +165,7 @@
 
 <jsp:include page="footer.jsp" />
 
+<!-- Inclusione del file JavaScript esterno -->
+<script src="${pageContext.request.contextPath}/js/checkout.js"></script>
 </body>
 </html>

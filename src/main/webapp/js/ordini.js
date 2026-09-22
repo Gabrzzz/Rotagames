@@ -48,3 +48,25 @@ function apriDettaglioOrdine(idOrdine) {
 function chiudiDettaglioOrdine() {
     document.getElementById("modalDettaglio").classList.remove("active");
 }
+
+//bottoni
+document.addEventListener('DOMContentLoaded', function() {
+    const bottoniRiepilogo = document.querySelectorAll('.btn-apri-dettaglio');
+
+    for (let i = 0; i < bottoniRiepilogo.length; i++) {
+        const bottone = bottoniRiepilogo[i];
+        
+        bottone.addEventListener('click', function() {
+            const idOrdine = this.getAttribute('data-id');
+            apriDettaglioOrdine(idOrdine);
+        });
+    }
+
+    const bottoneChiusura = document.querySelector('.btn-chiudi-dettaglio');
+
+    if (bottoneChiusura) {
+        bottoneChiusura.addEventListener('click', function() {
+            chiudiDettaglioOrdine();
+        });
+    }
+});
