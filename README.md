@@ -1,5 +1,46 @@
-# ROTAGAMES PROJECT
-RotaGames è una piattaforma e-commerce responsive dedicata alla vendita e catalogazione di videogiochi!
+# 🎮 Rotagames
+Benvenuto su Rotagames, molto più di un semplice store online. Di base, Rotagames è una piattaforma e-commerce dedicata alla vendita di chiavi digitali per videogiochi, con un catalogo che copre tutte le principali piattaforme: PS5, PS4, Nintendo Switch, PC e Xbox.
+
+Tuttavia, abbiamo voluto trasformare il classico processo di acquisto in un ecosistema interattivo. Abbiamo integrato meccaniche di gamification, un forte focus sulla community e un portale dedicato ai creatori di giochi, rendendo Rotagames il luogo ideale sia per i gamer che per gli sviluppatori.
+
+Ecco una panoramica delle funzionalità principali del progetto:
+
+## 🎲 Gamification e Personalizzazione
+Valuta Virtuale: Guadagna la nostra speciale valuta "in-game" interagendo con la piattaforma.
+
+Ruota dei Premi: Usa la valuta o i token per girare la ruota e vincere sconti, decorazioni o giochi.
+
+Questionario e Badge: Completa il nostro quiz di profilazione per sbloccare un badge personale unico che mostra a tutti il tuo stile di videogiocatore.
+
+Personalizzazione del Profilo: Spendi la tua valuta virtuale nello Shop delle Decorazioni per acquistare avatar, sfondi e abbellimenti unici per il tuo profilo.
+
+Libreria Personale: Un'area dedicata dove poter ammirare la collezione di tutti i giochi acquistati.
+
+## 🔍 Esplorazione e Community
+Ricerca Avanzata dei Giochi: Trova sempre il titolo perfetto grazie a filtri mirati (piattaforma, genere, prezzo, ecc.).
+
+Ricerca Utenti: Trova i tuoi amici o scopri i profili di altri giocatori per vedere le loro collezioni e le loro personalizzazioni.
+
+Wishlist: Salva i giochi che desideri comprare in futuro per non perderli mai di vista.
+
+Sistema di Recensioni: Hai completato un gioco? Condividi la tua opinione! Gli utenti possono scrivere recensioni per i giochi che hanno effettivamente acquistato.
+
+## 🚀 Hub per Sviluppatori (Game Studios)
+Registrazione Produttore: I team di sviluppo possono registrarsi con un account speciale "Studio Produttore".
+
+Pubblicazione Giochi: Gli studi possono proporre i propri giochi per la vendita sulla piattaforma. Una volta revisionati e accettati dall'amministratore, i giochi saranno disponibili per l'acquisto nel catalogo globale.
+
+## 🛒 E-commerce Solido e Funzionale
+Shopping Standard: Aggiunta rapida dei prodotti al carrello e processo di checkout fluido e sicuro.
+
+Storico Ordini: Un'area utente completa dove gestire e controllare in qualsiasi momento lo stato dei propri acquisti e i vecchi ordini.
+
+Fatturazione: Possibilità di richiedere una fattura opzionale durante la fase di checkout.
+
+## 👑 Pannello di Amministrazione (Admin)
+Gestione Completa: Un pannello di controllo dedicato che permette all'admin di gestire a 360 gradi l'utenza, approvare o rifiutare i giochi caricati dagli studi e monitorare/gestire l'andamento degli ordini.
+
+Preparati a sbloccare il tuo prossimo gioco preferito e a rendere unico il tuo profilo su Rotagames!
 
 ## Membri del Gruppo ("Le 3 Rotelle")
 Pietro Senatore - Matricola 0512122495
