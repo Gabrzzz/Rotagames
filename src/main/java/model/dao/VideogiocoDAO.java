@@ -74,7 +74,7 @@ public class VideogiocoDAO {
     // METODI PER LE CATEGORIE DELLA HOMEPAGE
     // =================================================================
 
-    // 1. Recupera i giochi in sconto (Max 10 per lo slider)
+    // Recupera i giochi in sconto (Max 10 per lo slider)
     public synchronized List<Videogioco> doRetrieveInSconto() {
         List<Videogioco> lista = new ArrayList<>();
         // Prende i giochi approvati, con sconto > 0, dal più scontato al meno, massimo 10
@@ -93,7 +93,7 @@ public class VideogiocoDAO {
         return lista;
     }
 
-    // 2. Recupera i giochi in Tendenza (Carosello - 5 giochi)
+    // Recupera i giochi in Tendenza (Carosello - 5 giochi)
     public synchronized List<Videogioco> doRetrieveTendenza() {
         List<Videogioco> lista = new ArrayList<>();
         // In mancanza di statistiche di vendita reali, peschiamo 5 giochi casuali approvati per creare dinamismo
@@ -112,7 +112,7 @@ public class VideogiocoDAO {
         return lista;
     }
 
-    // 3. METODO DI SUPPORTO: Evita di duplicare il codice di estrazione in ogni metodo
+    // METODO DI SUPPORTO: Evita di duplicare il codice di estrazione in ogni metodo
     private Videogioco estraiVideogiocoDaResultSet(ResultSet rs) throws SQLException {
         Videogioco gioco = new Videogioco();
         gioco.setIdVideogioco(rs.getInt("id_videogioco"));
@@ -424,6 +424,28 @@ public class VideogiocoDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+        return lista;
+    }
+    
+ // Ricerca senza filtri per il pannello Amministratore
+    public synchronized List<Videogioco> ricercaCatalogoAdmin(String queryTesto) {
+        List<Videogioco> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Videogioco WHERE titolo LIKE ? OR piattaforma LIKE ? ORDER BY id_videogioco DESC";
+        
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, "%" + queryTesto + "%");
+            ps.setString(2, "%" + queryTesto + "%");
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(estraiVideogiocoDaResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return lista;
     }

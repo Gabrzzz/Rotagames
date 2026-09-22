@@ -50,6 +50,17 @@
         <h2 class="vetrina-title">Gestione Catalogo Giochi</h2>
         
         <a href="GestioneGiochiServlet?azione=mostraFormAggiungi" class="btn-add">➕ Aggiungi Nuovo Gioco</a>
+        
+        <div class="admin-search-wrapper">
+            <form action="GestioneGiochiServlet" method="GET" class="admin-search-form">
+                <input type="hidden" name="azione" value="lista">
+                <input type="text" name="ricerca" class="input-ricerca-centrale" placeholder="Cerca titolo o piattaforma..." value="${param.ricerca}">
+                <button type="submit" class="btn-admin btn-filter">Cerca</button>
+                <% if (request.getParameter("ricerca") != null && !request.getParameter("ricerca").isEmpty()) { %>
+                    <a href="GestioneGiochiServlet?azione=lista" class="btn-outline btn-reset">Resetta</a>
+                <% } %>
+            </form>
+        </div>
 
 	<div class="table-responsive-wrapper">
         <table class="admin-table">

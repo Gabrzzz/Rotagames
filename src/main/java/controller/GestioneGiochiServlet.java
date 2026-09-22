@@ -47,8 +47,14 @@ public class GestioneGiochiServlet extends HttpServlet {
         VideogiocoDAO dao = new VideogiocoDAO();
 
         try {
-            if (azione == null || azione.equals("lista")) {
-                request.setAttribute("listaGiochi", dao.doRetrieveAllForAdmin());
+        	if (azione == null || azione.equals("lista")) {
+                String ricerca = request.getParameter("ricerca");
+                
+                if (ricerca != null && !ricerca.trim().isEmpty()) {
+                    request.setAttribute("listaGiochi", dao.ricercaCatalogoAdmin(ricerca));
+                } else {
+                    request.setAttribute("listaGiochi", dao.doRetrieveAllForAdmin());
+                }
                 request.setAttribute("vista", "tabella"); 
                 
             } else if (azione.equals("mostraFormAggiungi")) {

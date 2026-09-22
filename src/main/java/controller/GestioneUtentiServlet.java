@@ -57,9 +57,19 @@ public class GestioneUtentiServlet extends HttpServlet {
             return; 
         }
 
-        // 2. FASE DI VISUALIZZAZIONE (Se l'admin sta solo aprendo la pagina)
+        // FASE DI VISUALIZZAZIONE (Se l'admin sta solo aprendo la pagina)
         try {
-            List<Utente> listaUtenti = utenteDAO.doRetrieveAll();
+            String ricerca = request.getParameter("ricerca");
+            List<Utente> listaUtenti;
+            
+            if (ricerca != null && !ricerca.trim().isEmpty()) {
+                // Chiama il tuo metodo per la ricerca
+                listaUtenti = utenteDAO.doRetrievebyNameOrEmail(ricerca);
+            } else {
+                // Comportamento standard
+                listaUtenti = utenteDAO.doRetrieveAll();
+            }
+            
             request.setAttribute("listaUtenti", listaUtenti);
         } catch (Exception e) {
             e.printStackTrace();

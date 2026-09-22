@@ -926,6 +926,39 @@ header {
 .btn-filter { padding: 8px 20px; flex: 0; }
 .btn-reset { padding: 8px 15px; text-decoration: none; }
 
+/* --- BARRA DI RICERCA ADMIN (Sotto il titolo) --- */
+.admin-search-wrapper {
+    margin-bottom: 25px;
+}
+
+.admin-search-form {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    align-items: center; 
+}
+
+.admin-search-form .input-ricerca-centrale {
+    margin: 0;
+    padding: 10px 20px; 
+    flex: 1; 
+    min-width: 250px;
+}
+
+.admin-search-form .btn-filter {
+    padding: 10px 20px;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.admin-search-form .btn-reset {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
 /* --- PANNELLO SVILUPPATORE --- */
 .dev-stat-card-gold { border-bottom-color: #FFD700; }
 .dev-stat-card-gold .num { color: #FFD700; }

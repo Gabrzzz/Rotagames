@@ -32,9 +32,20 @@
 </jsp:include>
 
 <div class="store-container">
+    
     <h2 class="vetrina-title">Gestione Utenti Iscritti</h2>
+    
+    <div class="admin-search-wrapper">
+        <form action="GestioneUtentiServlet" method="GET" class="admin-search-form">
+            <input type="text" name="ricerca" class="input-ricerca-centrale" placeholder="Cerca email o nickname..." value="${param.ricerca}">
+            <button type="submit" class="btn-admin btn-filter">Cerca</button>
+            <% if (request.getParameter("ricerca") != null && !request.getParameter("ricerca").isEmpty()) { %>
+                <a href="GestioneUtentiServlet" class="btn-outline btn-reset">Resetta</a>
+            <% } %>
+        </form>
+    </div>
 
-<div class="table-responsive-wrapper">
+    <div class="table-responsive-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
