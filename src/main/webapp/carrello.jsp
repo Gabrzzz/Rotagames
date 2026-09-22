@@ -81,7 +81,17 @@
                         </select>
                     </form>
 
-                    <span class="cart-item-price"><%= String.format("%.2f", prezzoScontato * item.getQuantita()) %>€</span>
+                    <div class="price-container cart-price-wrapper">
+                        <% if (v.getScontoAttivo() > 0) { %>
+                            <span class="discount-badge">-<%= v.getScontoAttivo() %>%</span>
+                            <div class="price-column">
+                                <span class="old-price"><%= String.format("%.2f", v.getPrezzoBase() * item.getQuantita()) %>€</span>
+                                <span class="cart-item-price price-tag discounted-price"><%= String.format("%.2f", prezzoScontato * item.getQuantita()) %>€</span>
+                            </div>
+                        <% } else { %>
+                            <span class="cart-item-price"><%= String.format("%.2f", prezzoScontato * item.getQuantita()) %>€</span>
+                        <% } %>
+                    </div>             
                     
                     <form action="CartServlet" method="post" class="cart-form">
                         <input type="hidden" name="azione" value="rimuovi">

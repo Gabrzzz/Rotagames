@@ -425,6 +425,21 @@
         border-radius: 4px;
         box-sizing: border-box;
     }
+    
+    /* Nascondiamo il badge percentuale su mobile per recuperare spazio */
+    .cart-price-wrapper .discount-badge {
+        display: none;
+    }
+
+    .cart-item-actions .cart-form {
+        margin: 0; 
+    }
+
+    .cart-price-wrapper {
+        width: auto; 
+        flex: 1;     
+        justify-content: center;
+    }
 
     /* --- STORICO ORDINI --- */
     .order-card {
