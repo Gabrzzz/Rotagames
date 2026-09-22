@@ -31,39 +31,39 @@ Server: Apache Tomcat 9.0.x
 
 | Stato | Requisito | Priorità |
 | :---: | :--- | :--- |
-| - [ ] | Catalogo prodotti con visualizzazione dettagliata | **OBBLIGATORIO** |
-| - [X] | Carrello: aggiunta, modifica quantità, rimozione | **OBBLIGATORIO** |
-| - [X] | Conferma ordine e svuotamento carrello | **OBBLIGATORIO** |
-| - [X] | Storici ordini effettuati dal cliente | **OBBLIGATORIO** |
-| - [ ] | Barra di ricerca con AJAX | *CONSIGLIATO* |
-| - [ ] | CRUD completo prodotti (inserisci/modifica/visualizza/cancella) | **OBBLIGATORIO** |
-| - [X] | Visualizzazione ordini complessivi | **OBBLIGATORIO** |
-| - [ ] | Filtro ordini per intervallo di date | *ALMENO 1* |
-| - [ ] | Filtro ordini per cliente | *ALMENO 1* |
-| - [ ] | Conferma prima di cancellare un prodotto | **OBBLIGATORIO** |
-| - [X] | Prezzo e IVA salvati nella riga d’ordine (integrità storica) | **OBBLIGATORIO** |
-| - [ ] | Vincolo d’integrità referenziale (prodotti cancellati negli ordini) | **OBBLIGATORIO** |
-| - [X] | DataSource o DriverManager + Connection Pool | **OBBLIGATORIO** |
-| - [ ] | Prevenzione SQL Injection | *CONSIGLIATO* |
-| - [X] | Cifratura delle password | **OBBLIGATORIO** |
-| - [X] | Autenticazione programmata per area admin | **OBBLIGATORIO** |
-| - [X] | Utilizzo dei filtri servlet | **OBBLIGATORIO** |
-| - [X] | Pattern MVC rispettato | **OBBLIGATORIO** |
-| - [X] | Package Control (Servlet) e Model (Bean, Carrello) | **OBBLIGATORIO** |
-| - [X] | HTML generato solo da JSP (mai dalle Servlet) | **OBBLIGATORIO** |
-| - [ ] | Fragment JSP per header, footer e menu | **OBBLIGATORIO** |
-| - [ ] | Gestione sessioni per il carrello | **OBBLIGATORIO** |
-| - [ ] | Sito responsive | **OBBLIGATORIO** |
-| - [ ] | Validazione form con regex e JavaScript | *CONSIGLIATO* |
-| - [X] | Focus sul campo attivo e placeholder descrittivi | <sub>OPZIONALE</sub> |
-| - [X] | Messaggi di errore inline (no alert) | **OBBLIGATORIO** |
-| - [ ] | AJAX: barra di ricerca con suggerimenti | *ALMENO 1* |
-| - [ ] | AJAX: verifica email già presente in fase di registrazione | **OBBLIGATORIO** |
-| - [ ] | Fetch API con JSON per comunicazioni asincrone | **OBBLIGATORIO** |
-| - [ ] | Pagine di errore personalizzate (web.xml) | **OBBLIGATORIO** |
-| - [X] | Messaggi di conferma per le azioni dell’utente | **OBBLIGATORIO** |
-| - [X] | Tomcat come server diretto (no deploy esterno) | **OBBLIGATORIO** |
-| - [X] | Fattura tramite media query | **OBBLIGATORIO** |
+| [X] | Catalogo prodotti con visualizzazione dettagliata | **OBBLIGATORIO** |
+| [X] | Carrello: aggiunta, modifica quantità, rimozione | **OBBLIGATORIO** |
+| [X] | Conferma ordine e svuotamento carrello | **OBBLIGATORIO** |
+| [X] | Storici ordini effettuati dal cliente | **OBBLIGATORIO** |
+| [X] | Barra di ricerca con AJAX | *CONSIGLIATO* |
+| [X] | CRUD completo prodotti (inserisci/modifica/visualizza/cancella) | **OBBLIGATORIO** |
+| [X] | Visualizzazione ordini complessivi | **OBBLIGATORIO** |
+| [X] | Filtro ordini per intervallo di date | *ALMENO 1* |
+| [X] | Filtro ordini per cliente | *ALMENO 1* |
+| [X] | Conferma prima di cancellare un prodotto | **OBBLIGATORIO** |
+| [X] | Prezzo e IVA salvati nella riga d’ordine (integrità storica) | **OBBLIGATORIO** |
+| [X] | Vincolo d’integrità referenziale (prodotti cancellati negli ordini) | **OBBLIGATORIO** |
+| [X] | DataSource o DriverManager + Connection Pool | **OBBLIGATORIO** |
+| [X] | Prevenzione SQL Injection | *CONSIGLIATO* |
+| [X] | Cifratura delle password | **OBBLIGATORIO** |
+| [X] | Autenticazione programmata per area admin | **OBBLIGATORIO** |
+| [X] | Utilizzo dei filtri servlet | **OBBLIGATORIO** |
+| [X] | Pattern MVC rispettato | **OBBLIGATORIO** |
+| [X] | Package Control (Servlet) e Model (Bean, Carrello) | **OBBLIGATORIO** |
+| [X] | HTML generato solo da JSP (mai dalle Servlet) | **OBBLIGATORIO** |
+| [X] | Fragment JSP per header, footer e menu | **OBBLIGATORIO** |
+| [X] | Gestione sessioni per il carrello | **OBBLIGATORIO** |
+| [X] | Sito responsive | **OBBLIGATORIO** |
+| [X] | Validazione form con regex e JavaScript | *CONSIGLIATO* |
+| [X] | Focus sul campo attivo e placeholder descrittivi | <sub>OPZIONALE</sub> |
+| [X] | Messaggi di errore inline (no alert) | **OBBLIGATORIO** |
+| [X] | AJAX: barra di ricerca con suggerimenti | *ALMENO 1* |
+| [X] | AJAX: verifica email già presente in fase di registrazione | **OBBLIGATORIO** |
+| [X] | Fetch API con JSON per comunicazioni asincrone | **OBBLIGATORIO** |
+| [X] | Pagine di errore personalizzate (web.xml) | **OBBLIGATORIO** |
+| [X] | Messaggi di conferma per le azioni dell’utente | **OBBLIGATORIO** |
+| [X] | Tomcat come server diretto (no deploy esterno) | **OBBLIGATORIO** |
+| [X] | Fattura tramite media query | **OBBLIGATORIO** |
 
 ---
 *Tecnologie Software per il Web – Progetto d’Esame a.a. 2025-2026*

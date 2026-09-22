@@ -99,7 +99,7 @@
                             
                             <%-- Scorciatoie che appaiono nel menu SOLO su mobile per non perderle --%>
                             <a href="#" onclick="apriRuota(); return false;" class="dropdown-item mobile-dropdown-only">🎁 Gira la Ruota</a>
-                            <a href="CartServlet" class="dropdown-item mobile-dropdown-only">🛒 Carrello</a>
+                            
                             <% if ("AMMINISTRATORE".equals(utenteLoggatoHeader.getRuolo())) { %>
                                 <a href="AdminDashboardServlet" class="dropdown-item mobile-dropdown-only">⚙️ Pannello Admin</a>
                             <% } else if ("sviluppatore".equalsIgnoreCase(utenteLoggatoHeader.getRuolo())) { %>
