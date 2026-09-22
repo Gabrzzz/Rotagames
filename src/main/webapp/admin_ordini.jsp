@@ -105,5 +105,8 @@
 
 <jsp:include page="footer.jsp" />
 
+<!-- Script JavaScript esterno associato -->
+<script src="${pageContext.request.contextPath}/js/gestione_ordini.js"></script>
+
 </body>
 </html>

@@ -80,8 +80,7 @@
                             
                             <% if ("APPROVATO".equals(gioco.getStatoApprovazione()) || "IN_ATTESA".equals(gioco.getStatoApprovazione())) { %>
                                 <a href="GestioneGiochiSviluppatoreServlet?azione=ritira&id=<%= gioco.getIdVideogioco() %>" 
-                                   class="btn-action btn-delete" 
-                                   onclick="return confirm('Sicuro di voler ritirare questo gioco?');">
+                                   class="btn-action btn-delete btn-ritira-gioco">
                                     Ritira
                                 </a>
                             <% } %>
@@ -185,6 +184,13 @@
                     
                     <div class="admin-form-section">
                         <span class="form-section-title">Copertina (JPG/PNG):</span>
+                        <% if (vista.equals("formModifica") && gioco.getBase64Copertina() != null && !gioco.getBase64Copertina().isEmpty()) { %>
+                            <div class="gallery-container">
+                                <div class="gallery-item">
+                                    <img src="data:image/jpeg;base64,<%= gioco.getBase64Copertina() %>" class="gallery-img" alt="Copertina Attuale">
+                                </div>
+                            </div>
+                        <% } %>
                         <input type="file" name="copertinaFile" accept="image/*" <%= vista.equals("formAggiungi") ? "required" : "" %>>
                     </div>
                     
@@ -202,8 +208,7 @@
 					                <div class="gallery-item">
 					                    <img src="data:image/jpeg;base64,<%= img.getBase64Immagine() %>" class="gallery-img">
 					                    <a href="GestioneGiochiSviluppatoreServlet?azione=eliminaImmagine&idImmagine=<%= img.getIdImmagine() %>&idVideogioco=<%= gioco.getIdVideogioco() %>"
-					                       class="btn-delete-img"
-					                       onclick="return confirm('Vuoi eliminare questa immagine dalla galleria?');">X</a>
+					                       class="btn-delete-img btn-elimina-immagine">X</a>
 					                </div>
 					        <%      }
 					            } else { %>
@@ -227,6 +232,7 @@
     <% } %>
 
 </div>
+<script src="${pageContext.request.contextPath}/js/sviluppatore_giochi.js"></script>
 <script src="${pageContext.request.contextPath}/js/requisiti.js"></script>
 <jsp:include page="footer.jsp" />
 

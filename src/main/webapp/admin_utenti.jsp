@@ -63,19 +63,16 @@
 		                    <%-- Blocco Ban / Sban (Sempre visibile) --%>
 		                    <% if (!u.isBannato()) { %>
 		                        <a href="GestioneUtentiServlet?azione=impostaBan&id=<%= u.getIdUtente() %>&stato=true" 
-		                           class="btn-action btn-delete" 
-		                           onclick="return confirm('Sospendere questo utente?');">Ban</a>
+		                           class="btn-action btn-delete js-confirm-ban">Ban</a>
 		                    <% } else { %>
 		                        <a href="GestioneUtentiServlet?azione=impostaBan&id=<%= u.getIdUtente() %>&stato=false" 
-		                           class="btn-action btn-add" 
-		                           onclick="return confirm('Riattivare questo utente?');">Sbanna</a>
+		                           class="btn-action btn-add js-confirm-sban">Sbanna</a>
 		                    <% } %>
 		                    
 		                    <%-- Blocco Elimina (Condizionale) --%>
 		                    <% if (!haOrdini) { %>
 		                        <a href="GestioneUtentiServlet?azione=elimina&id=<%= u.getIdUtente() %>" 
-		                           class="btn-action btn-hard-delete" 
-		                           onclick="return confirm('ATTENZIONE: Eliminare fisicamente l\'account dal DB? L\'operazione è irreversibile.');">Elimina</a>
+		                           class="btn-action btn-hard-delete js-confirm-delete">Elimina</a>
 		                    <% } else { %>
 		                        <span class="client-immune-text" title="L'utente ha effettuato acquisti">Vincolato</span>
 		                    <% } %>
@@ -97,6 +94,9 @@
 </div>
 
 <jsp:include page="footer.jsp" />
+
+<!-- Script esterno associato -->
+<script src="${pageContext.request.contextPath}/js/gestione_utenti.js"></script>
 
 </body>
 </html>

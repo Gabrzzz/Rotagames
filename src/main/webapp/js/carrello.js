@@ -45,3 +45,14 @@ function inviaPiattaformeMultiple() {
     document.getElementById("modalPiattaformaScelta").value = piattaformeSelezionate;
     document.getElementById("formAggiungiCarrello").submit();
 }
+
+//cambio quantità nel carrello
+document.addEventListener("DOMContentLoaded", function() {
+    const selettoriQuantita = document.querySelectorAll(".cart-qty-select");
+
+    selettoriQuantita.forEach(function(selettore) {
+        selettore.addEventListener("change", function() {
+            this.form.submit();
+        });
+    });
+});

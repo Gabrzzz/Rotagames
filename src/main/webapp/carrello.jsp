@@ -55,10 +55,10 @@
 			<div class="cart-item">
                 <div class="cart-item-details">
                     <% if (v.getBase64Copertina() != null && !v.getBase64Copertina().isEmpty()) { %>
-                        <img src="data:image/jpeg;base64,<%= v.getBase64Copertina() %>" class="cart-item-cover" alt="Copertina di <%= v.getTitolo() %>">
-                    <% } else { %>
-                        <div class="empty-cover-cart">Nessuna<br>Foto</div>
-                    <% } %>
+					    <img src="data:image/jpeg;base64,<%= v.getBase64Copertina() %>" class="cart-item-cover" alt="Copertina di <%= v.getTitolo() %>">
+					<% } else { %>
+					    <div class="empty-cover-cart">Nessuna<br>Foto</div>
+					<% } %>
                     
                     <div class="cart-item-info">
                         <h3><%= v.getTitolo() %></h3>
@@ -72,7 +72,7 @@
                         <input type="hidden" name="idVideogioco" value="<%= v.getIdVideogioco() %>">
                         <input type="hidden" name="piattaforma" value="<%= piattaformaScelta %>">
                         
-                        <select name="quantita" class="cart-qty-select" onchange="this.form.submit()">
+                        <select name="quantita" class="cart-qty-select">
                             <% for(int i = 1; i <= 10; i++) { %>
                                 <option value="<%= i %>" <%= (item.getQuantita() == i) ? "selected" : "" %>>
                                     <%= i %>
@@ -162,5 +162,7 @@
 
 <jsp:include page="footer.jsp" />
 
+<!-- Inclusione dello script JavaScript esterno -->
+<script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 </body>
 </html>

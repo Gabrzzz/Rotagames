@@ -80,22 +80,19 @@
                             
                             <% if ("APPROVATO".equals(gioco.getStatoApprovazione())) { %>
                                 <a href="GestioneGiochiServlet?azione=elimina&id=<%= gioco.getIdVideogioco() %>" 
-                                   class="btn-action btn-delete" 
-                                   onclick="return confirm('Sicuro di voler ritirare questo gioco dal negozio?\n\nIl gioco non sarà più acquistabile dai nuovi clienti, ma gli utenti che lo possiedono già lo manterranno.');">
+                                   class="btn-action btn-delete js-confirm-ritira">
                                     Ritira dal Negozio
                                 </a>
                             
                             <% } else if ("ELIMINATO".equals(gioco.getStatoApprovazione())) { %>
                                 <a href="GestioneGiochiServlet?azione=ripristina&id=<%= gioco.getIdVideogioco() %>" 
-                                   class="btn-action btn-restore" 
-                                   onclick="return confirm('Vuoi ripristinare questo gioco nel negozio?\n\nTornerà ad essere acquistabile da tutti gli utenti.');">
+                                   class="btn-action btn-restore js-confirm-ripristina">
                                     Ripristina nel Negozio
                                 </a>
                             
                             <% } else if ("IN_ATTESA".equals(gioco.getStatoApprovazione())) { %>
                                 <a href="GestioneGiochiServlet?azione=approva&id=<%= gioco.getIdVideogioco() %>" 
-                                   class="btn-action btn-approve" 
-                                   onclick="return confirm('Vuoi approvare questo videogioco?\n\nIl gioco verrà pubblicato istantaneamente sul catalogo e sarà acquistabile.');">
+                                   class="btn-action btn-approve js-confirm-approva">
                                     Approva Gioco
                                 </a>
                             <% } %>
@@ -309,8 +306,7 @@
 					            <div class="gallery-item">
 					                <img src="data:image/jpeg;base64,<%= img.getBase64Immagine() %>" class="gallery-img">
 					                <a href="GestioneGiochiServlet?azione=eliminaImmagine&idImmagine=<%= img.getIdImmagine() %>&idVideogioco=<%= gioco.getIdVideogioco() %>"
-					                   class="btn-delete-img"
-					                   onclick="return confirm('Vuoi eliminare questa immagine dalla galleria?');">X</a>
+					                   class="btn-delete-img js-confirm-elimina-img">X</a>
 					            </div>
 					    <%      }
 					        } else { %>
@@ -334,6 +330,7 @@
 </div>
 
 <script src="${pageContext.request.contextPath}/js/requisiti.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_giochi.js"></script>
 
 <jsp:include page="footer.jsp" />
 </body>

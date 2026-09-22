@@ -51,3 +51,39 @@ function mostraToast(messaggio) {
         toast.classList.remove("show");
     }, 3000);
 }
+
+const bottoniCarrello = document.querySelectorAll('.btn-cart');
+bottoniCarrello.forEach(bottone => {
+    //bottone aggiungi al carrello
+    bottone.addEventListener('click', function() {
+        const idVideogioco = this.getAttribute('data-id');
+        const piattaforma = this.getAttribute('data-piattaforma');
+        apriModalPiattaforma(idVideogioco, piattaforma);
+    });
+});
+
+//bottone per rimuovere i giochi dalla wishlist
+const bottoniRimuoviWishlist = document.querySelectorAll('.btn-wishlist.active');
+bottoniRimuoviWishlist.forEach(bottone => {
+    bottone.addEventListener('click', function() {
+        const idVideogioco = this.getAttribute('data-id');
+        rimuoviDaWishlist(idVideogioco);
+    });
+});
+
+//bottone per chiudere il menù di scelta delle piattaforme per quel gioco (per esempio pc, ps4, etc...)
+const bottoneChiudiModale = document.getElementById('closeModalBtn');
+if (bottoneChiudiModale) {
+    // Gestione della chiusura della finestra modale
+    bottoneChiudiModale.addEventListener('click', function() {
+        chiudiModalPiattaforma();
+    });
+}
+
+//bottone di conferma per l'invio delle piattaforme selezionate nel menù di scelta delle piattaforme
+const bottoneInviaPiattaforme = document.getElementById('submitPlatformBtn');
+if (bottoneInviaPiattaforme) {
+    bottoneInviaPiattaforme.addEventListener('click', function() {
+        inviaPiattaformeMultiple();
+    });
+}

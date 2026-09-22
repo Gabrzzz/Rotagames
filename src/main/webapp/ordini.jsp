@@ -37,7 +37,8 @@
                     <p>Totale: <strong><%= String.format("%.2f", o.getTotaleOrdine()) %>€</strong></p>
                 </div>
                 <div class="order-actions">
-                    <button onclick="apriDettaglioOrdine(<%= o.getIdOrdine() %>)" class="btn-order-action">
+                    <!-- Sostituito onclick inline con attributo data-id e classe identificativa -->
+                    <button type="button" class="btn-order-action btn-apri-dettaglio" data-id="<%= o.getIdOrdine() %>">
                         🔍 Riepilogo
                     </button>
                     
@@ -61,7 +62,8 @@
 
 <div id="modalDettaglio" class="platform-overlay">
     <div class="platform-modal modal-wide">
-        <button class="platform-close-btn" onclick="chiudiDettaglioOrdine()">✖</button>
+        <!-- Sostituito onclick inline con classe identificativa -->
+        <button type="button" class="platform-close-btn btn-chiudi-dettaglio">✖</button>
         <h2>Dettagli Ordine #<span id="modalOrderId"></span></h2>
         
         <div id="dettagliContainer" class="scrollable-container order-detail-container">
@@ -73,7 +75,6 @@
 <script src="${pageContext.request.contextPath}/js/ordini.js"></script>
 
 <jsp:include page="footer.jsp" />
-
 
 </body>
 </html>
