@@ -532,6 +532,12 @@
     .requisiti-form-grid {
         grid-template-columns: 1fr; 
     }
+    
+    /* --- CHI SIAMO --- */
+    .dev-team-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
 }
 
 /* =========================================

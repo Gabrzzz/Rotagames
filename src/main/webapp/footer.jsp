@@ -2,4 +2,5 @@
 <footer class="footer">
     <p>&copy; 2026 RotaGames - Le 3 Rotelle - Progetto di TSW</p>
     <p class="underfooter">Tutti i prezzi sono IVA inclusa, dove applicabile.</p>
+    <p><a href="chisiamo.jsp" class="underfooter">👥 Chi Siamo</a> </p>
 </footer>

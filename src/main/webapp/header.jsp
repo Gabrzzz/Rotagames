@@ -113,6 +113,7 @@
                             <a href="OrdiniServlet" class="dropdown-item">📦 I miei Ordini</a>
                             <a href="WishlistServlet" class="dropdown-item">🎁 La tua Wishlist</a>
                             <a href="ShopServlet" class="dropdown-item">🎡 Negozio Premi</a>
+                            <a href="chisiamo.jsp" class="dropdown-item">👥 Chi Siamo</a>
                             <a href="LogoutServlet" class="dropdown-item logout-text">Esci</a>
                         </div>
                     </div>
@@ -123,6 +124,7 @@
                 <span class="visitor-msg hide-on-mobile">Esplora il catalogo come Visitatore</span>
                 <a href="login.jsp" class="btn-guest hide-on-mobile">Accedi</a>
                 <a href="registrazione.jsp" class="btn-guest solid hide-on-mobile">Registrati</a>
+                <a href="chisiamo.jsp" class="btn-guest hide-on-mobile">Chi Siamo</a>
                 
                 <%-- Menu compatto per il visitatore su Mobile --%>
                 <div class="user-dropdown mobile-dropdown-only">
@@ -130,6 +132,8 @@
                     <div class="dropdown-menu">
                         <a href="login.jsp" class="dropdown-item">Accedi</a>
                         <a href="registrazione.jsp" class="dropdown-item">Registrati</a>
+                        <a href="chisiamo.jsp" class="dropdown-item">👥 Chi Siamo</a>
+                        
                     </div>
                 </div>
             <% } %>
