@@ -38,7 +38,7 @@
         <%= errorMessage %>
     </p>
     
-    <a href="index.jsp" class="btn-checkout btn-checkout-inline btn-error-home">Torna alla Home</a>
+    <a href="Home" class="btn-checkout btn-checkout-inline btn-error-home">Torna alla Home</a>
 </div>
 
 <jsp:include page="footer.jsp" />

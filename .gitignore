@@ -16,3 +16,5 @@ build/classes/controller/RecensioneServlet.class
 build/classes/controller/RegistrazioneServlet.class
 build/classes/model/dao/UtenteDAO.class
 build/classes/model/dao/VideogiocoDAO.class
+build/classes/controller/FatturaServlet.class
+build/classes/controller/ProfiloServlet.class

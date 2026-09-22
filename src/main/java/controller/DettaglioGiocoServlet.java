@@ -49,9 +49,29 @@ public class DettaglioGiocoServlet extends HttpServlet {
             }
         }
         
+        // 1. Estrazione dei generi del gioco
+        List<String> listaGeneri = dao.getGeneriByIdVideogioco(idGioco);
+        
+        // 2. Controlli specifici per l'utente loggato (Possesso, Wishlist, Recensione)
+        boolean giocoPosseduto = false;
+        boolean haGiaRecensito = false;
+        boolean inWishlist = false;
+
+        Utente utente = (Utente) request.getSession().getAttribute("utenteLoggato");
+        if (utente != null) {
+            giocoPosseduto = dao.checkPossessoGioco(utente.getIdUtente(), idGioco);
+            inWishlist = dao.checkWishlist(utente.getIdUtente(), idGioco);
+            haGiaRecensito = recensioneDao.giaRecensito(utente.getIdUtente(), idGioco);
+        }
+
+        // 3. Invio di TUTTI i dati alla View
         request.setAttribute("gioco", gioco);
         request.setAttribute("immagini", immagini);
         request.setAttribute("recensioni", recensioni);
+        request.setAttribute("listaGeneri", listaGeneri);
+        request.setAttribute("giocoPosseduto", giocoPosseduto);
+        request.setAttribute("haGiaRecensito", haGiaRecensito);
+        request.setAttribute("inWishlist", inWishlist);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("/paginagiochi.jsp");
         dispatcher.forward(request, response);

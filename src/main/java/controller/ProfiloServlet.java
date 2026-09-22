@@ -72,9 +72,13 @@ public class ProfiloServlet extends HttpServlet {
         List<Libreria> giochiPosseduti = libreriaDao.doRetrieveByUtente(idUtente);
         if (giochiPosseduti == null) giochiPosseduti = new ArrayList<>();
 
-        OrdineDAO ordineDao = new OrdineDAO();
-        List<Ordine> ordiniUtente = ordineDao.doRetrieveByUtente(idUtente);
-        if (ordiniUtente == null) ordiniUtente = new ArrayList<>();
+     // Estraiamo gli ordini dal DB SOLO se l'utente guarda il proprio profilo
+        List<Ordine> ordiniUtente = new ArrayList<>();
+        if (isProprietario) {
+            OrdineDAO ordineDao = new OrdineDAO();
+            ordiniUtente = ordineDao.doRetrieveByUtente(idUtente);
+            if (ordiniUtente == null) ordiniUtente = new ArrayList<>();
+        }
 
         RecensioneDAO recensioneDao = new RecensioneDAO();
         List<Recensione> recensioniUtente = recensioneDao.doRetrieveByUtente(idUtente);

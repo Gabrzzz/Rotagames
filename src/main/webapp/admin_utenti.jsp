@@ -1,6 +1,6 @@
 <%@ page import="model.Utente" %>
-<%@ page import="model.dao.UtenteDAO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     Utente admin = (Utente) session.getAttribute("utenteLoggato");
@@ -58,10 +58,12 @@
         </thead>
         <tbody>
 		    <% 
-		        UtenteDAO uDao = new UtenteDAO(); // Inizializziamo il DAO
+		        // Recuperiamo la mappa calcolata nella servlet
+		        Map<Integer, Boolean> mappaOrdini = (Map<Integer, Boolean>) request.getAttribute("mappaOrdini");
+		        
 		        if (utenti != null && !utenti.isEmpty()) { 
 		            for (Utente u : utenti) { 
-		                boolean haOrdini = uDao.haFattoOrdini(u.getIdUtente()); // Controllo al volo
+		                boolean haOrdini = mappaOrdini != null && mappaOrdini.containsKey(u.getIdUtente()) && mappaOrdini.get(u.getIdUtente());
 		    %>
 		        <tr>
 		            <td><%= u.getEmail() %></td>

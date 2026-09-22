@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -37,7 +38,34 @@ public class FatturaServlet extends HttpServlet {
         }
         
         int idOrdine = Integer.parseInt(idStr);
+        
+        HttpSession session = request.getSession();
+        model.Utente utente = (model.Utente) session.getAttribute("utenteLoggato");
+        
+        if (utente == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
+        // Se l'utente non è amministratore, verifichiamo che l'ordine gli appartenga
+        if (!"AMMINISTRATORE".equals(utente.getRuolo())) {
+            boolean proprietario = false;
+            try (Connection con = DBConnection.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT id_utente FROM ordine WHERE id_ordine = ?")) {
+                ps.setInt(1, idOrdine);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next() && rs.getInt("id_utente") == utente.getIdUtente()) {
+                        proprietario = true;
+                    }
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+            
+            if (!proprietario) {
+                response.sendRedirect("index.jsp");
+                return;
+            }
+        }
+        
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(baos);
         PdfDocument pdf = new PdfDocument(writer);
@@ -47,7 +75,6 @@ public class FatturaServlet extends HttpServlet {
         try (Connection con = DBConnection.getConnection()) {
             
         	// 1. Estrazione Dati Cliente e Ordine
-            // Aggiunti via, cap e citta alla query
             String queryCliente = "SELECT o.data_acquisto, u.nome, u.cognome, u.email, u.via, u.cap, u.citta " +
                                   "FROM ordine o JOIN utente u ON o.id_utente = u.id_utente WHERE o.id_ordine = ?";
             PreparedStatement psCliente = con.prepareStatement(queryCliente);

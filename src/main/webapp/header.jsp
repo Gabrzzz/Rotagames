@@ -24,7 +24,7 @@
 
 
 <header>
-    <a href="index.jsp" class="logo-link">
+    <a href="Home" class="logo-link">
         <h1 class="header-logo-title">
             <img src="${pageContext.request.contextPath}/images/RotaLogo.png" alt="Logo RotaGames" class="header-logo-letter">otaGames
             <%-- Testo dinamico per il backoffice accanto al logo --%>

@@ -165,7 +165,7 @@
         <div class="empty-cart">
             <h3>Il tuo carrello è vuoto</h3>
             <p>Esplora il catalogo per trovare i tuoi prossimi giochi preferiti!</p>
-            <a href="index.jsp" class="btn-checkout btn-checkout-inline">Torna allo Store</a>
+            <a href="Home" class="btn-checkout btn-checkout-inline">Torna allo Store</a>
         </div>
     <% } %>
 </div>

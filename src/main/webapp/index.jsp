@@ -1,24 +1,25 @@
 <%@ page import="model.Utente" %>
 <%@ page import="model.Videogioco" %>
-<%@ page import="model.dao.VideogiocoDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
-    VideogiocoDAO dao = new VideogiocoDAO();
-
-    // Recuperiamo le liste dalla servlet. Usiamo @SuppressWarnings per evitare i warning "Type safety: Unchecked cast"
-    @SuppressWarnings("unchecked")
-    List<Videogioco> giochiTendenza = (List<Videogioco>) request.getAttribute("giochiTendenza");
-    if (giochiTendenza == null) giochiTendenza = dao.doRetrieveTendenza();
-
-    @SuppressWarnings("unchecked")
-    List<Videogioco> giochiScontati = (List<Videogioco>) request.getAttribute("giochiScontati");
-    if (giochiScontati == null) giochiScontati = dao.doRetrieveInSconto();
-
-    @SuppressWarnings("unchecked")
-    List<Videogioco> giochiMeno10 = (List<Videogioco>) request.getAttribute("giochiMeno10");
-    if (giochiMeno10 == null) giochiMeno10 = dao.filtraCatalogo(null, null, "10", "prezzo_asc");
+	Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
+	
+	// Leggiamo i pacchetti di dati preparati in esclusiva dal Controller
+	@SuppressWarnings("unchecked")
+	List<Videogioco> giochiTendenza = (List<Videogioco>) request.getAttribute("giochiTendenza");
+	
+	@SuppressWarnings("unchecked")
+	List<Videogioco> giochiScontati = (List<Videogioco>) request.getAttribute("giochiScontati");
+	
+	@SuppressWarnings("unchecked")
+	List<Videogioco> giochiMeno10 = (List<Videogioco>) request.getAttribute("giochiMeno10");
+	
+	@SuppressWarnings("unchecked")
+	List<Integer> wishlistIds = (List<Integer>) request.getAttribute("wishlistIds");
+	
+	@SuppressWarnings("unchecked")
+	List<Videogioco> giochiPersonalita = (List<Videogioco>) request.getAttribute("giochiPersonalita");
 %>
 <!DOCTYPE html>
 <html>
@@ -126,7 +127,7 @@
 	                            AL CARRELLO 🛒
 	                        </button>
 	                        <% if (utenteLoggato != null) { 
-	                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+	                        	boolean inWishlist = wishlistIds != null && wishlistIds.contains(g.getIdVideogioco());
 	                        %>
 	                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
 	                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
@@ -194,7 +195,7 @@
 	                            AL CARRELLO 🛒
 	                        </button>
 	                        <% if (utenteLoggato != null) { 
-	                            boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco());
+	                        	boolean inWishlist = wishlistIds != null && wishlistIds.contains(g.getIdVideogioco());
 	                        %>
 	                            <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
 	                                    onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
@@ -244,22 +245,7 @@
             </div>
         <% 
             } else {
-                // se l'utente e loggato con test della personalità effettuato
-                String badgeUtente = utenteLoggato.getBadgePersonalita();
-                String genereScelto = "";
-                
-                if ("Socializzatore".equalsIgnoreCase(badgeUtente)) {
-                    genereScelto = "JRPG";
-                } else if ("Esploratore".equalsIgnoreCase(badgeUtente)) {
-                    genereScelto = "Avventura";
-                } else if ("Collezionista".equalsIgnoreCase(badgeUtente)) {
-                    genereScelto = "Metroidvania";
-                } else if ("Competitivo".equalsIgnoreCase(badgeUtente)) {
-                    genereScelto = "FPS";
-                }
-                
-                // giochi filtrati per genere del bedge personalità
-                List<Videogioco> giochiPersonalita = dao.filtraCatalogo(null, genereScelto, null, null);
+
         %>
             
             <button class="slider-btn left-btn" onclick="scorriSlider(this, -360)">&#10094;</button>
@@ -306,7 +292,7 @@
                                         onclick="apriModalPiattaforma(<%= g.getIdVideogioco() %>, '<%= g.getPiattaforma().replace("'", "\\'") %>')">
                                     AL CARRELLO 🛒
                                 </button>
-                                <% boolean inWishlist = dao.checkWishlist(utenteLoggato.getIdUtente(), g.getIdVideogioco()); %>
+                                <% boolean inWishlist = wishlistIds != null && wishlistIds.contains(g.getIdVideogioco()); %>
                                 <button type="button" class="btn-wishlist-index <%= inWishlist ? "active" : "" %>" 
                                         onclick="toggleWishlist(<%= g.getIdVideogioco() %>, this)">
                                     <%= inWishlist ? "❤️" : "🤍" %>

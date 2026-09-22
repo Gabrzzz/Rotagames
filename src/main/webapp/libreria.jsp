@@ -1,6 +1,5 @@
 <%@ page import="model.Utente" %>
 <%@ page import="model.Libreria" %>
-<%@ page import="model.dao.LibreriaDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -12,12 +11,6 @@
     
     @SuppressWarnings("unchecked")
     List<Libreria> laMiaLibreria = (List<Libreria>) request.getAttribute("laMiaLibreria");
-    
-    // Fallback: se arriviamo direttamente alla JSP o se request è vuota
-    if (laMiaLibreria == null) {
-        LibreriaDAO libDao = new LibreriaDAO();
-        laMiaLibreria = libDao.doRetrieveByUtente(utenteLoggato.getIdUtente());
-    }
 %>
 <!DOCTYPE html>
 <html>

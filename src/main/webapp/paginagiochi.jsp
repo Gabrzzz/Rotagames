@@ -5,18 +5,25 @@
 <%@ page import="model.Recensione" %>
 <%@ page import="java.util.List" %>
 <%
-    Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); //acquisisce l'utente che visualizza il gioco
-    Videogioco gioco = (Videogioco) request.getAttribute("gioco"); //acquisisce il gioco
-    List<ImmagineGioco> immagini = (List<ImmagineGioco>) request.getAttribute("immagini"); //acquisisce le immagini aggiuntive del gioco
-    List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni"); //acquisisce le recensioni del gioco
-    boolean giocoPosseduto = false;
-    if (utenteLoggato != null) {
-        giocoPosseduto = new model.dao.VideogiocoDAO().checkPossessoGioco(utenteLoggato.getIdUtente(), gioco.getIdVideogioco()); //controlla se l'utente possiede il gioco
-    }
-    boolean haGiaRecensito = false;
-    if (utenteLoggato != null && gioco != null) {
-        haGiaRecensito = new model.dao.RecensioneDAO().giaRecensito(utenteLoggato.getIdUtente(), gioco.getIdVideogioco());
-    }
+    Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato"); 
+    Videogioco gioco = (Videogioco) request.getAttribute("gioco"); 
+    
+    @SuppressWarnings("unchecked")
+    List<ImmagineGioco> immagini = (List<ImmagineGioco>) request.getAttribute("immagini"); 
+    @SuppressWarnings("unchecked")
+    List<Recensione> recensioni = (List<Recensione>) request.getAttribute("recensioni"); 
+    @SuppressWarnings("unchecked")
+    List<String> listaGeneri = (List<String>) request.getAttribute("listaGeneri");
+
+    // Leggiamo i permessi calcolati dalla Servlet
+    Boolean possedutoObj = (Boolean) request.getAttribute("giocoPosseduto");
+    boolean giocoPosseduto = possedutoObj != null ? possedutoObj : false;
+    
+    Boolean recensitoObj = (Boolean) request.getAttribute("haGiaRecensito");
+    boolean haGiaRecensito = recensitoObj != null ? recensitoObj : false;
+    
+    Boolean wishlistObj = (Boolean) request.getAttribute("inWishlist");
+    boolean inWishlist = wishlistObj != null ? wishlistObj : false;
 %>
 <!DOCTYPE html>
 	<html>
@@ -79,10 +86,7 @@
 	                                Aggiungi al Carrello 🛒
 	                            </button>
 
-	                            <% if (utenteLoggato != null) { 
-	                                // Chiediamo al volo al DB se il gioco è già in wishlist per mostrare il cuore pieno o vuoto
-	                                boolean inWishlist = new model.dao.VideogiocoDAO().checkWishlist(utenteLoggato.getIdUtente(), gioco.getIdVideogioco());
-	                            %>
+	                            <% if (utenteLoggato != null) { %>
 	                                <button class="btn-wishlist <%= inWishlist ? "active" : "" %>" 
 	                                        id="btnToggleWishlist"
 	                                        data-id-gioco="<%= gioco.getIdVideogioco() %>"
@@ -189,7 +193,6 @@
 	                    <span class="info-label">Generi</span>
 	                    <div class="piattaforme-tags">
 	                        <% 
-	                            List<String> listaGeneri = new model.dao.VideogiocoDAO().getGeneriByIdVideogioco(gioco.getIdVideogioco());
 	                            if (listaGeneri != null && !listaGeneri.isEmpty()) {
 	                                for (String gen : listaGeneri) { 
 	                        %>

@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,6 +70,13 @@ public class GestioneUtentiServlet extends HttpServlet {
             } else {
                 // Comportamento standard
                 listaUtenti = utenteDAO.doRetrieveAll();
+            }
+            
+            Map<Integer, Boolean> mappaOrdini = new HashMap<>();
+            if (listaUtenti != null) {
+                for (Utente u : listaUtenti) {
+                    mappaOrdini.put(u.getIdUtente(), utenteDAO.haFattoOrdini(u.getIdUtente()));
+                }
             }
             
             request.setAttribute("listaUtenti", listaUtenti);
