@@ -10,7 +10,6 @@
     1. IMPOSTAZIONI BASE E BODY 
     =========================== */
 body {
-    
     background-color: #030D1A;
     color: #FFFFFF;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -394,12 +393,16 @@ header {
     margin-bottom: 20px;
     padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 15px;
 }
 
 .platform-tag {
     color: #5C6F8E;
     font-size: 0.85em;
     font-weight: bold;
+    text-align: right; 
+    line-height: 1.3; 
+    flex: 0 1 auto;
 }
 
 .game-card-link {
@@ -927,6 +930,39 @@ header {
 .btn-filter { padding: 8px 20px; flex: 0; }
 .btn-reset { padding: 8px 15px; text-decoration: none; }
 
+/* --- BARRA DI RICERCA ADMIN (Sotto il titolo) --- */
+.admin-search-wrapper {
+    margin-bottom: 25px;
+}
+
+.admin-search-form {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    align-items: center; 
+}
+
+.admin-search-form .input-ricerca-centrale {
+    margin: 0;
+    padding: 10px 20px; 
+    flex: 1; 
+    min-width: 250px;
+}
+
+.admin-search-form .btn-filter {
+    padding: 10px 20px;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.admin-search-form .btn-reset {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    flex: 0 0 auto;
+}
+
 /* --- PANNELLO SVILUPPATORE --- */
 .dev-stat-card-gold { border-bottom-color: #FFD700; }
 .dev-stat-card-gold .num { color: #FFD700; }
@@ -1180,7 +1216,7 @@ header {
     margin-right: 15px; 
 }
 
-.cart-item-form-update { margin-right: 15px; }
+.cart-item-form-update { margin-right: 15px; margin-left: 45px; }
 
 .cart-qty-select {
     width: 65px; 
@@ -1302,6 +1338,22 @@ header {
     font-size: 0.8em;
     text-align: center;
     border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* --- GESTIONE PREZZO E SCONTI NEL CARRELLO --- */
+.cart-price-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 140px; 
+}
+
+.cart-price-wrapper .discount-badge {
+    margin-right: 5px;
+}
+
+.cart-price-wrapper .cart-item-price {
+    margin-right: 0;
 }
 
 /* --- Stili specifici per Coupon e Totali Carrello --- */
@@ -4015,4 +4067,84 @@ input.remember-checkbox {
 
 .btn-equipaggia:hover {
     background-color: #006699;
+}
+
+/* =========================================
+   PAGINA "CHI SIAMO"
+   ========================================= */
+
+/* Testo centrale introduttivo */
+.chi-siamo-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto; 
+}
+
+.intro-desc {
+    color: #A0B0C8;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Griglia a 3 colonne */
+.dev-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+    margin-bottom: 50px;
+}
+
+/* Singola Card del Developer */
+.dev-card {
+    background-color: #0A192F; 
+    border: 1px solid #00E5FF; 
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease; 
+}
+
+.dev-card:hover {
+    transform: translateY(-10px); 
+}
+
+/* Immagine circolare */
+.dev-img-wrapper {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%; 
+    overflow: hidden;
+    border: 3px solid #00E5FF;
+}
+
+.dev-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* Testi della card */
+.dev-name {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    margin: 0 0 5px 0;
+}
+
+.dev-role {
+    display: block;
+    color: #00E5FF;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.dev-bio {
+    color: #A0B0C8;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
 }

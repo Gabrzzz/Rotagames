@@ -8,3 +8,11 @@ build/classes/model/dao/VideogiocoDAO.class
 build/classes/controller/RicercaUtenteServlet.class
 build/classes/controller/RicercaUtentiAjaxServlet.class
 build/classes/model/dao/UtenteDAO.class
+build/classes/controller/GestioneGiochiServlet.class
+build/classes/controller/GestioneGiochiSviluppatoreServlet.class
+build/classes/controller/GestioneUtentiServlet.class
+build/classes/controller/ProfiloServlet.class
+build/classes/controller/RecensioneServlet.class
+build/classes/controller/RegistrazioneServlet.class
+build/classes/model/dao/UtenteDAO.class
+build/classes/model/dao/VideogiocoDAO.class

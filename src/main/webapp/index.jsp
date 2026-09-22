@@ -36,7 +36,7 @@
 
 <div class="store-container">
 
-    <h2 class="vetrina-title" style="text-align: center; margin-top: 30px;">In Tendenza</h2>
+    <h2 class="vetrina-title">In Tendenza</h2>
 
 <% if (giochiTendenza != null && !giochiTendenza.isEmpty()) { %>
     <div class="tendenza-section hero-tendenza">

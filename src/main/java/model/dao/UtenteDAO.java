@@ -428,4 +428,32 @@ public class UtenteDAO {
         }
     }
     
+    public List<Utente> doRetrievebyNameOrEmail(String query) {
+        List<Utente> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Utente WHERE nickname LIKE ? OR email LIKE ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, "%" + query + "%");
+            ps.setString(2, "%" + query + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utente u = new Utente();
+                u.setIdUtente(rs.getInt("id_utente"));
+                u.setEmail(rs.getString("email"));
+                u.setNome(rs.getString("nome"));
+                u.setCognome(rs.getString("cognome"));
+                u.setRuolo(rs.getString("ruolo"));
+                u.setNickname(rs.getString("nickname"));
+                u.setSaldoRotelline(rs.getInt("saldo_rotelline"));
+                u.setTitoloAttivo(rs.getString("titolo_attivo"));
+                u.setAvatarAttivo(rs.getString("avatar_attivo"));
+                u.setBannato(rs.getBoolean("is_bannato"));
+                lista.add(u); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
 }
