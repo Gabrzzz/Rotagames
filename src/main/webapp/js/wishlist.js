@@ -52,16 +52,6 @@ function mostraToast(messaggio) {
     }, 3000);
 }
 
-const bottoniCarrello = document.querySelectorAll('.btn-cart');
-bottoniCarrello.forEach(bottone => {
-    //bottone aggiungi al carrello
-    bottone.addEventListener('click', function() {
-        const idVideogioco = this.getAttribute('data-id');
-        const piattaforma = this.getAttribute('data-piattaforma');
-        apriModalPiattaforma(idVideogioco, piattaforma);
-    });
-});
-
 //bottone per rimuovere i giochi dalla wishlist
 const bottoniRimuoviWishlist = document.querySelectorAll('.btn-wishlist.active');
 bottoniRimuoviWishlist.forEach(bottone => {
