@@ -9,13 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.List;
-
 import model.Utente;
 import model.dao.UtenteDAO;
-import model.dao.VideogiocoDAO;
 import util.HashUtil;
-import model.Videogioco;
+
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -62,24 +59,6 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(emailCookie);
             }
            
-            
-            // PULIZIA CARRELLO POST-LOGIN
-            @SuppressWarnings("unchecked")
-            List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello");
-
-            if (carrello != null && !carrello.isEmpty()) {
-                VideogiocoDAO dao = new VideogiocoDAO();
-                
-                // Cicliamo tutto il carrello per vedere se l'utente possiede il gioco, se si lo rimuoviamo dalla lista
-                boolean giochiRimossi = carrello.removeIf(gioco -> 
-                    dao.checkPossessoGioco(utente.getIdUtente(), gioco.getIdVideogioco())
-                );
-                
-                if (giochiRimossi) {
-                    session.setAttribute("erroreCarrello", "Alcuni giochi sono stati rimossi dal carrello perché li possedevi già nella tua libreria.");
-                }
-            }
-            
             if ("AMMINISTRATORE".equals(utente.getRuolo())) {
                 response.sendRedirect("AdminDashboardServlet");
             } else {
