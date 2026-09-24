@@ -18,15 +18,22 @@
         return;
     }
 
+    // 1. Recuperiamo i dati del coupon e il totale già scontato salvati dal carrello
+    Double totaleDaPagare = (Double) session.getAttribute("totaleDaPagare");
+    Integer scontoApplicato = (Integer) session.getAttribute("couponScontoPercentuale");
+    if (scontoApplicato == null) scontoApplicato = 0;
+
+    // 2. Calcoliamo il totale base per poter mostrare il confronto visivo
     double totale = 0.0;
-    if (carrello != null) {
-        for (ElementoCarrello item : carrello) {
-            // Estraiamo il videogioco dal contenitore
-            Videogioco v = item.getVideogioco();
-            double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
-            
-            totale += (prezzoScontato * item.getQuantita());
-        }
+    for (ElementoCarrello item : carrello) {
+        Videogioco v = item.getVideogioco();
+        double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+        totale += (prezzoScontato * item.getQuantita());
+    }
+    
+    // Fallback di sicurezza se la variabile in sessione dovesse per qualche motivo mancare
+    if (totaleDaPagare == null) {
+        totaleDaPagare = totale;
     }
 %>
 <!DOCTYPE html>
@@ -51,12 +58,12 @@
     <div class="admin-form-section checkout-section">
         <span class="form-section-title">Giochi in acquisto:</span>
         <ul class="checkout-list">
-			<% for (ElementoCarrello item : carrello) { 
+            <% for (ElementoCarrello item : carrello) { 
                 Videogioco v = item.getVideogioco();
                 String piattaformaScelta = item.getPiattaformaSelezionata();
                 double prezzoSc = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
             %>
-				<li class="checkout-list-item">
+                <li class="checkout-list-item">
                     <span><%= item.getQuantita() %>x <%= v.getTitolo() %> <span class="checkout-item-platform">(<%= piattaformaScelta %>)</span></span>
                     <span class="checkout-item-price"><%= String.format("%.2f", prezzoSc * item.getQuantita()) %>€</span>
                 </li>
@@ -64,7 +71,15 @@
         </ul>
         
         <div class="checkout-total-box">
-            Totale da pagare: <span class="checkout-total-amount"><%= String.format("%.2f", totale) %>€</span>
+            <% if (scontoApplicato > 0 && totaleDaPagare < totale) { %>
+                <div style="font-size: 0.9em; color: #ccc; margin-bottom: 5px;">
+                    Subtotale: <strike><%= String.format("%.2f", totale) %>€</strike><br>
+                    <span style="color: #00ccff;">Coupon Applicato: -<%= scontoApplicato %>%</span>
+                </div>
+                Totale da pagare: <span class="checkout-total-amount text-success"><%= String.format("%.2f", totaleDaPagare) %>€</span>
+            <% } else { %>
+                Totale da pagare: <span class="checkout-total-amount"><%= String.format("%.2f", totaleDaPagare) %>€</span>
+            <% } %>
         </div>
     </div>
 
@@ -111,7 +126,7 @@
                         </label>
                     </div>
                     
-                    <button type="submit" class="btn-checkout btn-pay">Paga Ora - <%= String.format("%.2f", totale) %>€</button>
+                    <button type="submit" class="btn-checkout btn-pay">Paga Ora - <%= String.format("%.2f", totaleDaPagare) %>€</button>
                 </div>
             </div>
 

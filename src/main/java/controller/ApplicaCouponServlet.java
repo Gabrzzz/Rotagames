@@ -32,6 +32,6 @@ public class ApplicaCouponServlet extends HttpServlet {
             session.setAttribute("couponScontoPercentuale", percentuale);
         }
 
-        response.sendRedirect("carrello.jsp");
+        response.sendRedirect("CartServlet");
     }
 }

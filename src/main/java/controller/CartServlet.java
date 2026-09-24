@@ -14,12 +14,41 @@ import model.Utente;
 import model.Videogioco;
 import model.ElementoCarrello;
 import model.dao.VideogiocoDAO;
+import model.OggettoShop;
+import model.dao.OggettoShopDAO;
 
 @WebServlet("/CartServlet")
 public class CartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Utente utente = (Utente) session.getAttribute("utenteLoggato");
+
+        if (utente != null) {
+            try {
+                OggettoShopDAO shopDao = new OggettoShopDAO();
+                List<OggettoShop> tuttoCatalogo = shopDao.doRetrieveAll();
+                List<Integer> idAcquistati = shopDao.doRetrieveAcquistati(utente.getIdUtente());
+                
+                List<OggettoShop> couponPosseduti = new ArrayList<>();
+                
+                if (tuttoCatalogo != null && idAcquistati != null) {
+                    for (OggettoShop obj : tuttoCatalogo) {
+                        // Se l'utente possiede l'oggetto e il tipo è COUPON, lo aggiungiamo alla lista
+                        if (obj.getTipo() != null && idAcquistati.contains(obj.getIdOggetto()) && obj.getTipo().trim().equalsIgnoreCase("COUPON")) {
+                            couponPosseduti.add(obj);
+                        }
+                    }
+                }
+                // Passiamo la lista alla JSP
+                request.setAttribute("couponPosseduti", couponPosseduti);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         // Mostra il carrello
         request.getRequestDispatcher("carrello.jsp").forward(request, response);
     }
@@ -101,6 +130,6 @@ public class CartServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("carrello.jsp");
+        response.sendRedirect("CartServlet");
     }
 }

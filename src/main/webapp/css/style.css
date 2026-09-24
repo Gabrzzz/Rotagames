@@ -595,6 +595,54 @@ header {
     box-shadow: 0 0 8px rgba(255, 68, 68, 0.4);
 }
 
+/* --- SEZIONE COUPON CARRELLO --- */
+.cart-coupon-selector {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.cart-coupon-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #ffffff;
+}
+
+.cart-coupon-form {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cart-coupon-select {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-grow: 1;
+    max-width: 300px;
+    background: #1a2639;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.cart-coupon-select:focus {
+    outline: none;
+    border-color: #00ccff;
+}
+
+.btn-apply-coupon {
+    padding: 10px 25px !important;
+    margin: 0 !important;
+    width: auto !important;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
 /*  =====================
     5. BOTTONI PRINCIPALI
     =====================  */

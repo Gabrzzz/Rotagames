@@ -8,16 +8,33 @@
     @SuppressWarnings("unchecked")
     List<ElementoCarrello> carrello = (List<ElementoCarrello>) session.getAttribute("carrello");
 
+    // 1. Recupero eventuale coupon dalla sessione
+    Integer scontoApplicato = (Integer) session.getAttribute("couponScontoPercentuale");
+    if (scontoApplicato == null) scontoApplicato = 0;
+
+    // 2. Calcolo unificato di totale base e totale scontato
     double totale = 0.0;
+    double totaleScontato = 0.0;
+
     if (carrello != null) {
         for (ElementoCarrello item : carrello) {
-            // Estraiamo il videogioco dal contenitore
             Videogioco v = item.getVideogioco();
-            double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
+            double prezzoCatalogo = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
             
-            totale += (prezzoScontato * item.getQuantita());
+            totale += (prezzoCatalogo * item.getQuantita());
+
+            // Il coupon si applica SOLO sui giochi NON scontati
+            if (v.getScontoAttivo() > 0 || scontoApplicato == 0) {
+                totaleScontato += (prezzoCatalogo * item.getQuantita());
+            } else {
+                double prezzoConCoupon = v.getPrezzoBase() - (v.getPrezzoBase() * scontoApplicato / 100.0);
+                totaleScontato += (prezzoConCoupon * item.getQuantita());
+            }
         }
     }
+    
+    // 3. SALVATAGGIO IN SESSIONE PER IL CHECKOUT (Risolve il problema del coupon che scompare)
+    session.setAttribute("totaleDaPagare", totaleScontato);
 %>
 <!DOCTYPE html>
 <html>
@@ -36,29 +53,27 @@
 <div class="cart-container">
     <h2 class="cart-header-title">Il tuo Carrello</h2>
     
-    <%-- Stampa eventuali errori di inserimento --%>
     <% String erroreCarrello = (String) session.getAttribute("erroreCarrello");
     if (erroreCarrello != null) { %>
         <div class="error-cart">
             ⚠️ <%= erroreCarrello %>
         </div>
-        <% session.removeAttribute("erroreCarrello"); // Rimuove il messaggio dopo averlo mostrato %>
+        <% session.removeAttribute("erroreCarrello"); %>
     <% } %>
 
     <% if (carrello != null && !carrello.isEmpty()) { %>
         <% for (ElementoCarrello item : carrello) {
-            // Estraiamo i dati dall'ElementoCarrello per questa riga
             Videogioco v = item.getVideogioco();
             String piattaformaScelta = item.getPiattaformaSelezionata();
             double prezzoScontato = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
         %>
-			<div class="cart-item">
+            <div class="cart-item">
                 <div class="cart-item-details">
                     <% if (v.getBase64Copertina() != null && !v.getBase64Copertina().isEmpty()) { %>
-					    <img src="data:image/jpeg;base64,<%= v.getBase64Copertina() %>" class="cart-item-cover" alt="Copertina di <%= v.getTitolo() %>">
-					<% } else { %>
-					    <div class="empty-cover-cart">Nessuna<br>Foto</div>
-					<% } %>
+                        <img src="data:image/jpeg;base64,<%= v.getBase64Copertina() %>" class="cart-item-cover" alt="Copertina di <%= v.getTitolo() %>">
+                    <% } else { %>
+                        <div class="empty-cover-cart">Nessuna<br>Foto</div>
+                    <% } %>
                     
                     <div class="cart-item-info">
                         <h3><%= v.getTitolo() %></h3>
@@ -66,13 +81,13 @@
                     </div>
                 </div>
                 
-				<div class="cart-item-actions">
+                <div class="cart-item-actions">
                     <form action="CartServlet" method="post" class="cart-form cart-item-form-update">
                         <input type="hidden" name="azione" value="aggiorna">
                         <input type="hidden" name="idVideogioco" value="<%= v.getIdVideogioco() %>">
                         <input type="hidden" name="piattaforma" value="<%= piattaformaScelta %>">
                         
-                        <select name="quantita" class="cart-qty-select">
+                        <select name="quantita" class="cart-qty-select" onchange="this.form.submit()">
                             <% for(int i = 1; i <= 10; i++) { %>
                                 <option value="<%= i %>" <%= (item.getQuantita() == i) ? "selected" : "" %>>
                                     <%= i %>
@@ -101,44 +116,41 @@
                     </form>
                 </div>
             </div>
-       <% } 
-        %>
+       <% } %>
 
-        <%-- === INIZIO NUOVO CODICE COUPON === --%>
+        <%-- === SEZIONE SELEZIONE VISIVA COUPON === --%>
         <%
-            // 1. Controlla se l'utente ha cliccato per applicare uno sconto
-            Integer scontoApplicato = (Integer) session.getAttribute("couponScontoPercentuale");
-            if (scontoApplicato == null) scontoApplicato = 0;
+            java.util.List<model.OggettoShop> couponPosseduti = (java.util.List<model.OggettoShop>) request.getAttribute("couponPosseduti");
             
-            // 2. Ricalcolo avanzato: Il coupon si applica SOLO sui giochi NON scontati
-            double totaleScontato = 0.0;
-            if (carrello != null) {
-                for (ElementoCarrello item : carrello) {
-                    Videogioco v = item.getVideogioco();
-                    double prezzoCatalogo = v.getPrezzoBase() - (v.getPrezzoBase() * v.getScontoAttivo() / 100.0);
-                    
-                    if (v.getScontoAttivo() > 0 || scontoApplicato == 0) {
-                        // Il gioco è già in saldo (o non ci sono coupon): il coupon NON fa effetto
-                        totaleScontato += (prezzoCatalogo * item.getQuantita());
-                    } else {
-                        // Il gioco è a prezzo pieno: applichiamo il coupon
-                        double prezzoConCoupon = v.getPrezzoBase() - (v.getPrezzoBase() * scontoApplicato / 100.0);
-                        totaleScontato += (prezzoConCoupon * item.getQuantita());
-                    }
-                }
-            }
+            if (utenteLoggato != null && couponPosseduti != null && !couponPosseduti.isEmpty() && scontoApplicato == 0) {
         %>
+            <div class="cart-coupon-selector">
+                <h4 class="cart-coupon-title">🎁 Hai dei coupon disponibili!</h4>
+                <form action="ApplicaCouponServlet" method="get" class="cart-coupon-form">
+                    <select name="idOggetto" id="couponSelect" class="cart-coupon-select" required onchange="document.getElementById('percInput').value = this.options[this.selectedIndex].getAttribute('data-perc');">
+                        <option value="" disabled selected>Seleziona un coupon...</option>
+                        <% for (model.OggettoShop coupon : couponPosseduti) { 
+                            String percStr = coupon.getValore().replaceAll("[^0-9]", "");
+                        %>
+                            <option value="<%= coupon.getIdOggetto() %>" data-perc="<%= percStr %>">
+                                Sconto del <%= percStr %>%
+                            </option>
+                        <% } %>
+                    </select>
+                    <input type="hidden" name="percentuale" id="percInput" value="">
+                    <button type="submit" class="btn-checkout btn-apply-coupon">Applica</button>
+                </form>
+            </div>
+        <% } %>
 
-		<div class="cart-total">
+        <div class="cart-total">
             <% if (scontoApplicato > 0 && totaleScontato < totale) { %>
-                <%-- Se il coupon ha abbassato il prezzo, mostra il confronto --%>
                 <span class="cart-old-price"><%= String.format("%.2f", totale) %>€</span>
                 <span class="cart-coupon-discount">Coupon (<%= scontoApplicato %>%): -<%= String.format("%.2f", totale - totaleScontato) %>€</span>
                 <br><br>
                 Totale Scontato: <span class="cart-total-amount text-success"><%= String.format("%.2f", totaleScontato) %>€</span>
             
             <% } else if (scontoApplicato > 0 && totaleScontato == totale) { %>
-                <%-- Se ha applicato il coupon ma nel carrello c'erano solo giochi già in saldo --%>
                 <div class="cart-coupon-warning">
                     ⚠️ Il coupon del <%= scontoApplicato %>% è attivo, ma non applicabile ai titoli già in saldo.
                 </div>
@@ -172,7 +184,6 @@
 
 <jsp:include page="footer.jsp" />
 
-<!-- Inclusione dello script JavaScript esterno -->
 <script src="${pageContext.request.contextPath}/js/carrello.js"></script>
 </body>
 </html>
